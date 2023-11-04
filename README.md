@@ -1,1 +1,0 @@
-"# Politechnika_Gdanska" 
