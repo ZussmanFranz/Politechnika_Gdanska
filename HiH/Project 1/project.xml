@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:noNamespaceSchemaLocation="schema.xsd">
+    <teaser>
+        <label>Drukhari</label>
+        <logo gallery_item="#1"/>
+    </teaser>
+    <details>
+        <gallery>
+            <image n="1" original="yes">
+                <link source="./img/Eldar1.jpg" />
+            </image>
+            <image n="2" original="yes">
+                <link source="./img/Eldar2.jpg" />
+            </image>
+            <image n="3" original="no" web_origin="https://ru.pinterest.com/pin/506443920572499751/" >
+                <link source="./img/Eldar3.jpg" />
+            </image>
+            <image n="4" original="no">
+                <link source="./img/Eldar4.jpg" />
+            </image>
+        </gallery>
+        <description>
+            <header>
+                Citizens of the Dark City
+            </header>
+            <quote>
+                <block>
+                    We are the lords of despair, masters of terror. 
+                    Dread and agony are our meat and wine, and they are plentiful indeed!
+                </block>
+                <source person="yes">
+                    Asdrubael Vect, Supreme Lord of the Kabal of the Black Heart
+                </source>
+            </quote>
+        </description>
+    </details>
+</project>
