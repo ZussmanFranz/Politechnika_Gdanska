@@ -129,7 +129,7 @@ nav li.active::first-letter {
     width: 100%;
     border-radius: 10%;
 }
-.gallery_item header {
+.gallery_item h2 {
     text-align: center;
     font-size: 200%;
 }
