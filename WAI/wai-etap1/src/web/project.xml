@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project SYSTEM "project.dtd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:noNamespaceSchemaLocation="schema.xsd">
+    <teaser>
+        <label>Drukhari</label>
+        <logo gallery_item="1"/>
+    </teaser>
+    <details>
+        <gallery>
+            <image n="1" original="yes">
+                <link source="./img/Eldar1.jpg" />
+            </image>
+            <image n="2" original="yes">
+                <link source="./img/Eldar2.jpg" />
+            </image>
+            <image n="3" original="no">
+                <web_origin source="./img/Eldar3" web_source="https://ru.pinterest.com/pin/506443920572499751/" />
+            </image>
+            <image n="4" original="no">
+                <link source="./img/Eldar4.jpg" />
+            </image>
+        </gallery>
+        <description>
+            <header>
+                <icon source="./img/icon.svg"/>
+                <label>Citizens of the Dark City</label>
+            </header>
+            <quote>
+                <block>
+                    We are the lords of despair, masters of terror. 
+                    Dread and agony are our meat and wine, and they are plentiful indeed!
+                </block>
+                <source person="yes">
+                    Asdrubael Vect, Supreme Lord of the Kabal of the Black Heart
+                </source>
+                <link source="https://warhammer40k.fandom.com/pl/wiki/Asdrubael_Vect"/>
+            </quote>
+        </description>
+    </details>
+    <meta>
+        <author>
+            <name>&author_name;</name>
+            <second_name enabled="false"></second_name>
+            <surname>&author_surname;</surname>
+        </author>
+        <info>
+            <date>05 11 2023</date>
+            <time>
+                <hour>23</hour>
+                <minute>25</minute>
+            </time>
+        </info>
+    </meta>
+</project>

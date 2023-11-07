@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My hobby: Contact</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<div id = "main" class="contact">
+    <header id="header"><q>There is no such thing as innocence, only degrees of guilt.</q></header>
+    <nav id="menu">
+        <ul>
+            <li><a href="index.html">Main</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li class="active"><a href="contact.html">Contact</a></li>
+            <li><a href="about.html">About Me</a></li>
+        </ul>
+    </nav>
+
+    <div id="auspex">
+
+        <form action="odbierz.php" method="post" id="comment_form">
+            <table class="form_item">
+                <tr>
+                    <td>
+                        <label for="first_name">First name: <br></label>
+                        <input type="text" name="first_name" id="first_name">
+                    </td>
+                    <td>
+                        <label for="surname">Surname: <br></label>
+                        <input type="text" name="surname" id="surname">
+                    </td>
+                    <td>
+                        <label for="animals">Number of bad thoughts: <br></label>
+                        <input type="number" name="animals" id="animals" placeholder="0" min="0">
+                    </td>
+                </tr>
+        
+                <tr>
+                    <td>
+                        <label for="homeworld">Name of your homeworld: <br></label>
+                        <input type="text" name="homeworld" id="homeworld">
+                    </td>
+                    <td>
+                        <label for="age">Your full age: <br></label>
+                        <input type="number" name="age" id="age" min="0">
+                    </td>
+                    <td>
+                        <label for="animals">Number of convictions: <br></label>
+                        <input type="number" name="convictions" id="convictions" placeholder="0" min="0">
+                    </td>
+                </tr>
+        
+                <tr>
+                    <td>
+                        <label for="proffesion">Your proffesion: <br></label>
+                        <input type="text" name="proffesion" id="proffesion">
+                    </td>
+                    <td>
+                        <label for="clan">Your clan: <br></label>
+                        <input type="text" name="clan" id="clan">
+                    </td>
+                    <td>
+                        <label for="commisar">Your commisar's name: <br></label>
+                        <input type="text" name="commisar" id="commisar">
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <p>Have you ever been in jail?</p> 
+                        <label for="jail1">yes</label>
+                        <input type="radio" name="jail" id="jail1" value="yes">
+                        <label for="jail2">no</label>
+                        <input type="radio" name="jail" id="jail2" value="no">
+                        <label for="jail3">MAYBE</label>
+                        <input type="radio" name="jail" id="jail3" value="maybe" checked>
+                    </td>
+
+                    <td>
+                        <label for="opinion">Your opinion about the cite: <br></label>
+                        <select name="opinion" id="opinion">
+                            <option value="good">Good</option>
+                            <option value="r_good">Really good</option>
+                            <option value="perfect">Perfect</option>
+                            <option value="amazing">Amazing!</option>
+                        </select>
+                    </td>
+
+                    <td>
+                        <p>Are you from inquisition?</p>
+                        <label for="tricky_question">yes</label>
+                        <input type="checkbox" name="tricky_question" id="tricky_question" value="yes">
+                    </td>
+                </tr>
+            </table>
+
+          
+            <div id="comment_section">
+                <textarea name="comment" id="comment" cols="60" rows="10" class="form_item" placeholder="Leave your comment here, if you wish"></textarea>
+                <button type="submit" id="submit" class="form_item">Send<br>your<br>message</button>
+            </div>
+            
+        </form>
+    </div>
+    
+    <div id="skull"><a href="#header"><img src="./img/servo-skull.svg" alt="Go to top"></a></div>
+    <footer id="footer">Yauheni Pyryeu, 023.M3</footer>
+</div>
+</body>
+</html>

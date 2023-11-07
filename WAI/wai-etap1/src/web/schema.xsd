@@ -1,0 +1,223 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified">
+    <xs:element name="project" type="projectType"/>
+
+    <xs:element name="image" type="imageType"/>
+	<xs:element name="link" type="linkType"/>
+    <xs:element name="label" type="shortString"/>
+
+    <xs:attribute name="source" type="xs:anyURI"/>
+
+    <xs:element name="gallery">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="image" minOccurs="2" maxOccurs="4"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:complexType name="projectType">
+        <xs:sequence>
+            <xs:element name="teaser">
+                <xs:complexType>
+                    <xs:all>
+                        <xs:element ref="label"/>
+                        <xs:element name="logo">
+                            <xs:complexType>
+                                <xs:simpleContent>
+                                    <xs:extension base="xs:string">
+                                        <xs:attribute name="gallery_item" type="itemType" use="required"/>
+                                    </xs:extension>
+                                </xs:simpleContent>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:all>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="details">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element ref="gallery" minOccurs="1" maxOccurs="1"/>
+                        <xs:element name="description" type="descriptionType"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="meta">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="author" minOccurs="1" maxOccurs="1">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="name" type="personalType"/>
+                                    <xs:element name="second_name">
+                                        <xs:complexType>
+                                        <xs:simpleContent>
+                                            <xs:extension base="personalType">
+                                                <xs:attribute default="false" name="enabled" type="xs:boolean"/>
+                                            </xs:extension>
+                                        </xs:simpleContent>
+                                        </xs:complexType>
+                                    </xs:element>
+                                    <xs:element name="surname" type="personalType"/>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                        <xs:element name="info" minOccurs="1" maxOccurs="1">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="date">
+                                        <xs:simpleType>
+                                            <xs:list itemType="xs:positiveInteger"/>
+                                        </xs:simpleType>
+                                    </xs:element>
+                                    <xs:element name="time">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element name="hour" type="hourType"/>
+                                                <xs:element name="minute" type="minuteType"/>
+                                            </xs:sequence>
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:group name="linkingGroup">
+        <xs:choice>
+            <xs:element ref="link"/>
+            <xs:element name="web_origin" type="web_originType"/>
+        </xs:choice>
+    </xs:group>
+
+    <xs:complexType name="imageType">
+        <xs:group ref="linkingGroup"/>
+
+        <xs:attribute name="n" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:integer">
+                    <xs:minInclusive value="1"/>
+                    <xs:maxInclusive value="4"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+
+        <xs:attribute name="original" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="yes"/>
+					<xs:enumeration value="no"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+
+	</xs:complexType>
+
+    <xs:complexType name="linkType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute ref="source" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+	</xs:complexType>
+
+    <xs:complexType name="web_originType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="web_source" type="xs:anyURI" use="required"/>
+                <xs:attribute ref="source" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+	</xs:complexType>
+
+    <xs:complexType name="descriptionType">
+        <xs:sequence>
+            <xs:element name="header" type="headerType"/>
+            <xs:element name="quote" type="quoteType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="headerType">
+        <xs:sequence>
+            <xs:element name="icon" type="linkType" minOccurs="1" maxOccurs="1"/>
+            <xs:element ref="label" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="quoteType">
+        <xs:sequence>
+            <xs:element name="block" type="longString" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="source" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:string">
+                            <xs:attribute name="person" use="required">
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:enumeration value="yes"/>
+                                        <xs:enumeration value="no"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:attribute>
+                        </xs:extension>
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element ref="link" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="capitalType">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Z]*([a-z])*"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="shortString">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="0"/>
+            <xs:maxLength value="30"/>
+        </xs:restriction>
+	</xs:simpleType>
+    
+    <xs:simpleType name="longString">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="30"/>
+            <xs:maxLength value="180"/>
+        </xs:restriction>
+	</xs:simpleType>
+
+    <xs:simpleType name="positiveInteger">
+        <xs:restriction base="xs:integer">
+            <xs:minExclusive value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="itemType">
+        <xs:restriction base="xs:decimal">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="4"/>
+        </xs:restriction>
+	</xs:simpleType>
+
+    <xs:simpleType name="personalType">
+        <xs:union memberTypes="capitalType shortString" />
+    </xs:simpleType>
+
+    <xs:simpleType name="hourType">
+        <xs:restriction base="xs:positiveInteger">
+            <xs:maxExclusive value="24"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="minuteType">
+        <xs:restriction base="xs:positiveInteger">
+            <xs:maxExclusive value="60"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+</xs:schema>
