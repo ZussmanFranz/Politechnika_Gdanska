@@ -1,0 +1,42 @@
+<!DOCTYPE project 
+[
+<!ENTITY % x.source "source (CDATA) #REQUIRED">
+<!ENTITY author_name "Yauheni">
+<!ENTITY author_surname "Pyryeu">
+
+<!ELEMENT project (teaser, details, meta)>
+<!ELEMENT teaser (label, logo)>
+<!ELEMENT label (#PCDATA)>
+<!ELEMENT logo EMPTY>
+<!ELEMENT details (gallery, description)>
+<!ELEMENT gallery (image*)>
+<!ELEMENT image (link|web_origin)>
+<!ELEMENT link EMPTY>
+<!ELEMENT web_origin EMPTY>
+<!ELEMENT description (header, quote)>
+<!ELEMENT header (icon, label)>
+<!ELEMENT icon EMPTY>
+<!ELEMENT quote (block, source, link?)>
+<!ELEMENT block (#PCDATA)>
+<!ELEMENT source (#PCDATA)>
+<!ELEMENT meta (author, info)>
+<!ELEMENT author (name, second_name, surname)>
+<!ELEMENT name (CDATA)>
+<!ELEMENT second_name (CDATA)>
+<!ELEMENT surname (CDATA)>
+<!ELEMENT info (date, time)>
+<!ELEMENT date (CDATA)>
+<!ELEMENT time (hour, minute)>
+<!ELEMENT hour (CDATA)>
+<!ELEMENT minute (CDATA)>
+
+<!ATTLIST logo gallery_item (CDATA) #REQUIRED>
+<!ATTLIST image n (CDATA) #REQUIRED>
+<!ATTLIST image original ("yes"|"no") "yes" #REQUIRED>
+<!ATTLIST link %x.source>
+<!ATTLIST web_origin %x.source; web_source (CDATA) #REQUIRED>
+<!ATTLIST icon %x.source>
+<!ATTLIST source person ("yes"|"no") "yes" #REQUIRED>
+<!ATTLIST second_name enabled ("yes"|"no") "no" #REQUIRED>
+]>
+

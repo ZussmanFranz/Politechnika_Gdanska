@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project SYSTEM "project.dtd">
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
    xsi:noNamespaceSchemaLocation="schema.xsd">
     <teaser>
@@ -39,9 +40,9 @@
     </details>
     <meta>
         <author>
-            <name>Yauheni</name>
+            <name>&author_name;</name>
             <second_name enabled="false"></second_name>
-            <surname>Pyryeu</surname>
+            <surname>&author_surname;</surname>
         </author>
         <info>
             <date>05 11 2023</date>
