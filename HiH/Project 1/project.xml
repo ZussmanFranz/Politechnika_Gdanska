@@ -3,7 +3,7 @@
    xsi:noNamespaceSchemaLocation="schema.xsd">
     <teaser>
         <label>Drukhari</label>
-        <logo gallery_item="#1"/>
+        <logo gallery_item="1"/>
     </teaser>
     <details>
         <gallery>
@@ -13,8 +13,8 @@
             <image n="2" original="yes">
                 <link source="./img/Eldar2.jpg" />
             </image>
-            <image n="3" original="no" web_origin="https://ru.pinterest.com/pin/506443920572499751/" >
-                <link source="./img/Eldar3.jpg" />
+            <image n="3" original="no">
+                <web_origin source="./img/Eldar3" web_source="https://ru.pinterest.com/pin/506443920572499751/" />
             </image>
             <image n="4" original="no">
                 <link source="./img/Eldar4.jpg" />
@@ -22,7 +22,8 @@
         </gallery>
         <description>
             <header>
-                Citizens of the Dark City
+                <icon source="./img/icon.svg"/>
+                <label>Citizens of the Dark City</label>
             </header>
             <quote>
                 <block>
@@ -32,7 +33,22 @@
                 <source person="yes">
                     Asdrubael Vect, Supreme Lord of the Kabal of the Black Heart
                 </source>
+                <link source="https://warhammer40k.fandom.com/pl/wiki/Asdrubael_Vect"/>
             </quote>
         </description>
     </details>
+    <meta>
+        <author>
+            <name>Yauheni</name>
+            <second_name enabled="false"></second_name>
+            <surname>Pyryeu</surname>
+        </author>
+        <info>
+            <date>05 11 2023</date>
+            <time>
+                <hour>23</hour>
+                <minute>25</minute>
+            </time>
+        </info>
+    </meta>
 </project>
