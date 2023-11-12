@@ -217,6 +217,9 @@ table {
     border-collapse: collapse;
     width:99vw;
 }
+td {
+    width: 33vw;
+}
 td, .gallery_detailed  {
     border: dotted 2px #d7bd27;
     background-image: linear-gradient(rgba(0, 0, 0, 0.5),  rgba(0, 0, 0, 0.5));
@@ -251,7 +254,7 @@ select option{
     grid-area: submit;
 }
 
-#auspex, input, textarea, button, #blog{
+#auspex, input, textarea, button, #blog, #dialog, .ui-dialog-titlebar{
     color: #d7bd27;
     font-family: Courier, Lucida, monospace;
     background-image: linear-gradient(rgba(0, 0, 0, 0.5),  rgba(0, 0, 0, 0.5));
@@ -338,6 +341,48 @@ footer {
     color: #EF1401 !important;
     font-size: 150%;
 }
+
+#fullscreen {
+    text-align: left;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    width: fit-content;
+    font-size: 15px;
+    padding: 10px 10px 10px 10px ;
+    background-color: transparent !important;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5),  rgba(0, 0, 0, 0.5));
+    cursor: pointer;
+}
+#fullscreen:hover {
+    cursor: pointer;
+}
+
+#dialog, .ui-dialog-titlebar, .ui-corner-all, .ui-widget-header, .ui-helper-clearfix, .ui-draggable-handle {
+    background-color: black !important;
+    color:#EF1401  !important;
+    border: solid 1px #EF1401  !important;
+    text-align: center;
+    height: fit-content;
+    min-height: max-content;
+}
+#dialog img {
+    height: 90%;
+    width: 90%;
+    margin-top: 5%;
+}
+.ui-dialog-content.ui-widget-content {
+    padding: 0px 0px 0px 0px;
+}
+
+#slider, .ui-slider-handle {
+    color: #d7bd27 !important;
+    border: #d7bd27 dotted 1px  !important;
+}
+.ui-state-default, .ui-slider-range {
+    border: #d7bd27 solid 1px  !important;
+}
+
 
 @font-face {
 	font-family: 'ManorlyFontbyconnecttohumanx';
@@ -433,9 +478,17 @@ footer {
     .icon {
         margin-left: 20%;
     }
+
+    #fullscreen {
+        display: none;
+    }
 }
 @media screen and (max-width: 650px) {
     td, .gallery_detailed  {
         padding: 5px;
+    }
+
+    #fullscreen {
+        display: none;
     }
 }

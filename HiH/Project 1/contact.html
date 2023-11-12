@@ -24,52 +24,52 @@
             <table class="form_item">
                 <tr>
                     <td>
-                        <label for="first_name">First name: <br></label>
+                        <label for="first_name" id="first_name_label">First name: <br></label>
                         <input type="text" name="first_name" id="first_name">
                     </td>
                     <td>
-                        <label for="surname">Surname: <br></label>
+                        <label for="surname" id="surname_label">Surname: <br></label>
                         <input type="text" name="surname" id="surname">
                     </td>
                     <td>
-                        <label for="animals">Number of bad thoughts: <br></label>
-                        <input type="number" name="animals" id="animals" placeholder="0" min="0">
+                        <label for="bad_thoughts" id="bad_thoughts_label">Number of bad thoughts: <br></label>
+                        <input type="number" name="bad_thoughts" id="bad_thoughts" placeholder="0" min="0">
                     </td>
                 </tr>
         
                 <tr>
                     <td>
-                        <label for="homeworld">Name of your homeworld: <br></label>
+                        <label for="homeworld" id="homeworld_label">Name of your homeworld: <br></label>
                         <input type="text" name="homeworld" id="homeworld">
                     </td>
                     <td>
-                        <label for="age">Your full age: <br></label>
+                        <label for="age" id="age_label">Your full age: <br></label>
                         <input type="number" name="age" id="age" min="0">
                     </td>
                     <td>
-                        <label for="animals">Number of convictions: <br></label>
+                        <label for="convictions" id="convictions_label">Number of convictions: <br></label>
                         <input type="number" name="convictions" id="convictions" placeholder="0" min="0">
                     </td>
                 </tr>
         
                 <tr>
                     <td>
-                        <label for="proffesion">Your proffesion: <br></label>
+                        <label for="proffesion" id="proffesion_label">Your proffesion: <br></label>
                         <input type="text" name="proffesion" id="proffesion">
                     </td>
                     <td>
-                        <label for="clan">Your clan: <br></label>
+                        <label for="clan" id="clan_label">Your clan: <br></label>
                         <input type="text" name="clan" id="clan">
                     </td>
                     <td>
-                        <label for="commisar">Your commisar's name: <br></label>
+                        <label for="commisar" id="commisar_label">Your commisar's name: <br></label>
                         <input type="text" name="commisar" id="commisar">
                     </td>
                 </tr>
 
                 <tr>
                     <td>
-                        <p>Have you ever been in jail?</p> 
+                        <p id="jail_label">Have you ever been in jail?</p> 
                         <label for="jail1">yes</label>
                         <input type="radio" name="jail" id="jail1" value="yes">
                         <label for="jail2">no</label>
@@ -79,7 +79,7 @@
                     </td>
 
                     <td>
-                        <label for="opinion">Your opinion about the cite: <br></label>
+                        <label for="opinion" id="opinion_label">Your opinion about the site: <br></label>
                         <select name="opinion" id="opinion">
                             <option value="good">Good</option>
                             <option value="r_good">Really good</option>
@@ -89,20 +89,12 @@
                     </td>
 
                     <td>
-                        <p>Are you from inquisition?</p>
+                        <p id="tricky_question_label">Are you from inquisition?</p>
                         <label for="tricky_question">yes</label>
                         <input type="checkbox" name="tricky_question" id="tricky_question" value="yes">
                     </td>
                 </tr>
             </table>
-
-          
-            <div id="comment_section">
-                <textarea name="comment" id="comment" cols="60" rows="10" class="form_item" placeholder="Leave your comment here, if you wish"></textarea>
-                <button type="submit" id="submit" class="form_item">Send<br>your<br>message</button>
-            </div>
-            
-        </form>
     </div>
     
     <div id="skull"><a href="#header"><img src="./img/servo-skull.svg" alt="Go to top"></a></div>

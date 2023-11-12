@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My hobby: Projects</title>
     <link rel="stylesheet" href="./style.css">
+    <script src="./JS/jquery-3.7.1.js"></script>
 </head>
 <body>
 <div id = "main" class="projects">
@@ -23,16 +24,16 @@
             <a href="#Empire"><img src="./img/Empire1.jpg" alt="Empire thumbnail"></a>
         </section>
         <section class="gallery_item">
-            <h2>Blood Rage</h2>
-            <a href="#Blood_Rage" id="Blood_Rage-logo"><img src="./img/BloodRage1.jpg" alt="BloodRage thumbnail (side project)"></a>
+            <h2 id="Blood_Rage-logo">Blood Rage</h2>
+            <a href="#Blood_Rage"><img src="./img/BloodRage1.jpg" alt="BloodRage thumbnail (side project)"></a>
         </section>
         <section class="gallery_item">
-            <h2>Drukhari</h2>
-            <a href="#Drukhari" id="Drukhari-logo"><img src="./img/Eldar1.jpg" alt="Dark eldar thumbnail"></a>
+            <h2 id="Drukhari-logo">Drukhari</h2>
+            <a href="#Drukhari"><img src="./img/Eldar1.jpg" alt="Dark eldar thumbnail"></a>
         </section>
         <section class="gallery_item">
-            <h2>Thousand Sons</h2>
-            <a href="#Thousand_Sons" id="Thousand_Sons-logo"><img src="./img/ThousandSons1.jpg" alt="Thousand sons thumbnail"></a>
+            <h2 id="Thousand_Sons-logo">Thousand Sons</h2>
+            <a href="#Thousand_Sons"><img src="./img/ThousandSons1.jpg" alt="Thousand sons thumbnail"></a>
         </section>
     </div>
     <div>
@@ -105,5 +106,48 @@
     <div id="skull"><a href="#header"><img src="./img/servo-skull.svg" alt="Go to top"></a></div>
     <footer id="footer">Yauheni Pyryeu, 023.M3</footer>
 </div>
+
+<script type="text/javascript">
+    function toggleFullScreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else if (document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+    }
+
+    const fullscreenButton = document.createElement("button");
+
+    const main = document.getElementById("main");
+    const text1 = document.createTextNode("Enter the");
+    const text2 = document.createTextNode("fullscreen ");
+    const text3 = document.createTextNode("mode");
+
+    fullscreenButton.appendChild(text1);
+    fullscreenButton.appendChild(document.createElement("br"));
+    fullscreenButton.appendChild(text2);
+    fullscreenButton.appendChild(document.createElement("br"));
+    fullscreenButton.appendChild(text3);
+    main.appendChild(fullscreenButton);
+
+    fullscreenButton.id = "fullscreen";
+
+    fullscreenButton.classList.add("pointer");
+    
+    $(document).ready(function(){
+        $("#fullscreen").click(function(){
+            toggleFullScreen();
+        });
+    });
+
+    main.addEventListener("mouseover", (event) => {
+        if(window.innerHeight === screen.height){
+            $("#fullscreen").html("Exit the<br> fullscreen <br>mode");
+        }
+        else{
+            $("#fullscreen").html("Enter the<br> fullscreen <br>mode");
+        }
+    });
+</script>
 </body>
 </html>
