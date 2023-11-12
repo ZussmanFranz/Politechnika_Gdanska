@@ -116,14 +116,14 @@
                     <td>
                         <p id="tricky_question_label" class="label_class">Are you from inquisition?</p>
                         <label for="tricky_question">yes</label>
-                        <input type="checkbox" name="tricky_question" id="tricky_question" value="yes" checked="false">
+                        <input type="checkbox" name="tricky_question" id="tricky_question" value="yes">
                     </td>
                 </tr>
             </table>
 
           
             <div id="comment_section">
-                <textarea name="comment" id="comment" cols="60" rows="10" class="form_item" placeholder="Leave your comment here, &#10if you wish."></textarea>
+                <textarea name="comment" id="comment" cols="60" rows="10" class="form_item" placeholder="Leave your comment here, &#10;if you wish."></textarea>
                 <button type="submit" id="submit" class="form_item">Send<br>your<br>message</button>
             </div>
             
@@ -131,14 +131,14 @@
     </div>
 
     <div id="dialog" title="Good day, Inquisitor" style="display: none;">
-        <img src="./img/Inquisition.svg">
+        <img src="./img/Inquisition.svg" alt="Inquisition Symbol">
     </div>
 
     <div id="skull"><a href="#header"><img src="./img/servo-skull.svg" alt="Go to top"></a></div>
     <footer id="footer">Yauheni Pyryeu, 023.M3</footer>
 </div>
 
-<script type="text/javascript">
+<script>
     function toggleFullScreen() {
         if (!document.fullscreenElement) {
             document.documentElement.requestFullscreen();
