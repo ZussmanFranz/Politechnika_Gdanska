@@ -1,0 +1,3 @@
+﻿Backgammon.obj : error LNK2019: unresolved external symbol printw referenced in function main
+D:\Materials\Programming\GitHub\Politechnika_Gdanska\PP\C++_external_libraries\PDCurses-3.9\include\lib\pdcurses.lib : warning LNK4272: library machine type 'x86' conflicts with target machine type 'x64'
+D:\Materials\Programming\GitHub\Politechnika_Gdanska\PP\Project\Project_1\Backgammon\Backgammon by Yauheni Pyryeu\x64\Debug\Backgammon by Yauheni Pyryeu.exe : fatal error LNK1120: 1 unresolved externals
