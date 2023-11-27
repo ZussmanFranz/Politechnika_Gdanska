@@ -245,7 +245,10 @@ select option{
 
     width: 100%;
     display: grid;
-    grid-template-areas: "comment comment comment comment submit";
+    grid-template-areas: "comment comment comment reset submit";
+}
+#reset {
+    grid-area: reset;
 }
 #comment {
     grid-area: comment;
@@ -467,10 +470,6 @@ footer {
         font-size: smaller;
     }
 
-    #comment_section {    
-        width: 100%;
-        grid-template-areas: "comment comment comment submit submit";
-    }
     textarea {
         font-size: smaller;
     }
