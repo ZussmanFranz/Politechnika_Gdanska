@@ -1,6 +1,5 @@
 <!DOCTYPE project 
 [
-<!ENTITY source_att "source (CDATA) #REQUIRED">
 <!ENTITY author_name "Yauheni">
 <!ENTITY author_surname "Pyryeu">
 
@@ -32,11 +31,11 @@
 
 <!ATTLIST logo gallery_item (CDATA) #REQUIRED>
 <!ATTLIST image n (CDATA) #REQUIRED>
-<!ATTLIST image original (yes|no) "yes" NMTOKENS >
-<!ATTLIST link &source_att>
-<!ATTLIST web_origin &source_att; web_source (CDATA) #REQUIRED>
-<!ATTLIST icon &source_att>
-<!ATTLIST source person ("yes"|"no") "yes" NMTOKENS >
-<!ATTLIST second_name enabled ("yes"|"no") "no" NMTOKENS >
+<!ATTLIST image original (yes | no) "yes">
+<!ATTLIST link source (CDATA) #REQUIRED>
+<!ATTLIST web_origin source (CDATA) #REQUIRED; web_source (CDATA) #REQUIRED>
+<!ATTLIST icon source (CDATA) #REQUIRED>
+<!ATTLIST source person (yes | no) "yes">
+<!ATTLIST second_name enabled (yes | no) "no">
 ]>
 
