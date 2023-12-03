@@ -1,8 +1,5 @@
 <!DOCTYPE project 
 [
-<!ENTITY author_name "Yauheni">
-<!ENTITY author_surname "Pyryeu">
-
 <!ELEMENT project (teaser, details, meta)>
 <!ELEMENT teaser (label, logo)>
 <!ELEMENT label (#PCDATA)>
@@ -33,7 +30,7 @@
 <!ATTLIST image n (CDATA) #REQUIRED>
 <!ATTLIST image original (yes | no) "yes">
 <!ATTLIST link source (CDATA) #REQUIRED>
-<!ATTLIST web_origin source (CDATA) #REQUIRED; web_source (CDATA) #REQUIRED>
+<!ATTLIST web_origin source (CDATA) #REQUIRED web_source (CDATA) #REQUIRED>
 <!ATTLIST icon source (CDATA) #REQUIRED>
 <!ATTLIST source person (yes | no) "yes">
 <!ATTLIST second_name enabled (yes | no) "no">

@@ -1,3 +1,7 @@
 ﻿  Backgammon.cpp
-D:\Materials\Programming\GitHub\Politechnika_Gdanska\PP\Project\Project_1\Backgammon by Yauheni Pyryeu\Backgammon by Yauheni Pyryeu\Backgammon.cpp(23,2): warning C4091: 'typedef ': ignored on left of 'pole' when no variable is declared
+D:\Materials\Programming\GitHub\Politechnika_Gdanska\PP\Project\Project_1\Backgammon by Yauheni Pyryeu\Backgammon by Yauheni Pyryeu\Backgammon.cpp(25,2): warning C4091: 'typedef ': ignored on left of 'pole' when no variable is declared
+D:\Materials\Programming\GitHub\Politechnika_Gdanska\PP\Project\Project_1\Backgammon by Yauheni Pyryeu\Backgammon by Yauheni Pyryeu\Backgammon.cpp(38,2): warning C4091: 'typedef ': ignored on left of 'gracz' when no variable is declared
+D:\Materials\Programming\GitHub\Politechnika_Gdanska\PP\Project\Project_1\Backgammon by Yauheni Pyryeu\Backgammon by Yauheni Pyryeu\Backgammon.cpp(73,12): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+D:\Materials\Programming\GitHub\Politechnika_Gdanska\PP\Project\Project_1\Backgammon by Yauheni Pyryeu\Backgammon by Yauheni Pyryeu\Backgammon.cpp(658,21): warning C4101: 'end_str': unreferenced local variable
+D:\Materials\Programming\GitHub\Politechnika_Gdanska\PP\Project\Project_1\Backgammon by Yauheni Pyryeu\Backgammon by Yauheni Pyryeu\Backgammon.cpp(658,7): warning C4101: 'start_str': unreferenced local variable
   Backgammon by Yauheni Pyryeu.vcxproj -> D:\Materials\Programming\GitHub\Politechnika_Gdanska\PP\Project\Project_1\Backgammon by Yauheni Pyryeu\Backgammon by Yauheni Pyryeu\Debug\Backgammon by Yauheni Pyryeu.exe
