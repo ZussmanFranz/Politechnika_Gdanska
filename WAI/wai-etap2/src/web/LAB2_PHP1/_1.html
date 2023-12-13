@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="pl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AJAX, podstawa PHP</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+  
+  
+</head>
+<body>
+  <section >
+      <fieldset>
+          <legend>Typ emotki: </legend>
+          <label for="radio-1">Pozytywne</label>
+          <input type="radio" name="radio-1" id="radio-1" onchange="wybor(this);" value="P">
+          <label for="radio-2">Negatywne</label>
+          <input type="radio" name="radio-1" id="radio-2" onchange="wybor(this);" value="N">
+      </fieldset>
+  </section> 
+
+  <div id="result"> 
+  </div>
+ 
+
+  <script>
+  $( function() {
+    $( "input" ).checkboxradio();
+  } );
+  
+  function wybor(param){
+    $.ajax({
+      method:"POST",
+      url: "E.php",
+      data: {E_typ:param.value} //wartość z inputa typu radio
+    }).done(function(msg){
+      $("#result").html(msg);
+    });
+	
+  };
+  </script>
+</body>
+</html>

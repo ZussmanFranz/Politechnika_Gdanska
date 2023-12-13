@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My hobby: Contact</title>
+    <link rel="stylesheet" href="./style.css">
+
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script>
+    $( function() {
+        $( "#dialog" ).dialog();
+    } );
+    $( function() {
+        var select = $( "#opinion" );
+        var slider = $( "<div id='slider'></div>" ).insertAfter( select ).slider({
+        min: 1,
+        max: 10,
+        range: "min",
+        value: select[ 0 ].selectedIndex + 1,
+        slide: function( event, ui ) {
+            select[ 0 ].selectedIndex = ui.value - 1;
+        }
+        });
+        $( "#opinion"  ).on( "change", function() {
+            slider.slider( "value", this.selectedIndex + 1 );
+        });
+    } );
+    </script>
+</head>
+<body>
+<div id = "main" class="contact">
+    <header id="header"><q>There is no such thing as innocence, only degrees of guilt.</q></header>
+    <nav id="menu">
+        <ul>
+            <li><a href="index.html">Main</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li class="active"><a href="contact.html">Contact</a></li>
+            <li><a href="about.html">About Me</a></li>
+        </ul>
+    </nav>
+
+    <div id="auspex">
+
+        <form action="odbierz.php" method="post" id="comment_form">
+            <table class="form_item">
+                <tr>
+                    <td>
+                        <label for="first_name" id="first_name_label" class="label_class">First name: </label><br>
+                        <input type="text" name="first_name" id="first_name"/>
+                    </td>
+                    <td>
+                        <label for="surname" id="surname_label" class="label_class">Surname: </label><br>
+                        <input type="text" name="surname" id="surname"/>
+                    </td>
+                    <td>
+                        <label for="bad_thoughts" id="bad_thoughts_label" class="label_class">Number of bad thoughts: </label><br>
+                        <input type="number" name="bad_thoughts" id="bad_thoughts" value="0" min="0"/>
+                    </td>
+                </tr>
+        
+                <tr>
+                    <td>
+                        <label for="homeworld" id="homeworld_label" class="label_class">Name of your homeworld: </label><br>
+                        <input type="text" name="homeworld" id="homeworld"/>
+                    </td>
+                    <td>
+                        <label for="age" id="age_label" class="label_class">Your full age: </label><br>
+                        <input type="number" name="age" id="age" min="0"/>
+                    </td>
+                    <td>
+                        <label for="convictions" id="convictions_label" class="label_class">Number of convictions: </label><br>
+                        <input type="number" name="convictions" id="convictions" value="0" min="0"/>
+                    </td>
+                </tr>
+        
+                <tr>
+                    <td>
+                        <label for="proffesion" id="proffesion_label" class="label_class">Your proffesion: </label><br>
+                        <input type="text" name="proffesion" id="proffesion"/>
+                    </td>
+                    <td>
+                        <label for="clan" id="clan_label" class="label_class">Your clan: </label><br>
+                        <input type="text" name="clan" id="clan"/>
+                    </td>
+                    <td>
+                        <label for="commisar" id="commisar_label" class="label_class">Your commisar's name: </label><br>
+                        <input type="text" name="commisar" id="commisar"/>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <p id="jail_label" class="label_class">Have you ever been in jail?</p> 
+                        <label for="jail1">yes</label>
+                        <input type="radio" name="jail" id="jail1" value="yes"/>
+                        <label for="jail2">no</label>
+                        <input type="radio" name="jail" id="jail2" value="no"/>
+                        <label for="jail3">MAYBE</label>
+                        <input type="radio" name="jail" id="jail3" value="maybe" checked/>
+                    </td>
+
+                    <td>
+                        <label for="opinion" id="opinion_label" class="label_class">Your opinion about the site: </label><br>
+                        <select name="opinion" id="opinion">
+                            <option value="good">Good</option>
+                            <option value="r_good">Really good</option>
+                            <option value="perfect">Perfect</option>
+                            <option value="amazing">Amazing!</option>
+                        </select>
+                    </td>
+
+                    <td>
+                        <p id="tricky_question_label" class="label_class">Are you from inquisition?</p>
+                        <label for="tricky_question">yes</label>
+                        <input type="checkbox" name="tricky_question" id="tricky_question" value="yes">
+                    </td>
+                </tr>
+            </table>
+
+          
+            <div id="comment_section">
+                <textarea name="comment" id="comment" cols="60" rows="10" class="form_item" placeholder="Leave your comment here, &#10;if you wish."></textarea>
+                <button type="reset" id="reset" class="form_item">Clear<br>your<br>message</button>
+                <button type="submit" id="submit" class="form_item">Send<br>your<br>message</button>
+            </div>
+            
+        </form>
+    </div>
+
+    <div id="dialog" title="Good day, Inquisitor" style="display: none;">
+        <img src="./img/Inquisition.svg" alt="Inquisition Symbol">
+    </div>
+
+    <div id="skull"><a href="#header"><img src="./img/servo-skull.svg" alt="Go to top"></a></div>
+    <footer id="footer">Yauheni Pyryeu, 023.M3</footer>
+</div>
+
+<script>
+    function toggleFullScreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+        } else if (document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+    }
+
+    const fullscreenButton = document.createElement("button");
+
+    const main = document.getElementById("main");
+    const text1 = document.createTextNode("Enter the");
+    const text2 = document.createTextNode("fullscreen ");
+    const text3 = document.createTextNode("mode");
+
+    fullscreenButton.appendChild(text1);
+    fullscreenButton.appendChild(document.createElement("br"));
+    fullscreenButton.appendChild(text2);
+    fullscreenButton.appendChild(document.createElement("br"));
+    fullscreenButton.appendChild(text3);
+    main.appendChild(fullscreenButton);
+
+    fullscreenButton.id = "fullscreen";
+
+    fullscreenButton.classList.add("pointer");
+    
+    $(document).ready(function(){
+        $("#fullscreen").click(function(){
+            toggleFullScreen();
+        });
+    });
+
+    main.addEventListener("mouseover", (event) => {
+        if(window.innerHeight === screen.height){
+            $("#fullscreen").html("Exit the<br> fullscreen <br>mode");
+        }
+        else{
+            $("#fullscreen").html("Enter the<br> fullscreen <br>mode");
+        }
+    });
+
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    var i = 0;
+    var speed = 60;
+    var txt = 'Leave your comment here, \nif you wish.';
+
+    async function typeWriter() {
+    if (i < txt.length) {
+        document.getElementById("comment").placeholder += txt.charAt(i);
+        i++;
+        setTimeout(typeWriter, speed);
+    }
+    }
+
+    async function labelsWriter() {
+        const labelsCollection = document.getElementsByClassName("label_class");
+        const labelsArray = Array.from(labelsCollection);
+
+        const textArray = ["First name: ",
+        "Surname: ",
+        "Number of bad thoughts: ",
+        "Name of your homeworld: ",
+        "Your full age: ",
+        "Number of convictions: ",
+        "Your proffesion: ",
+        "Your clan: ",
+        "Your commisar's name: ",
+        "Have you ever been in jail?",
+        "Your opinion about the site: ",
+        "Are you from inquisition?"]
+
+        for (let l = 0; l < 12; l++)
+        {
+            labelsArray[l].innerHTML = '';
+        }
+
+        for (let j = 0; j < 30; j++) {
+            for (let i = 0; i < labelsArray.length; i++) 
+            {
+                if(j < textArray[i].length)
+                {
+                    labelsArray[i].innerHTML += textArray[i].charAt(j);
+                }
+            }
+            await sleep(speed);
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function()
+    {
+        document.getElementById("comment").placeholder = '';
+        typeWriter();
+    });
+
+    document.addEventListener("DOMContentLoaded", labelsWriter);
+
+    $(document).ready(function(){
+        document.getElementById("tricky_question").checked = false;
+    })
+
+    $( "#dialog" ).dialog({
+        autoOpen: false,
+        autoResize: false,
+        width: 400,
+        height: 500,
+        show: {
+            effect: "scale",
+            duration: 1000
+        },
+        hide: {
+            effect: "scale",
+            duration: 1000
+        }
+    });
+
+    const inquisition_check = document.getElementById("tricky_question");
+    inquisition_check.addEventListener('change', function() {
+        if (this.checked) {
+            $( "#dialog" ).dialog( "open" );
+        }
+        else
+        {
+            $( "#dialog" ).dialog( "close" );
+        }
+    });
+
+    $(".ui-button").click(function(){
+        inquisition_check.checked = false;
+    })
+
+    $(document).ready(function(){
+        document.getElementById("opinion").innerHTML = "";
+        for (let i = 0; i < 10; i++)
+        {
+            let option = document.createElement("option")
+            option.value = "" + (i + 1);
+            document.getElementById("opinion").appendChild(option);
+            option.innerHTML += (i + 1);
+        } 
+    })
+
+</script>
+</body>
+</html>
