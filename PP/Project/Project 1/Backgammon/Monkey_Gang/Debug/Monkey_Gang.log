@@ -1,0 +1,5 @@
+﻿  main.cpp
+D:\Materials\Programming\GitHub\Politechnika_Gdanska\PP\Project\Project_2\Materials\template-project-2\template-project-2\main.cpp(211,26): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+D:\Materials\Programming\GitHub\Politechnika_Gdanska\PP\Project\Project_2\Materials\template-project-2\template-project-2\main.cpp(210,32): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+D:\Materials\Programming\GitHub\Politechnika_Gdanska\PP\Project\Project_2\Materials\template-project-2\template-project-2\main.cpp(223,3): error C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+D:\Materials\Programming\GitHub\Politechnika_Gdanska\PP\Project\Project_2\Materials\template-project-2\template-project-2\main.cpp(226,3): error C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
