@@ -1,0 +1,6 @@
+{
+    "name": "root/06-mongodb-injection",
+    "require": {
+        "mongodb/mongodb": "^1.1"
+    }
+}

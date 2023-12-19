@@ -1,0 +1,77 @@
+table {
+    border-collapse: collapse;
+    border: 1px solid #778899;
+    width: 800px;
+    margin: 10px 0px;
+}
+
+table td, table th {
+    padding: 5px;
+}
+
+table tbody td, table th {
+    border: 1px solid #778899;
+}
+
+table tbody td[colspan] {
+    text-align: center;
+}
+
+table tfoot td:last-child {
+    text-align: right;
+}
+
+form label {
+    display: block;
+    margin: 10px 10px 10px 0px;
+    width: 800px;
+}
+
+textarea {
+    display: block;
+    margin: 10px 10px 10px 0px;
+    padding: 2px;
+    border-width: 1px;
+    width: 794px;
+    height: 90px;
+}
+
+form label input {
+    width: 700px;
+    float: right;
+}
+
+form input[type=submit] {
+    display: block;
+    width: 80px;
+    margin: 10px 0px 10px 720px;
+}
+
+form.inline, form.inline input {
+    margin: 0px;
+    width: auto;
+    display: inline;
+}
+
+a.cancel {
+    float: left;
+}
+
+p.description {
+    width: 800px;
+    text-align: justify;
+}
+
+footer {
+    border-top: 1px solid black;
+    margin-top: 20px;
+    padding: 10px;
+    text-align: center;
+    bottom: 0px;
+    width: 780px;
+}
+
+#cart {
+    position: relative;
+    width: 800px;
+}

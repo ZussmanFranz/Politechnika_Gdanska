@@ -1,0 +1,6 @@
+{
+    "name": "root/04-procedural-mvc",
+    "require": {
+        "mongodb/mongodb": "^1.1"
+    }
+}

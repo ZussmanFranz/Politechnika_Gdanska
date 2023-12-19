@@ -1,0 +1,10 @@
+@font-face {
+	font-family: 'ManorlyFontbyconnecttohumanx';
+	src: local('ManorlyFontbyconnecttohumanx'), url('./ManorlyFontbyconnecttohumanx.woff') format('woff');
+}
+/* use this class to attach this font to any element i.e. <p class="fontsforweb_fontid_35282">Text with this font applied</p> */
+.fontsforweb_fontid_35282 {
+	font-family: 'ManorlyFontbyconnecttohumanx' !important;
+}
+
+/* Font downloaded from FontsForWeb.com */

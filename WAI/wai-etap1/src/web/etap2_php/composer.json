@@ -1,0 +1,6 @@
+{
+    "name": "root/etap2_php",
+    "require": {
+        "mongodb/mongodb": "^1.1"
+    }
+}
