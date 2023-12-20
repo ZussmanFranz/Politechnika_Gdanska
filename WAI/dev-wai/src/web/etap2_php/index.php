@@ -11,14 +11,6 @@ if (!isset($_SESSION['user']))
     exit();
 }
 
-/*if (isset($_SESSION['logout']))
-{
-    unset($_SESSION['logout']);
-    session_unset();
-    header("Location: index.php");
-    exit();
-}*/
-
 $login = $_SESSION['login'];
 
 ?>
@@ -44,41 +36,51 @@ $login = $_SESSION['login'];
             <div class="gallery_detailed">
                 <?php
                     $db = get_db();
-                    $photos = $db->images->find();
+                    $images = $db->images->find();
 
-                    foreach ($photos as $photo) {
-                        echo '<a href="./zdjecia/watermarks/'.$photo['name'].'"><img src="./zdjecia/miniatures/' . $photo['name'] . '" alt="'.$photo['title'].'" /></a>';
+                    foreach ($images as $image) {
+                        echo '<a href="./zdjecia/watermarks/'.$image['name'].'"><div class="image_header">'.$image['title'].'</div><img src="./zdjecia/miniatures/' . $image['name'] . '" alt="'.$image['title'].'" /></a>';
                     }
                 ?>
             </div>
         </section>
     </div>
-    <!-- dodawanie nowych zdjęć!!! -->
-    <form action="upload.php">
-        <table>
-            <th>Upload new image!</th>
+    
+    <form action="upload.php" method="POST" enctype="multipart/form-data">
+        <table id="image_upload">
+            <th colspan="3">Upload new image!</th>
             <tr>
-                <td><input type="file" name="file" id="zdjecie"></td>
-            </tr>
-            <tr>
-                <td><?php echo '<input type="text" name="author" value="'.$_SESSION['user']['login'].'">'?></td>
-            </tr>
-            <tr>
-                <td><input type="text" name="title" placeholder="title"></td>
-            </tr>
-            <tr>
-                <td>
-                    <label for="private" value="Private: ">
-                        <input type="radio" name="private" value="yes">
-                        <input type="radio" name="private" value="no">
-                    </label>
+                <td colspan="3"><input type="file" name="image" id="zdjecie">
+                <?php
+                    if(isset($_GET['upload_error']))
+                    {
+                        echo '<div id="incorrect">'.$_GET['upload_error'].'</div>';
+                        unset($_GET['upload_error']);
+                    }
+                    elseif(isset($_GET['success']))
+                    {
+                        echo '<div id="success">'.$_GET['success'].'</div>';
+                        unset($_GET['success']);
+                    }
+                ?>
                 </td>
             </tr>
             <tr>
-                <td><input type="submit" value="Upload"></td>
+                <td>Author name: <?php echo '<input type="text" name="author" value="'.$_SESSION['user']['login'].'">'?></td>
+                <td>Title: <input type="text" name="title"/></td>
+                <td>Watermark: <input type="text" name="watermark"/></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    Private: <br>
+                    <label for="private">Yes: <input type="radio" name="private" value="yes"></label>
+                    <label for="private">No: <input type="radio" name="private" value="no" checked></label>
+                </td>
+                <td><input type="submit" id="submit_photo" value="Upload"></td>
             </tr>
         </table>
     </form>
+
     <div id="skull"><a href="#header"><img src="./img/servo-skull.svg" alt="Go to top"></a></div>
     <footer id="footer">Yauheni Pyryeu, 023.M3</footer>
 </div>

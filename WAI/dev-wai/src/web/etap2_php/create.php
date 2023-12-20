@@ -23,12 +23,20 @@ else if(($_POST['email'] == ""))
 
 if((($_POST['password1'] == $_POST['password2']) && (!isset($_SESSION['error']))))
 {
-    $password_hashed = password_hash($_POST['password1'], PASSWORD_DEFAULT);
-    create_user($_POST['login'], $password_hashed, $_POST['email']);
-    $_SESSION['login'] = $_POST['login'];
-    $_SERVER['REQUEST_METHOD'] = 'POST';
-    header("Location: account.php");
-    exit();
+    if(login_check($_POST['login']))
+    {
+        $password_hashed = password_hash($_POST['password1'], PASSWORD_DEFAULT);
+        create_user($_POST['login'], $password_hashed, $_POST['email']);
+        $_SESSION['login'] = $_POST['login'];
+        $_SERVER['REQUEST_METHOD'] = 'POST';
+        header("Location: account.php");
+        exit();
+    }
+    else{
+        $_SESSION['error'] = "user with this login already exists";
+        header("Location: account_create.php");
+        exit();
+    }
 }
 else{
     $_SESSION['error'] = "passwords should be the same";

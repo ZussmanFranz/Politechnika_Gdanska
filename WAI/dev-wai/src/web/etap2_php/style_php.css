@@ -144,7 +144,7 @@ nav li.active::first-letter {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content:space-evenly;
     grid-area: gallery_plus;
     margin-top: 20vh;
     border-bottom: 0px;
@@ -422,6 +422,14 @@ footer {
 #incorrect {
     color:#EF1401  !important;
     border: solid 1px #EF1401  !important;
+    padding: 1%;
+    margin-top: 5px;
+    text-align: center;
+}
+#success {
+    color:#26ab0e  !important;
+    border: solid 1px #26ab0e !important;
+    padding: 1%;
     margin-top: 5px;
     text-align: center;
 }
@@ -432,6 +440,30 @@ footer {
     border: solid 1px #d6bc29;
 }
 
+#image_upload tr td, #zdjecie{
+    text-align: center;
+}
+#zdjecie {
+    width: 90% !important;
+    padding: 2%;
+    font-size: larger;
+}
+#submit_photo {
+    width: 50% !important;
+    padding: 5%;
+    margin-left: 20%;
+    margin-right: 20%;
+    font-size: 200%;
+}
+
+.image_header
+{
+    text-align: center;
+    font-size: 150%;
+    font-family: Courier, Lucida, monospace; 
+    color:#d6bc29 !important;
+    border: solid 1px #d6bc29;
+}
 
 @font-face {
 	font-family: 'ManorlyFontbyconnecttohumanx';
