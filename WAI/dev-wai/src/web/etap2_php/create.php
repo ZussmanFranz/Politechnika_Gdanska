@@ -8,13 +8,13 @@ if($_POST['login'] == "")
     header("Location: account_create.php");
     exit();
 }
-else if(((!isset($_POST['password1'])) || (!isset($_POST['password2']))) && (!isset($_SESSION)))
+else if(((!isset($_POST['password1'])) || (!isset($_POST['password2']))))
 {
     $_SESSION['error'] = "please, enter both passwords";
     header("Location: account_create.php");
     exit();
 }
-else if(($_POST['email'] == "") && (!isset($_SESSION)))
+else if(($_POST['email'] == ""))
 {
     $_SESSION['error'] = "please, enter email";
     header("Location: account_create.php");
