@@ -78,22 +78,16 @@ function db_get_images($login, $page, $page_size)
 
     $opts = [
         'skip' => (int)($page * $page_size),
-        'limit' => ($page_size + 1)
+        'limit' => $page_size
+    ];
+    $filter = [
+        '$or' => [
+            ['private' => 'no'],
+            ['$and' => [['private' => 'yes'], ['author' => $login]]]
+        ]
     ];
 
-    $images_unsort = $db->images->find();
-
-    $images = [];
-
-    foreach($images_unsort as $image)
-    {
-        if((($image['private'] == 'yes') && ($image['author'] == $login)) || ($image['private'] == 'no'))
-            {
-                array_push($images, $image);
-            }
-    }
-
-    $images = $images->find([], $opts);
+    $images = $db->images->find($filter, $opts);
     
     return $images;
 }
@@ -102,20 +96,32 @@ function db_count_pages($page_size, $login)
 {
     $db = get_db();
 
-    $images_unsort = $db->images->find();
-    $count = 0;
+    $filter = [
+        '$or' => [
+            ['private' => 'no'],
+            ['$and' => [['private' => 'yes'], ['author' => $login]]]
+        ]
+    ];
 
-    foreach($images_unsort as $image)
+    $images = $db->images->find($filter);
+
+    $count_images = 0;
+
+    foreach ($images as $image)
     {
-        if((($image['private'] == 'yes') && ($image['author'] == $login)) || ($image['private'] == 'no'))
-            {
-                $count++;
-            }
+        $count_images++;
     }
 
-    $count = floor($count / $page_size);
+    if ($count_images <= $page_size)
+    {
+        return 0;
+    }
+    else
+    {
+        $count_pages = floor($count_images / $page_size);
+    }
 
-    return $count;
+    return $count_pages;
 }
 
 function check_image($image)
@@ -244,13 +250,3 @@ function server_upload_image($image, $watermark) {
 
     Miniature($targetDirectory . $fileName, $miniatureDirectory . $fileName, 200, 125, $image['type']);
 }
-
-function switch_page($page, $page_size)
-{
-    $image_index = ($page - 1) * $page_size;
-
-    //$image_index = ''.$image_index.''; ???
-
-    header("Location: index.php?image_index=$image_index");
-}
-

@@ -3,8 +3,6 @@
 require_once 'functions.php';
 session_start();
 
-$login = $_SESSION['login'];
-
 $db = get_db();
 
 if (!isset($_SESSION['user']))
@@ -23,8 +21,10 @@ else
 }
 
 $db = get_db();
+$login = $_SESSION['login'];
 
-$page_size = 3;
+$page_size = 6; // Ręczne wpisany rozmiar strony
+
 $pages_max = db_count_pages($page_size, $login);
 
 if($page < 0)

@@ -144,7 +144,7 @@ nav li.active::first-letter {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 30px;
+    gap: 55px;
     grid-area: gallery_plus;
     margin-top: 20vh;
     border-bottom: 0px;
