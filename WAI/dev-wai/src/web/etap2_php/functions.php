@@ -72,12 +72,58 @@ function db_upload_image($name, $author, $title, $private)
     $db->images->insertOne($new_image);
 }
 
+function db_get_images($login, $page, $page_size)
+{
+    $db = get_db();
+
+    $opts = [
+        'skip' => (int)($page * $page_size),
+        'limit' => ($page_size + 1)
+    ];
+
+    $images_unsort = $db->images->find();
+
+    $images = [];
+
+    foreach($images_unsort as $image)
+    {
+        if((($image['private'] == 'yes') && ($image['author'] == $login)) || ($image['private'] == 'no'))
+            {
+                array_push($images, $image);
+            }
+    }
+
+    $images = $images->find([], $opts);
+    
+    return $images;
+}
+
+function db_count_pages($page_size, $login)
+{
+    $db = get_db();
+
+    $images_unsort = $db->images->find();
+    $count = 0;
+
+    foreach($images_unsort as $image)
+    {
+        if((($image['private'] == 'yes') && ($image['author'] == $login)) || ($image['private'] == 'no'))
+            {
+                $count++;
+            }
+    }
+
+    $count = floor($count / $page_size);
+
+    return $count;
+}
+
 function check_image($image)
 {
     //sprawdza, czy plik jest zdjęciem
     $check = getimagesize($_FILES['image']['tmp_name']);
     if ($check === false) {
-        return "File is not an image.";
+        return "File is not an image or it's extension is not supported.";
     }
 
     if ($_FILES['image']['size'] > 1000000) {
@@ -94,9 +140,16 @@ function check_image($image)
 
 function Watermark($sourceImagePath, $outputImagePath, $text, $type) {
 
-    $sourceImage = imagecreatefromjpeg($sourceImagePath); 
+    if(($type == 'image/jpg') || ($type == 'image/jpeg'))
+    {
+        $sourceImage = imagecreatefromjpeg($sourceImagePath);  
+    }
+    else
+    {
+        $sourceImage = imagecreatefrompng($sourceImagePath); 
+    } 
 
-    $textColor = imagecolorallocate($sourceImage, 255, 255, 255); 
+    $textColor = imagecolorallocate($sourceImage, 255, 0, 255); 
     $fontSize = 30;
 
     $x = 10; // pozycja znaku wodnego
@@ -106,7 +159,7 @@ function Watermark($sourceImagePath, $outputImagePath, $text, $type) {
     imagestring($sourceImage, $fontSize, $x, $y, $text, $textColor);
 
 
-    if($type == 'image/jpg')
+    if(($type == 'image/jpg') || ($type == 'image/jpeg'))
     {
         imagejpeg($sourceImage, $outputImagePath); 
     }
@@ -118,9 +171,16 @@ function Watermark($sourceImagePath, $outputImagePath, $text, $type) {
     imagedestroy($sourceImage);
 }
 
-function Miniature($sourceImagePath, $outputImagePath, $width, $height) {
-
-    $sourceImage = imagecreatefromjpeg($sourceImagePath);
+function Miniature($sourceImagePath, $outputImagePath, $width, $height, $type) {
+    
+    if(($type == 'image/jpg') || ($type == 'image/jpeg'))
+    {
+        $sourceImage = imagecreatefromjpeg($sourceImagePath);  
+    }
+    else
+    {
+        $sourceImage = imagecreatefrompng($sourceImagePath); 
+    }
 
     $originalWidth = imagesx($sourceImage);
     $originalHeight = imagesy($sourceImage);
@@ -157,16 +217,23 @@ function Miniature($sourceImagePath, $outputImagePath, $width, $height) {
         $miniature = imagecrop($miniature, ['x' => 0, 'y' => ($height_crop/2), 'width' => $width, 'height' => $height]);
     }
 
-    imagejpeg($miniature, $outputImagePath); //jpeg dobrze pasuje do miniaturek
+    if(($type == 'image/jpg') || ($type == 'image/jpeg'))
+    {
+        imagejpeg($miniature, $outputImagePath); 
+    }
+    else
+    {
+        imagepng($miniature, $outputImagePath); 
+    }
 
     imagedestroy($sourceImage);
     imagedestroy($miniature);
 }
 
 function server_upload_image($image, $watermark) {
-    $targetDirectory = "./zdjecia/originals/";
-    $watermarkDirectory = "./zdjecia/watermarks/";
-    $miniatureDirectory = "./zdjecia/miniatures/";
+    $targetDirectory = "./images/originals/";
+    $watermarkDirectory = "./images/watermarks/";
+    $miniatureDirectory = "./images/miniatures/";
 
     $fileName = $image['name'];
     $tempFilePath = $image['tmp_name'];
@@ -175,8 +242,15 @@ function server_upload_image($image, $watermark) {
 
     Watermark($targetDirectory . $fileName, $watermarkDirectory . $fileName, $watermark, $image['type']);
 
-    Miniature($targetDirectory . $fileName, $miniatureDirectory . $fileName, 200, 125);
+    Miniature($targetDirectory . $fileName, $miniatureDirectory . $fileName, 200, 125, $image['type']);
 }
 
+function switch_page($page, $page_size)
+{
+    $image_index = ($page - 1) * $page_size;
 
+    //$image_index = ''.$image_index.''; ???
+
+    header("Location: index.php?image_index=$image_index");
+}
 

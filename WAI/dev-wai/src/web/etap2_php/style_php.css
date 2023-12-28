@@ -144,7 +144,7 @@ nav li.active::first-letter {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content:space-evenly;
+    gap: 30px;
     grid-area: gallery_plus;
     margin-top: 20vh;
     border-bottom: 0px;
@@ -456,13 +456,34 @@ footer {
     font-size: 200%;
 }
 
-.image_header
+.image_header, .image_author
 {
     text-align: center;
     font-size: 150%;
     font-family: Courier, Lucida, monospace; 
     color:#d6bc29 !important;
     border: solid 1px #d6bc29;
+}
+.image_author
+{
+    text-align: left;
+    font-size: small;
+    padding-left: 5px;
+}
+.gallery_images
+{
+    width: 200px !important;
+}
+
+#paging_controller
+{
+    display: flex !important;
+    justify-content: center;
+    gap: 20px;
+    color:#d7bd27;
+    border: dotted 2px #d6bc29;
+    border-top: 0px;
+    font-size: xx-large;
 }
 
 @font-face {

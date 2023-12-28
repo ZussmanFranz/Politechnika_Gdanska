@@ -3,6 +3,8 @@
 require_once 'functions.php';
 session_start();
 
+$login = $_SESSION['login'];
+
 $db = get_db();
 
 if (!isset($_SESSION['user']))
@@ -11,7 +13,30 @@ if (!isset($_SESSION['user']))
     exit();
 }
 
-$login = $_SESSION['login'];
+if(!isset($_GET['page']))
+{
+    $page = 0;
+}
+else
+{
+    $page = $_GET['page'];
+}
+
+$db = get_db();
+
+$page_size = 3;
+$pages_max = db_count_pages($page_size, $login);
+
+if($page < 0)
+{
+    $page = $pages_max;
+}
+elseif($page > $pages_max)
+{
+    $page = 0;
+}
+
+$images = db_get_images($login, $page, $page_size);
 
 ?>
 
@@ -35,15 +60,22 @@ $login = $_SESSION['login'];
         <section>
             <div class="gallery_detailed">
                 <?php
-                    $db = get_db();
-                    $images = $db->images->find();
-
                     foreach ($images as $image) {
-                        echo '<a href="./zdjecia/watermarks/'.$image['name'].'"><div class="image_header">'.$image['title'].'</div><img src="./zdjecia/miniatures/' . $image['name'] . '" alt="'.$image['title'].'" /></a>';
+                        echo '<a href="./images/watermarks/'.$image['name'].'" class="gallery_images"><div class="image_header">'.$image['title'].'<br><div class="image_author">Author: '.$image['author'].'</div></div><img src="./images/miniatures/' . $image['name'] . '" alt="'.$image['title'].'"/></a>';
                     }
                 ?>
             </div>
         </section>
+        <?php
+        if($pages_max > 0)
+        {
+            echo '<div id="paging_controller">
+                <a href="index.php?page='.($page - 1).'" id="left"><h3>< </h3></a>
+                <h3 id="center">'.($page + 1).'</h3>
+                <a href="index.php?page='.($page + 1).'" id="right"><h3> ></h3></a>
+            </div>';
+        }
+        ?>
     </div>
     
     <form action="upload.php" method="POST" enctype="multipart/form-data">
@@ -66,7 +98,7 @@ $login = $_SESSION['login'];
                 </td>
             </tr>
             <tr>
-                <td>Author name: <?php echo '<input type="text" name="author" value="'.$_SESSION['user']['login'].'">'?></td>
+                <td>Author name: <?= '<input type="text" name="author" value="'.$_SESSION['user']['login'].'">'?></td>
                 <td>Title: <input type="text" name="title"/></td>
                 <td>Watermark: <input type="text" name="watermark"/></td>
             </tr>

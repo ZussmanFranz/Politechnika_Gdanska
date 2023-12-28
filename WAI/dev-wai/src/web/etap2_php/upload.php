@@ -5,6 +5,10 @@ if((isset($_FILES['image'])) && ($_FILES['image']['error'] != UPLOAD_ERR_NO_FILE
 {
     if (($_POST['author'] != "") && ($_POST['title'] != "") && ($_POST['watermark'] != ""))
     {
+        if (strlen($_POST['title']) > 10) {
+            $_POST['title'] = substr($_POST['title'], 0, 10) . '...';
+        }
+
         $check = check_image($_FILES['image']);
         if($check == "OK")
         {

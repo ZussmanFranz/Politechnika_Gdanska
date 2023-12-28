@@ -14,7 +14,6 @@
     {
         $login = "";
     }
-    
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +36,7 @@
                     <td id="password_d">Password: <input type="password" name="password"> </td>
                 </tr>
                 <?php
-                if((!isset($_SESSION['user'])) && (isset($_SESSION['login_error'])))
+                if((isset($_SESSION['login_error'])))
                 {
                     echo '<tr><td colspan="2" id="incorrect">Incorrect login or password!</td></tr>';
                     unset($_SESSION['login_error']);
