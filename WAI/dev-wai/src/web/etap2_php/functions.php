@@ -126,7 +126,7 @@ function db_count_pages($page_size, $login)
 
 function check_image($image)
 {
-    //sprawdza, czy plik jest zdjęciem
+    //sprawdza, czy plik istnieje i jest zdjęciem
     $check = getimagesize($_FILES['image']['tmp_name']);
     if ($check === false) {
         return "File is not an image or it's extension is not supported.";

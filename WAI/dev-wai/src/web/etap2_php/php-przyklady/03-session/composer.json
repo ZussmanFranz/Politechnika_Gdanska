@@ -1,6 +1,0 @@
-{
-    "name": "root/03-session",
-    "require": {
-        "mongodb/mongodb": "^1.1"
-    }
-}

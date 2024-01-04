@@ -1,7 +1,0 @@
-{
-    "name": "root/02-mongodb",
-    "type": "project",
-    "require": {
-        "mongodb/mongodb": "^1.1"
-    }
-}
