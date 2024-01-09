@@ -1,8 +1,22 @@
 #include "Game.hpp"
-#include "TextureManager.hpp"
+//#include "TextureManager.hpp"
 #include "GameObject.hpp"
+#include "Map.hpp"
+#include "SpriteComponent.hpp"
+#include "Entities.hpp"
+
+Entities* entities;
+GameObject** game_objects;
 
 GameObject* player;
+GameObject* badya;
+
+Map* map;
+
+SDL_Renderer* Game::renderer = nullptr;
+SDL_Event Game::event;
+
+int dx, dy;
 
 Game::Game()
 {}
@@ -46,38 +60,61 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
         isRunning = false;
     }
 
-    player = new GameObject("assets/dwarf_sprite_running.bmp", renderer);
+    entities = new Entities();
+
+    if (entities != NULL)
+    {
+        printf("Entities initialised!\n");
+    }
+    
+    game_objects = entities->GetObjects();
+
+    map = new Map();
+    map->EntifyMap(entities); //first, we add decorations;
+
+    player = new GameObject("assets/dwarf_sprite.bmp", 0, Game::SCREEN_HEIGHT - 64, PLAYER_SPEED, 'P', PLAYER_SCALE);
+    player->keyboard = new KeyboardController(player->position);
+    entities->AppendObject(player);
+
+    badya = new GameObject("assets/badya_sprite.bmp", 20, 0, BADYA_SPEED, 'B', BADYA_SCALE);
+    entities->AppendObject(badya);
 }
 
 void Game::handleEvents()
 {
-    SDL_Event event;
     SDL_PollEvent(&event);
-
-    switch (event.type)
-    {
-    case SDL_QUIT:
-        isRunning = false;
-        break;
     
-    default:
-        break;
+    if (event.type == SDL_KEYDOWN)
+        {
+            switch (event.key.keysym.sym)
+            {
+            case SDLK_ESCAPE:
+                isRunning = false;
+                break;
+            }
+        }
+    else if (event.type == SDL_QUIT)
+    {
+        isRunning = false;
     }
+
+    player->keyboard->update();
 }
 
 void Game::update()
 {
-    player->Update();
+    entities->UpdateObjects();
 }
 
 void Game::render()
 {
     SDL_RenderClear(renderer);
 
-    player->Render();
+    TextureManager::DrawBackground();
+
+    entities->RenderObjects();
 
     SDL_RenderPresent(renderer);
-
 }
 
 void Game::clean()
