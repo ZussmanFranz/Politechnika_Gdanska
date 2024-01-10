@@ -1,22 +1,22 @@
 #pragma once
 
 #include "Game.hpp"
-#include "GameObject.hpp"
+//#include "GameObject.hpp"
 #include "SpriteComponent.hpp"
 #include "PositionComponent.hpp"
 
 class KeyboardController
 {
-private:
-    
 public:
-    KeyboardController(PositionComponent* pos)
+    KeyboardController(PositionComponent* pos, SpriteComponent* spr)
     {
         position = pos;
+        sprite = spr;
     }
     ~KeyboardController();
 
     PositionComponent* position;
+    SpriteComponent* sprite;
 
     void update()
     {
@@ -25,16 +25,26 @@ public:
             switch (Game::event.key.keysym.sym)
             {
             case SDLK_w:
-                position->velocity_y = -1;
+                if (sprite->on_stairs)
+                {
+                    position->velocity_y = -1;   
+                }
                 break;
             case SDLK_d:
                 position->velocity_x = 1;
                 break;
             case SDLK_s:
-                position->velocity_y = 1;
+                if (sprite->on_stairs)
+                {
+                    position->velocity_y = 1;   
+                }
                 break;
             case SDLK_a:
                 position->velocity_x = -1;
+                break;
+            case SDLK_SPACE:
+                position->velocity_y = -1.8;
+                sprite->on_ground = false;
                 break;
             default:
                 break;

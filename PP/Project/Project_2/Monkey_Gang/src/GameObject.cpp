@@ -9,14 +9,23 @@ GameObject::GameObject(const char* texturesheet, int x, int y, int speed, char t
         printf("There is a problem with texture...\n");
     }
     sprite = new SpriteComponent(objTexture, scale, &srcRect, &destRect);    
-    position = new PositionComponent(x, y, speed, tp);
+    position = new PositionComponent(x, y, speed, tp, sprite);
 
     type = tp;
 
-    on_ground = false;
-    on_stairs = false;
-    brutally_murdered = false;
-    exit = false;
+    sprite->on_ground = false;
+    sprite->on_stairs = false;
+    sprite->brutally_murdered = false;
+    sprite->exit = false;
+
+    if ((type == 'P') || (type == 'B'))
+    {
+        position->gravity = Game::GRAVITY;
+    }
+    else
+    {
+        position->gravity = 0;
+    }
 }
 
 
@@ -25,8 +34,6 @@ void GameObject::Update()
     position->update();
     destRect.x = position->x();
     destRect.y = position->y(); 
-    //printf("x: %d y: %d\n", destRect.x, destRect.y);
-    //sprite->frame_update();
 }
 
 void GameObject::Render()

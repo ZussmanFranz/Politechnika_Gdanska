@@ -1,6 +1,7 @@
 #pragma once
 #include <stdio.h>
 #include "GameObject.hpp"
+#include "Collision.hpp"
 
 class Entities
 {
@@ -8,12 +9,14 @@ private:
     int size;
     int capacity;
     GameObject** game_objects;
+    Collision* collider;
 public:
     Entities()
     {
         size = 0;
         capacity = 10;
         game_objects = new GameObject*[capacity];
+        collider = new Collision();
     }
     ~Entities()
     {
@@ -89,6 +92,22 @@ public:
 
     void UpdateObjects()
     {
+        for (int c = 0; c < size; c++)
+        {
+            if ((game_objects[c]->type == 'P') || (game_objects[c]->type == 'B'))
+            {
+                game_objects[c]->sprite->on_ground = false;
+                game_objects[c]->sprite->on_stairs = false;
+                for (int o = 0; o < size; o++)
+                {
+                    if (o != c)
+                    {
+                        collider->CollisionManager(game_objects[c], game_objects[o]);    
+                    }
+                }
+            }
+        }
+
         for (int i = 0; i < size; i++)
         {
             game_objects[i]->Update();
