@@ -7,30 +7,31 @@ private:
     float xpos;
     float ypos;
 
-    float init_xpos;
-    float init_ypos;
-
     char type;
 public:
     float velocity_x;
     float velocity_y;
+<<<<<<< HEAD
     float gravity;
 
+=======
+>>>>>>> parent of a5a0ea7 (PP jumps almost done)
     int speed;
 
     int deep_x;
     int deep_y;
     
-    SpriteComponent* sprite;
-
-    PositionComponent(int x, int y, int sp, char type, SpriteComponent* spr)
+    PositionComponent(int x, int y, int sp, char type)
     {
         xpos = x;
         ypos = y;
+<<<<<<< HEAD
         init_xpos = x;
         init_ypos = y;
 
 
+=======
+>>>>>>> parent of a5a0ea7 (PP jumps almost done)
         
         velocity_x = 0;
         if (type == 'B')
@@ -41,11 +42,14 @@ public:
 
         speed = sp;
         type = type;
+<<<<<<< HEAD
 
         sprite = spr;
 
         deep_x = 0;
         deep_y = 0;
+=======
+>>>>>>> parent of a5a0ea7 (PP jumps almost done)
     }
     ~PositionComponent();
 
@@ -54,6 +58,7 @@ public:
 
     void update()
     {
+<<<<<<< HEAD
         /*if (type == 'B')
         {
             velocity_x = 1;
@@ -81,18 +86,16 @@ public:
             sprite->brutally_murdered = false;
         }
         
+=======
+        xpos += velocity_x * speed;
+        ypos += velocity_y * speed;
+>>>>>>> parent of a5a0ea7 (PP jumps almost done)
     }
 
     void setPos(int x, int y)
     {
         xpos = x;
         ypos = y;
-    }
-
-    void toInitPos()
-    {
-        xpos = init_xpos;
-        ypos = init_ypos;
     }
 
     void Push(float dx, float dy)

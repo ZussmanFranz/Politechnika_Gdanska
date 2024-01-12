@@ -1,22 +1,22 @@
 #pragma once
 
 #include "Game.hpp"
-//#include "GameObject.hpp"
+#include "GameObject.hpp"
 #include "SpriteComponent.hpp"
 #include "PositionComponent.hpp"
 
 class KeyboardController
 {
+private:
+    
 public:
-    KeyboardController(PositionComponent* pos, SpriteComponent* spr)
+    KeyboardController(PositionComponent* pos)
     {
         position = pos;
-        sprite = spr;
     }
     ~KeyboardController();
 
     PositionComponent* position;
-    SpriteComponent* sprite;
 
     void update()
     {
@@ -25,23 +25,18 @@ public:
             switch (Game::event.key.keysym.sym)
             {
             case SDLK_w:
-                if (sprite->on_stairs)
-                {
-                    position->velocity_y = -1;   
-                }
+                position->velocity_y = -1;
                 break;
             case SDLK_d:
                 position->velocity_x = 1;
                 break;
             case SDLK_s:
-                if (sprite->on_stairs)
-                {
-                    position->velocity_y = 1;   
-                }
+                position->velocity_y = 1;
                 break;
             case SDLK_a:
                 position->velocity_x = -1;
                 break;
+<<<<<<< HEAD
             case SDLK_SPACE:
                 if (sprite->on_ground)
                 {
@@ -49,6 +44,8 @@ public:
                     sprite->on_ground = false;
                 }
                 break;
+=======
+>>>>>>> parent of a5a0ea7 (PP jumps almost done)
             default:
                 break;
             }

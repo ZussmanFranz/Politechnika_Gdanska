@@ -32,11 +32,6 @@ public:
     SDL_Rect* scrRect;
     SDL_Rect* destRect;
 
-    bool on_ground;
-    bool on_stairs;
-    bool brutally_murdered;
-    bool exit;
-
     SpriteComponent(SDL_Texture* tex, float scale, SDL_Rect* src, SDL_Rect* dest)
     {
         scrRect = src;

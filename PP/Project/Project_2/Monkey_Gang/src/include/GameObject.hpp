@@ -18,6 +18,10 @@ public:
     KeyboardController* keyboard = nullptr;
 
     char type;
+    bool on_ground;
+    bool on_stairs;
+    bool brutally_murdered;
+    bool exit;
 private:
     SDL_Texture* objTexture;
     SDL_Rect srcRect, destRect;

@@ -70,14 +70,19 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
     game_objects = entities->GetObjects();
 
     map = new Map();
-    map->EntifyMap(entities); //first, we add "decorations";
+    map->EntifyMap(entities); //first, we add decorations;
 
-    player = new GameObject("assets/dwarf_sprite.bmp", 0, Game::SCREEN_HEIGHT - 112, PLAYER_SPEED, 'P', PLAYER_SCALE);
-    player->keyboard = new KeyboardController(player->position,player->sprite);
+    player = new GameObject("assets/dwarf_sprite.bmp", 0, Game::SCREEN_HEIGHT - 64, PLAYER_SPEED, 'P', PLAYER_SCALE);
+    player->keyboard = new KeyboardController(player->position);
     entities->AppendObject(player);
 
+<<<<<<< HEAD
     //badya = new GameObject("assets/badya_sprite.bmp", 20, 20, BADYA_SPEED, 'B', BADYA_SCALE);
     //entities->AppendObject(badya);
+=======
+    badya = new GameObject("assets/badya_sprite.bmp", 20, 0, BADYA_SPEED, 'B', BADYA_SCALE);
+    entities->AppendObject(badya);
+>>>>>>> parent of a5a0ea7 (PP jumps almost done)
 }
 
 void Game::handleEvents()
@@ -104,11 +109,6 @@ void Game::handleEvents()
 void Game::update()
 {
     entities->UpdateObjects();
-    if (player->sprite->exit)
-    {
-        finish();
-    }
-    
 }
 
 void Game::render()
@@ -128,10 +128,4 @@ void Game::clean()
     SDL_DestroyRenderer(renderer);
     SDL_Quit();
     printf("Game cleaned\n");
-}
-
-void Game::finish()
-{
-    //finish level
-    isRunning = false;
 }

@@ -17,8 +17,6 @@ public:
     void render();
     void clean();
 
-    void finish();
-
     bool running() {return isRunning;}
 
     static SDL_Renderer* renderer;
@@ -26,11 +24,10 @@ public:
 
     static const int SCREEN_WIDTH = 1024;
     static const int SCREEN_HEIGHT = 768;
-    const int PLAYER_SPEED = 4;
-    const float PLAYER_SCALE = 0.6;
-    const int BADYA_SPEED = 3;
-    const float BADYA_SCALE = 0.6;
-    static constexpr float GRAVITY = 0.05f;
+    const int PLAYER_SPEED = 3;
+    const float PLAYER_SCALE = 0.75;
+    const int BADYA_SPEED = 2;
+    const float BADYA_SCALE = 0.75;
 private:
     int cnt;
     bool isRunning;
