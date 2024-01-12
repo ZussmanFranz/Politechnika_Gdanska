@@ -9,7 +9,7 @@ Entities* entities;
 GameObject** game_objects;
 
 GameObject* player;
-GameObject* badya;
+//GameObject* badya;
 
 Map* map;
 
@@ -76,8 +76,8 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
     player->keyboard = new KeyboardController(player->position,player->sprite);
     entities->AppendObject(player);
 
-    badya = new GameObject("assets/badya_sprite.bmp", 20, 20, BADYA_SPEED, 'B', BADYA_SCALE);
-    entities->AppendObject(badya);
+    //badya = new GameObject("assets/badya_sprite.bmp", 20, 20, BADYA_SPEED, 'B', BADYA_SCALE);
+    //entities->AppendObject(badya);
 }
 
 void Game::handleEvents()

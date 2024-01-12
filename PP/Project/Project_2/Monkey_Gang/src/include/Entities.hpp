@@ -96,13 +96,13 @@ public:
         {
             if ((game_objects[c]->type == 'P') || (game_objects[c]->type == 'B'))
             {
-                game_objects[c]->sprite->on_ground = false;
                 game_objects[c]->sprite->on_stairs = false;
                 for (int o = 0; o < size; o++)
                 {
                     if (o != c)
                     {
-                        collider->CollisionManager(game_objects[c], game_objects[o]);    
+                        collider->FallManager(game_objects[c], game_objects[o]);
+                        collider->CollisionManager(game_objects[c], game_objects[o]);
                     }
                 }
             }

@@ -15,7 +15,11 @@ public:
     float velocity_x;
     float velocity_y;
     float gravity;
+
     int speed;
+
+    int deep_x;
+    int deep_y;
     
     SpriteComponent* sprite;
 
@@ -25,6 +29,8 @@ public:
         ypos = y;
         init_xpos = x;
         init_ypos = y;
+
+
         
         velocity_x = 0;
         if (type == 'B')
@@ -37,6 +43,9 @@ public:
         type = type;
 
         sprite = spr;
+
+        deep_x = 0;
+        deep_y = 0;
     }
     ~PositionComponent();
 
@@ -45,18 +54,25 @@ public:
 
     void update()
     {
-        if (type == 'B')
+        /*if (type == 'B')
         {
             velocity_x = 1;
-        }
+        }*/
         
         xpos += velocity_x * speed;
         ypos += velocity_y * speed;
+
+        if (sprite->on_ground)
+        {
+            velocity_y = 0;
+        }
+        
 
         if ((sprite->on_stairs == false) && (sprite->on_ground == false))
         {
             velocity_y += gravity;
         }
+        
 
         if (sprite->brutally_murdered)
         {

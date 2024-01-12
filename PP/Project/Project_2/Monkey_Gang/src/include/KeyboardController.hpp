@@ -43,8 +43,11 @@ public:
                 position->velocity_x = -1;
                 break;
             case SDLK_SPACE:
-                position->velocity_y = -1.8;
-                sprite->on_ground = false;
+                if (sprite->on_ground)
+                {
+                    position->velocity_y = -1.8;
+                    sprite->on_ground = false;
+                }
                 break;
             default:
                 break;
