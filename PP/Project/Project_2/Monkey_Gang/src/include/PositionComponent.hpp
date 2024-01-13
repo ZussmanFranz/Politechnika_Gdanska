@@ -55,8 +55,19 @@ public:
 
         if ((sprite->on_stairs == false) && (sprite->on_ground == false))
         {
+            printf("Gravity!!!\n");
             velocity_y += gravity;
         }
+
+        // if (sprite->on_ground == true)
+        // {
+        //     //velocity_y = 0;
+        //     printf("On ground\n");
+        // }
+        // else
+        // {
+        //     printf("Not on ground\n");
+        // }
 
         if (sprite->brutally_murdered)
         {

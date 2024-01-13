@@ -70,6 +70,12 @@ void Map::EntifyMap(Entities* entities)
             }
         }
     }
+
+    //window borders
+    entities->CreateObject("assets/dark.bmp", 0, 0 - Game::SCREEN_WIDTH , 0, 'W', (Game::SCREEN_WIDTH / 64)); // top
+    entities->CreateObject("assets/dark.bmp", 0, Game::SCREEN_HEIGHT , 0, 'W', (Game::SCREEN_WIDTH / 64)); // bottom
+    entities->CreateObject("assets/dark.bmp", 0 - Game::SCREEN_HEIGHT , 0, 0, 'W', (Game::SCREEN_HEIGHT / 64)); // left
+    entities->CreateObject("assets/dark.bmp", Game::SCREEN_WIDTH , 0, 0, 'W', (Game::SCREEN_HEIGHT / 64));  // right
 }
 
 void Map::DrawMap()

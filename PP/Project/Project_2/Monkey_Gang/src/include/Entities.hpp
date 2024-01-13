@@ -102,6 +102,7 @@ public:
                 {
                     if (o != c)
                     {
+                        //collider->FallManager(game_objects[c], game_objects[o]);
                         collider->CollisionManager(game_objects[c], game_objects[o]);    
                     }
                 }
