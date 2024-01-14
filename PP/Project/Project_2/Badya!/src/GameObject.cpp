@@ -19,7 +19,7 @@ GameObject::GameObject(const char* texturesheet, int x, int y, int speed, char t
     sprite->brutally_murdered = false;
     sprite->exit = false;
 
-    if ((type == 'P') || (type == 'B'))
+    if ((type == 'P') || (type == 'B') || (type == 'G'))
     {
         position->gravity = Game::GRAVITY;
     }

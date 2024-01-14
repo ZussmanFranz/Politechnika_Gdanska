@@ -1,3 +1,4 @@
+#include "time.h"
 #include "Map.hpp"
 #include "TextureManager.hpp"
 
@@ -20,7 +21,7 @@ int lvl2[12][16] = {
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
     {1,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0},
-    {0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0},
+    {1,1,0,0,0,0,0,0,0,0,0,0,0,2,2,0},
     {0,0,0,0,0,1,1,0,0,0,0,1,1,0,0,0},
     {0,0,0,0,0,2,2,0,0,0,0,2,2,0,0,0},
     {0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0},
@@ -35,7 +36,7 @@ int lvl3[12][16] = {
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0},
     {1,1,0,0,0,0,0,0,0,0,0,0,2,0,2,0},
-    {0,0,0,0,0,0,0,0,0,0,2,0,2,0,0,0},
+    {1,1,0,0,0,0,0,0,0,0,2,0,2,0,0,0},
     {0,0,0,0,0,0,0,0,2,0,2,0,0,0,0,0},
     {0,0,0,0,0,0,2,0,2,0,0,0,0,0,0,0},
     {0,0,0,0,2,0,2,0,0,0,0,0,0,0,0,0},
@@ -56,6 +57,8 @@ Map::Map()
     src.x = src.y = 0;
     src.w = dest.w = 64;
     src.h = dest.h = 64;
+
+    srand(time(NULL)); //random initialized
 }
 
 void Map::LoadMap(int lvl)
@@ -97,6 +100,7 @@ void Map::LoadMap(int lvl)
 void Map::EntifyMap(Entities* entities)
 {
     int type = 0;
+    int coin;
     int x, y;
 
     for (int row = 0; row < 12; row++)
@@ -111,10 +115,44 @@ void Map::EntifyMap(Entities* entities)
             switch (type)
             {
             case 1:
-                entities->CreateObject("assets/platform.bmp", x, y, 0, 'O', 1);
+                const char* platform_texture;
+                if (map[row + 1][column] == 2)
+                {
+                    platform_texture = "assets/platform_ladder.bmp";
+                }
+                else if (map[row + 1][column] == 1)
+                {
+                    platform_texture = "assets/platform_stone.bmp";
+                }
+                else
+                {
+                    coin = rand() % 2;
+                    if (coin == 1)
+                    {
+                        platform_texture = "assets/platform1.bmp";
+                    }
+                    else
+                    {
+                        platform_texture = "assets/platform2.bmp";
+                    }
+                }
+                
+                entities->CreateObject(platform_texture, x, y, 0, 'O', 1);
                 break;
             case 2:
-                entities->CreateObject("assets/stairs.bmp", x, y, 0, 'S', 1);
+                const char* stairs_texture;
+
+                coin = rand() % 2;
+                if (coin == 1)
+                {
+                    stairs_texture = "assets/stairs1.bmp";
+                }
+                else
+                {
+                    stairs_texture = "assets/stairs2.bmp";
+                }
+
+                entities->CreateObject(stairs_texture, x, y, 0, 'S', 1);
                 break;
             case 3:
                 entities->CreateObject("assets/exit.bmp", x, y, 0, 'E', 1);

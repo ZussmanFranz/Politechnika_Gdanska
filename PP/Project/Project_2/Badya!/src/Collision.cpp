@@ -42,39 +42,6 @@ bool Collision::CollisionDetection(int result[4])
     return false;
 }
 
-// void Collision::FallManager(GameObject* obj_main, GameObject* obj_second)
-// {
-//     if ((obj_second->type == 'O') || (obj_second->type == 'W')) //second object is a platform or a window border
-//     {
-//         SDL_Rect* rect_main_orig = obj_main->GetRect();
-//         SDL_Rect* rect_second_orig = obj_second->GetRect();
-
-//         SDL_Rect rect_main = *rect_main_orig;
-//         SDL_Rect rect_second = *rect_second_orig;
-
-//         obj_main->sprite->on_ground = false;
-//         //obj_main->position->velocity_y = 1;
-
-//         //printf("Fall: destA: (%d) (%d), destB: (%d) (%d)\n", rect_main.x, rect_main.y, rect_second.x, rect_second.y);
-
-//         if ((rect_main.x <= (rect_second.x + rect_second.w)) && ((rect_main.x + rect_main.w) >= rect_second.x)) // OX check
-//         {
-//             //printf("(%d <= %d + %d) && (%d + %d >= %d)\n", rect_main.x, rect_second.x, rect_second.w, rect_main.x, rect_second.x);
-//             if (((-rect_main.y - rect_main.h + rect_second.y) <= 4) && ((-rect_main.y - rect_main.h + rect_second.y) >= 0)) // OY "laser" check
-//             {
-//                 //printf("Position before: x:(%d), y:(%d)\n", obj_main->position->x(), obj_main->position->y());
-//                 int magnet = (-rect_main.y - rect_main.h + rect_second.y) - 1; // 1 is a distance between the floor and the object;
-//                 obj_main->position->Push(0, magnet);
-//                 obj_main->sprite->on_ground = true;
-//                 //obj_main->position->velocity_y = 0;
-//                 //printf("Magnet! New position: x:(%d), y:(%d)\n", obj_main->position->x(), obj_main->position->y());
-//             }
-//         }
-        
-//     }
-//     return;
-// }
-
 void Collision::CollisionManager(GameObject* obj_main, GameObject* obj_second)
 {
     SDL_Rect* rect_main = obj_main->GetRect();
@@ -90,7 +57,7 @@ void Collision::CollisionManager(GameObject* obj_main, GameObject* obj_second)
 
     if (collision_check)
     {
-        printf("(%c)\n", obj_second->type);
+        //printf("(%c)\n", obj_second->type);
         /*printf("Collision manager have this: (%d, %d, %d, %d) First object: (%c), second object: (%c)\n",
             result[0], result[1], result[2], result[3], 
             obj_main->type, obj_second->type);*/
@@ -108,6 +75,10 @@ void Collision::CollisionManager(GameObject* obj_main, GameObject* obj_second)
         else if ((obj_second->type == 'P') && (obj_main->type == 'B'))
         {
             obj_second->sprite->brutally_murdered = true;
+        }
+        else if ((obj_second->type == 'P') && (obj_main->type == 'G'))
+        {
+            obj_second->sprite->exit = true;
         }
         else if(obj_second->type == 'A')
         {
@@ -156,7 +127,7 @@ void Collision::CollisionManager(GameObject* obj_main, GameObject* obj_second)
                         obj_main->position->Push(5, -2);  
                     }
                     
-                    if (obj_main->type == 'B')
+                    if ((obj_main->type == 'B') || (obj_main->type == 'G'))
                     {
                         obj_main->position->velocity_x *= -1;
                     }
@@ -174,13 +145,13 @@ void Collision::CollisionManager(GameObject* obj_main, GameObject* obj_second)
             if ((obj_main->type == 'P') && (obj_second->type == 'B')) // collision of the player and a badya is detected, so the player is DEAD now
             {
                 obj_main->sprite->brutally_murdered = true;
-                printf("The player has been murdered!\n");
+                //printf("The player has been murdered!\n");
             }
             
-            if ((obj_main->type == 'P') && (obj_second->type == 'E')) // the player succesfully escaped
+            if ((obj_main->type == 'P') && ((obj_second->type == 'E') || (obj_second->type == 'G'))) // the player succesfully escaped
             {
                 obj_main->sprite->exit = true;
-                printf("The player has escaped form level %d!\n", Game::level);
+                //printf("The player has escaped form level %d!\n", Game::level);
             }
         } 
     }

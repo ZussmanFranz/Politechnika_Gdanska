@@ -156,7 +156,17 @@ void Game::update()
     if (delta_B >= BADYA_DELAY) // co ? sekund
     {
         antagonist->sprite->fire = false;
-        entities->CreateObject("assets/badya_sprite.bmp", BADYA_SPAWN_X, BADYA_SPAWN_Y, BADYA_SPEED, 'B', BADYA_SCALE);
+
+        int chance = rand() % 100; // 5% chance of an easter egg
+        if (chance < 95)
+        {
+            entities->CreateObject("assets/badya_sprite.bmp", BADYA_SPAWN_X, BADYA_SPAWN_Y, BADYA_SPEED, 'B', BADYA_SCALE);
+        }
+        else
+        {
+            entities->CreateObject("assets/gift.bmp", BADYA_SPAWN_X, BADYA_SPAWN_Y, BADYA_SPEED, 'G', BADYA_SCALE);
+        }
+
         Game::delta_B = 0;
     }
 
@@ -196,6 +206,7 @@ void Game::load(int lvl)
 
     map->DestroyLevel(entities);
     entities->DestroyAllObjectsByType('B');
+    entities->DestroyAllObjectsByType('G');
 
     map->LoadMap(level);
     map->EntifyMap(entities);

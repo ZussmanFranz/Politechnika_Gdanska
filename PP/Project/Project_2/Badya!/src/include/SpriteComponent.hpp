@@ -60,7 +60,7 @@ public:
 
     void frame_update(float velocity_x, float velocity_y)
     {
-        if ((type == 'B') || (type == 'A'))
+        if ((type == 'B') || (type == 'A') || (type == 'G')) 
         {
             next_frame();
             state = 1;
@@ -120,7 +120,7 @@ public:
         prev_state = state;
         }
         
-        printf("%d\n", state);
+        //printf("%d\n", state);
         return;
     }
 

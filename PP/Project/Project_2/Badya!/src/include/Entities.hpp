@@ -181,7 +181,7 @@ public:
     {
         for (int c = 0; c < size; c++)
         {
-            if ((game_objects[c]->type == 'P') || (game_objects[c]->type == 'B'))
+            if ((game_objects[c]->type == 'P') || (game_objects[c]->type == 'B') || (game_objects[c]->type == 'G'))
             {
                 game_objects[c]->sprite->on_ground = false;
                 game_objects[c]->sprite->on_stairs = false;
@@ -199,7 +199,7 @@ public:
         for (int i = 0; i < size; i++)
         {
             game_objects[i]->Update();
-            if ((game_objects[i]->type == 'B') && (game_objects[i]->position->y() > (Game::SCREEN_HEIGHT - 256)) && (game_objects[i]->position->x() < 256))
+            if (((game_objects[i]->type == 'B') || (game_objects[i]->type == 'G')) && (game_objects[i]->position->y() > (Game::SCREEN_HEIGHT - 256)) && (game_objects[i]->position->x() < 256))
             {
                 DestroyObject(game_objects[i]);
             }
@@ -211,7 +211,7 @@ public:
     {
         for (int i = 0; i < size; i++)
         {
-            if ((game_objects[i]->type == 'P') || (game_objects[i]->type == 'B') || (game_objects[i]->type == 'A' && game_objects[i]->sprite->fire))
+            if ((game_objects[i]->type == 'P') || (game_objects[i]->type == 'B') || (game_objects[i]->type == 'G') || (game_objects[i]->type == 'A' && game_objects[i]->sprite->fire))
             {
                 game_objects[i]->sprite->frame_update(game_objects[i]->position->velocity_x, game_objects[i]->position->velocity_y);
             }    

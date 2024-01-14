@@ -28,7 +28,7 @@ public:
         init_ypos = y;
         
         velocity_x = 0;
-        if (type == 'B')
+        if ((type == 'B') || (type == 'G'))
         {
             velocity_x = 1;
         }
