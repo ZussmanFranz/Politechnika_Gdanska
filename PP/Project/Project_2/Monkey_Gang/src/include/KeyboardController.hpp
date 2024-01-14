@@ -13,7 +13,8 @@ public:
         position = pos;
         sprite = spr;
     }
-    ~KeyboardController();
+    ~KeyboardController()
+    {}
 
     PositionComponent* position;
     SpriteComponent* sprite;

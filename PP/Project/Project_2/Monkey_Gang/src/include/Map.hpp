@@ -10,8 +10,9 @@ public:
     Map();
     ~Map();
 
-    void LoadMap(int arr[12][16]);
+    void LoadMap(int lvl);
     void EntifyMap(Entities* entities);
+    void DestroyLevel(Entities* entities);
     void DrawMap();
 
 private:

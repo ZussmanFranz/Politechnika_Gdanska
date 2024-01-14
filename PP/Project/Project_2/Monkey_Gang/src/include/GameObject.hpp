@@ -5,7 +5,7 @@
 class GameObject
 {   
 public:
-    GameObject(const char* texturesheet, int x, int y, int speed, char type, float scale); // 'P' for player, 'B' for badya, 'O' for obstacle (platform), 'S' for stairs, 'E' for exit, 'A' for antagonist, 'W' for window border
+    GameObject(const char* texturesheet, int x, int y, int speed, char type, float scale); 
     ~GameObject();
 
     void Update();
@@ -17,7 +17,7 @@ public:
     PositionComponent* position = nullptr;
     KeyboardController* keyboard = nullptr;
 
-    char type;
+    char type; // 'P' for player, 'B' for badya, 'O' for obstacle (platform), 'S' for stairs, 'E' for exit, 'A' for antagonist, 'W' for window border
 private:
     SDL_Texture* objTexture;
     SDL_Rect srcRect, destRect;

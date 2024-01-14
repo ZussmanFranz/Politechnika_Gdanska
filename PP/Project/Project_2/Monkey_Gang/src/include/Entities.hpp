@@ -90,6 +90,93 @@ public:
         return;
     }
 
+    void DestroyObjectByType(char type)
+    {
+        for (int i = 0; i < size; i++)
+        {
+            if (game_objects[i]->type == type)
+            {
+                printf("Object of type (%c) found...", game_objects[i]->type);
+
+                delete game_objects[i];
+
+                for (int b = i + 1; b < size; b++)
+                {
+                    game_objects[b - 1] = game_objects[b];
+                }
+                game_objects[size] = nullptr;
+                size--;
+
+                printf(" ...and succesfully destroyed! New number of objects: (%d)\n", size);
+                return;
+            }
+        }
+        printf("There is no such object.\n");
+        return;
+    }
+
+    void DestroyAllObjectsByType(char type)
+    {
+        int destroyed = 0;
+
+        for (int i = 0; i < size; i++)
+        {
+            if (game_objects[i]->type == type)
+            {
+                delete game_objects[i];
+
+                for (int b = i + 1; b < size; b++)
+                {
+                    game_objects[b - 1] = game_objects[b];
+                }
+                game_objects[size] = nullptr;
+            
+                destroyed++;
+            }
+        }
+        size -= destroyed;
+
+        printf("Destroyed %d objects of type %c! New number of objects: %d\n", destroyed, type, size);
+        return;
+    }
+
+    void DestroyAll()
+    {
+        DestroyObjectByType('P');
+        delete[] game_objects;
+        size = 0;
+        printf("Cleaned up!\n");
+        return;
+    }
+
+    void TossPlayer()
+    {
+        for (int i = 0; i < size; i++)
+        {
+            if (game_objects[i]->type == 'P')
+            {
+                ViewAll();
+                AppendObject(game_objects[i]);
+                DestroyObject(game_objects[i]);
+                printf("Player moved to the end!\n");
+                ViewAll();
+                return; // player has been moved to the end of a list
+            }
+            
+        }
+        
+    }
+
+    void ViewAll()
+    {
+        for (int i = 0; i < size; i++)
+        {
+            printf("%c ", game_objects[i]->type);
+        }
+        printf("\n");
+        return;
+    }
+
     void UpdateObjects()
     {
         for (int c = 0; c < size; c++)
@@ -112,16 +199,43 @@ public:
         for (int i = 0; i < size; i++)
         {
             game_objects[i]->Update();
+            if ((game_objects[i]->type == 'B') && (game_objects[i]->position->y() > (Game::SCREEN_HEIGHT - 256)) && (game_objects[i]->position->x() < 256))
+            {
+                DestroyObject(game_objects[i]);
+            }
+        }
+        
+    }
+
+    void UpdateFrames()
+    {
+        for (int i = 0; i < size; i++)
+        {
+            if ((game_objects[i]->type == 'P') || (game_objects[i]->type == 'B'))
+            {
+                game_objects[i]->sprite->frame_update(game_objects[i]->position->velocity_x, game_objects[i]->position->velocity_y, game_objects[i]->type);
+            }
+            
         }
     }
 
     void RenderObjects()
     {
+        int player_id;
+
         for (int i = 0; i < size; i++)
         {
-            game_objects[i]->Render();
+            if (game_objects[i]->type != 'P')
+            {
+                game_objects[i]->Render();   
+            }
+            else
+            {
+                player_id = i;
+            }
         }
-        
+
+        game_objects[player_id]->Render();
     }
 
     int GetSize()

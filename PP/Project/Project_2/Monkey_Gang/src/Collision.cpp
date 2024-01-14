@@ -15,7 +15,7 @@ void Collision::AABB(SDL_Rect recA, SDL_Rect recB, int result[4]) //Axis-Aligned
             }
             if (((recA.x + recA.w) > recB.x) && (recB.x > recA.x))
             {
-                result[1] = (recA.x + recA.w) - recB.x; //right collision detected
+                result[1] = -1 * ((recA.x + recA.w) - recB.x + 1); //right collision detected
             }
             if (((recA.y + recA.h) > recB.y) && (recB.y > recA.y))
             {
@@ -23,7 +23,7 @@ void Collision::AABB(SDL_Rect recA, SDL_Rect recB, int result[4]) //Axis-Aligned
             }
             if ((recA.x < (recB.x + recB.w)) && ((recB.x + recB.w) < (recA.x + recA.w)))
             {
-                result[3] = recA.x < (recB.x + recB.w); //left collision detected
+                result[3] = (recB.x + recB.w) - recA.x + 1; //left collision detected
             }
             
         }
@@ -42,38 +42,38 @@ bool Collision::CollisionDetection(int result[4])
     return false;
 }
 
-void Collision::FallManager(GameObject* obj_main, GameObject* obj_second)
-{
-    if ((obj_second->type == 'O') || (obj_second->type == 'W')) //second object is a platform or a window border
-    {
-        SDL_Rect* rect_main_orig = obj_main->GetRect();
-        SDL_Rect* rect_second_orig = obj_second->GetRect();
+// void Collision::FallManager(GameObject* obj_main, GameObject* obj_second)
+// {
+//     if ((obj_second->type == 'O') || (obj_second->type == 'W')) //second object is a platform or a window border
+//     {
+//         SDL_Rect* rect_main_orig = obj_main->GetRect();
+//         SDL_Rect* rect_second_orig = obj_second->GetRect();
 
-        SDL_Rect rect_main = *rect_main_orig;
-        SDL_Rect rect_second = *rect_second_orig;
+//         SDL_Rect rect_main = *rect_main_orig;
+//         SDL_Rect rect_second = *rect_second_orig;
 
-        obj_main->sprite->on_ground = false;
-        //obj_main->position->velocity_y = 1;
+//         obj_main->sprite->on_ground = false;
+//         //obj_main->position->velocity_y = 1;
 
-        //printf("Fall: destA: (%d) (%d), destB: (%d) (%d)\n", rect_main.x, rect_main.y, rect_second.x, rect_second.y);
+//         //printf("Fall: destA: (%d) (%d), destB: (%d) (%d)\n", rect_main.x, rect_main.y, rect_second.x, rect_second.y);
 
-        if ((rect_main.x <= (rect_second.x + rect_second.w)) && ((rect_main.x + rect_main.w) >= rect_second.x)) // OX check
-        {
-            //printf("(%d <= %d + %d) && (%d + %d >= %d)\n", rect_main.x, rect_second.x, rect_second.w, rect_main.x, rect_second.x);
-            if (((-rect_main.y - rect_main.h + rect_second.y) <= 4) && ((-rect_main.y - rect_main.h + rect_second.y) >= 0)) // OY "laser" check
-            {
-                //printf("Position before: x:(%d), y:(%d)\n", obj_main->position->x(), obj_main->position->y());
-                int magnet = (-rect_main.y - rect_main.h + rect_second.y) - 1; // 1 is a distance between the floor and the object;
-                obj_main->position->Push(0, magnet);
-                obj_main->sprite->on_ground = true;
-                //obj_main->position->velocity_y = 0;
-                //printf("Magnet! New position: x:(%d), y:(%d)\n", obj_main->position->x(), obj_main->position->y());
-            }
-        }
+//         if ((rect_main.x <= (rect_second.x + rect_second.w)) && ((rect_main.x + rect_main.w) >= rect_second.x)) // OX check
+//         {
+//             //printf("(%d <= %d + %d) && (%d + %d >= %d)\n", rect_main.x, rect_second.x, rect_second.w, rect_main.x, rect_second.x);
+//             if (((-rect_main.y - rect_main.h + rect_second.y) <= 4) && ((-rect_main.y - rect_main.h + rect_second.y) >= 0)) // OY "laser" check
+//             {
+//                 //printf("Position before: x:(%d), y:(%d)\n", obj_main->position->x(), obj_main->position->y());
+//                 int magnet = (-rect_main.y - rect_main.h + rect_second.y) - 1; // 1 is a distance between the floor and the object;
+//                 obj_main->position->Push(0, magnet);
+//                 obj_main->sprite->on_ground = true;
+//                 //obj_main->position->velocity_y = 0;
+//                 //printf("Magnet! New position: x:(%d), y:(%d)\n", obj_main->position->x(), obj_main->position->y());
+//             }
+//         }
         
-    }
-    return;
-}
+//     }
+//     return;
+// }
 
 void Collision::CollisionManager(GameObject* obj_main, GameObject* obj_second)
 {
@@ -90,41 +90,63 @@ void Collision::CollisionManager(GameObject* obj_main, GameObject* obj_second)
 
     if (collision_check)
     {
+        printf("(%c)\n", obj_second->type);
         /*printf("Collision manager have this: (%d, %d, %d, %d) First object: (%c), second object: (%c)\n",
             result[0], result[1], result[2], result[3], 
             obj_main->type, obj_second->type);*/
         if (obj_second->type == 'S')
-        {
+        {   
             obj_main->sprite->on_stairs = true;
+        }
+        else if (obj_second->type == 'E')
+        {
+            obj_main->sprite->exit = true;
+        }
+        else if ((obj_second->type == 'P') && (obj_main->type == 'B'))
+        {
+            obj_second->sprite->brutally_murdered = true;
         }
         else
         {
-            
-            if (result[0]) //top collision
-            {
-                //obj_main->position->Push(0, -1 * (obj_main->position->velocity_y * obj_main->position->speed));
-                //obj_main->position->velocity_y = 0; 
-                obj_main->position->Push(0, result[0] + 2);
-                obj_main->position->velocity_y *= -1;
-                obj_main->sprite->on_ground = false;
-            }
+            int d_y = (result[0]) ? result[0] : result[2];
+            int d_x = (result[1]) ? result[1] : result[3];
 
             if ((result[1]) || (result[3])) //right collision or left collision
             {
-                //obj_main->position->Push(-1 * (obj_main->position->velocity_x * obj_main->position->speed), 0);
-                int d_y = (result[0]) ? result[0] : result[2];
-                int d_x = 0;
-
-                d_x = (result[1]) ? result[1] : result[3];
-
-                if (((abs(result[0]) < d_x) || (abs(result[2]) < d_x)) && (abs(d_y) > 1))
+                if (obj_second->type == 'W')
                 {
-                    obj_main->position->Push(-d_x, 0);
-                    if ((obj_main->type == 'B') && ((obj_second->type == 'W') || (obj_second->type == 'O')))
+                    if (result[1])
                     {
-                        obj_main->position->velocity_x = -1 * (obj_main->position->velocity_x); // inverting x velocity when badya hits a window border
-                    }      
+                        obj_main->position->Push(-5, -2);  
+                    }
+                    else
+                    {
+                        obj_main->position->Push(5, -2);  
+                    }
+                    
+                    if (obj_main->type == 'B')
+                    {
+                        obj_main->position->velocity_x *= -1;
+                    }
+                    
                 }
+                else
+                {
+                    if ((abs(d_y) < abs(d_x)) && (abs(d_y) > 1))
+                    {
+                        obj_main->position->Push(d_x, 0);    
+                    }
+                }
+            }
+
+            if (result[0]) //top collision
+            {
+                if ((abs(d_y) > abs(d_x))) // && (obj_main->sprite->on_stairs == false))
+                {
+                    obj_main->position->Push(0, result[0] + 2);     
+                }
+                obj_main->position->velocity_y *= -1;
+                obj_main->sprite->on_ground = false;
             }
 
             if (result[2]) // bottom collision
@@ -132,9 +154,8 @@ void Collision::CollisionManager(GameObject* obj_main, GameObject* obj_second)
                 //obj_main->position->Push(0, -1 * (obj_main->position->velocity_y * obj_main->position->speed));
                 obj_main->sprite->on_ground = true;
                 obj_main->position->velocity_y = 0; //stop falling
-                if (result[2] > 1)
+                if ((result[2] > 1)) // && (obj_main->sprite->on_stairs == false))
                 {
-                    //printf("%d %d %d %d\n", result[0], result[1], result[2], result[3]);
                     obj_main->position->Push(0, -result[2]+1); // push a little bit higher
                 }
             }
@@ -148,7 +169,7 @@ void Collision::CollisionManager(GameObject* obj_main, GameObject* obj_second)
             if ((obj_main->type == 'P') && (obj_second->type == 'E')) // the player succesfully escaped
             {
                 obj_main->sprite->exit = true;
-                printf("The player has escaped!\n"); //...from level n
+                printf("The player has escaped form level %d!\n", Game::level);
             }
         } 
     }

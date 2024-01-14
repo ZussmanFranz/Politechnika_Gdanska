@@ -2,23 +2,15 @@
 #include "TextureManager.hpp"
 #include <SDL2/SDL.h>
 
-const int STATIC = 1;
-const int RUN_RIGHT = 2;
-const int RUN_LEFT = 3;
-const int FALL_RIGHT = 4;
-const int FALL_LEFT = 5;
-const int STAIRS = 6;
+const int RUN_RIGHT = 1;
+const int RUN_LEFT = 2;
+const int FALL_RIGHT = 3;
+const int FALL_LEFT = 4;
+const int STATIC_RIGHT = 5;
+const int STATIC_LEFT = 6;
+const int STAIRS = 7;
 
 const int ANIMATION_LENGTH = 6;
-
-const int PLAYER_STATIC = 2;
-const int PLAYER_RIGHT_FRAME_1 = 1;
-const int PLAYER_LEFT_FRAME_1 = 7;
-const int PLAYER_FALL_RIGHT_FRAME = 4;
-const int PLAYER_FALL_LEFT_FRAME = 10;
-const int PLAYER_STAIRS_FRAME_1 = 14;
-
-const int BADYA_FRAME_1 = 1;
 
 class SpriteComponent
 {
@@ -26,9 +18,11 @@ private:
     SDL_Texture* texture;
 
     int frame;
-    int state;
-    int temp_state;
+    int baseframe;
 public:
+    int state;
+    int prev_state;
+
     SDL_Rect* scrRect;
     SDL_Rect* destRect;
 
@@ -46,81 +40,113 @@ public:
         (*scrRect).w = (*scrRect).h = 64;
 
         frame = 1;
+        state = 1;
 
         (*destRect).w = (*destRect).h = (int)((*scrRect).w * scale);
 
         texture = tex;
+
+        prev_state = 1;
     }
 
-    /*void frame_update()
+    void frame_update(float velocity_x, float velocity_y, char type)
     {
-        bool anim = animation_check(temp_state, state);
-        state = temp_state;
-
-        switch (state)
+        if (type == 'B')
         {
-        case STATIC :
-            frame = PLAYER_STATIC;
-            break;
-        case RUN_LEFT :
-            if (anim)
-            {
-                animation(frame, PLAYER_LEFT_FRAME_1);
-            }
-            else
-            {
-                frame = PLAYER_LEFT_FRAME_1;
-            }
-            break;
-        case RUN_RIGHT :
-        if (anim)
-            {
-                animation(frame, PLAYER_RIGHT_FRAME_1);
-            }
-            else
-            {
-                frame = PLAYER_RIGHT_FRAME_1;
-            }
-            break;
-        case FALL_LEFT :
-            frame = PLAYER_FALL_LEFT_FRAME;
-            break;
-        case FALL_RIGHT :
-            frame = PLAYER_FALL_RIGHT_FRAME;
-            break;
-        //case stairs
-        default:
-            break;
+            next_frame();
+            state = 1;
         }
+        else
+        {
+            if (on_stairs)
+        {
+            state = STAIRS;
+        }
+        else
+        {
+            if (velocity_x > 0)
+            {
+                if (on_ground)
+                {
+                    state = RUN_RIGHT;
+                }
+                else
+                {
+                    state = FALL_RIGHT;
+                }
+            }
+            else if (velocity_x < 0)
+            {
+                if (on_ground)
+                {
+                    state = RUN_LEFT;
+                }
+                else
+                {
+                    state = FALL_LEFT;
+                }
+            }
+            else
+            {
+                if ((prev_state == RUN_RIGHT) || (prev_state == FALL_RIGHT))
+                {
+                    state = STATIC_RIGHT;
+                }
+                else if ((prev_state == RUN_LEFT) || (prev_state == FALL_LEFT))
+                {
+                    state = STATIC_LEFT;
+                }
+            }
+        }
+
+        if (state == prev_state)
+        {
+            next_frame();
+        }
+        else
+        {
+            frame = 1;
+        }
+
+        prev_state = state;
+        }
+        
+        printf("%d\n", state);
+        return;
     }
 
-    void animation(int frame, int starting_frame)
+    void next_frame()
     {
         if ((frame + 1) > ANIMATION_LENGTH)
         {
-            frame = starting_frame;
+            frame = 0;
         }
         frame++;
     }
 
-    bool animation_check(int temp_state, int state)
-    {
-        if (temp_state == state)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }*/
+    // bool animation_check(int temp_state, int state)
+    // {
+    //     if (temp_state == state)
+    //     {
+    //         return true;
+    //     }
+    //     else
+    //     {
+    //         return false;
+    //     }
+    // }
 
     void draw()
     {
-        //printf("srcRect: x: %d, y: %d, w: %d, h: %d\n destRect: x: %d, y: %d, w: %d, h: %d\n frame: %d \n", (*scrRect).x, (*scrRect).y, (*scrRect).w, (*scrRect).h, (*destRect).x, (*destRect).y, (*destRect).w, (*destRect).h, frame);
+        scrRect->x = scrRect->w * (frame - 1);
+        scrRect->y = scrRect->h * (state - 1);
+
         TextureManager::Draw(texture, *scrRect, *destRect, frame);
     }
 
-    ~SpriteComponent();
+    ~SpriteComponent()
+    {
+        
+    }
 };
 

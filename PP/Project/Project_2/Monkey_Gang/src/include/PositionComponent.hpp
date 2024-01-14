@@ -1,5 +1,6 @@
 #pragma once
 #include "SpriteComponent.hpp"
+#include <math.h>
 
 class PositionComponent
 {
@@ -38,27 +39,40 @@ public:
 
         sprite = spr;
     }
-    ~PositionComponent();
+    ~PositionComponent()
+    {
+        delete sprite;
+    }
 
     int x() {return (int)xpos;}
     int y() {return (int)ypos;}
 
     void update()
     {
-        if (type == 'B')
-        {
-            velocity_x = 1;
-        }
+        // if (type == 'B')
+        // {
+        //     velocity_x = 1;
+        // }
         
         xpos += velocity_x * speed;
         ypos += velocity_y * speed;
 
         if ((sprite->on_stairs == false) && (sprite->on_ground == false))
         {
-            printf("Gravity!!!\n");
+            //printf("Gravity!!!\n");
             velocity_y += gravity;
         }
 
+        if (sprite->on_stairs)
+        {
+            if (abs(velocity_y) < 1)
+            {
+                velocity_y = 0;
+            }
+            
+            
+        }
+        
         // if (sprite->on_ground == true)
         // {
         //     //velocity_y = 0;
@@ -73,6 +87,7 @@ public:
         {
             toInitPos();
             printf("Go home!!!\n");
+            sprite->state = STATIC_RIGHT;
             sprite->brutally_murdered = false;
         }
         

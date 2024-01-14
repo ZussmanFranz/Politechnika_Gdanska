@@ -17,6 +17,7 @@ public:
     void render();
     void clean();
 
+    static void load(int lvl);
     void finish();
 
     bool running() {return isRunning;}
@@ -24,8 +25,20 @@ public:
     static SDL_Renderer* renderer;
     static SDL_Event event;
 
+    static Uint32 FinishTime;
+    static Uint32 WorldTime;
+    static Uint32 SkipTime;
+    static Uint32 delta_B;
+    static Uint32 delta_Frame;
+
+    static int level;
+
     static const int SCREEN_WIDTH = 1024;
     static const int SCREEN_HEIGHT = 768;
+
+    const int BADYA_DELAY = 450;
+    const int NEW_FRAME_DELAY = 5;
+
     const int PLAYER_SPEED = 4;
     const float PLAYER_SCALE = 0.6;
     const int BADYA_SPEED = 3;

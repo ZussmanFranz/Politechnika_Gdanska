@@ -44,4 +44,11 @@ void GameObject::Render()
 
 GameObject::~GameObject()
 {
+    delete position;
+
+    if (type == 'P')
+    {
+        delete keyboard;
+    }
+    
 }
