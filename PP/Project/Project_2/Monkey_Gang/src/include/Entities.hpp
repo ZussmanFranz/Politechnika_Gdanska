@@ -211,11 +211,10 @@ public:
     {
         for (int i = 0; i < size; i++)
         {
-            if ((game_objects[i]->type == 'P') || (game_objects[i]->type == 'B'))
+            if ((game_objects[i]->type == 'P') || (game_objects[i]->type == 'B') || (game_objects[i]->type == 'A' && game_objects[i]->sprite->fire))
             {
-                game_objects[i]->sprite->frame_update(game_objects[i]->position->velocity_x, game_objects[i]->position->velocity_y, game_objects[i]->type);
-            }
-            
+                game_objects[i]->sprite->frame_update(game_objects[i]->position->velocity_x, game_objects[i]->position->velocity_y);
+            }    
         }
     }
 

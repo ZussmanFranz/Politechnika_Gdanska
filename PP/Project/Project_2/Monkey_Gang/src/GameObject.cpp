@@ -8,10 +8,11 @@ GameObject::GameObject(const char* texturesheet, int x, int y, int speed, char t
     {
         printf("There is a problem with texture...\n");
     }
-    sprite = new SpriteComponent(objTexture, scale, &srcRect, &destRect);    
-    position = new PositionComponent(x, y, speed, tp, sprite);
 
     type = tp;
+
+    sprite = new SpriteComponent(objTexture, scale, &srcRect, &destRect, type);    
+    position = new PositionComponent(x, y, speed, type, sprite);
 
     sprite->on_ground = false;
     sprite->on_stairs = false;

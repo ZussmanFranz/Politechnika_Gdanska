@@ -29,21 +29,26 @@ public:
     static Uint32 WorldTime;
     static Uint32 SkipTime;
     static Uint32 delta_B;
+    static Uint32 delta_A;
     static Uint32 delta_Frame;
 
     static int level;
+    static const int number_of_levels = 3;
 
     static const int SCREEN_WIDTH = 1024;
     static const int SCREEN_HEIGHT = 768;
 
-    const int BADYA_DELAY = 450;
-    const int NEW_FRAME_DELAY = 5;
+    const int BADYA_DELAY = 400; // number of frames between badya spawns 
+    const int NEW_FRAME_DELAY = 6; // number of frames between "animation switches"
 
     const int PLAYER_SPEED = 4;
-    const float PLAYER_SCALE = 0.6;
-    const int BADYA_SPEED = 3;
-    const float BADYA_SCALE = 0.6;
-    static constexpr float GRAVITY = 0.05f;
+    const float PLAYER_SCALE = 0.6; // scale of destination rectangle 
+    const int BADYA_SPEED = 4;
+    const float BADYA_SCALE = 0.6; // scale of destination rectangle 
+    static constexpr float GRAVITY = 0.05f; 
+
+    const int BADYA_SPAWN_X = 96; // Axises of the place where badyas spawn
+    const int BADYA_SPAWN_Y = 64; //
 private:
     int cnt;
     bool isRunning;

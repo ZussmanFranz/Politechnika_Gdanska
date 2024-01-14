@@ -9,6 +9,7 @@ Entities* entities;
 GameObject** game_objects;
 
 GameObject* player;
+GameObject* antagonist;
 
 Map* map;
 
@@ -22,6 +23,7 @@ Uint32 Game::WorldTime = 0;
 Uint32 Game::FinishTime = 0;
 
 Uint32 Game::delta_B = 0;
+Uint32 Game::delta_A = 36; // starts with 36 frames prediction (35 + 1 to switch frame)
 Uint32 Game::delta_Frame = 0;
 
 Game::Game()
@@ -85,7 +87,10 @@ void Game::init(const char* title, int xpos, int ypos, int width, int height, bo
     player->keyboard = new KeyboardController(player->position,player->sprite);
     entities->AppendObject(player);
 
-    entities->CreateObject("assets/badya_sprite.bmp", 30, 20, BADYA_SPEED, 'B', BADYA_SCALE);
+    antagonist = new GameObject("assets/cannon_sprite.bmp", BADYA_SPAWN_X - (64 * BADYA_SCALE), BADYA_SPAWN_Y, 0, 'A', 1); // creating an antagonist
+    entities->AppendObject(antagonist);
+
+    entities->CreateObject("assets/badya_sprite.bmp", BADYA_SPAWN_X, BADYA_SPAWN_Y, BADYA_SPEED, 'B', BADYA_SCALE);
 
     TextureManager::InitWriting("assets/cs8x8.bmp");
 }
@@ -136,19 +141,26 @@ void Game::update()
         finish();
     }
 
+    Game::delta_A++;
     Game::delta_B++;
     Game::delta_Frame++;
 
     //printf("Delta B: (%d), Delta Frames: (%d)\n", delta_B, delta_Frame);
 
-    if (delta_B >= BADYA_DELAY) // co 10 sekund
+    if (delta_A >= BADYA_DELAY)
     {
-        //entities->DestroyObjectByType('B');
-        entities->CreateObject("assets/badya_sprite.bmp", 20, 20, BADYA_SPEED, 'B', BADYA_SCALE);
+        antagonist->sprite->fire = true;
+        Game::delta_A = 0; 
+    }
+    
+    if (delta_B >= BADYA_DELAY) // co ? sekund
+    {
+        antagonist->sprite->fire = false;
+        entities->CreateObject("assets/badya_sprite.bmp", BADYA_SPAWN_X, BADYA_SPAWN_Y, BADYA_SPEED, 'B', BADYA_SCALE);
         Game::delta_B = 0;
     }
 
-    if (delta_Frame >= NEW_FRAME_DELAY) // 
+    if (delta_Frame >= NEW_FRAME_DELAY) // co 0,1 sekund
     {
         entities->UpdateFrames();
         Game::delta_Frame = 0;
@@ -195,36 +207,23 @@ void Game::load(int lvl)
 void Game::finish()
 {
     player->sprite->exit = false;
-    if (level < 3)
+    if (level < number_of_levels)
     {
         level++;
         load(level);
     }
     else
     {
-        player->position->setPos(0, SCREEN_HEIGHT - 48);
-
-        Uint32 T1;
-        Uint32 T2; 
-
         isRunning = true;
 
         FinishTime = (WorldTime - SkipTime) / 1000;
 
         while (isRunning)
         {
-            // T1 = SDL_GetTicks();
-            // player->position->Push(0.5, 0);
-            // player->sprite->on_ground = true;
-            // T2 = SDL_GetTicks();
+            SDL_RenderClear(renderer);
+            TextureManager::DrawOutro(FinishTime);
+            SDL_RenderPresent(Game::renderer);
 
-            // int delta = T2 - T1;
-
-            // if (delta > 10)
-            // {
-            //     player->sprite->frame_update(1, 0, 'P');
-            TextureManager::DrawOutro(FinishTime);   
-            //}
             handleEvents();
         }
     }

@@ -1,11 +1,10 @@
 #include "Map.hpp"
 #include "TextureManager.hpp"
-//#include "Entities.hpp"
 
 int lvl1[12][16] = {
     {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,3},
-    {1,1,1,1,1,0,0,0,1,1,1,1,2,1,1,1},
-    {0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0},
+    {0,0,0,0,0,0,0,0,1,1,1,1,2,1,1,1},
+    {1,1,0,0,0,0,0,0,0,0,0,0,2,0,0,0},
     {0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0},
     {0,0,1,1,2,1,1,1,1,1,1,1,1,1,1,0},
     {0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0},
@@ -131,6 +130,8 @@ void Map::EntifyMap(Entities* entities)
     entities->CreateObject("assets/dark.bmp", 0, Game::SCREEN_HEIGHT - 2, 0, 'W', (Game::SCREEN_WIDTH / 64)); // bottom
     entities->CreateObject("assets/dark.bmp", 0 - Game::SCREEN_HEIGHT + 2, 0, 0, 'W', (Game::SCREEN_HEIGHT / 64)); // left
     entities->CreateObject("assets/dark.bmp", Game::SCREEN_WIDTH - 2, 0, 0, 'W', (Game::SCREEN_HEIGHT / 64));  // right
+
+    //entities->CreateObject("assets/cannon_sprite.bmp", 20, 127, 0, 'A', 1); // creating an antagonist
 }
 
 void Map::DestroyLevel(Entities* entities)

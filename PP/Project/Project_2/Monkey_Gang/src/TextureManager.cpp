@@ -82,8 +82,6 @@ void TextureManager::DrawInfo(Uint32 WorldTime)
 
 void TextureManager::DrawOutro(Uint32 FinishTime)
 {
-    SDL_RenderClear(Game::renderer);
-
     int y_first = Game::SCREEN_HEIGHT / 2 - 200;
 
     sprintf(text, "Congratulations, you made it in ");
@@ -94,8 +92,6 @@ void TextureManager::DrawOutro(Uint32 FinishTime)
 
     sprintf(text, "Press ESC to exit the game", FinishTime);
 	DrawString(Game::SCREEN_WIDTH / 2 - (strlen(text) * 8 * 2) / 2, y_first + 400, text, charset, 2);
-
-    SDL_RenderPresent(Game::renderer);
 }
 
 TextureManager::TextureManager()

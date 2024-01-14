@@ -2,7 +2,8 @@
 #include "TextureManager.hpp"
 #include <SDL2/SDL.h>
 
-const int RUN_RIGHT = 1;
+//OY frame numbers
+const int RUN_RIGHT = 1; 
 const int RUN_LEFT = 2;
 const int FALL_RIGHT = 3;
 const int FALL_LEFT = 4;
@@ -10,18 +11,18 @@ const int STATIC_RIGHT = 5;
 const int STATIC_LEFT = 6;
 const int STAIRS = 7;
 
-const int ANIMATION_LENGTH = 6;
+const int ANIMATION_LENGTH = 6; //number of frames in the animation cycle
 
 class SpriteComponent
 {
 private:
     SDL_Texture* texture;
-
-    int frame;
-    int baseframe;
 public:
+    char type;
+
     int state;
     int prev_state;
+    int frame;
 
     SDL_Rect* scrRect;
     SDL_Rect* destRect;
@@ -30,11 +31,14 @@ public:
     bool on_stairs;
     bool brutally_murdered;
     bool exit;
+    bool fire; //for antagoist
 
-    SpriteComponent(SDL_Texture* tex, float scale, SDL_Rect* src, SDL_Rect* dest)
+    SpriteComponent(SDL_Texture* tex, float scale, SDL_Rect* src, SDL_Rect* dest, char tp)
     {
         scrRect = src;
         destRect = dest;
+
+        type = tp;
 
         (*scrRect).x = (*scrRect).y = 0;
         (*scrRect).w = (*scrRect).h = 64;
@@ -47,11 +51,16 @@ public:
         texture = tex;
 
         prev_state = 1;
+
+        if (type == 'A')
+        {
+            fire = false;
+        }
     }
 
-    void frame_update(float velocity_x, float velocity_y, char type)
+    void frame_update(float velocity_x, float velocity_y)
     {
-        if (type == 'B')
+        if ((type == 'B') || (type == 'A'))
         {
             next_frame();
             state = 1;

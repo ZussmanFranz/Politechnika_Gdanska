@@ -96,7 +96,10 @@ void Collision::CollisionManager(GameObject* obj_main, GameObject* obj_second)
             obj_main->type, obj_second->type);*/
         if (obj_second->type == 'S')
         {   
-            obj_main->sprite->on_stairs = true;
+            if (obj_main->type == 'P')
+            {
+                obj_main->sprite->on_stairs = true;
+            }
         }
         else if (obj_second->type == 'E')
         {
@@ -106,10 +109,39 @@ void Collision::CollisionManager(GameObject* obj_main, GameObject* obj_second)
         {
             obj_second->sprite->brutally_murdered = true;
         }
+        else if(obj_second->type == 'A')
+        {
+            if (obj_main->type == 'P')
+            {
+                obj_main->sprite->brutally_murdered = true;
+            }
+        }
         else
         {
             int d_y = (result[0]) ? result[0] : result[2];
             int d_x = (result[1]) ? result[1] : result[3];
+
+            if (result[0]) //top collision
+            {
+                if ((abs(d_y) > abs(d_x))) // && (obj_main->sprite->on_stairs == false))
+                {
+                    obj_main->position->Push(0, result[0] + 2);     
+                }
+                obj_main->position->velocity_y *= -1;
+                obj_main->sprite->on_ground = false;
+            }
+
+            if (result[2]) // bottom collision
+            {
+                //obj_main->position->Push(0, -1 * (obj_main->position->velocity_y * obj_main->position->speed));
+                obj_main->sprite->on_ground = true;
+                obj_main->position->velocity_y = 0; //stop falling
+                if ((result[2] > 1)) // && (obj_main->sprite->on_stairs == false))
+                {
+                    obj_main->position->Push(0, -result[2]+1); // push a little bit higher
+                    result[1] = result[3] = 0;
+                }
+            }
 
             if ((result[1]) || (result[3])) //right collision or left collision
             {
@@ -136,27 +168,6 @@ void Collision::CollisionManager(GameObject* obj_main, GameObject* obj_second)
                     {
                         obj_main->position->Push(d_x, 0);    
                     }
-                }
-            }
-
-            if (result[0]) //top collision
-            {
-                if ((abs(d_y) > abs(d_x))) // && (obj_main->sprite->on_stairs == false))
-                {
-                    obj_main->position->Push(0, result[0] + 2);     
-                }
-                obj_main->position->velocity_y *= -1;
-                obj_main->sprite->on_ground = false;
-            }
-
-            if (result[2]) // bottom collision
-            {
-                //obj_main->position->Push(0, -1 * (obj_main->position->velocity_y * obj_main->position->speed));
-                obj_main->sprite->on_ground = true;
-                obj_main->position->velocity_y = 0; //stop falling
-                if ((result[2] > 1)) // && (obj_main->sprite->on_stairs == false))
-                {
-                    obj_main->position->Push(0, -result[2]+1); // push a little bit higher
                 }
             }
 
