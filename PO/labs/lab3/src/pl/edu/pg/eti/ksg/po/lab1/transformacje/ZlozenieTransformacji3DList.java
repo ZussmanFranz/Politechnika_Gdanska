@@ -19,7 +19,7 @@ public class ZlozenieTransformacji3DList implements Transformacja3D{
     public void setTr(ArrayList<Transformacja3D> tr) {
         this.transformacje3d = tr;
         this.n = tr.size();
-    }
+    }`
 
     @Override
     public Transformacja3D getTransformacjaOdwrotna3D() {
