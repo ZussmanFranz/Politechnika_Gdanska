@@ -36,8 +36,9 @@ private:
     node* next;
 public:
     node();
-    node(T token);
+    node(T tok);
     node(int value);
+    node(node* orig);
 
     T GetToken();
     void SetToken(T token);
@@ -46,6 +47,7 @@ public:
     void SetNext(node* next);
 
     int GetValue();
+    void SetValue(int new_value);
 
     ~node();
 };
@@ -55,19 +57,29 @@ node::node()
     token = NUMBER;
     value = 0;
     next = nullptr;
+    //std::cout << "created standard node!\n";
 }
 
-node::node(T token)
+node::node(T tok)
 {
-    this->token = token;
-    this->next = next;
+    token = tok;
+    value = 0;
     next = nullptr;
+    //std::cout << "created node with token!\n";
 }
 
 node::node(int value)
 {
     this->token = NUMBER;
     this->value = value;
+    next = nullptr;
+    //std::cout << "created node with value!\n";
+}
+
+node::node(node* orig)
+{
+    this->token = orig->GetToken();
+    this->value = orig->GetValue();
     next = nullptr;
 }
 
@@ -94,6 +106,11 @@ void node::SetNext(node* next)
 int node::GetValue()
 {
     return value;
+}
+
+void node::SetValue(int new_value)
+{
+    this->value = new_value;
 }
 
 node::~node()

@@ -14,7 +14,7 @@ public:
 
     void push(int value);
     void push(T token);
-    void push(node* added);
+    void push(node* orig);
 
     node* pop();
 
@@ -24,6 +24,8 @@ public:
 
     bool isEmpty();
 
+    node* GetRoot();
+
     void show();
 
     ~list();
@@ -32,57 +34,105 @@ public:
 list::list()
 {
     root = nullptr;
+    len = 0;
 }
 
 void list::push(int value)
 {
-    len++;
     node* added = new node(value);
-    this->top()->SetNext(added);
+    
+    if (root == nullptr) {
+        root = added;
+        ++len;
+    
+        return;
+    }
+
+    top()->SetNext(added);
+    ++len;
+
+    return;
 }
 void list::push(T token)
 {
-    len++;
     node* added = new node(token);
-    this->top()->SetNext(added);
+
+    if (root == nullptr) {
+    
+        root = added;
+        ++len;
+    
+        return;
+    }
+
+    top()->SetNext(added);
+    ++len;
+
+    return;
 }
-void list::push(node* added)
+void list::push(node* orig)
 {
-    len++;
-    added->SetNext(nullptr);
-    (this->top())->SetNext(added);
+    node* added = new node(orig);
+
+    if (root == nullptr) {
+    
+        root = added;
+        ++len;
+    
+        return;
+    }
+
+    top()->SetNext(added);
+    ++len;
+
+    return;
 }
 
 node* list::pop()
 {
     len--;
+
+    if (len == 0)
+    {
+        return root;
+    }
+    
+
+    //std::cout << "new length is " << len <<",\n";
     node* new_top = root;
 
-    for (int i = 0; i < len; i++)
+    for (int i = 0; i < len - 1; i++)
     {
+        //std::cout << "new top token is " << new_top->GetToken() << " and i = " << i << '\n';
         new_top = new_top->GetNext();    
     }
     
-    node* target = new_top->GetNext();
+    //std::cout << "new top token is " << new_top->GetToken() << '\n';
+
+    node* target = new node(new_top->GetNext());
     new_top->SetNext(nullptr);
 
+    //std::cout << "pop is finished. Top token is " << top()->GetToken() << '\n';
     return target;
 }
 
 node* list::top()
 {
-    node* next = root->GetNext();
-
-    while (true)
+    if (root == nullptr)
     {
-        if (next->GetNext() == nullptr)
+        return nullptr;
+    }
+    else
+    {
+        node* top = root;
+    
+        //while(top->GetNext() != nullptr)
+        for (int i = 0; i < len - 1; i++)
         {
-            return next;
+            top = top->GetNext();
         }
-        else
-        {
-            next = next->GetNext();
-        }
+        
+        return top;
     }
 }
 
@@ -103,27 +153,23 @@ bool list::isEmpty()
     }
 }
 
+node* list::GetRoot()
+{
+    return root;
+}
+
 void list::show()
 {
-    list* temporary = new list();
+    int starting_length = len;
 
-    node* current = root;
-
-    while (current->GetNext() != nullptr)
+    while (len > 0)
     {
-        temporary->push(current);
-        current = current->GetNext();
-    }
-    
-
-    while (!temporary->isEmpty())
-    {
-        node* current = temporary->pop();
+        node* current = top();
 
         switch (current->GetToken())
         {
         case NUMBER:
-            std::cout << current->GetValue() << ' ';
+            std::cout << current->GetValue() << " ";
             break;
         case ADD:
             std::cout << "+ ";
@@ -157,10 +203,14 @@ void list::show()
             break;
         default:
             break;
-        }   
+        }
+
+        len--;  
     }
 
-    delete temporary;
+    len = starting_length;
+    
+    std::cout << '\n';
 }
 
 list::~list()

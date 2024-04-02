@@ -148,165 +148,79 @@ int ONPCalc(list* onp) {
     return result;
 }
 
-list* HandleExpression() //replace stos with expression and add switch instead of if...else
+list* HandleExpression() 
 {
-    list* expression = new list();
-    //char op[10];
-    //int digit = 0;
-
-    std::cout << "Enter a string: ";
-
     char c;
-    //int target = 0;
-    bool MIN_MAX_encountered = false;
+    list* expression = new list();
 
-    std::cout << "Started scanning: \n";
+    std::cout << "Enter your expression:\n"; 
 
     do
     {
         std::cin >> c;
 
-        std::cout << '\n' << c;
+        T token;
 
-        if (!MIN_MAX_encountered)
+        switch (c)
         {
-            switch (c)
-            {
+            case '.':
+                continue; 
             case '+':
-                expression->push(ADD);
+                token = ADD;
                 break;
             case '-':
-                expression->push(SUBTRACT);
+                token = SUBTRACT;
                 break;
             case '*':
-                expression->push(MULTIPLY);
+                token = MULTIPLY;
                 break;
             case '/':
-                expression->push(DIVIDE);
+                token = DIVIDE;
                 break;
             case 'N':
-                expression->push(N);
+                token = N;
                 break;
             case '(':
-                expression->push(BRACKETS_START);
+                token = BRACKETS_START;
                 break;
             case ')':
-                expression->push(BRACKETS_END);
+                token = BRACKETS_END;
                 break;
             default:
-                int prev = 0;
-                if (expression->top()->GetToken() == NUMBER)
+                if (expression->top() == nullptr)
                 {
-                    prev = expression->pop()->GetValue();
+                    expression->push((int) c - (int)('0'));
                 }
-                expression->push(10*prev + (int) c - (int)('0'));
-                break;
-            }   
+                else if (expression->top()->GetToken() == NUMBER)
+                {
+                    expression->top()->SetValue((expression->top()->GetValue() * 10) + (int) c - (int)('0'));
+                }
+                else
+                {
+                    expression->push((int) c - (int)('0'));
+                }
+                continue;
         }
-        else // finish implementation
-        {
-            switch (c)
-            {
-            case 'I':
-                expression->push(MIN);
-                break;
-            case 'N':
-                continue;
-                break; //nothing
-            case 'A':
-                expression->push(MAX);
-                break;
-            case 'X':
-                continue;
-                break; //nothing
-            case '(':
-                continue;
-                break; //nothing
-            case ')':
-                MIN_MAX_encountered = false;
-                break;
-            case ',':
-                continue;
-                break; // nothing
-            default:
-                expression->push((int)c - (int)('0'));
-                break;
-            }
-        }
-    }
-    while (c != '.');
+
+        expression->push(token);
+    } while (c != '.');
+
+
+    list* norm_expression = new list();
+
+    int length = expression->GetSize();
     
-    std::cout << "finished scanning\n";
-
-    list* normalised_expression = new list();
-
-    for (int i = 0; i < expression->GetSize(); i++)
+    //std::cout<<"The length is " << length <<"\nNormalisation:\n";
+    for (int i = 0; i < length; i++)
     {
-        normalised_expression->push(expression->pop());
+        //std::cout<<"normalising token number " << i + 1 << "...\n";
+        node* moved = expression->pop();        
+        //std::cout<<"done\n";
+        norm_expression->push(moved);
     }
 
-    normalised_expression->show();
-    
-    return normalised_expression;
-
-    // char c;
-    // while(std::cin.get(c) && c != '\n') { 
-    //     if (isdigit(c)) {
-    //         digit = digit * 10 + c - '0';
-    //     } else if (c == '(') {
-    //         expression.push(BRACKETS_START);
-    //     } else if (c == ')') {
-    //         while (!stos.empty()) {
-    //             char top = stos.top();
-    //             stos.pop_back();
-    //             if (top == '(')
-    //                 break;
-    //             else
-    //                 std::cout << top;
-    //         }
-    //     } else if (c == ' '){
-    //         if (digit != 0) {
-    //             std::cout << digit << " ";
-    //             digit = 0;
-    //         }
-    //         if (op[1] == 'I'){
-    //             std::cout << "MIN ";
-    //         } else if (op[1] == 'A'){
-    //             std::cout << "MAX ";
-    //         } else if (op[0] == 'N'){
-    //             std::cout << "N ";
-    //         } else if (op[0] == 'I'){
-    //             std::cout << "IF ";
-    //         } else std::cout << op[0] << " ";
-    //         op[0] = 0;
-    //         op[1] = 0;
-    //         op[2] = 0;
-    //     } else {
-    //         if (op[0] == 0) {
-    //             op[0] = c;
-    //         } else if (op[1] == 0) {
-    //             op[1] = c;
-    //         } else {
-    //             op[2] = c;
-    //         }
-    //         // int priority = get_priority(c);
-    //         // while (!stos.empty()) {
-    //         //     char top = stos.top();
-    //         //     if (top == '(' || get_priority(top) < priority)
-    //         //         break;
-    //         //     stos.pop_back();
-    //         //     cout << top;
-    //         // }
-    //         // stos.push_back(c);
-    //     }
-    // }
-
-    // while (!stos.empty()) {
-    //     std::cout << stos.top();
-    //     stos.pop_back();
-    // }
-
-    // std::cout << '\n';
+    //std::cout<<"Normalisation finished!\n";
+    return norm_expression;
 }
 
 
@@ -317,8 +231,9 @@ int main()
 
     for (int i = 0; i < n_expr; i++)
     {
-        //char scope[3];
-
+        std::cout << "\nhandling expression number " << i+1 << '\n';
         list* expression = HandleExpression();
+        std::cout << "\nyou've entered this:\n";
+        expression->show();
     }
 }
