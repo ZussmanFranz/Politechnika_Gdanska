@@ -1,5 +1,6 @@
 #include <iostream>
 #include "list.h"
+#include "kolejka.h"
 
 int get_priority(T token)
 {
@@ -127,7 +128,7 @@ int ONPCalc(list* onp) {
     expression #evaluation. Example : 3 4 * 2
     +’’’ = returned result*/
 
-    list* stack = new list();
+    kolejka* stack = new kolejka();
     while (!onp->isEmpty()){
         node* current = onp->pop();
         T token = current->GetToken();
@@ -231,9 +232,18 @@ int main()
 
     for (int i = 0; i < n_expr; i++)
     {
-        std::cout << "\nhandling expression number " << i+1 << '\n';
+        std::cout << "handling expression number " << i+1 << '\n';
         list* expression = HandleExpression();
-        std::cout << "\nyou've entered this:\n";
+
+        std::cout << "you've entered this:\n";
         expression->show();
+
+        list* onp = ONPConv(expression);
+        
+        std::cout << "ONP version:\n";
+        onp->show();
+
+        int result = ONPCalc(onp);
+        std::cout << "result: " << result <<'\n';
     }
 }

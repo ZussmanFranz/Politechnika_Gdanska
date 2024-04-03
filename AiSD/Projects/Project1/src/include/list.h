@@ -5,10 +5,9 @@
 
 class list
 {
-private:
+protected:
     node* root;
     int len;
-    
 public:
     list();
 
@@ -21,10 +20,12 @@ public:
     node* top();
 
     int GetSize();
+    void SetSize(int new_len);
 
     bool isEmpty();
 
     node* GetRoot();
+    void SetRoot(node* new_root);
 
     void show();
 
@@ -140,6 +141,11 @@ int list::GetSize()
 {
     return len;
 }
+void list::SetSize(int new_len)
+{
+    len = new_len;
+    return;
+}
 
 bool list::isEmpty()
 {
@@ -156,6 +162,12 @@ bool list::isEmpty()
 node* list::GetRoot()
 {
     return root;
+}
+void list::SetRoot(node* new_root)
+{
+    new_root->SetNext(root->GetNext());
+    root = new_root;
+    return;
 }
 
 void list::show()
