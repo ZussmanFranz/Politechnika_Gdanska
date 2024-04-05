@@ -22,7 +22,8 @@ typedef enum {
     MIN,
     MAX,
     BRACKETS_START,
-    BRACKETS_END
+    BRACKETS_END,
+    COMMA
 } T;
 
 
@@ -57,7 +58,6 @@ node::node()
     token = NUMBER;
     value = 0;
     next = nullptr;
-    //std::cout << "created standard node!\n";
 }
 
 node::node(T tok)
@@ -65,7 +65,6 @@ node::node(T tok)
     token = tok;
     value = 0;
     next = nullptr;
-    //std::cout << "created node with token!\n";
 }
 
 node::node(int value)
@@ -73,7 +72,6 @@ node::node(int value)
     this->token = NUMBER;
     this->value = value;
     next = nullptr;
-    //std::cout << "created node with value!\n";
 }
 
 node::node(node* orig)

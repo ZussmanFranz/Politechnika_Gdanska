@@ -6,22 +6,18 @@
 
 int get_priority(T token)
 {
-    int priority;
-
-    // if (token == BRACKETS_START)
-    // {
-    //     priority = 0;
-    // }
     if (token == MULTIPLY || token == DIVIDE)
     {
-        priority = 2;
+        return 2;
+    }
+    else if (token == N || token == IF || token == MIN || token == MAX)
+    {
+        return 3;
     }
     else
     {
-        priority = 1;
+        return 1;
     }
-
-    return priority;
 }
 
 int do_calculation(T token, int* ops)
@@ -84,9 +80,12 @@ int do_calculation(T token, int op1, int op2)
 
 int do_calculation(T token, int op)
 {
+    //std::cout << "encountered the N token! previous value = " << op << ", the new value = ";
     if (token == N)
     {
         op = -op;
+        //std::cout << op << '\n';
+        return op;
     }
     return ERROR;
 }
@@ -110,6 +109,10 @@ kolejka* ONPConv(list* expression){
                 if(token == BRACKETS_START){break;}
                 else { onp->push(token); }
             }
+        }
+        else if (token == COMMA)
+        {
+            continue;
         }
         else
         {
@@ -213,17 +216,98 @@ int ONPCalc(kolejka* onp) {
     return result;
 }
 
+void HandleIf(list* expression)
+{
+    char c;
+    T token;
+    int brackets_encountered = -1;
+    int brackets_closed = 0;
+
+    do
+    {
+        std::cin >> c;
+
+        switch (c)
+        {
+            case '+':
+                token = ADD;
+                break;
+            case '-':
+                token = SUBTRACT;
+                break;
+            case '*':
+                token = MULTIPLY;
+                break;
+            case '/':
+                token = DIVIDE;
+                break;
+            case 'N':
+                token = N;
+                break;
+            case '(':
+                if (brackets_encountered == -1)
+                { 
+                    brackets_encountered++;
+                    continue;
+                }
+                else if (brackets_encountered == brackets_closed)
+                {
+                    brackets_encountered++;
+                    token = BRACKETS_START;
+                }
+                break;
+            case ')':
+                brackets_closed++;
+
+                if (brackets_encountered != brackets_closed)
+                {
+                    return;
+                }
+
+                token = BRACKETS_END;
+                break;
+            case 'I':
+                expression->push(IF);
+                HandleIf(expression);
+                continue;
+            case 'F':
+                continue;
+            case ',':
+                token = COMMA;
+                break;
+            default:
+                if (expression->top() == nullptr)
+                {
+                    expression->push((int) c - (int)('0'));
+                }
+                else if (expression->top()->GetToken() == NUMBER)
+                {
+                    expression->top()->SetValue((expression->top()->GetValue() * 10) + (int) c - (int)('0'));
+                }
+                else
+                {
+                    expression->push((int) c - (int)('0'));
+                }
+                continue;
+        }
+
+        expression->push(token);
+    } while (true);
+
+    return;
+}
+
 list* HandleExpression() 
 {
     char c;
+    T token;
+
     list* expression = new list();
 
     // Handling input:
     do
     {
         std::cin >> c;
-
-        T token;
 
         switch (c)
         {
@@ -250,6 +334,10 @@ list* HandleExpression()
             case ')':
                 token = BRACKETS_END;
                 break;
+            case 'I':
+                expression->push(IF);
+                HandleIf(expression);
+                continue;
             default:
                 if (expression->top() == nullptr)
                 {
