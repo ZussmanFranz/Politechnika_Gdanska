@@ -2,6 +2,8 @@
 #include "list.h"
 #include "kolejka.h"
 
+#define ERROR -99999
+
 int get_priority(T token)
 {
     int priority;
@@ -33,7 +35,7 @@ int do_calculation(T token, int* ops)
         //find MAX
     }
     
-    return 0;
+    return ERROR;
 }
 
 int do_calculation(T token, int op1, int op2, int op3)
@@ -48,7 +50,7 @@ int do_calculation(T token, int op1, int op2, int op3)
             return op3;
         }
     }
-    return 0;
+    return ERROR;
 }
 
 int do_calculation(T token, int op1, int op2)
@@ -65,9 +67,17 @@ int do_calculation(T token, int op1, int op2)
         return (op1 * op2);
         break;
     case DIVIDE:
-        return (op1 / op2);
+        if (op2 != 0)
+        {
+            return (op1 / op2);
+        }
+        else
+        {
+            return ERROR;
+        }
         break;
     default:
+        return ERROR;
         break;
     }
 }
@@ -78,7 +88,7 @@ int do_calculation(T token, int op)
     {
         op = -op;
     }
-    return op;
+    return ERROR;
 }
 
 kolejka* ONPConv(list* expression){
@@ -187,6 +197,11 @@ int ONPCalc(kolejka* onp) {
                 int op2 = stack->pop()->GetValue();
                 int op1 = stack->pop()->GetValue();
                 result = do_calculation(token,op1,op2); // add options
+                if (result == ERROR)
+                {
+                    std::cout << "ERROR\n";
+                    return result;
+                }
             }
 
             stack->push(result);
@@ -290,6 +305,11 @@ int main()
         onp->show();
 
         int result = ONPCalc(onp);
+        if (result == ERROR)
+        {
+            continue;
+        }
+        
         std::cout << result <<'\n';
     }
 }
