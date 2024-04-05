@@ -42,7 +42,7 @@ void list::push(int value)
 {
     node* added = new node(value);
     
-    if (root == nullptr) {
+    if ((root == nullptr) || (len == 0)) {
         root = added;
         ++len;
     
@@ -56,13 +56,11 @@ void list::push(int value)
 }
 void list::push(T token)
 {
-    node* added = new node(token);
+    node* added = new node(token);    
 
-    if (root == nullptr) {
-    
+    if ((root == nullptr) || (len == 0)) {        
         root = added;
-        ++len;
-    
+        ++len;        
         return;
     }
 
@@ -75,7 +73,7 @@ void list::push(node* orig)
 {
     node* added = new node(orig);
 
-    if (root == nullptr) {
+    if ((root == nullptr) || (len == 0)) {
     
         root = added;
         ++len;
@@ -91,29 +89,24 @@ void list::push(node* orig)
 
 node* list::pop()
 {
-    len--;
+    len--;    
 
     if (len == 0)
-    {
+    {        
         return root;
     }
     
 
-    //std::cout << "new length is " << len <<",\n";
     node* new_top = root;
 
     for (int i = 0; i < len - 1; i++)
-    {
-        //std::cout << "new top token is " << new_top->GetToken() << " and i = " << i << '\n';
+    {        
         new_top = new_top->GetNext();    
     }
-    
-    //std::cout << "new top token is " << new_top->GetToken() << '\n';
-
-    node* target = new node(new_top->GetNext());
+          
+    node* target = new_top->GetNext();
     new_top->SetNext(nullptr);
-
-    //std::cout << "pop is finished. Top token is " << top()->GetToken() << '\n';
+    
     return target;
 }
 
@@ -126,8 +119,7 @@ node* list::top()
     else
     {
         node* top = root;
-    
-        //while(top->GetNext() != nullptr)
+            
         for (int i = 0; i < len - 1; i++)
         {
             top = top->GetNext();
@@ -224,6 +216,7 @@ void list::show()
     
     std::cout << '\n';
 }
+
 
 list::~list()
 {

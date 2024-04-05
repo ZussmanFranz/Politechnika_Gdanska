@@ -81,7 +81,7 @@ list* HandleExpression()
 kolejka* HandleKolejka()
 {
     char c;
-    kolejka* expression = new kolejka();
+    kolejka* kolej = new kolejka();
 
     std::cout << "Enter your kolejka:\n"; 
 
@@ -117,23 +117,28 @@ kolejka* HandleKolejka()
                 token = BRACKETS_END;
                 break;
             default:
-                if (expression->top() == nullptr)
+                if (kolej->last() == nullptr)
                 {
-                    expression->push((int) c - (int)('0'));
+                    kolej->push((int) c - (int)('0'));
                 }
-                else if (expression->top()->GetToken() == NUMBER)
+                else if (kolej->last()->GetToken() == NUMBER)
                 {
-                    expression->top()->SetValue((expression->top()->GetValue() * 10) + (int) c - (int)('0'));
+                    kolej->last()->SetValue((kolej->last()->GetValue() * 10) + (int) c - (int)('0'));
                 }
                 else
                 {
-                    expression->push((int) c - (int)('0'));
+                    kolej->push((int) c - (int)('0'));
                 }
+
+                std::cout << "(N)last token is " << kolej->last()->GetToken() << '\n';
                 continue;
         }
 
-        expression->push(token);
+        kolej->push(token);
+        std::cout << "last token is " << kolej->last()->GetToken() << '\n';
     } while (c != '.');
+
+    return kolej;
 }
 
 int main()
@@ -145,18 +150,20 @@ int main()
 
     kolejka* kolej = HandleKolejka();
 
-    int choice = 0;
+    std::cout << "\nFinished handling kolejka\n";
+    char choice = '0';
 
-    while (choice != 2);
+    do
     {
-        if (choice = 1)
+        if (choice == '1')
         {
             kolej->pop();
         }
         
         kolej->show();
-        std::cout << "1 = pop\n2 = exit\nEnter your choice: ";
+
+        std::cout << "\n1 = pop\n2 = exit\nEnter your choice: \n";
         std::cin >> choice;
-    }
+    }while (choice != '2');
     
 }

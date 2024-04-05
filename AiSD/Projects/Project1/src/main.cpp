@@ -81,22 +81,22 @@ int do_calculation(T token, int op)
     return op;
 }
 
-list* ONPConv(list* expression){
+kolejka* ONPConv(list* expression){
     list *stack = new list();
-    list *onp = new list();
-    while (!expression->isEmpty()){
+    kolejka *onp = new kolejka();
+    while (!expression->isEmpty()){                
         node* current = expression->pop();
-        T token = current->GetToken();
+        T token = current->GetToken();        
 
         if (token == NUMBER){
-            onp->push(current->GetValue());
+            onp->push(current->GetValue());            
         }
         else if (token == BRACKETS_START){
-            stack->push(token);
+            stack->push(token);            
         }
         else if (token == BRACKETS_END){
             while (!stack->isEmpty()){
-                token = stack->pop()->GetToken();
+                token = stack->pop()->GetToken();                
                 if(token == BRACKETS_START){break;}
                 else { onp->push(token); }
             }
@@ -106,29 +106,29 @@ list* ONPConv(list* expression){
             int priority = get_priority(token);
 
             while (!stack->isEmpty()){
-                T top = stack->pop()->GetToken();
+                T top = stack->pop()->GetToken();                
                 if ((top == BRACKETS_START) || (get_priority(top) < priority)) {
-                    stack->push(top);
+                    stack->push(top);                    
                     break;
                 }
-                onp->push(top);
+                onp->push(top);                
             }
             stack->push(token);
-        }
+        }      
     }
     while (!stack->isEmpty()) {
         T item = (stack->pop())->GetToken();
-        onp->push(item);
+        onp->push(item);        
     }
     return onp;
 }
 
-int ONPCalc(list* onp) {
+int ONPCalc(kolejka* onp) {
     /*Function returns the result of ONP
     expression #evaluation. Example : 3 4 * 2
     +’’’ = returned result*/
 
-    kolejka* stack = new kolejka();
+    list* stack = new list();
     while (!onp->isEmpty()){
         node* current = onp->pop();
         T token = current->GetToken();
@@ -136,10 +136,59 @@ int ONPCalc(list* onp) {
         {
             stack->push(current->GetValue());
         }
-        else{ 
-            int op2 = stack->pop()->GetValue();
-            int op1 = stack->pop()->GetValue();
-            int result = do_calculation(token,op1,op2); // add options
+        else{
+            switch (token)
+            {
+            case ADD:
+                std::cout << "+ ";
+                break;
+            case SUBTRACT:
+                std::cout << "- ";
+                break;
+            case MULTIPLY:
+                std::cout << "* ";
+                break;
+            case DIVIDE:
+                std::cout << "/ ";
+                break;
+            case IF:
+                std::cout << "IF ";
+                break;
+            case N:
+                std::cout << "N ";
+                break;
+            case MIN:
+                std::cout << "MIN" << current->GetValue() << ' ';
+                break;
+            case MAX:
+                std::cout << "MAX" << current->GetValue() << ' ';
+                break;
+            default:
+                break;
+            }
+
+            int result;
+            stack->show();
+
+            if (token == N)
+            {
+                int op = stack->pop()->GetValue();
+                result = do_calculation(token, op);
+            }
+            else if (token == IF)
+            {
+                int op3 = stack->pop()->GetValue();
+                int op2 = stack->pop()->GetValue();
+                int op1 = stack->pop()->GetValue();
+                result = do_calculation(token, op1, op2, op3);
+            } // add else if for MIN/MAX, creating an array of op's with malloc, length is a value
+            else
+            {
+                int op2 = stack->pop()->GetValue();
+                int op1 = stack->pop()->GetValue();
+                result = do_calculation(token,op1,op2); // add options
+            }
+
             stack->push(result);
         }
     }
@@ -154,8 +203,7 @@ list* HandleExpression()
     char c;
     list* expression = new list();
 
-    std::cout << "Enter your expression:\n"; 
-
+    // Handling input:
     do
     {
         std::cin >> c;
@@ -232,18 +280,16 @@ int main()
 
     for (int i = 0; i < n_expr; i++)
     {
-        std::cout << "handling expression number " << i+1 << '\n';
+        // Handling expression number i
         list* expression = HandleExpression();
 
-        std::cout << "you've entered this:\n";
-        expression->show();
-
-        list* onp = ONPConv(expression);
+        // Converting it into ONP version
+        kolejka* onp = ONPConv(expression);
         
-        std::cout << "ONP version:\n";
+        // ONP version:
         onp->show();
 
         int result = ONPCalc(onp);
-        std::cout << "result: " << result <<'\n';
+        std::cout << result <<'\n';
     }
 }
