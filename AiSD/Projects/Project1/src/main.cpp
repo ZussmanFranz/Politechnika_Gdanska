@@ -10,9 +10,13 @@ int get_priority(T token)
     {
         return 2;
     }
-    else if (token == N || token == IF || token == MIN || token == MAX)
+    else if (token == N)
     {
         return 3;
+    }
+    else if (token == IF || token == MIN || token == MAX)
+    {
+        return 4;
     }
     else
     {
@@ -112,6 +116,14 @@ kolejka* ONPConv(list* expression){
         }
         else if (token == COMMA)
         {
+            T top = stack->pop()->GetToken();
+            if (top == BRACKETS_START)
+            {
+                stack->push(top);
+                continue;
+            }
+            //std::cout << "a comma pushed an operation!\n";
+            onp->push(top);
             continue;
         }
         else
@@ -245,22 +257,25 @@ void HandleIf(list* expression)
                 token = N;
                 break;
             case '(':
-                if (brackets_encountered == -1)
-                { 
-                    brackets_encountered++;
-                    continue;
-                }
-                else if (brackets_encountered == brackets_closed)
-                {
-                    brackets_encountered++;
-                    token = BRACKETS_START;
-                }
+                // if (brackets_encountered == -1)
+                // { 
+                //     brackets_encountered++;
+                //     continue;
+                // }
+                // else if (brackets_encountered == brackets_closed)
+                // {
+                //     brackets_encountered++;
+                //     token = BRACKETS_START;
+                // }
+                brackets_encountered++;
+                token = BRACKETS_START;
                 break;
             case ')':
                 brackets_closed++;
 
-                if (brackets_encountered != brackets_closed)
+                if ((brackets_closed - brackets_encountered) == 1)
                 {
+                    expression->push(BRACKETS_END);
                     return;
                 }
 
@@ -385,6 +400,9 @@ int main()
     {
         // Handling expression number i
         list* expression = HandleExpression();
+
+        //std::cout << "You have entered this: ";
+        //expression->show();
 
         // Converting it into ONP version
         kolejka* onp = ONPConv(expression);
