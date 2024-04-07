@@ -134,7 +134,7 @@ kolejka* ONPConv(list* expression){
 
                 if (top == COMMA){continue;}
 
-                if ((top == BRACKETS_START) || (get_priority(top) < priority)) {
+                if (((top == BRACKETS_START) || (get_priority(top) < priority)) || ((top == N) && (token == N))) {
                     stack->push(top);                    
                     break;
                 }
