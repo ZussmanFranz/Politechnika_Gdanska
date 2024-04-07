@@ -111,35 +111,46 @@ kolejka* ONPConv(list* expression){
             while (!stack->isEmpty()){
                 token = stack->pop()->GetToken();                
                 if(token == BRACKETS_START){break;}
+                else if (token == COMMA){continue;}
                 else { onp->push(token); }
             }
         }
         else if (token == COMMA)
         {
-            T top = stack->pop()->GetToken();
-            if (top == BRACKETS_START)
-            {
-                stack->push(top);
-                continue;
+            while (!stack->isEmpty()){
+                token = stack->pop()->GetToken();                
+                if(token == COMMA){break;}
+                else if(token == BRACKETS_START){stack->push(token); break;}
+                else { onp->push(token); }
             }
-            //std::cout << "a comma pushed an operation!\n";
-            onp->push(top);
-            continue;
+            stack->push(COMMA);
         }
         else
         {
             int priority = get_priority(token);
 
             while (!stack->isEmpty()){
-                T top = stack->pop()->GetToken();                
+                T top = stack->pop()->GetToken(); 
+
+                if (top == COMMA){continue;}
+
                 if ((top == BRACKETS_START) || (get_priority(top) < priority)) {
                     stack->push(top);                    
                     break;
                 }
+                
                 onp->push(top);                
             }
             stack->push(token);
-        }      
+        }
+
+        // std::cout << "\n---------\nCurrent state of expression:\n";
+        // expression->show();
+        // std::cout << "Current state of stack:\n";
+        // stack->show();
+        // std::cout << "Current state of kolej:\n";
+        // onp->show();
+        // std::cout << "---------\n\n";
     }
     while (!stack->isEmpty()) {
         T item = (stack->pop())->GetToken();
@@ -413,9 +424,10 @@ int main()
         int result = ONPCalc(onp);
         if (result == ERROR)
         {
+            std::cout << '\n';
             continue;
         }
         
-        std::cout << result <<'\n';
+        std::cout << result <<"\n\n";
     }
 }

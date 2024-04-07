@@ -99,6 +99,9 @@ void kolejka::show()
             case BRACKETS_END:
                 std::cout << ") ";
                 break;
+            case COMMA:
+                std::cout << ", ";
+                break;
             default:
                 break;
             }
