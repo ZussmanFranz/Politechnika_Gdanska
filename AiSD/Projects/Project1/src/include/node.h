@@ -86,6 +86,7 @@ T node::GetToken()
 void node::SetToken(T token)
 {
     this->token = token;
+    return;
 }
 
 node* node::GetNext()
@@ -96,6 +97,7 @@ node* node::GetNext()
 void node::SetNext(node* next)
 {
     this->next = next;
+    return;
 }
 
 int node::GetValue()
@@ -106,6 +108,7 @@ int node::GetValue()
 void node::SetValue(int new_value)
 {
     this->value = new_value;
+    return;
 }
 
 int node::GetKey()
@@ -116,6 +119,7 @@ int node::GetKey()
 void node::SetKey(int key)
 {
     this->key = key;
+    return;
 }
 
 node::~node()

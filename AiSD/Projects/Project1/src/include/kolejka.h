@@ -18,9 +18,11 @@ node* kolejka::pop()
 {
     len--;
 
-    node* popped = new node(root);
+    // node* popped = new node(root);
+    node* popped = root;//added
     
-    root = root->GetNext();
+    root = popped->GetNext();//changed
+    popped->SetNext(nullptr);//added
 
     return popped;
 }

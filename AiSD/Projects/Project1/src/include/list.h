@@ -40,60 +40,52 @@ list::list()
     len = 0;
 }
 
+
 void list::push(int value)
 {
-    node* added = new node(value);
-    
     if ((root == nullptr) || (len == 0)) {
-        root = added;
+        root = new node(value);
         ++len;
-    
-        //delete added;
         return;
     }
+
+    node* added = new node(value);
 
     top()->SetNext(added);
     ++len;
 
-    //delete added;
     return;
 }
 void list::push(T token)
 {
-    node* added = new node(token);    
-
     if ((root == nullptr) || (len == 0)) {        
-        root = added;
-        ++len;
-        //delete added;        
+        root = new node(token);
+        ++len;       
         return;
     }
+
+    node* added = new node(token);    
 
     top()->SetNext(added);
     ++len;
 
-    //delete added;
     return;
 }
 void list::push(node* orig)
 {
-    node* added = new node(orig);
-
     if ((root == nullptr) || (len == 0)) {
-    
-        root = added;
+        root = new node(orig);
         ++len;
-        //delete added;
         return;
     }
+
+    node* added = new node(orig);
 
     top()->SetNext(added);
     ++len;
 
-    //delete added;
     return;
 }
-
 node* list::pop()
 {
     len--;    
