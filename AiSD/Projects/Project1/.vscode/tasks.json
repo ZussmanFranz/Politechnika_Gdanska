@@ -2,8 +2,8 @@
     "tasks": [
         {
             "type": "cppbuild",
-            "label": "C/C++: gcc build active file",
-            "command": "/usr/lib64/ccache/gcc",
+            "label": "C/C++: g++ build active file",
+            "command": "/usr/lib64/ccache/g++",
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",

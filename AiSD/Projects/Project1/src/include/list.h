@@ -29,6 +29,8 @@ public:
 
     void show();
 
+    node* find(T token, int key);
+
     ~list();
 };
 
@@ -46,12 +48,14 @@ void list::push(int value)
         root = added;
         ++len;
     
+        //delete added;
         return;
     }
 
     top()->SetNext(added);
     ++len;
 
+    //delete added;
     return;
 }
 void list::push(T token)
@@ -60,13 +64,15 @@ void list::push(T token)
 
     if ((root == nullptr) || (len == 0)) {        
         root = added;
-        ++len;        
+        ++len;
+        //delete added;        
         return;
     }
 
     top()->SetNext(added);
     ++len;
 
+    //delete added;
     return;
 }
 void list::push(node* orig)
@@ -77,13 +83,14 @@ void list::push(node* orig)
     
         root = added;
         ++len;
-    
+        //delete added;
         return;
     }
 
     top()->SetNext(added);
     ++len;
 
+    //delete added;
     return;
 }
 
@@ -101,7 +108,7 @@ node* list::pop()
 
     for (int i = 0; i < len - 1; i++)
     {        
-        new_top = new_top->GetNext();    
+        new_top = new_top->GetNext();
     }
           
     node* target = new_top->GetNext();
@@ -116,17 +123,15 @@ node* list::top()
     {
         return nullptr;
     }
-    else
-    {
-        node* top = root;
+   
+    node* top = root;
             
-        for (int i = 0; i < len - 1; i++)
-        {
-            top = top->GetNext();
-        }
-        
-        return top;
+    for (int i = 0; i < len - 1; i++)
+    {
+        top = top->GetNext();
     }
+        
+    return top;
 }
 
 int list::GetSize()
@@ -194,10 +199,10 @@ void list::show()
             std::cout << "N ";
             break;
         case MIN:
-            std::cout << "MIN ";
+            std::cout << "MIN" << current->GetValue() << ' ';
             break;
         case MAX:
-            std::cout << "MAX ";
+            std::cout << "MAX" << current->GetValue() << ' ';
             break;
         case BRACKETS_START:
             std::cout << "( ";
@@ -218,6 +223,29 @@ void list::show()
     len = starting_length;
     
     std::cout << '\n';
+}
+
+node* list::find(T token, int key)
+{
+    if (root == nullptr)
+    {
+        return nullptr;
+    }
+    
+    node* current = root;
+
+    for (int i = 0; i < len - 1; i++)
+    {
+        if ((current->GetToken() == token) && (current->GetKey() == key))
+        {
+            //std::cout << "found a MIN/MAX token with the key " << current->GetKey() <<'\n';
+            return current;
+        }
+        
+        current = current->GetNext();
+    }
+
+    return nullptr;
 }
 
 

@@ -2,7 +2,11 @@
 #include "list.h"
 #include "kolejka.h"
 
+
 #define ERROR -99999
+
+void HandleMinMax(list* expression);
+void HandleIf(list* expression);
 
 int get_priority(T token)
 {
@@ -24,15 +28,37 @@ int get_priority(T token)
     }
 }
 
-int do_calculation(T token, int* ops)
+int do_calculation(T token, int* ops, int length)
 {
     if (token == MIN)
     {
         //find MIN
+        int min = ops[0];
+
+        for (int i = 0; i < length; i++)
+        {
+            if (ops[i] < min)
+            {
+                min = ops[i];
+            }
+        }
+
+        return min;
     }
     else if (token == MAX)
     {
         //find MAX
+        int max = ops[0];
+
+        for (int i = 0; i < length; i++)
+        {
+            if (ops[i] > max)
+            {
+                max = ops[i];
+            }
+        }
+        
+        return max;
     }
     
     return ERROR;
@@ -84,11 +110,9 @@ int do_calculation(T token, int op1, int op2)
 
 int do_calculation(T token, int op)
 {
-    //std::cout << "encountered the N token! previous value = " << op << ", the new value = ";
     if (token == N)
     {
         op = -op;
-        //std::cout << op << '\n';
         return op;
     }
     return ERROR;
@@ -109,19 +133,27 @@ kolejka* ONPConv(list* expression){
         }
         else if (token == BRACKETS_END){
             while (!stack->isEmpty()){
-                token = stack->pop()->GetToken();                
+                node* item = stack->pop();
+                token = item->GetToken();             
                 if(token == BRACKETS_START){break;}
                 else if (token == COMMA){continue;}
-                else { onp->push(token); }
+                else { 
+                    if ((token == MIN )|| (token == MAX)){ onp->push(item); }
+                    else{ onp->push(token); }
+                }
             }
         }
         else if (token == COMMA)
         {
             while (!stack->isEmpty()){
-                token = stack->pop()->GetToken();                
+                node* item = stack->pop();
+                token = item->GetToken();                
                 if(token == COMMA){break;}
                 else if(token == BRACKETS_START){stack->push(token); break;}
-                else { onp->push(token); }
+                else { 
+                    if ((token == MIN )|| (token == MAX)){ onp->push(item); }
+                    else{ onp->push(token); }
+                }
             }
             stack->push(COMMA);
         }
@@ -130,18 +162,33 @@ kolejka* ONPConv(list* expression){
             int priority = get_priority(token);
 
             while (!stack->isEmpty()){
-                T top = stack->pop()->GetToken(); 
+                T top;
+                node* current = nullptr;
+
+                if (stack->top()->GetToken() == MIN || stack->top()->GetToken() == MAX)
+                {
+                    current = stack->pop();
+                    top = current->GetToken();
+                }
+                else
+                {
+                    top = stack->pop()->GetToken(); 
+                }
 
                 if (top == COMMA){continue;}
 
                 if (((top == BRACKETS_START) || (get_priority(top) < priority)) || ((top == N) && (token == N))) {
-                    stack->push(top);                    
+                    if ((top == MIN )|| (top == MAX)){ stack->push(current); }
+                    else{ stack->push(top); }                   
                     break;
                 }
                 
-                onp->push(top);                
+                if ((top == MIN )|| (top == MAX)){ onp->push(current); }
+                else{ onp->push(top); }                
             }
-            stack->push(token);
+
+            if ((token == MIN )|| (token == MAX)){ stack->push(current); }
+            else{ stack->push(token); }
         }
 
         // std::cout << "\n---------\nCurrent state of expression:\n";
@@ -153,8 +200,17 @@ kolejka* ONPConv(list* expression){
         // std::cout << "---------\n\n";
     }
     while (!stack->isEmpty()) {
-        T item = (stack->pop())->GetToken();
-        onp->push(item);        
+        node* item = stack->pop();
+        T token = item->GetToken();
+
+        if (token == MIN || token == MAX)
+        {
+            onp->push(item);
+        }
+        else
+        {
+            onp->push(token); 
+        }       
     }
     return onp;
 }
@@ -217,7 +273,20 @@ int ONPCalc(kolejka* onp) {
                 int op2 = stack->pop()->GetValue();
                 int op1 = stack->pop()->GetValue();
                 result = do_calculation(token, op1, op2, op3);
-            } // add else if for MIN/MAX, creating an array of op's with malloc, length is a value
+            }
+            else if (token == MIN || token == MAX)
+            {
+                int n_arguments = current->GetValue();
+                int* arguments = new int[n_arguments];
+
+                for (int i = 0; i < n_arguments; i++)
+                {
+                    arguments[i] = stack->pop()->GetValue();
+                }
+                
+                result = do_calculation(token, arguments, n_arguments);
+                delete[] arguments;
+            }
             else
             {
                 int op2 = stack->pop()->GetValue();
@@ -239,8 +308,111 @@ int ONPCalc(kolejka* onp) {
     return result;
 }
 
+void HandleMinMax(list* expression)
+{
+    node* added = new node();
+    added->SetKey((long)added);
+
+    //std::cout << "encountered a MIN/MAX token and given it a key " << added->GetKey()  << '\n';
+
+    char c;
+    std::cin >> c;
+
+    if (c == 'I')
+    {
+        added->SetToken(MIN);
+    }
+    else if (c == 'A')
+    {
+        added->SetToken(MAX);
+    }
+
+    expression->push(added);
+
+    std::cin.ignore(1);
+
+    T token;
+    int brackets_encountered = -1;
+    int brackets_closed = 0;
+    int arguments = 1;
+
+    do
+    {
+        std::cin >> c;
+
+        switch (c)
+        {
+            case '+':
+                token = ADD;
+                break;
+            case '-':
+                token = SUBTRACT;
+                break;
+            case '*':
+                token = MULTIPLY;
+                break;
+            case '/':
+                token = DIVIDE;
+                break;
+            case 'N':
+                token = N;
+                break;
+            case '(':
+                brackets_encountered++;
+                token = BRACKETS_START;
+                break;
+            case ')':
+                brackets_closed++;
+
+                if ((brackets_closed - brackets_encountered) == 1)
+                {
+                    expression->push(BRACKETS_END);
+                    //std::cout << "looking for a MIN/MAX token with the key " << added->GetKey() << " and trying to set the value " << arguments << '\n';
+                    expression->find(added->GetToken(), added->GetKey())->SetValue(arguments); 
+                    delete added;
+                    return;
+                }
+
+                token = BRACKETS_END;
+                break;
+            case 'I':
+                expression->push(IF);
+                HandleIf(expression);
+                continue;
+            case 'M':
+                HandleMinMax(expression);
+                continue;
+            case ',':
+                token = COMMA;
+                arguments++;
+                break;
+            default:
+                if (expression->top() == nullptr)
+                {
+                    expression->push((int) c - (int)('0'));
+                }
+                else if (expression->top()->GetToken() == NUMBER)
+                {
+                    expression->top()->SetValue((expression->top()->GetValue() * 10) + (int) c - (int)('0'));
+                }
+                else
+                {
+                    expression->push((int) c - (int)('0'));
+                }
+                continue;
+        }
+
+        expression->push(token);
+    } while (true);
+
+    delete added;
+    return;
+}
+
 void HandleIf(list* expression)
 {
+    std::cin.ignore(1); //Ignoring F letter
+
     char c;
     T token;
     int brackets_encountered = -1;
@@ -268,16 +440,6 @@ void HandleIf(list* expression)
                 token = N;
                 break;
             case '(':
-                // if (brackets_encountered == -1)
-                // { 
-                //     brackets_encountered++;
-                //     continue;
-                // }
-                // else if (brackets_encountered == brackets_closed)
-                // {
-                //     brackets_encountered++;
-                //     token = BRACKETS_START;
-                // }
                 brackets_encountered++;
                 token = BRACKETS_START;
                 break;
@@ -296,7 +458,8 @@ void HandleIf(list* expression)
                 expression->push(IF);
                 HandleIf(expression);
                 continue;
-            case 'F':
+            case 'M':
+                HandleMinMax(expression);
                 continue;
             case ',':
                 token = COMMA;
@@ -364,6 +527,9 @@ list* HandleExpression()
                 expression->push(IF);
                 HandleIf(expression);
                 continue;
+            case 'M':
+                HandleMinMax(expression);
+                continue;
             default:
                 if (expression->top() == nullptr)
                 {
@@ -388,16 +554,13 @@ list* HandleExpression()
 
     int length = expression->GetSize();
     
-    //std::cout<<"The length is " << length <<"\nNormalisation:\n";
     for (int i = 0; i < length; i++)
     {
-        //std::cout<<"normalising token number " << i + 1 << "...\n";
         node* moved = expression->pop();        
-        //std::cout<<"done\n";
         norm_expression->push(moved);
     }
 
-    //std::cout<<"Normalisation finished!\n";
+    delete expression;
     return norm_expression;
 }
 
@@ -429,5 +592,10 @@ int main()
         }
         
         std::cout << result <<"\n\n";
+
+        delete expression;
+        delete onp;
     }
+
+    return 0;
 }

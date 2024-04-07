@@ -88,10 +88,10 @@ void kolejka::show()
                 std::cout << "N ";
                 break;
             case MIN:
-                std::cout << "MIN ";
+                std::cout << "MIN" << current->GetValue() << ' ';
                 break;
             case MAX:
-                std::cout << "MAX ";
+                std::cout << "MAX" << current->GetValue() << ' ';
                 break;
             case BRACKETS_START:
                 std::cout << "( ";

@@ -1,15 +1,4 @@
-// #define NUMBER 1
-// #define ADD 2
-// #define SUBSTRUCT 3
-// #define MULTIPLY 4
-// #define DIVIDE 5
-// #define IF 6
-// #define N 7
-// #define MIN 8
-// #define MAX 9
-// #define BRACKETS_START 10
-// #define BRACKETS_END 11
-
+#pragma once
 
 typedef enum {
     NUMBER,
@@ -33,6 +22,7 @@ class node
 private:
     T token;
     int value;
+    int key;
 
     node* next;
 public:
@@ -50,6 +40,9 @@ public:
     int GetValue();
     void SetValue(int new_value);
 
+    int GetKey();
+    void SetKey(int key);
+
     ~node();
 };
 
@@ -58,6 +51,7 @@ node::node()
     token = NUMBER;
     value = 0;
     next = nullptr;
+    key = -1;
 }
 
 node::node(T tok)
@@ -65,20 +59,23 @@ node::node(T tok)
     token = tok;
     value = 0;
     next = nullptr;
+    key = -1;
 }
 
 node::node(int value)
 {
-    this->token = NUMBER;
+    token = NUMBER;
     this->value = value;
     next = nullptr;
+    key = -1;
 }
 
 node::node(node* orig)
 {
-    this->token = orig->GetToken();
-    this->value = orig->GetValue();
+    token = orig->GetToken();
+    value = orig->GetValue();
     next = nullptr;
+    key = orig->GetKey(); 
 }
 
 T node::GetToken()
@@ -111,8 +108,21 @@ void node::SetValue(int new_value)
     this->value = new_value;
 }
 
+int node::GetKey()
+{
+    return key;
+}
+
+void node::SetKey(int key)
+{
+    this->key = key;
+}
+
 node::~node()
 {
-    delete next;
-    next = nullptr;
+    if (next != nullptr)
+    {
+        delete next;
+        next = nullptr;   
+    }
 }
