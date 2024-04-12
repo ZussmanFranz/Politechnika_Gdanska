@@ -3,9 +3,11 @@
 #include <iostream>
 #include <vector>
 #include <ncurses.h>
-#include "organizm.h"
+//#include "organizm.h"
 
-#include "animals/animals.h"
+//#include "animals/animals.h"
+#include "animals/animal.h"
+#include "animals/player.h"
 //#include "plants/plants.h"
 
 typedef struct

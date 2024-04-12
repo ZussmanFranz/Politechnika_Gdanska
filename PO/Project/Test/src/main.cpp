@@ -1,7 +1,6 @@
 #include <ncurses.h>
 #include "world.h"
 
-
 const YX FIELD_SIZE = {3, 5};
 const YX PADDING = {0, 1};
 

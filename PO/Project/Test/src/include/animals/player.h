@@ -1,14 +1,14 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "animal.h"
-#include "world.h"
+#include "animals/animal.h"
+//#include "world.h"
 
 
 class player: public animal
 {  
 public:
-    player(world* world_point, YX position)
+    player(world& world_point, YX position)
     :animal(5,4, position, world_point)
     {
         avatar = 'P';

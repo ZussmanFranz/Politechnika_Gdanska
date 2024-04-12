@@ -3,12 +3,13 @@
 
 
 #include "organizm.h"
+//#include "../world.h"
 
 class animal: public virtual organizm
 {
 private:
 public:
-    animal(int strength, int initiative, YX position, world* world_point)
+    animal(int strength, int initiative, YX position, world& world_point)
     : organizm(world_point)
     {
         this->strength = strength;
@@ -41,7 +42,7 @@ void animal::Draw(YX position)
 
 void animal::Move(YX delta)
 {
-    world_point->FindField(position)->member = nullptr;
+    world_point.FindField(position)->member = nullptr;
 
     position = {position.y + delta.y, position.x + delta.x};
 
@@ -63,7 +64,7 @@ void animal::Move(YX delta)
     //     position.y = 0;
     // }
 
-    world_point->FindField(position)->member = this;
+    world_point.FindField(position)->member = this;
 
     printw("Moved to {%d,%d}", position.y, position.x);
     return;
