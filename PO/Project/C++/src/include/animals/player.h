@@ -16,6 +16,7 @@ public:
 
     void Draw(YX position) override;
     void Action() override;
+    void Action(char input);
 
     CLASS GetClass() override { return PLAYER; }
 
@@ -60,6 +61,31 @@ void player::Action()
 
     Move(delta);
     //finish the logic!
+}
+
+void player::Action(char input)
+{
+    YX delta = {0,0};
+
+    switch (input)
+    {
+    case 'w':
+        delta = {-1,0};
+        break;
+    case 'a':
+        delta = {0,-1};
+        break;
+    case 's':
+        delta = {1,0};
+        break;
+    case 'd':
+        delta = {0,1};
+        break;
+    default:
+        break;
+    }
+
+    Move(delta);
 }
 
 player::~player()

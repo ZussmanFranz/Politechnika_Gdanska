@@ -78,8 +78,8 @@ public:
     void Add(organizm* added);
     void Destroy(organizm* destroyed);
 
-    YX GetDimensions(){ return dimensions; }
-    YX GetFieldSize(){ return field_size; }
+    YX GetDimensions() const { return dimensions; }
+    YX GetFieldSize() const { return field_size; }
     field* FindField(YX id);
 
     int GetRound(){ return round; }
