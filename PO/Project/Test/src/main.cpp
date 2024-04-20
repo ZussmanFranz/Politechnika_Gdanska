@@ -1,5 +1,8 @@
 #include <ncurses.h>
 #include "world.h"
+//#include "organizm.h"
+//#include "animal.h"
+//#include "player.h"
 
 const YX FIELD_SIZE = {3, 5};
 const YX PADDING = {0, 1};
@@ -28,6 +31,8 @@ int main() {
     curs_set(0); 
 
     world* my_world = new world(y,x, FIELD_SIZE, PADDING);
+    player* Player = new player(my_world, {0,0});
+    my_world->Add(Player);
 
     char input;
 

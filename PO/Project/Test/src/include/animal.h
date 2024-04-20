@@ -1,7 +1,4 @@
-#ifndef ANIMAL_H
-#define ANIMAL_H
-
-
+#pragma once
 #include "organizm.h"
 
 class animal: public virtual organizm
@@ -63,6 +60,3 @@ void animal::Move(YX delta)
 
     return;
 }
-
-
-#endif // ANIMAL_H

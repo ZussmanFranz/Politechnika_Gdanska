@@ -4,8 +4,9 @@
 #include <vector>
 #include <ncurses.h>
 #include "organizm.h"
-#include "animal.h"
-#include "player.h"
+//#include "animals/animal.h"
+//#include "animals/animals.h"
+//#include "plants/plants.h"
 
 typedef struct
 {
@@ -16,20 +17,27 @@ typedef struct
 
     void draw_box(YX field_size)
     {
-        // int COLOR = COLOR_WHITE;
+        if (member != nullptr) {
+            int COLOR = COLOR_MAGENTA;
+            
+            switch (member->GetClass())
+            {
+            case PLAYER:
+                COLOR = COLOR_YELLOW;
+                break;
+            case PLANT:
+                COLOR = COLOR_GREEN;
+                break;
+            case ANIMAL:
+                COLOR = COLOR_RED;
+                break;
+            default:
+                break;
+            }
 
-        // if (member != nullptr) {
-        //     if (auto player_ptr = dynamic_cast<player*>(member)) {
-        //         COLOR = COLOR_YELLOW;
-        //     } else if (auto plant_ptr = dynamic_cast<plant*>(member)) {
-        //         COLOR = COLOR_GREEN;
-        //     } else if (auto animal_ptr = dynamic_cast<animal*>(member)) {
-        //         COLOR = COLOR_RED;
-        //     }
-
-        //     init_pair(1, COLOR, COLOR_BLACK);
-        //     attron(COLOR_PAIR(1));
-        // }
+            init_pair(1, COLOR, COLOR_BLACK);
+            attron(COLOR_PAIR(1));
+        }
 
         mvvline(position.y + 1, position.x, ACS_VLINE, field_size.y - 1);
         mvvline(position.y, position.x + field_size.x - 1, ACS_VLINE, field_size.y - 1);
@@ -42,23 +50,25 @@ typedef struct
         mvaddch(position.y + field_size.y - 1, position.x, ACS_LLCORNER);
         mvaddch(position.y + field_size.y - 1, position.x + field_size.x - 1, ACS_LRCORNER);
 
-        // if (member != nullptr){
-        //     attroff(COLOR_PAIR(1));
-        // }
+        if (member != nullptr){
+            attroff(COLOR_PAIR(1));
+        }
         return;
     }
 }field;
+
 
 class world
 {
 private:
     std::vector<organizm*> members;
     field** fields;
-    const YX dimensions;
-    const YX field_size;
-    const YX padding;
+    YX dimensions;
+    YX field_size;
+    YX padding;
 
     int round;
+    bool end;
 public:
     world(int y, int x, YX field_size, YX padding);
 
@@ -67,11 +77,17 @@ public:
     void Add(organizm* added);
     void Destroy(organizm* destroyed);
 
-    YX GetDimensions(){ return dimensions; }
-    YX GetFieldSize(){ return field_size; }
+    void GenerateRandomOrganizm();
+    void GenerateRandomStart(int number_of_organizms);
+
+    YX GetDimensions() const { return dimensions; }
+    YX GetFieldSize() const { return field_size; }
     field* FindField(YX id);
+    field* GetRandomField();
 
     int GetRound(){ return round; }
+    bool IsOver() { return end; }
 
     ~world();
 };
+

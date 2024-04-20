@@ -1,11 +1,8 @@
-#ifndef WORLD_CPP
-#define WORLD_CPP
-
 #include "world.h"
 
 
 world::world(int y, int x, YX field_size, YX padding)
-: field_size(field_size), padding(padding), round(0), dimensions({y,x})
+:dimensions({y,x}), field_size(field_size), padding(padding), round(0)
 {
     int max_y, max_x;
     getmaxyx(stdscr, max_y, max_x);
@@ -32,11 +29,8 @@ world::world(int y, int x, YX field_size, YX padding)
             fields[i][j].member = nullptr;
         }
     }
-
-    Player = new player(this, {0,0});
-
-    Add(Player);
 }
+
 
 field* world::FindField(YX id)
 {
@@ -50,7 +44,7 @@ field* world::FindField(YX id)
     }
 }
 
-void  world::Draw()
+void world::Draw()
 {
     for (int i = 0; i < dimensions.y; i++) {
         for (int j = 0; j < dimensions.x; j++) 
@@ -62,16 +56,17 @@ void  world::Draw()
             }
         }
     }
+
+    //organizmy->Draw()
 }
 void world::Update(char input)
 {
     round++;
 
     for (auto* org : members) { // i should add the initiative and age check
-        if (player* playerPtr = dynamic_cast<player*>(org))
-        {        
-            printw("detected player action!");
-            playerPtr->Action(input);
+        if (auto player_ptr = dynamic_cast<player*>(org))
+        {
+            player_ptr->Action(input);
         }
         else
         {
@@ -101,18 +96,13 @@ void world::Destroy(organizm* destroyed)
     }
 }
 
-// void world::Move(organizm* moved, YX delta)
-// {
-//     //?
-// }
-
 world::~world()
 {
-    // for (auto it = members.begin(); it != members.end(); ++it) {
-    //     delete *it;
-    //     members.erase(it);
-    //     break;
-    // }
+    for (auto it = members.begin(); it != members.end(); ++it) {
+        delete *it;
+        members.erase(it);
+        break;
+    }
 
     for (int i = 0; i < dimensions.y; i++) 
     {
@@ -122,4 +112,3 @@ world::~world()
     delete[] fields;
 }
 
-#endif

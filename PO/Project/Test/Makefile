@@ -1,5 +1,5 @@
 CXX = g++
-CXXFLAGS = -Wall -Wextra -std=c++11
+CXXFLAGS = -std=c++11
 INCLUDES = -Isrc/include
 LIBS = -lncurses
 
@@ -7,7 +7,7 @@ SRCDIR = src
 OBJDIR = obj
 BINDIR = bin
 
-SOURCES = $(wildcard $(SRCDIR)/*.cpp)
+SOURCES = $(wildcard $(SRCDIR)/*.cpp, wildcard $(SRCDIR)/include/*.cpp)
 OBJECTS = $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SOURCES))
 EXECUTABLE = $(BINDIR)/main
 

@@ -1,6 +1,8 @@
 #include <ncurses.h>
 #include "world.h"
+#include "organizm.h"
 
+class world;
 
 const YX FIELD_SIZE = {3, 5};
 const YX PADDING = {0, 1};
@@ -28,6 +30,7 @@ int main() {
     noecho(); 
     curs_set(0); 
 
+    //world& my_world =  world::GetInstance(y, x, FIELD_SIZE, PADDING);
     world* my_world = new world(y,x, FIELD_SIZE, PADDING);
 
     char input;
@@ -37,15 +40,16 @@ int main() {
         draw_interface(my_world);
 
         my_world->Update(input);
+        getch();
         my_world->Draw();
 
         input = getch();
         clear();
-    } while (input != 'q');
+    } while ((input != 'q') && (!(my_world->IsOver())));
 
     //getch();
 
-    delete my_world;
+    //delete my_world;
     endwin();
     return 0;
 }
