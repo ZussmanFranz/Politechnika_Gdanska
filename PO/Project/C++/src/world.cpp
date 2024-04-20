@@ -92,16 +92,10 @@ void world::Draw()
     for (int i = 0; i < dimensions.y; i++) {
         for (int j = 0; j < dimensions.x; j++) 
         {
-            mvprintw(20 + i + j, 2, "i: %d j: %d", i, j);
-            getch();
-
             fields[i][j].draw_box(field_size);
             if (fields[i][j].member != nullptr) 
             {
-                mvprintw(i + j, 2, "encounter an entity!");
-                getch();
                 fields[i][j].member->Draw({fields[i][j].position.y + fields[i][j].field_size.y/2, fields[i][j].position.x + fields[i][j].field_size.x/2});
-                getch();
             }
         }
     }
@@ -191,9 +185,6 @@ void world::GenerateRandomOrganizm()
         default:
             break;
         }
-
-        printw("created an animal with the i = %d and j = %d", random->id.y, random->id.x);
-        getch();
     }
     else if (type == 2) // plant
     {

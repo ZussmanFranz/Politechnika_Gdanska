@@ -17,6 +17,16 @@ void draw_interface(world* my_world)
     mvprintw(screen_height - 1, screen_height/2 - 14, "q - quit, w a s d - controls");
 }
 
+void draw_endscreen(world* my_world)
+{
+    int screen_height, screen_width;
+    getmaxyx(stdscr, screen_height, screen_width);
+
+    mvprintw(1, screen_width/2 - 5, "Round is %d", my_world->GetRound());
+    mvprintw(0, screen_width/2 - 15, "End of Game!");
+    my_world->Draw();
+}
+
 int main() {
     initscr();
     start_color();
@@ -40,14 +50,15 @@ int main() {
         draw_interface(my_world);
 
         my_world->Update(input);
-        getch();
+        //getch();
         my_world->Draw();
 
         input = getch();
         clear();
     } while ((input != 'q') && (!(my_world->IsOver())));
 
-    //getch();
+    draw_endscreen(my_world);
+    getch();
 
     //delete my_world;
     endwin();
