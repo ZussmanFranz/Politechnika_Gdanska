@@ -8,6 +8,7 @@ organizm::organizm()
 organizm::organizm(world* world_point)
 {
     this->world_point = world_point;
+    death_sentence = false;
 }
 
 organizm::~organizm() {}

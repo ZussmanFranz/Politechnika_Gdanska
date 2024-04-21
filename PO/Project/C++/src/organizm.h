@@ -20,7 +20,7 @@ protected:
     YX position;
     world* world_point;
     char avatar;
-
+    bool death_sentence;
 public:
     organizm();
     organizm(world* world_point);
@@ -38,6 +38,9 @@ public:
     int GetInitiative() { return initiative; }
     void SetBirth(int new_birth) { birth = new_birth; }
     int GetBirth() { return birth; }
+
+    void IEddardOfTheHouseStartLordOfWinterfellAndWardenOfTheNorthSentenceYouToDie() { death_sentence = true; }
+    bool GetSentence() { return death_sentence; }
 
     virtual CLASS GetClass() = 0;
 

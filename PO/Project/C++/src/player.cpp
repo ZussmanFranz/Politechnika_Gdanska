@@ -8,7 +8,7 @@ player::player(world* world_point, YX position)
 
 void player::Draw(YX position)
 {
-    init_pair(1, COLOR_YELLOW, COLOR_BLACK);
+    init_pair(1, COLOR_YELLOW, -1);
     
     attron(COLOR_PAIR(1));
     

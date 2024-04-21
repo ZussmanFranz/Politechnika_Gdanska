@@ -30,6 +30,7 @@ void draw_endscreen(world* my_world)
 int main() {
     initscr();
     start_color();
+    use_default_colors();
 
     int x, y;
     printw("enter world dimensions: ");
@@ -60,7 +61,7 @@ int main() {
     draw_endscreen(my_world);
     getch();
 
-    //delete my_world;
+    delete my_world;
     endwin();
     return 0;
 }

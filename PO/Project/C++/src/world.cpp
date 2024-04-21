@@ -9,6 +9,9 @@ world::world(int y, int x, YX field_size, YX padding)
     //initialising random for the whole project
     srand(time(NULL));
 
+    //Logger initialisation
+    Logger = new logmanager("log.txt");
+
     round = 0;
     end = false;
     dimensions = {y, x};
@@ -107,12 +110,42 @@ void world::Update(char input)
     round++;
 
     for (organizm* org : members) { // i should add the initiative and age check
+
+        if (org->GetSentence())
+        {
+            continue;
+        }
+        
+
         if (player* player_ptr = dynamic_cast<player*>(org)) {
             player_ptr->Action(input);
         }
         else
         {
             org->Action();
+        }
+    }
+
+    //vector of organizms to eliminate
+    for (std::vector<organizm*>::iterator it = members.begin(); it != members.end();)
+    {
+        organizm* org = *it;
+        if (org->GetSentence()) 
+        {
+            if (dynamic_cast<player*>(org) != nullptr) 
+            {
+                end = true;
+            }
+            
+            mvprintw(30 ,2 ,"some entity has been murdered!");
+            delete org;
+
+            it = members.erase(it); // Erase and update iterator
+
+        } 
+        else 
+        {
+            ++it; // Move to the next element
         }
     }
 }
@@ -126,19 +159,23 @@ void world::Add(organizm* added)
 
 void world::Destroy(organizm* destroyed)
 {
-    FindField(destroyed->GetPosition())->member = nullptr;
-    
     for (std::vector<organizm*>::iterator it = members.begin(); it != members.end(); ++it) {
-    if (*it == destroyed) {
-        if (dynamic_cast<player*>(*it) != nullptr) {
-            end = true;
-        }
+        if (*it == destroyed) {
+            if (dynamic_cast<player*>(*it) != nullptr) {
+                end = true;
+            }
 
-        delete *it;
-        members.erase(it);
-        break;
+            delete *it;
+            members.erase(it);
+            break;
+        }
     }
 }
+
+void world::Kill(organizm* killed)
+{
+    FindField(killed->GetPosition())->member = nullptr;
+    killed->IEddardOfTheHouseStartLordOfWinterfellAndWardenOfTheNorthSentenceYouToDie();
 }
 
 void world::GenerateRandomOrganizm()
@@ -146,6 +183,7 @@ void world::GenerateRandomOrganizm()
     field* random = GetRandomField();
     if (random == nullptr)
     {
+        clear();
         printw("There is no free field!");
         getch();
         return;
@@ -221,11 +259,11 @@ void world::GenerateRandomStart(int number_of_organizms)
 
 world::~world()
 {
-    for (auto it = members.begin(); it != members.end(); ++it) {
-        delete *it;
-        members.erase(it);
-        break;
+    for (organizm* org : members) {
+        delete org;
     }
+
+    members.clear();
 
     for (int i = 0; i < dimensions.y; i++) 
     {
@@ -233,4 +271,5 @@ world::~world()
     }
 
     delete[] fields;
+    delete Logger;
 }

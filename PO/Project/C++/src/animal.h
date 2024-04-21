@@ -12,7 +12,9 @@ public:
     void Move(YX delta);
 
     void Action() override;
+
     int Collision(organizm* target) override;
+    int Fight(organizm* target); 
 
     CLASS GetClass() override;
 

@@ -11,7 +11,7 @@ animal::animal(int strength, int initiative, YX position, world* world_point)
 
 void animal::Draw(YX position)
 {
-    init_pair(1, COLOR_RED, COLOR_BLACK);
+    init_pair(1, COLOR_RED, -1);
     
     attron(COLOR_PAIR(1));
     
@@ -72,6 +72,13 @@ void animal::Action()
 
 int animal::Collision(organizm* target)
 {
+    int result = Fight(target);
+    
+    world_point->GetLogger()->LogCollision(this, target, result);
+}
+
+int animal::Fight(organizm* target)
+{
     if (target == nullptr)
     {
         return 0;
@@ -80,13 +87,13 @@ int animal::Collision(organizm* target)
     if (target->GetStrength() < strength)
     {
         // succes
-        world_point->Destroy(target);
+        world_point->Kill(target);
         return 0;
     }
     else if (target->GetStrength() > strength)
     {
         // failed
-        world_point->Destroy(this);
+        world_point->Kill(this);
         return 1;
     }
     else
@@ -94,13 +101,13 @@ int animal::Collision(organizm* target)
         if (target->GetBirth() <= birth)
         {
             // succes
-            world_point->Destroy(target);
+            world_point->Kill(target);
             return 0;
         }
         else
         {
             //failed
-            world_point->Destroy(this);
+            world_point->Kill(this);
             return 1;
         }
     }

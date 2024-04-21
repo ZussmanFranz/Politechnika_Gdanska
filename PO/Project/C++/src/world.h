@@ -7,6 +7,7 @@
 //#include "animals/animal.h"
 //#include "animals/animals.h"
 //#include "plants/plants.h"
+#include "logmanager.h"
 
 typedef struct
 {
@@ -35,7 +36,7 @@ typedef struct
                 break;
             }
 
-            init_pair(1, COLOR, COLOR_BLACK);
+            init_pair(1, COLOR, -1);
             attron(COLOR_PAIR(1));
         }
 
@@ -69,6 +70,8 @@ private:
 
     int round;
     bool end;
+
+    logmanager* Logger;
 public:
     world(int y, int x, YX field_size, YX padding);
 
@@ -76,6 +79,7 @@ public:
     void Update(char input);
     void Add(organizm* added);
     void Destroy(organizm* destroyed);
+    void Kill(organizm* killed);
 
     void GenerateRandomOrganizm();
     void GenerateRandomStart(int number_of_organizms);
@@ -87,6 +91,8 @@ public:
 
     int GetRound(){ return round; }
     bool IsOver() { return end; }
+
+    logmanager* GetLogger() { return Logger; }
 
     ~world();
 };
