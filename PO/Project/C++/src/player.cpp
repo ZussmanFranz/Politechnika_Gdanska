@@ -18,7 +18,7 @@ void player::Draw(YX position)
 }
 
 
-void player::Action(char input)
+int player::Action(char input)
 {
     YX delta = {0,0};
 
@@ -40,7 +40,7 @@ void player::Action(char input)
         break;
     }
 
-    Move(delta);
+    return Move(delta);
 }
 
 CLASS player::GetClass() 

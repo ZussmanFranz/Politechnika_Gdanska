@@ -20,8 +20,10 @@ void animal::Draw(YX position)
     attroff(COLOR_PAIR(1));
 }
 
-void animal::Move(YX delta)
+int animal::Move(YX delta) //0 - normal move, 1 - collision
 {
+    bool collided = false;
+
     world_point->FindField(position)->member = nullptr;
 
     YX new_position = {position.y + delta.y, position.x + delta.x};
@@ -50,66 +52,94 @@ void animal::Move(YX delta)
 
     //fight with the member of the new position (must return 1 if attak is failed and 0 is attak is succesful)
     organizm* target = world_point->FindField(new_position)->member;
-    if ((target != nullptr) && (Collision(target) == 1))
+
+    if (target != nullptr)
     {
-        return;
+        collided = true;
     }
 
+    if ((collided) && (Collision(target) == 1))
+    {
+    //     //diagnostics:
+    //     printw("\nattaker is dead.");
+    //     getch();
+
+        return 1;
+    }
+    
     position = new_position;
 
     world_point->FindField(position)->member = this;
 
-    return;
+
+    if (collided)
+    {
+        return 1;
+    }
+    return 0;
 }
 
-void animal::Action()
+int animal::Action() // 0 - normal move, 1 - collision detected
 {
     int delta_y = rand() % 3 - 1; // Generates random number between -1 and 1
     int delta_x = rand() % 3 - 1; // Generates random number between -1 and 1
 
-    Move({delta_y, delta_x});
+    return Move({delta_y, delta_x});
 }
 
 int animal::Collision(organizm* target)
 {
+    world_point->GetLogger()->LogCollision(this, target);
+    
     int result = Fight(target);
     
-    world_point->GetLogger()->LogCollision(this, target, result);
+    world_point->GetLogger()->LogCollisionResult((result) ? target : this);
+    
+    // //diagnostics:
+    // printw("\nresult is %d", result);
+    // getch();
+
+
+    // //diagnostics:
+    // printw("\nlogged(no)");
+    // getch();
+
+    return result;
 }
 
 int animal::Fight(organizm* target)
 {
+    // //diagnostics:
+    // clear();
+    // printw("collision!");
+    // getch();
+
     if (target == nullptr)
     {
         return 0;
     }
 
-    if (target->GetStrength() < strength)
+    if (target->GetStrength() <= strength)
     {
+        // //diagnostics:
+        // printw("\nsucces.");
+        // getch();
+
         // succes
-        world_point->Kill(target);
+        //world_point->Kill(target);
+        world_point->Destroy(target);
         return 0;
     }
     else if (target->GetStrength() > strength)
     {
+        // //diagnostics:
+        // printw("\nfail.");
+        // getch();
+
         // failed
-        world_point->Kill(this);
+        //world_point->Kill(this);
+        world_point->Destroy(this);
         return 1;
-    }
-    else
-    {
-        if (target->GetBirth() <= birth)
-        {
-            // succes
-            world_point->Kill(target);
-            return 0;
-        }
-        else
-        {
-            //failed
-            world_point->Kill(this);
-            return 1;
-        }
     }
 }
 

@@ -109,43 +109,28 @@ void world::Update(char input)
 {
     round++;
 
-    for (organizm* org : members) { // i should add the initiative and age check
+    int action_result = 0;
 
-        if (org->GetSentence())
+    for (int i = 0; i < members.size(); i++)
+    {
+        if (members.size() <= 1)
         {
-            continue;
+            end = true;
         }
         
 
-        if (player* player_ptr = dynamic_cast<player*>(org)) {
-            player_ptr->Action(input);
+        if (end)
+        {
+            return;
+        }
+        
+        
+        if (player* player_ptr = dynamic_cast<player*>(members[i])) {
+            action_result = player_ptr->Action(input);
         }
         else
         {
-            org->Action();
-        }
-    }
-
-    //vector of organizms to eliminate
-    for (std::vector<organizm*>::iterator it = members.begin(); it != members.end();)
-    {
-        organizm* org = *it;
-        if (org->GetSentence()) 
-        {
-            if (dynamic_cast<player*>(org) != nullptr) 
-            {
-                end = true;
-            }
-            
-            mvprintw(30 ,2 ,"some entity has been murdered!");
-            delete org;
-
-            it = members.erase(it); // Erase and update iterator
-
-        } 
-        else 
-        {
-            ++it; // Move to the next element
+            action_result = members[i]->Action();
         }
     }
 }
@@ -159,23 +144,35 @@ void world::Add(organizm* added)
 
 void world::Destroy(organizm* destroyed)
 {
-    for (std::vector<organizm*>::iterator it = members.begin(); it != members.end(); ++it) {
-        if (*it == destroyed) {
-            if (dynamic_cast<player*>(*it) != nullptr) {
-                end = true;
-            }
+    FindField(destroyed->GetPosition())->member = nullptr;
 
-            delete *it;
-            members.erase(it);
-            break;
-        }
+    auto it = std::find(members.begin(), members.end(), destroyed);
+
+    if (dynamic_cast<player*>(*it) != nullptr)
+    {
+        end = true;
     }
+    
+
+    if (it != members.end()) {
+        // //diagnostics:
+        // printw("\ndeleted %s", Logger->GetEntityName(destroyed).c_str());
+        // getch();
+
+        delete *it;
+        members.erase(it);
+
+        // //diagnostics:
+        // printw("\ndone.");
+        // getch();
+    } 
 }
 
 void world::Kill(organizm* killed)
 {
     FindField(killed->GetPosition())->member = nullptr;
     killed->IEddardOfTheHouseStartLordOfWinterfellAndWardenOfTheNorthSentenceYouToDie();
+    Destroy(killed);
 }
 
 void world::GenerateRandomOrganizm()

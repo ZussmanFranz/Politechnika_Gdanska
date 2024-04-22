@@ -8,7 +8,7 @@ public:
 
     void Draw(YX position) override;
     //void Action() override;
-    void Action(char input);
+    int Action(char input);
 
     CLASS GetClass() override;
 

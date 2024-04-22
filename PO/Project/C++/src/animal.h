@@ -9,9 +9,9 @@ public:
 
     void Draw(YX position) override;
 
-    void Move(YX delta);
+    int Move(YX delta);
 
-    void Action() override;
+    int Action() override;
 
     int Collision(organizm* target) override;
     int Fight(organizm* target); 

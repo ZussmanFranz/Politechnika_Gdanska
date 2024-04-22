@@ -1,4 +1,5 @@
 #pragma once
+
 class world;
 
 typedef struct {
@@ -25,7 +26,7 @@ public:
     organizm();
     organizm(world* world_point);
 
-    virtual void Action() = 0;
+    virtual int Action() = 0;
     virtual int Collision(organizm* target) = 0;
     virtual void Draw(YX position);
 

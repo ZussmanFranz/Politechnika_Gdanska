@@ -46,7 +46,7 @@ std::string logmanager::GetEntityName(organizm* entity)
     }
 }
 
-void logmanager::LogCollision(organizm* attaker, organizm* prey, int result)
+void logmanager::LogCollision(organizm* attaker, organizm* prey)
 {
     if (!logFile.is_open())
     {
@@ -54,29 +54,23 @@ void logmanager::LogCollision(organizm* attaker, organizm* prey, int result)
         return;
     }
     
-    std::string attaker_name = GetEntityName(attaker);
-    std::string prey_name = GetEntityName(prey);
+    std::string attaker_name = GetEntityName(attaker).c_str();
+    std::string prey_name = GetEntityName(prey).c_str();
 
-    logFile << "Fight log: " << attaker_name << " vs " << prey_name << "\nwinner: ";
-    if (result == 0)
+    logFile << "Fight log: " << attaker_name << " vs " << prey_name << "\n";
+
+    logFile << "location: y = " << prey->GetPosition().y << " x = " << prey->GetPosition().x << "\n";
+}
+
+void logmanager::LogCollisionResult(organizm* winner)
+{
+    if (!logFile.is_open())
     {
-        logFile << attaker_name << '\n';
-    }
-    else if (result == 1)
-    {
-        logFile << prey_name << '\n';
-    }
-    else
-    {
-        logFile << "error\n\n";
+        //error!
         return;
     }
 
-    organizm* winner = (result) ? prey : attaker;
-
-    logFile << "location: y = " << winner->GetPosition().y << " x = " << winner->GetPosition().x << "\n\n";
-
-    winner = nullptr;
+    logFile << "winner is " << GetEntityName(winner).c_str() << "\n\n";
 }
 
 logmanager::~logmanager()

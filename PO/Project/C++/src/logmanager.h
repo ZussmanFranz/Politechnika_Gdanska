@@ -14,7 +14,8 @@ public:
 
     std::string GetEntityName(organizm* entity);
 
-    void LogCollision(organizm* attaker, organizm* prey, int result);
+    void LogCollision(organizm* attaker, organizm* prey);
+    void LogCollisionResult(organizm* winner);
 
     ~logmanager();
 };

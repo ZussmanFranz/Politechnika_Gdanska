@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include <ncurses.h>
 #include "organizm.h"
 //#include "animals/animal.h"
