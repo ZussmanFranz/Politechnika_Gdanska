@@ -5,7 +5,7 @@ class fox: public animal
 public:
     fox(world* world_point, YX position);
     
-    //void Action() override {};
+    int Fight(organizm* target) override; 
 
     ~fox();
 };

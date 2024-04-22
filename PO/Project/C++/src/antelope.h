@@ -5,7 +5,8 @@ class antelope: public animal
 public:
     antelope(world* world_point, YX position);
 
-    //void Action() override {};
+    int Action() override;
+    bool RejectAttak(organizm* attaker) override;
 
     ~antelope();
 };

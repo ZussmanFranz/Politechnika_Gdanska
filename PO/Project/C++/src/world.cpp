@@ -1,7 +1,9 @@
 #include "world.h"
 #include "animals.h"
+#include <cstddef>
 #include <cstdlib>
 #include <ctime> 
+#include <vector>
 
 
 world::world(int y, int x, YX field_size, YX padding)
@@ -90,6 +92,34 @@ field* world::GetRandomField()
     }
 }
 
+field* world::GetFreeFieldNear(YX position)
+{
+    std::vector<field*> free_fields;
+
+    for (int i = -1; i < 2; i++) {
+        for (int j = -1; j < 2; j++) {
+            if ((i == 0) && (j == 0)) {
+                continue;
+            }
+
+            field* target = FindField({position.y + i, position.x + j});
+
+            if ((target != nullptr) && (target->member == nullptr)) 
+            {
+                free_fields.push_back(target);
+            }
+        }
+    }
+
+    if (free_fields.size() == 0) {
+        return nullptr;
+    }
+
+    else {
+        return free_fields[rand() % free_fields.size()];
+    }
+}
+
 void world::Draw()
 {
     for (int i = 0; i < dimensions.y; i++) {
@@ -139,6 +169,8 @@ void world::Add(organizm* added)
 
 void world::Destroy(organizm* destroyed)
 {
+    Logger->NecroLog(destroyed);
+
     FindField(destroyed->GetPosition())->member = nullptr;
 
     auto it = std::find(members.begin(), members.end(), destroyed);

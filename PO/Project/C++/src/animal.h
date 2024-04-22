@@ -16,6 +16,8 @@ public:
     int Collision(organizm* target) override;
     int Fight(organizm* target); 
 
+    bool RejectAttak(organizm* attaker) override {return false;}
+
     CLASS GetClass() override;
 
     ~animal();

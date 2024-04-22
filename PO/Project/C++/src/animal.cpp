@@ -61,9 +61,9 @@ int animal::Move(YX delta) //0 - normal move, 1 - collision
 
     if ((collided) && (Collision(target) == 1))
     {
-    //     //diagnostics:
-    //     printw("\nattaker is dead.");
-    //     getch();
+        // //diagnostics:
+        // printw("\nattaker is dead.");
+        // getch();
 
         return 1;
     }
@@ -87,6 +87,10 @@ int animal::Action() // 0 - normal move, 1 - collision detected
 {
     int delta_y = rand() % 3 - 1; // Generates random number between -1 and 1
     int delta_x = rand() % 3 - 1; // Generates random number between -1 and 1
+
+    if ((delta_x == 0) && (delta_y == 0)) {
+        return 0;
+    }
 
     return Move({delta_y, delta_x});
 }
@@ -113,10 +117,11 @@ int animal::Collision(organizm* target)
 
 int animal::Fight(organizm* target)
 {
-    // //diagnostics:
-    // clear();
-    // printw("collision!");
-    // getch();
+    if (target->RejectAttak(this)) {
+        world_point->FindField(position)->member = this;
+
+        return 1;
+    }
 
     if (target == nullptr)
     {

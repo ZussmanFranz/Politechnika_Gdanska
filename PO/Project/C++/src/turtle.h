@@ -7,7 +7,8 @@ protected:
 public:
     turtle(world* world_point, YX position);
 
-    //void Action() override {};
+    int Action() override;
+    bool RejectAttak(organizm* attaker) override;
     
     ~turtle();
 };

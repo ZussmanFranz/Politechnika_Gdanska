@@ -10,7 +10,7 @@
 //#include "plants/plants.h"
 #include "logmanager.h"
 
-typedef struct
+struct field
 {
     YX position;
     YX field_size;
@@ -57,7 +57,7 @@ typedef struct
         }
         return;
     }
-}field;
+};
 
 
 class world
@@ -89,6 +89,7 @@ public:
     YX GetFieldSize() const { return field_size; }
     field* FindField(YX id);
     field* GetRandomField();
+    field* GetFreeFieldNear(YX position);
 
     int GetRound(){ return round; }
     bool IsOver() { return end; }

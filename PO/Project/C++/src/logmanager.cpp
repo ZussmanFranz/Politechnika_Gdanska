@@ -1,5 +1,6 @@
 #include "logmanager.h"
 #include "animals.h"
+#include "organizm.h"
 
 logmanager::logmanager(const char* filepath)
 :filepath(filepath), logFile(filepath)
@@ -46,6 +47,19 @@ std::string logmanager::GetEntityName(organizm* entity)
     }
 }
 
+void logmanager::Log(std::string prompt)
+{
+    if (!logFile.is_open())
+    {
+        //error!
+        return;
+    }
+
+    logFile << prompt << '\n';
+    
+    return;
+}
+
 void logmanager::LogCollision(organizm* attaker, organizm* prey)
 {
     if (!logFile.is_open())
@@ -60,6 +74,10 @@ void logmanager::LogCollision(organizm* attaker, organizm* prey)
     logFile << "Fight log: " << attaker_name << " vs " << prey_name << "\n";
 
     logFile << "location: y = " << prey->GetPosition().y << " x = " << prey->GetPosition().x << "\n";
+
+    logFile << "round: " << attaker->GetWorld()->GetRound() << '\n';
+
+    return;
 }
 
 void logmanager::LogCollisionResult(organizm* winner)
@@ -71,6 +89,21 @@ void logmanager::LogCollisionResult(organizm* winner)
     }
 
     logFile << "winner is " << GetEntityName(winner).c_str() << "\n\n";
+
+    return;
+}
+
+void logmanager::NecroLog(organizm* RIP)
+{
+    if (!logFile.is_open())
+    {
+        //error!
+        return;
+    }
+
+    logFile << GetEntityName(RIP).c_str() << " is dead :(\nIt's age was " << RIP->GetWorld()->GetRound() - RIP->GetBirth() << "\n";
+
+    return;
 }
 
 logmanager::~logmanager()

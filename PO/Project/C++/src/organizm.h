@@ -28,6 +28,8 @@ public:
 
     virtual int Action() = 0;
     virtual int Collision(organizm* target) = 0;
+    virtual int Fight(organizm* target) = 0;
+    virtual bool RejectAttak(organizm* attaker) = 0;
     virtual void Draw(YX position);
 
     world* GetWorld();

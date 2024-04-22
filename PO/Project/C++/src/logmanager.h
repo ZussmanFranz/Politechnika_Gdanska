@@ -14,8 +14,12 @@ public:
 
     std::string GetEntityName(organizm* entity);
 
+    void Log(std::string prompt);
+
     void LogCollision(organizm* attaker, organizm* prey);
     void LogCollisionResult(organizm* winner);
+
+    void NecroLog(organizm* RIP);
 
     ~logmanager();
 };
