@@ -40,8 +40,8 @@ public:
     void SetBirth(int new_birth) { birth = new_birth; }
     int GetBirth() { return birth; }
 
-    void IEddardOfTheHouseStartLordOfWinterfellAndWardenOfTheNorthSentenceYouToDie() { death_sentence = true; }
-    bool GetSentence() { return death_sentence; }
+    //void IEddardOfTheHouseStartLordOfWinterfellAndWardenOfTheNorthSentenceYouToDie() { death_sentence = true; }
+    //bool GetSentence() { return death_sentence; }
 
     virtual CLASS GetClass() = 0;
 

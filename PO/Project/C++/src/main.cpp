@@ -44,19 +44,19 @@ int main() {
     //world& my_world =  world::GetInstance(y, x, FIELD_SIZE, PADDING);
     world* my_world = new world(y,x, FIELD_SIZE, PADDING);
 
-    char input;
+    //char input = 'i';
 
-    do
+    while (!(my_world->IsOver()))
     {
         draw_interface(my_world);
 
-        my_world->Update(input);
-        //getch();
         my_world->Draw();
+        my_world->Update();
+        //getch();
 
-        input = getch();
+        //input = getch();
         clear();
-    } while ((input != 'q') && (!(my_world->IsOver())));
+    }
 
     draw_endscreen(my_world);
     getch();

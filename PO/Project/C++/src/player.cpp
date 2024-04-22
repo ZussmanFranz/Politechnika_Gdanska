@@ -18,9 +18,11 @@ void player::Draw(YX position)
 }
 
 
-int player::Action(char input)
+int player::Action()
 {
     YX delta = {0,0};
+
+    char input = getch();
 
     switch (input)
     {
@@ -35,6 +37,9 @@ int player::Action(char input)
         break;
     case 'd':
         delta = {0,1};
+        break;
+    case 'q':
+        world_point->StopIt();
         break;
     default:
         break;

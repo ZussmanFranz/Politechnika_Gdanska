@@ -1,22 +1,19 @@
 ---!log started!---
-Fight log: antelope vs antelope
-location: y = 8 x = 4
-winner is antelope
 
-Fight log: antelope vs sheep
-location: y = 8 x = 0
-winner is antelope
+Fight log: player vs turtle
+location: y = 0 x = 1
+winner is player
+
+Fight log: player vs turtle
+location: y = 2 x = 8
+winner is player
 
 Fight log: player vs antelope
-location: y = 11 x = 2
+location: y = 11 x = 6
 winner is player
 
-Fight log: sheep vs sheep
-location: y = 3 x = 6
-winner is sheep
-
-Fight log: player vs sheep
-location: y = 6 x = 2
-winner is player
+Fight log: wolf vs wolf
+location: y = 5 x = 3
+winner is wolf
 
 ---!log ended!---

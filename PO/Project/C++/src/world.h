@@ -77,10 +77,10 @@ public:
     world(int y, int x, YX field_size, YX padding);
 
     void Draw();
-    void Update(char input);
+    void Update();
     void Add(organizm* added);
     void Destroy(organizm* destroyed);
-    void Kill(organizm* killed);
+    void SortMembers();
 
     void GenerateRandomOrganizm();
     void GenerateRandomStart(int number_of_organizms);
@@ -92,6 +92,7 @@ public:
 
     int GetRound(){ return round; }
     bool IsOver() { return end; }
+    void StopIt() { end = true; }
 
     logmanager* GetLogger() { return Logger; }
 

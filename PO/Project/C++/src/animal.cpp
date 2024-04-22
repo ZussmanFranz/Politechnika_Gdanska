@@ -1,5 +1,6 @@
 #include "animal.h"
 
+
 animal::animal(int strength, int initiative, YX position, world* world_point)
 : organizm(world_point)
 {
@@ -31,23 +32,23 @@ int animal::Move(YX delta) //0 - normal move, 1 - collision
     if (new_position.x >= world_point->GetDimensions().x)
     {
         new_position.x = world_point->GetDimensions().x - 1;
-        mvprintw(0, 0, "right wall");
+        //mvprintw(0, 0, "right wall");
     }
     else if (new_position.x < 0)
     {
         new_position.x = 0;
-        mvprintw(0, 0, "left wall");
+        //mvprintw(0, 0, "left wall");
     }
 
     if (new_position.y >= world_point->GetDimensions().y)
     {
         new_position.y = world_point->GetDimensions().y - 1;
-        mvprintw(2, 0, "bottom wall");
+        //mvprintw(2, 0, "bottom wall");
     }
     else if (new_position.y < 0)
     {
         new_position.y = 0;
-        mvprintw(2, 0, "top wall");
+        //mvprintw(2, 0, "top wall");
     }
 
     //fight with the member of the new position (must return 1 if attak is failed and 0 is attak is succesful)
@@ -66,11 +67,14 @@ int animal::Move(YX delta) //0 - normal move, 1 - collision
 
         return 1;
     }
+
+    //world_point->FindField(position)->draw_box(world_point->GetFieldSize());
     
     position = new_position;
 
     world_point->FindField(position)->member = this;
 
+    //world_point->FindField(position)->draw_box(world_point->GetFieldSize());
 
     if (collided)
     {

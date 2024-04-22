@@ -105,9 +105,12 @@ void world::Draw()
 
     //organizmy->Draw()
 }
-void world::Update(char input)
+void world::Update()
 {
     round++;
+
+    //sorting of the vector
+    
 
     int action_result = 0;
 
@@ -118,20 +121,12 @@ void world::Update(char input)
             end = true;
         }
         
-
         if (end)
         {
             return;
         }
         
-        
-        if (player* player_ptr = dynamic_cast<player*>(members[i])) {
-            action_result = player_ptr->Action(input);
-        }
-        else
-        {
-            action_result = members[i]->Action();
-        }
+        action_result = members[i]->Action();
     }
 }
 
@@ -167,13 +162,23 @@ void world::Destroy(organizm* destroyed)
         // getch();
     } 
 }
-
-void world::Kill(organizm* killed)
+void world::SortMembers()
 {
-    FindField(killed->GetPosition())->member = nullptr;
-    killed->IEddardOfTheHouseStartLordOfWinterfellAndWardenOfTheNorthSentenceYouToDie();
-    Destroy(killed);
+    std::sort(members.begin(), members.end(), [](organizm* a, organizm* b)
+    {
+        int aInitiative = a->GetInitiative();
+        int bInitiative = b->GetInitiative();
+        int aBirthRound = a->GetBirth();
+        int bBirthRound = b->GetBirth();
+        
+        if (aInitiative == bInitiative)
+        {
+            return aBirthRound > bBirthRound;
+        }
+        return aInitiative > bInitiative; 
+    });
 }
+
 
 void world::GenerateRandomOrganizm()
 {

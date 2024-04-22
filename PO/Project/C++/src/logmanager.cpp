@@ -4,7 +4,7 @@
 logmanager::logmanager(const char* filepath)
 :filepath(filepath), logFile(filepath)
 {
-    logFile << "---!log started!---\n";
+    logFile << "---!log started!---\n\n";
     // if (logFile.is_open()) 
     // {
     //     logFile << "---!log started!---\n";
