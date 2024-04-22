@@ -2,20 +2,10 @@
 
 class guarana: public plant
 {
-protected:
-    
 public:
-    guarana(world* world_point);
+    guarana(YX position, world* world_point);
 
-    void Action() override {};
+    //int Action() override {};
 
     ~guarana();
 };
-
-guarana::guarana(world* world_point): organizm(world_point)
-{
-}
-
-guarana::~guarana()
-{
-}

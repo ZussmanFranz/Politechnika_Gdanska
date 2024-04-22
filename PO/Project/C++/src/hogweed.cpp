@@ -1,0 +1,11 @@
+#include "hogweed.h"
+
+hogweed::hogweed(YX position, world* world_point)
+: plant(10, position ,world_point)
+{
+    avatar = 'h';
+}
+
+hogweed::~hogweed()
+{
+}

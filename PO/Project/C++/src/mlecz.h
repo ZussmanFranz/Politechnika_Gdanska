@@ -2,20 +2,10 @@
 
 class mlecz: public plant
 {
-protected:
-    
 public:
-    mlecz(world* world_point);
+    mlecz(YX position, world* world_point);
 
-    void Action() override {};
+    //int Action() override {};
 
     ~mlecz();
 };
-
-mlecz::mlecz(world* world_point): organizm(world_point)
-{
-}
-
-mlecz::~mlecz()
-{
-}

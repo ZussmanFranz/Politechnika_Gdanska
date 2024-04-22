@@ -2,12 +2,10 @@
 
 class wolfberry: public plant
 {
-protected:
-    
 public:
-    wolfberry(world* world_point);
+    wolfberry(YX position, world* world_point);
 
-    int Action() override {};
+    //int Action() override {};
 
     ~wolfberry();
 };

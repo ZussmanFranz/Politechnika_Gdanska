@@ -1,5 +1,7 @@
 #include "world.h"
 #include "animals.h"
+#include "plants.h"
+#include "plants.h"
 #include <cstddef>
 #include <cstdlib>
 #include <ctime> 
@@ -225,9 +227,6 @@ void world::GenerateRandomOrganizm()
     
 
     int type = rand() % 2 + 1; // Generates 1 or 2
-
-    type = 1; // !set type to 1 because plants are incomplete!
-
     int sub_type = rand() % 5 + 1; // Generates from 1 to 5
 
     if (type == 1) // animal
@@ -264,18 +263,23 @@ void world::GenerateRandomOrganizm()
         {
         case 1:
             // grass
+            Add(new grass(random->id, this));
             break;
         case 2:
             // mlecz
+            Add(new mlecz(random->id, this));
             break;
         case 3:
             // guarana
+            Add(new guarana(random->id, this));
             break;
         case 4:
             // wolfberry
+            Add(new wolfberry(random->id, this));
             break;
         case 5:
             // hogweed
+            Add(new hogweed(random->id, this));
             break;
         default:
             break;

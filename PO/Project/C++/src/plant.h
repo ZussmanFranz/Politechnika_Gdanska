@@ -1,36 +1,22 @@
-#ifndef PLANT_H
-#define PLANT_H
-
-
+#pragma once
 #include "organizm.h"
+#include "world.h"
 
 class plant: public virtual organizm
 {
-protected:
-    
 public:
-    plant(world* world_point):organizm(world_point) { initiative = 0; };
+    plant(int strength, YX position, world* world_point);
 
     void Draw(YX position) override;
+
+    int Action() override;
+
+    //inherited virtuals
+    bool RejectAttak(organizm* attaker) override { return false;}
+    int Collision(organizm* target) override { return 1;}
+    int Fight(organizm* target) override { return 1; }
 
     CLASS GetClass() override { return PLANT; }
 
     ~plant();
 };
-
-plant::~plant()
-{
-}
-
-void plant::Draw(YX position)
-{
-    init_pair(1, COLOR_GREEN, COLOR_BLACK);
-    
-    attron(COLOR_PAIR(1));
-    
-    mvprintw(position.y, position.x, &avatar);
-    
-    attroff(COLOR_PAIR(1));
-}
-
-#endif // PLANT_H
