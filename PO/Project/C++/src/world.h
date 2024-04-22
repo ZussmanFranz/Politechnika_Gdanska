@@ -19,26 +19,25 @@ struct field
 
     void draw_box(YX field_size)
     {
+        int pair;
+
         if (member != nullptr) {
-            int COLOR = COLOR_MAGENTA;
-            
             switch (member->GetClass())
             {
-            case PLAYER:
-                COLOR = COLOR_YELLOW;
+            case ANIMAL:
+                pair = 1;
                 break;
             case PLANT:
-                COLOR = COLOR_GREEN;
+                pair = 2;
                 break;
-            case ANIMAL:
-                COLOR = COLOR_RED;
+            case PLAYER:
+                pair = 3;
                 break;
             default:
                 break;
             }
 
-            init_pair(1, COLOR, -1);
-            attron(COLOR_PAIR(1));
+            attron(COLOR_PAIR(pair));
         }
 
         mvvline(position.y + 1, position.x, ACS_VLINE, field_size.y - 1);
@@ -53,7 +52,7 @@ struct field
         mvaddch(position.y + field_size.y - 1, position.x + field_size.x - 1, ACS_LRCORNER);
 
         if (member != nullptr){
-            attroff(COLOR_PAIR(1));
+            attroff(COLOR_PAIR(pair));
         }
         return;
     }

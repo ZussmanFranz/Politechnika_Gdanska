@@ -5,6 +5,7 @@
 #include <cstddef>
 #include <cstdlib>
 #include <ctime> 
+#include <ncurses.h>
 #include <vector>
 
 
@@ -12,6 +13,11 @@ world::world(int y, int x, YX field_size, YX padding)
 {
     //initialising random for the whole project
     srand(time(NULL));
+
+    //initialasing color pairs for different types
+    init_pair(1, COLOR_RED, -1);
+    init_pair(2, COLOR_GREEN, -1);
+    init_pair(3, COLOR_YELLOW, -1);
 
     //Logger initialisation
     Logger = new logmanager("log.txt");
@@ -144,8 +150,6 @@ void world::Update()
     //sorting of the vector
     
 
-    int action_result = 0;
-
     for (int i = 0; i < members.size(); i++)
     {
         if (members.size() <= 1)
@@ -158,7 +162,7 @@ void world::Update()
             return;
         }
         
-        action_result = members[i]->Action();
+        members[i]->Action();
     }
 }
 

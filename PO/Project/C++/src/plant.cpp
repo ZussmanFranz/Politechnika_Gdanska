@@ -9,14 +9,12 @@ plant::plant(int strength, YX position, world* world_point)
 }
 
 void plant::Draw(YX position)
-{
-    init_pair(1, COLOR_GREEN, -1);
-    
-    attron(COLOR_PAIR(1));
+{   
+    attron(COLOR_PAIR(2));
     
     mvaddch(position.y, position.x, avatar);
     
-    attroff(COLOR_PAIR(1));
+    attroff(COLOR_PAIR(2));
 }
 
 int plant::Action()

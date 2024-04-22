@@ -11,9 +11,7 @@ animal::animal(int strength, int initiative, YX position, world* world_point)
 
 
 void animal::Draw(YX position)
-{
-    init_pair(1, COLOR_RED, -1);
-    
+{   
     attron(COLOR_PAIR(1));
     
     mvaddch(position.y, position.x, avatar);
