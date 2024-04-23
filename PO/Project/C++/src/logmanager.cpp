@@ -126,6 +126,19 @@ void logmanager::LogCollisionResult(organizm* winner)
     return;
 }
 
+void logmanager::LogReproductionCollision(organizm* roditiel1, organizm* roditiel2)
+{
+    if (!logFile.is_open())
+    {
+        //error!
+        return;
+    }
+
+    logFile << GetEntityName(roditiel1).c_str() << " and " << GetEntityName(roditiel2).c_str() << " now have a child!\n\n";
+
+    return;
+}
+
 void logmanager::LogOrder(std::vector<organizm*> members)
 {
     if (!logFile.is_open())
@@ -168,6 +181,8 @@ void logmanager::LogOverpopulation(organizm* unlucky_boy, int neighbours)
     }
 
     logFile << GetEntityName(unlucky_boy).c_str() << " has died because of overpopulation, it had " << neighbours << " neighbours\n\n";
+
+    return;
 }
 
 void logmanager::NecroLog(organizm* RIP)
@@ -178,7 +193,7 @@ void logmanager::NecroLog(organizm* RIP)
         return;
     }
 
-    logFile << GetEntityName(RIP).c_str() << " is dead :(\nIt's age was " << RIP->GetWorld()->GetRound() - RIP->GetBirth() << "\n";
+    logFile << GetEntityName(RIP).c_str() << " is dead :(\nIt's age was " << RIP->GetWorld()->GetRound() - RIP->GetBirth() << "\n\n";
 
     return;
 }

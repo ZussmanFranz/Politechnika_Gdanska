@@ -1,4 +1,5 @@
 #include "animal.h"
+#include "world.h"
 
 
 animal::animal(int strength, int initiative, YX position, world* world_point)
@@ -99,6 +100,13 @@ int animal::Action() // 0 - normal move, 1 - collision detected
 int animal::Collision(organizm* target)
 {
     world_point->GetLogger()->LogCollision(this, target);
+
+    if (world_point->SameType(this, target)) 
+    {
+        Reproduct();
+        world_point->GetLogger()->LogReproductionCollision(this, target);
+        return 1;
+    }
     
     int result = Fight(target);
     

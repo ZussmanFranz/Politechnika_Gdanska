@@ -79,11 +79,11 @@ public:
     void DrawInterface();
     void DrawEndscreen();
     void Update();
-    //void SleepMiliseconds(int ms);
     void Add(organizm* added);
     void Destroy(organizm* destroyed);
     void SortMembers();
     int CountNeighboursSameType(organizm* me);
+    bool SameType(organizm* a, organizm* b);
     void Clean();
 
     void GenerateRandomOrganizm();

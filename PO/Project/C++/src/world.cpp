@@ -319,13 +319,27 @@ int world::CountNeighboursSameType(organizm* me)
 
             organizm* target = FindField({me->GetPosition().y + i, me->GetPosition().x + j})->member;
 
-            if ((target != nullptr) && (typeid(target) == typeid(me))) {
+            if ((target != nullptr) && (SameType(target, me))) {
                 count++;
             } 
         }
     }
 
     return count;
+}
+
+bool world::SameType(organizm* a, organizm* b)
+{
+    // Check if both pointers are valid
+    if (a && b) {
+        // Get the type_info objects
+        const std::type_info& type1 = typeid(*a);
+        const std::type_info& type2 = typeid(*b);
+
+        // Compare the type_info objects
+        return type1 == type2;
+    }
+    return false; 
 }
 
 void world::Clean()
