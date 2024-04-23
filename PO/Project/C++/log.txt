@@ -1,0 +1,110 @@
+---!log started!---
+
+The New Order:
+0) player
+
+The New Order:
+0) player
+1) mlecz
+
+The New Order:
+0) player
+1) mlecz
+2) grass
+
+The New Order:
+0) player
+1) antelope
+2) mlecz
+3) grass
+
+The New Order:
+0) player
+1) antelope
+2) antelope
+3) mlecz
+4) grass
+
+The New Order:
+0) player
+1) antelope
+2) antelope
+3) turtle
+4) mlecz
+5) grass
+
+The New Order:
+0) player
+1) antelope
+2) antelope
+3) turtle
+4) mlecz
+5) grass
+
+Fight log: antelope vs player
+location: y = 7 x = 3
+round: 10
+antelope is dead :(
+It's age was 10
+The New Order:
+0) player
+1) antelope
+2) turtle
+3) mlecz
+4) grass
+
+the winner is player
+
+Fight log: turtle vs player
+location: y = 10 x = 3
+round: 15
+turtle is dead :(
+It's age was 15
+The New Order:
+0) player
+1) antelope
+2) mlecz
+3) grass
+
+the winner is player
+
+Fight log: player vs antelope
+location: y = 7 x = 6
+round: 27
+antelope avoided attak
+the winner is antelope
+
+Fight log: player vs antelope
+location: y = 9 x = 2
+round: 33
+antelope is dead :(
+It's age was 33
+The New Order:
+0) player
+1) mlecz
+2) grass
+
+the winner is player
+
+Fight log: player vs mlecz
+location: y = 3 x = 4
+round: 43
+mlecz is dead :(
+It's age was 43
+The New Order:
+0) player
+1) grass
+
+the winner is player
+
+Fight log: player vs grass
+location: y = 8 x = 11
+round: 55
+grass is dead :(
+It's age was 55
+The New Order:
+0) player
+
+the winner is player
+
+---!log ended!---

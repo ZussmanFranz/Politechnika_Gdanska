@@ -1,6 +1,7 @@
 #include "world.h"
 #include "animals.h"
 #include "organizm.h"
+#include "plant.h"
 #include "plants.h"
 #include "plants.h"
 #include <cstddef>

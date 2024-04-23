@@ -65,14 +65,10 @@ int animal::Move(YX delta) //0 - normal move, 1 - collision
 
         return 1;
     }
-
-    //world_point->FindField(position)->draw_box(world_point->GetFieldSize());
     
     position = new_position;
 
     world_point->FindField(position)->member = this;
-
-    //world_point->FindField(position)->draw_box(world_point->GetFieldSize());
 
     if (collided)
     {
@@ -100,15 +96,6 @@ int animal::Collision(organizm* target)
     int result = Fight(target);
     
     world_point->GetLogger()->LogCollisionResult((result) ? target : this);
-    
-    // //diagnostics:
-    // printw("\nresult is %d", result);
-    // getch();
-
-
-    // //diagnostics:
-    // printw("\nlogged(no)");
-    // getch();
 
     return result;
 }
@@ -128,10 +115,6 @@ int animal::Fight(organizm* target)
 
     if (target->GetStrength() <= strength)
     {
-        // //diagnostics:
-        // printw("\nsucces.");
-        // getch();
-
         // succes
         //world_point->Kill(target);
         world_point->Destroy(target);
@@ -139,10 +122,6 @@ int animal::Fight(organizm* target)
     }
     else if (target->GetStrength() > strength)
     {
-        // //diagnostics:
-        // printw("\nfail.");
-        // getch();
-
         // failed
         //world_point->Kill(this);
         world_point->Destroy(this);

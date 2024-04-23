@@ -2,7 +2,7 @@
 #include "organizm.h"
 #include "world.h"
 
-class plant: public virtual organizm
+class plant: public organizm
 {
 public:
     plant(int strength, YX position, world* world_point);
