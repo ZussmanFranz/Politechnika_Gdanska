@@ -82,6 +82,17 @@ void logmanager::Log(std::string prompt)
     return;
 }
 
+void logmanager::LogTime()
+{
+    if (!logFile.is_open())
+    {
+        //error!
+        return;
+    }
+
+    logFile << "current time is " << time(NULL) << "\n\n";
+}
+
 void logmanager::LogCollision(organizm* attaker, organizm* prey)
 {
     if (!logFile.is_open())
@@ -133,6 +144,30 @@ void logmanager::LogOrder(std::vector<organizm*> members)
     logFile << '\n';
 
     return;
+}
+
+void logmanager::LogStrengthIncrease(organizm* lucky_boy)
+{
+    if (!logFile.is_open())
+    {
+        //error!
+        return;
+    }
+
+    logFile << "Strength of the " << GetEntityName(lucky_boy) << " has been increased by 3, new strength is " << lucky_boy->GetStrength() << '\n';
+
+    return;
+}
+
+void logmanager::LogOverpopulation(organizm* unlucky_boy, int neighbours)
+{
+    if (!logFile.is_open())
+    {
+        //error!
+        return;
+    }
+
+    logFile << GetEntityName(unlucky_boy).c_str() << " has died because of overpopulation, it had " << neighbours << " neighbours\n\n";
 }
 
 void logmanager::NecroLog(organizm* RIP)

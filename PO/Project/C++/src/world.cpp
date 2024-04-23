@@ -1,14 +1,19 @@
 #include "world.h"
+#include "animal.h"
 #include "animals.h"
 #include "organizm.h"
 #include "plant.h"
 #include "plants.h"
 #include "plants.h"
+#include "player.h"
 #include <cstddef>
 #include <cstdlib>
 #include <ctime> 
+#include <thread>
+#include <chrono>
 #include <ncurses.h>
 #include <vector>
+//#include<unistd.h>
 
 
 world::world(int y, int x, YX field_size, YX padding)
@@ -67,7 +72,7 @@ world::world(int y, int x, YX field_size, YX padding)
 
 field* world::FindField(YX id)
 {
-    if ((id.y <= dimensions.y) && (id.y >= 0) && (id.x <= dimensions.x) && (id.x >= 0))
+    if ((id.y < dimensions.y) && (id.y >= 0) && (id.x < dimensions.x) && (id.x >= 0))
     {
         return &(fields[id.y][id.x]);
     }
@@ -134,6 +139,10 @@ field* world::GetFreeFieldNear(YX position)
 
 void world::Draw()
 {
+    clear();
+
+    DrawInterface();
+
     for (int i = 0; i < dimensions.y; i++) {
         for (int j = 0; j < dimensions.x; j++) 
         {
@@ -144,15 +153,38 @@ void world::Draw()
             }
         }
     }
-
-    //organizmy->Draw()
+    return;
 }
+
+void world::DrawInterface()
+{
+    int screen_height, screen_width;
+    getmaxyx(stdscr, screen_height, screen_width);
+
+    mvprintw(1, screen_width/2 - 5, "Round is %d", round);
+    mvprintw(0, screen_width/2 - 15, "Yauheni Pyryeu 201253 project");
+    mvprintw(screen_height - 1, screen_height/2 - 14, "q - quit, w a s d - controls");
+    
+    return;
+}
+
+void world::DrawEndscreen()
+{
+    clear();
+
+    int screen_height, screen_width;
+    getmaxyx(stdscr, screen_height, screen_width);
+
+    mvprintw(1, screen_width/2 - 5, "Round is %d", round);
+    mvprintw(0, screen_width/2 - 15, "End of Game!");
+    //Draw();
+
+    return;
+}
+
 void world::Update()
 {
     round++;
-
-    //sorting of the vector
-    //SortMembers();
 
     for (int i = 0; i < members.size(); i++)
     {
@@ -165,16 +197,36 @@ void world::Update()
         {
             return;
         }
-        
-        // //diagnostics
-        // if (dynamic_cast<plant*>(members[i])) {
-        //     printw("plant's turn\n");
+
+        // if ((dynamic_cast<animal*>(members[i]) != nullptr) && (dynamic_cast<player*>(members[i]) == nullptr)) {
+        //     Draw();
+        //     Logger->Log("starting time:");
+        //     Logger->LogTime();
+
+        //     mvprintw(0, 0, Logger->GetEntityName(members[i]).c_str());
+        //     mvprintw(1, 0, "%d",members.size());
+
+        //     // unsigned int second = 1000000;
+        //     // usleep(second);//sleeps for 3 second
         //     getch();
+
+        //     Logger->Log("ending time:");
+        //     Logger->LogTime();
         // }
 
         members[i]->Action();
     }
+
+    Clean();
 }
+
+// void world::SleepMiliseconds(int ms)
+// {
+//     clock_t goal = ms + clock(); // The end time
+
+//     while (goal > clock());
+//     return;
+// }
 
 void world::Add(organizm* added)
 {
@@ -230,9 +282,45 @@ void world::SortMembers()
         return aInitiative > bInitiative; 
     });
 
-    Logger->LogOrder(members);
+    //Logger->LogOrder(members);
 }
 
+int world::CountNeighboursSameType(organizm* me)
+{
+    int count = 0;
+
+    for (int i = -1; i < 2; i++) {
+        for (int j = -1; j < 2; j++) {
+            if (((i == 0) && (j == 0)) || (FindField({me->GetPosition().y + i, me->GetPosition().x + j}) == nullptr)) {
+                continue;
+            }
+
+            organizm* target = FindField({me->GetPosition().y + i, me->GetPosition().x + j})->member;
+
+            if ((target != nullptr) && (typeid(target) == typeid(me))) {
+                count++;
+            } 
+        }
+    }
+
+    return count;
+}
+
+void world::Clean()
+{
+    //Logger->Log("cleaning routine...");
+
+    for (int i = 0; i < members.size(); i++) {
+        int neighbours = CountNeighboursSameType(members[i]);
+        if (neighbours > 2) {
+            Logger->LogOverpopulation(members[i], neighbours);
+            Destroy(members[i]);
+            i--;
+        }
+    }
+
+    return;
+}
 
 void world::GenerateRandomOrganizm()
 {

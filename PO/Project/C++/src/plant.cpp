@@ -2,20 +2,27 @@
 #include <cstdlib>
 
 plant::plant(int strength, YX position, world* world_point)
-: organizm(world_point)
+: organizm(world_point, strength, 0, position)
 {
-    this->strength = strength;
-    this->initiative = 0;
-    this->position = position;
 }
 
 void plant::Draw(YX position)
 {   
+    if (strength > starting_strength) 
+    {
+        attron(A_BOLD); 
+    }
+
     attron(COLOR_PAIR(2));
     
     mvaddch(position.y, position.x, avatar);
     
     attroff(COLOR_PAIR(2));
+
+    if (strength > starting_strength) 
+    {
+        attroff(A_BOLD); 
+    }
 }
 
 int plant::Action()

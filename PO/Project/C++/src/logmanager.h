@@ -17,10 +17,16 @@ public:
 
     void Log(std::string prompt);
 
+    void LogTime();
+
     void LogCollision(organizm* attaker, organizm* prey);
     void LogCollisionResult(organizm* winner);
 
     void LogOrder(std::vector<organizm*> members);
+
+    void LogStrengthIncrease(organizm* lucky_boy);
+
+    void LogOverpopulation(organizm* unlucky_boy, int neighbours);
 
     void NecroLog(organizm* RIP);
 

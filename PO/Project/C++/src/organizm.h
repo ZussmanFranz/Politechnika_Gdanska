@@ -16,15 +16,16 @@ typedef enum {
 class organizm {
 protected:
     int strength;
+    int starting_strength;
     int initiative;
     int birth;
+    bool death_sentence;
     YX position;
     world* world_point;
     char avatar;
-    bool death_sentence;
 public:
     organizm();
-    organizm(world* world_point);
+    organizm(world* world_point, int strength, int initiative, YX position);
 
     virtual int Action() = 0;
     virtual int Collision(organizm* target) = 0;
@@ -38,9 +39,13 @@ public:
     YX GetPosition();
 
     int GetStrength() { return strength; }
+    void SetStrength(int new_strength) { strength = new_strength; }
     int GetInitiative() { return initiative; }
     void SetBirth(int new_birth) { birth = new_birth; }
     int GetBirth() { return birth; }
+    bool GetSentence() { return death_sentence; }
+
+    void IAmEddarOfHouseStartkLordOfWinterfellAndWardenOfTheNorthSentenceYouToDie() { death_sentence = true; }
 
     virtual organizm* MakeChild(YX new_position) = 0;
     void Reproduct();

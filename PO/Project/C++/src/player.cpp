@@ -8,16 +8,28 @@ player::player(world* world_point, YX position)
 
 void player::Draw(YX position)
 {   
+    if (strength > starting_strength) 
+    {
+        attron(A_BOLD); 
+    }
+
     attron(COLOR_PAIR(3));
     
     mvaddch(position.y, position.x, avatar);
     
     attroff(COLOR_PAIR(3));
+
+    if (strength > starting_strength) 
+    {
+        attroff(A_BOLD); 
+    }
 }
 
 
 int player::Action()
 {
+    world_point->Draw();
+
     YX delta = {0,0};
 
     char input = getch();

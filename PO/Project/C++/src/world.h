@@ -76,10 +76,15 @@ public:
     world(int y, int x, YX field_size, YX padding);
 
     void Draw();
+    void DrawInterface();
+    void DrawEndscreen();
     void Update();
+    //void SleepMiliseconds(int ms);
     void Add(organizm* added);
     void Destroy(organizm* destroyed);
     void SortMembers();
+    int CountNeighboursSameType(organizm* me);
+    void Clean();
 
     void GenerateRandomOrganizm();
     void GenerateRandomStart(int number_of_organizms);

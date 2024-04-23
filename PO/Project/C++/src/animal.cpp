@@ -2,21 +2,28 @@
 
 
 animal::animal(int strength, int initiative, YX position, world* world_point)
-: organizm(world_point)
+: organizm(world_point, strength, initiative, position)
 {
-    this->strength = strength;
-    this->initiative = initiative;
-    this->position = position;
 }
 
 
 void animal::Draw(YX position)
 {   
+    if (strength > starting_strength) 
+    {
+        attron(A_BOLD); 
+    }
+
     attron(COLOR_PAIR(1));
     
     mvaddch(position.y, position.x, avatar);
     
     attroff(COLOR_PAIR(1));
+
+    if (strength > starting_strength) 
+    {
+        attroff(A_BOLD); 
+    }
 }
 
 int animal::Move(YX delta) //0 - normal move, 1 - collision
@@ -103,6 +110,11 @@ int animal::Collision(organizm* target)
 int animal::Fight(organizm* target)
 {
     if (target->RejectAttak(this)) {
+        if (death_sentence) {
+            world_point->Destroy(this);
+            return 1;
+        }
+
         world_point->FindField(position)->member = this;
 
         return 1;

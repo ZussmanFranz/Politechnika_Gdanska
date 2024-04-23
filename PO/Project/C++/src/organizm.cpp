@@ -6,9 +6,13 @@ organizm::organizm()
 : world_point(nullptr) 
 {}
 
-organizm::organizm(world* world_point)
+organizm::organizm(world* world_point, int strength, int initiative, YX position)
 {
     this->world_point = world_point;
+    this->strength = strength;
+    this->starting_strength = strength;
+    this->initiative= initiative;
+    this->position = position;
     death_sentence = false;
 }
 
@@ -25,8 +29,8 @@ void organizm::Reproduct()
 }
 
 void organizm::Draw(YX position) {
-    //mvprintw(position.y, position.x, &avatar);
     mvaddch(position.y, position.x, avatar);
+    return;
 }
 
 world* organizm::GetWorld()
