@@ -101,14 +101,14 @@ int animal::Collision(organizm* target)
     
     world_point->GetLogger()->LogCollisionResult((result) ? target : this);
     
-    //diagnostics:
-    printw("\nresult is %d", result);
-    getch();
+    // //diagnostics:
+    // printw("\nresult is %d", result);
+    // getch();
 
 
-    //diagnostics:
-    printw("\nlogged(no)");
-    getch();
+    // //diagnostics:
+    // printw("\nlogged(no)");
+    // getch();
 
     return result;
 }

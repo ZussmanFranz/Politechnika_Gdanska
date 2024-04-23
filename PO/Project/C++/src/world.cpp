@@ -59,6 +59,8 @@ world::world(int y, int x, YX field_size, YX padding)
     Add(Player);
 
     GenerateRandomStart(5);
+
+    SortMembers();
 }
 
 
@@ -149,7 +151,7 @@ void world::Update()
     round++;
 
     //sorting of the vector
-    SortMembers();
+    //SortMembers();
 
     for (int i = 0; i < members.size(); i++)
     {
@@ -178,6 +180,8 @@ void world::Add(organizm* added)
     added->SetBirth(round);
     members.push_back(added);
     FindField(added->GetPosition())->member = added;
+
+    SortMembers();
 }
 
 void world::Destroy(organizm* destroyed)
@@ -206,6 +210,8 @@ void world::Destroy(organizm* destroyed)
 
     delete destroyed;
     members.erase(members.begin() + index);
+
+    SortMembers();
 }
 void world::SortMembers()
 {
@@ -222,6 +228,8 @@ void world::SortMembers()
         }
         return aInitiative > bInitiative; 
     });
+
+    Logger->LogOrder(members);
 }
 
 
@@ -309,7 +317,7 @@ void world::GenerateRandomStart(int number_of_organizms)
 world::~world()
 {
     delete Logger;
-    
+
     for (organizm* org : members) {
         delete org;
     }

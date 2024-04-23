@@ -110,7 +110,27 @@ void logmanager::LogCollisionResult(organizm* winner)
         return;
     }
 
-    logFile << "winner is " << GetEntityName(winner).c_str() << "\n\n";
+    logFile << "the winner is " << GetEntityName(winner).c_str() << "\n\n";
+
+    return;
+}
+
+void logmanager::LogOrder(std::vector<organizm*> members)
+{
+    if (!logFile.is_open())
+    {
+        //error!
+        return;
+    }
+
+    logFile << "The New Order:\n";
+
+    for (int i = 0; i < members.size(); i++) 
+    {
+        logFile << i << ") " << GetEntityName(members[i]) << '\n';
+    }
+
+    logFile << '\n';
 
     return;
 }

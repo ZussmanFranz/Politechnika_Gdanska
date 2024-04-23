@@ -1,17 +1,58 @@
 ---!log started!---
 
-Fight log: antelope vs player
-location: y = 4 x = 2
-round: 6
-antelope is dead :(
-It's age was 6
-winner is player
+The New Order:
+0) player
 
-Fight log: player vs ERROR
-location: y = 11 x = 10
-round: 21
+The New Order:
+0) player
+1) mlecz
+
+The New Order:
+0) player
+1) mlecz
+2) hogweed
+
+The New Order:
+0) player
+1) mlecz
+2) hogweed
+3) guarana
+
+The New Order:
+0) player
+1) mlecz
+2) hogweed
+3) guarana
+4) grass
+
+The New Order:
+0) player
+1) mlecz
+2) hogweed
+3) guarana
+4) grass
+5) hogweed
+
+The New Order:
+0) player
+1) mlecz
+2) hogweed
+3) guarana
+4) grass
+5) hogweed
+
+Fight log: player vs hogweed
+location: y = 6 x = 10
+round: 16
 player is dead :(
-It's age was 21
-winner is ERROR
+It's age was 16
+The New Order:
+0) mlecz
+1) hogweed
+2) guarana
+3) grass
+4) hogweed
+
+the winner is hogweed
 
 ---!log ended!---
