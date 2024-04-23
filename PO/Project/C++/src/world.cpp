@@ -1,5 +1,6 @@
 #include "world.h"
 #include "animals.h"
+#include "organizm.h"
 #include "plants.h"
 #include "plants.h"
 #include <cstddef>
@@ -179,26 +180,26 @@ void world::Destroy(organizm* destroyed)
 
     FindField(destroyed->GetPosition())->member = nullptr;
 
-    auto it = std::find(members.begin(), members.end(), destroyed);
+    //auto it = std::find(members.begin(), members.end(), destroyed);
+    organizm* it = nullptr;
+    int index;
 
-    if (dynamic_cast<player*>(*it) != nullptr)
+    for (int i = 0; i < members.size(); i++) {
+        if (members[i] == destroyed) {
+            it = members[i];
+            index = i;
+        }
+    }
+
+    if (it == nullptr) { return; }
+
+    if (dynamic_cast<player*>(it) != nullptr)
     {
         end = true;
     }
-    
 
-    if (it != members.end()) {
-        // //diagnostics:
-        // printw("\ndeleted %s", Logger->GetEntityName(destroyed).c_str());
-        // getch();
-
-        delete *it;
-        members.erase(it);
-
-        // //diagnostics:
-        // printw("\ndone.");
-        // getch();
-    } 
+    delete destroyed;
+    members.erase(members.begin() + index);
 }
 void world::SortMembers()
 {
