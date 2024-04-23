@@ -137,6 +137,28 @@ field* world::GetFreeFieldNear(YX position)
     }
 }
 
+std::vector<field*> world::GetFieldsNear(YX position)
+{
+    std::vector<field*> near;
+
+    for (int i = -1; i < 2; i++) {
+        for (int j = -1; j < 2; j++) {
+            if ((i == 0) && (j == 0)) {
+                continue;
+            }
+
+            field* target = FindField({position.y + i, position.x + j});
+
+            if (target != nullptr) 
+            {
+                near.push_back(target);
+            }
+        }
+    }
+
+    return near;
+}
+
 void world::Draw()
 {
     clear();

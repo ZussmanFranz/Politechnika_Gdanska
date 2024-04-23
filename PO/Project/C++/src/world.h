@@ -94,6 +94,7 @@ public:
     field* FindField(YX id);
     field* GetRandomField();
     field* GetFreeFieldNear(YX position);
+    std::vector<field*> GetFieldsNear(YX position);
 
     int GetRound(){ return round; }
     bool IsOver() { return end; }
