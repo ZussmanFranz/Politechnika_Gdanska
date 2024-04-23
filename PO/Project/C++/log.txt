@@ -1,0 +1,17 @@
+---!log started!---
+
+Fight log: antelope vs player
+location: y = 4 x = 2
+round: 6
+antelope is dead :(
+It's age was 6
+winner is player
+
+Fight log: player vs ERROR
+location: y = 11 x = 10
+round: 21
+player is dead :(
+It's age was 21
+winner is ERROR
+
+---!log ended!---

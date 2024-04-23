@@ -1,6 +1,8 @@
 #include "logmanager.h"
 #include "animals.h"
+#include "plants.h"
 #include "organizm.h"
+#include "plants.h"
 
 logmanager::logmanager(const char* filepath)
 :filepath(filepath), logFile(filepath)
@@ -40,7 +42,27 @@ std::string logmanager::GetEntityName(organizm* entity)
     else if (dynamic_cast<antelope*>(entity) != nullptr)
     {
         return "antelope";
-    }//add plants here!
+    }
+    else if (dynamic_cast<grass*>(entity) != nullptr)
+    {
+        return "grass";
+    }
+    else if (dynamic_cast<mlecz*>(entity) != nullptr)
+    {
+        return "mlecz";
+    }
+    else if (dynamic_cast<guarana*>(entity) != nullptr)
+    {
+        return "guarana";
+    }
+    else if (dynamic_cast<wolfberry*>(entity) != nullptr)
+    {
+        return "wolfberry";
+    }
+    else if (dynamic_cast<hogweed*>(entity) != nullptr)
+    {
+        return "hogweed";
+    }
     else
     {
         return "ERROR";

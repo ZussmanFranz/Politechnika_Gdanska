@@ -149,7 +149,7 @@ void world::Update()
     round++;
 
     //sorting of the vector
-    
+    SortMembers();
 
     for (int i = 0; i < members.size(); i++)
     {
@@ -163,6 +163,12 @@ void world::Update()
             return;
         }
         
+        // //diagnostics
+        // if (dynamic_cast<plant*>(members[i])) {
+        //     printw("plant's turn\n");
+        //     getch();
+        // }
+
         members[i]->Action();
     }
 }
@@ -302,6 +308,8 @@ void world::GenerateRandomStart(int number_of_organizms)
 
 world::~world()
 {
+    delete Logger;
+    
     for (organizm* org : members) {
         delete org;
     }
@@ -314,5 +322,5 @@ world::~world()
     }
 
     delete[] fields;
-    delete Logger;
+    // delete Logger;
 }
