@@ -1,294 +1,758 @@
 ---!log started!---
 
-The New Order:
-0) player
+Fight log: fox vs fox
+location: y = 10 x = 9
+round: 5
+fox is dead :(
+It's age was 5
+the winner is fox
 
-The New Order:
-0) player
-1) guarana
-
-The New Order:
-0) player
-1) fox
-2) guarana
-
-The New Order:
-0) player
-1) fox
-2) sheep
-3) guarana
-
-The New Order:
-0) player
-1) fox
-2) sheep
-3) antelope
-4) guarana
-
-The New Order:
-0) player
-1) fox
-2) sheep
-3) antelope
-4) turtle
-5) guarana
-
-The New Order:
-0) player
-1) fox
-2) sheep
-3) antelope
-4) turtle
-5) guarana
-
-The New Order:
-0) player
-1) fox
-2) sheep
-3) antelope
-4) turtle
-5) guarana
-6) guarana
-
-Fight log: player vs turtle
-location: y = 1 x = 1
+Fight log: player vs fox
+location: y = 5 x = 3
 round: 8
-turtle is dead :(
+fox is dead :(
 It's age was 8
-The New Order:
-0) player
-1) fox
-2) sheep
-3) antelope
-4) guarana
-5) guarana
-
-the winner is player
-
-Fight log: sheep vs player
-location: y = 3 x = 3
-round: 12
-sheep is dead :(
-It's age was 12
-The New Order:
-0) player
-1) fox
-2) antelope
-3) guarana
-4) guarana
-
 the winner is player
 
 Fight log: player vs fox
-location: y = 4 x = 1
-round: 47
+location: y = 6 x = 9
+round: 19
 fox is dead :(
-It's age was 47
-The New Order:
-0) player
-1) antelope
-2) guarana
-3) guarana
-
+It's age was 19
 the winner is player
 
-Fight log: player vs antelope
-location: y = 3 x = 0
-round: 79
-antelope is dead :(
-It's age was 79
-The New Order:
-0) player
-1) guarana
-2) guarana
+wolfberry has died because of overpopulation, it had 3 neighbours
 
-the winner is player
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
 
-The New Order:
-0) player
-1) guarana
-2) guarana
-3) guarana
+wolfberry is dead :(
+It's age was 62
+wolfberry has died because of overpopulation, it had 3 neighbours
 
-The New Order:
-0) player
-1) guarana
-2) guarana
-3) guarana
-4) guarana
+wolfberry is dead :(
+It's age was 7
+wolfberry has died because of overpopulation, it had 3 neighbours
 
-The New Order:
-0) player
-1) guarana
-2) guarana
-3) guarana
-4) guarana
-5) guarana
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
 
-The New Order:
-0) player
-1) guarana
-2) guarana
-3) guarana
-4) guarana
-5) guarana
-6) guarana
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
 
-The New Order:
-0) player
-1) guarana
-2) guarana
-3) guarana
-4) guarana
-5) guarana
-6) guarana
-7) guarana
+wolfberry is dead :(
+It's age was 116
+wolfberry has died because of overpopulation, it had 3 neighbours
 
-The New Order:
-0) player
-1) guarana
-2) guarana
-3) guarana
-4) guarana
-5) guarana
-6) guarana
-7) guarana
-8) guarana
+wolfberry is dead :(
+It's age was 8
+wolfberry has died because of overpopulation, it had 3 neighbours
 
-Fight log: player vs guarana
-location: y = 3 x = 6
-round: 168
-guarana is dead :(
-It's age was 161
-The New Order:
-0) player
-1) guarana
-2) guarana
-3) guarana
-4) guarana
-5) guarana
-6) guarana
-7) guarana
+wolfberry is dead :(
+It's age was 120
+wolfberry has died because of overpopulation, it had 4 neighbours
 
-the winner is player
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 4 neighbours
 
-The New Order:
-0) player
-1) guarana
-2) guarana
-3) guarana
-4) guarana
-5) guarana
-6) guarana
-7) guarana
-8) guarana
+wolfberry is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 3 neighbours
 
-Fight log: player vs guarana
-location: y = 3 x = 7
-round: 169
-guarana is dead :(
-It's age was 169
-The New Order:
-0) player
-1) guarana
-2) guarana
-3) guarana
-4) guarana
-5) guarana
-6) guarana
-7) guarana
+grass is dead :(
+It's age was 205
+wolfberry has died because of overpopulation, it had 5 neighbours
 
-the winner is player
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
 
-Fight log: player vs guarana
-location: y = 3 x = 8
-round: 170
-guarana is dead :(
-It's age was 12
-The New Order:
-0) player
-1) guarana
-2) guarana
-3) guarana
-4) guarana
-5) guarana
-6) guarana
+wolfberry is dead :(
+It's age was 57
+wolfberry has died because of overpopulation, it had 5 neighbours
 
-the winner is player
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 4 neighbours
 
-Fight log: player vs guarana
-location: y = 4 x = 8
-round: 171
-guarana is dead :(
-It's age was 43
-The New Order:
-0) player
-1) guarana
-2) guarana
-3) guarana
-4) guarana
-5) guarana
+wolfberry is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 3 neighbours
 
-the winner is player
+grass is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 3 neighbours
 
-Fight log: player vs guarana
-location: y = 4 x = 7
-round: 172
-guarana is dead :(
+grass is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 4 neighbours
+
+grass is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 42
+grass has died because of overpopulation, it had 3 neighbours
+
+grass is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 159
+wolfberry has died because of overpopulation, it had 6 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 4 neighbours
+
+grass is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 6 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 6 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 4 neighbours
+
+grass is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 3 neighbours
+
+grass is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 4 neighbours
+
+grass is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 4 neighbours
+
+grass is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 5 neighbours
+
+grass is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 5 neighbours
+
+grass is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 3 neighbours
+
+grass is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 3 neighbours
+
+grass is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 4 neighbours
+
+grass is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 3 neighbours
+
+grass is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 5 neighbours
+
+grass is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 4 neighbours
+
+grass is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 141
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 5 neighbours
+
+grass is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 51
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 3 neighbours
+
+grass is dead :(
+It's age was 19
+wolfberry has died because of overpopulation, it had 6 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 5 neighbours
+
+grass is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 5 neighbours
+
+grass is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 4 neighbours
+
+grass is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 3 neighbours
+
+grass is dead :(
+It's age was 122
+grass has died because of overpopulation, it had 3 neighbours
+
+grass is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 4 neighbours
+
+grass is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 4 neighbours
+
+grass is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 3 neighbours
+
+grass is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 4 neighbours
+
+grass is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 201
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 189
+wolfberry has died because of overpopulation, it had 6 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 6 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 6 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 3 neighbours
+
+grass is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 6 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 7 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 3 neighbours
+
+grass is dead :(
+It's age was 10
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 3 neighbours
+
+grass is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 469
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 35
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 3 neighbours
+
+grass is dead :(
+It's age was 83
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 4 neighbours
+
+grass is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 6 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 61
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 2
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
 It's age was 85
-The New Order:
-0) player
-1) guarana
-2) guarana
-3) guarana
-4) guarana
+wolfberry has died because of overpopulation, it had 4 neighbours
 
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 3 neighbours
+
+grass is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 393
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 5 neighbours
+
+grass is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 6 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 5 neighbours
+
+grass is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 3 neighbours
+
+grass is dead :(
+It's age was 60
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 3 neighbours
+
+grass is dead :(
+It's age was 256
+Fight log: player vs grass
+location: y = 9 x = 4
+round: 562
+grass is dead :(
+It's age was 11
 the winner is player
 
-Fight log: player vs guarana
-location: y = 4 x = 6
-round: 173
-guarana is dead :(
-It's age was 5
-The New Order:
-0) player
-1) guarana
-2) guarana
-3) guarana
+grass has died because of overpopulation, it had 6 neighbours
 
+grass is dead :(
+It's age was 0
+grass has died because of overpopulation, it had 3 neighbours
+
+grass is dead :(
+It's age was 58
+Fight log: player vs grass
+location: y = 11 x = 4
+round: 564
+grass is dead :(
+It's age was 10
 the winner is player
 
-Fight log: player vs guarana
-location: y = 5 x = 7
-round: 175
-guarana is dead :(
-It's age was 21
-The New Order:
-0) player
-1) guarana
-2) guarana
-
+Fight log: player vs grass
+location: y = 11 x = 2
+round: 566
+grass is dead :(
+It's age was 400
 the winner is player
 
-Fight log: player vs guarana
-location: y = 5 x = 8
-round: 176
-guarana is dead :(
-It's age was 34
-The New Order:
-0) player
-1) guarana
-
+Fight log: player vs grass
+location: y = 11 x = 1
+round: 567
+grass is dead :(
+It's age was 360
 the winner is player
 
-Fight log: player vs guarana
-location: y = 2 x = 7
-round: 180
-guarana is dead :(
-It's age was 73
-The New Order:
-0) player
+wolfberry has died because of overpopulation, it had 4 neighbours
 
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+Fight log: player vs grass
+location: y = 11 x = 0
+round: 568
+grass is dead :(
+It's age was 363
 the winner is player
+
+grass has died because of overpopulation, it had 3 neighbours
+
+grass is dead :(
+It's age was 412
+Fight log: player vs grass
+location: y = 9 x = 0
+round: 570
+grass is dead :(
+It's age was 76
+the winner is player
+
+Fight log: player vs grass
+location: y = 9 x = 2
+round: 572
+grass is dead :(
+It's age was 45
+the winner is player
+
+Fight log: player vs grass
+location: y = 7 x = 2
+round: 574
+grass is dead :(
+It's age was 65
+the winner is player
+
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+Fight log: player vs grass
+location: y = 7 x = 1
+round: 575
+grass is dead :(
+It's age was 164
+the winner is player
+
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+Fight log: player vs grass
+location: y = 9 x = 6
+round: 582
+grass is dead :(
+It's age was 41
+the winner is player
+
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+Fight log: player vs wolfberry
+location: y = 9 x = 7
+round: 583
+wolfberry instantly killed an attaker
+player is dead :(
+It's age was 583
+the winner is wolfberry
 
 ---!log ended!---
