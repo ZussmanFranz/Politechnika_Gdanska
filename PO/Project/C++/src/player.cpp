@@ -51,6 +51,11 @@ CLASS player::GetClass()
     return PLAYER; 
 }
 
+organizm* player::MakeChild(YX new_position)
+{
+    return (new player(world_point, new_position));
+}
+
 player::~player()
 {
 }

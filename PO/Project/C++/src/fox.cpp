@@ -20,6 +20,11 @@ int fox::Fight(organizm* target)
     return animal::Fight(target);
 }
 
+organizm* fox::MakeChild(YX new_position)
+{
+    return (new fox(world_point, new_position));
+}
+
 fox::~fox()
 {
 }

@@ -5,103 +5,287 @@ The New Order:
 
 The New Order:
 0) player
-1) mlecz
+1) guarana
 
 The New Order:
 0) player
-1) mlecz
-2) grass
+1) fox
+2) guarana
 
 The New Order:
 0) player
-1) antelope
-2) mlecz
-3) grass
+1) fox
+2) sheep
+3) guarana
 
 The New Order:
 0) player
-1) antelope
-2) antelope
-3) mlecz
-4) grass
+1) fox
+2) sheep
+3) antelope
+4) guarana
 
 The New Order:
 0) player
-1) antelope
-2) antelope
-3) turtle
-4) mlecz
-5) grass
+1) fox
+2) sheep
+3) antelope
+4) turtle
+5) guarana
 
 The New Order:
 0) player
-1) antelope
-2) antelope
-3) turtle
-4) mlecz
-5) grass
+1) fox
+2) sheep
+3) antelope
+4) turtle
+5) guarana
 
-Fight log: antelope vs player
-location: y = 7 x = 3
-round: 10
-antelope is dead :(
-It's age was 10
 The New Order:
 0) player
-1) antelope
-2) turtle
-3) mlecz
-4) grass
+1) fox
+2) sheep
+3) antelope
+4) turtle
+5) guarana
+6) guarana
 
-the winner is player
-
-Fight log: turtle vs player
-location: y = 10 x = 3
-round: 15
+Fight log: player vs turtle
+location: y = 1 x = 1
+round: 8
 turtle is dead :(
-It's age was 15
+It's age was 8
+The New Order:
+0) player
+1) fox
+2) sheep
+3) antelope
+4) guarana
+5) guarana
+
+the winner is player
+
+Fight log: sheep vs player
+location: y = 3 x = 3
+round: 12
+sheep is dead :(
+It's age was 12
+The New Order:
+0) player
+1) fox
+2) antelope
+3) guarana
+4) guarana
+
+the winner is player
+
+Fight log: player vs fox
+location: y = 4 x = 1
+round: 47
+fox is dead :(
+It's age was 47
 The New Order:
 0) player
 1) antelope
-2) mlecz
-3) grass
+2) guarana
+3) guarana
 
 the winner is player
 
 Fight log: player vs antelope
-location: y = 7 x = 6
-round: 27
-antelope avoided attak
-the winner is antelope
-
-Fight log: player vs antelope
-location: y = 9 x = 2
-round: 33
+location: y = 3 x = 0
+round: 79
 antelope is dead :(
-It's age was 33
+It's age was 79
 The New Order:
 0) player
-1) mlecz
-2) grass
+1) guarana
+2) guarana
 
 the winner is player
 
-Fight log: player vs mlecz
-location: y = 3 x = 4
-round: 43
-mlecz is dead :(
+The New Order:
+0) player
+1) guarana
+2) guarana
+3) guarana
+
+The New Order:
+0) player
+1) guarana
+2) guarana
+3) guarana
+4) guarana
+
+The New Order:
+0) player
+1) guarana
+2) guarana
+3) guarana
+4) guarana
+5) guarana
+
+The New Order:
+0) player
+1) guarana
+2) guarana
+3) guarana
+4) guarana
+5) guarana
+6) guarana
+
+The New Order:
+0) player
+1) guarana
+2) guarana
+3) guarana
+4) guarana
+5) guarana
+6) guarana
+7) guarana
+
+The New Order:
+0) player
+1) guarana
+2) guarana
+3) guarana
+4) guarana
+5) guarana
+6) guarana
+7) guarana
+8) guarana
+
+Fight log: player vs guarana
+location: y = 3 x = 6
+round: 168
+guarana is dead :(
+It's age was 161
+The New Order:
+0) player
+1) guarana
+2) guarana
+3) guarana
+4) guarana
+5) guarana
+6) guarana
+7) guarana
+
+the winner is player
+
+The New Order:
+0) player
+1) guarana
+2) guarana
+3) guarana
+4) guarana
+5) guarana
+6) guarana
+7) guarana
+8) guarana
+
+Fight log: player vs guarana
+location: y = 3 x = 7
+round: 169
+guarana is dead :(
+It's age was 169
+The New Order:
+0) player
+1) guarana
+2) guarana
+3) guarana
+4) guarana
+5) guarana
+6) guarana
+7) guarana
+
+the winner is player
+
+Fight log: player vs guarana
+location: y = 3 x = 8
+round: 170
+guarana is dead :(
+It's age was 12
+The New Order:
+0) player
+1) guarana
+2) guarana
+3) guarana
+4) guarana
+5) guarana
+6) guarana
+
+the winner is player
+
+Fight log: player vs guarana
+location: y = 4 x = 8
+round: 171
+guarana is dead :(
 It's age was 43
 The New Order:
 0) player
-1) grass
+1) guarana
+2) guarana
+3) guarana
+4) guarana
+5) guarana
 
 the winner is player
 
-Fight log: player vs grass
-location: y = 8 x = 11
-round: 55
-grass is dead :(
-It's age was 55
+Fight log: player vs guarana
+location: y = 4 x = 7
+round: 172
+guarana is dead :(
+It's age was 85
+The New Order:
+0) player
+1) guarana
+2) guarana
+3) guarana
+4) guarana
+
+the winner is player
+
+Fight log: player vs guarana
+location: y = 4 x = 6
+round: 173
+guarana is dead :(
+It's age was 5
+The New Order:
+0) player
+1) guarana
+2) guarana
+3) guarana
+
+the winner is player
+
+Fight log: player vs guarana
+location: y = 5 x = 7
+round: 175
+guarana is dead :(
+It's age was 21
+The New Order:
+0) player
+1) guarana
+2) guarana
+
+the winner is player
+
+Fight log: player vs guarana
+location: y = 5 x = 8
+round: 176
+guarana is dead :(
+It's age was 34
+The New Order:
+0) player
+1) guarana
+
+the winner is player
+
+Fight log: player vs guarana
+location: y = 2 x = 7
+round: 180
+guarana is dead :(
+It's age was 73
 The New Order:
 0) player
 

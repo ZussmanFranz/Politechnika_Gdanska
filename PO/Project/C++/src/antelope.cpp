@@ -47,6 +47,11 @@ bool antelope::RejectAttak(organizm* attaker)
     return false;
 }
 
+organizm* antelope::MakeChild(YX new_position)
+{
+    return (new antelope(world_point, new_position));
+}
+
 antelope::~antelope()
 {
 }

@@ -6,6 +6,11 @@ sheep::sheep(world* world_point, YX position)
     avatar = 'S';
 }
 
+organizm* sheep::MakeChild(YX new_position)
+{
+    return (new sheep(world_point, new_position));
+}
+
 sheep::~sheep()
 {
 }

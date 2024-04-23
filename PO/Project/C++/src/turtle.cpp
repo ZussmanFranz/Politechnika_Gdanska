@@ -34,6 +34,11 @@ bool turtle::RejectAttak(organizm* attaker)
     return false;
 }
 
+organizm* turtle::MakeChild(YX new_position)
+{
+    return (new turtle(world_point, new_position));
+}
+
 turtle::~turtle()
 {
 }

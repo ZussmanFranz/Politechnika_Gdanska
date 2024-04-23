@@ -1,4 +1,5 @@
 #include "plant.h"
+#include <cstdlib>
 
 plant::plant(int strength, YX position, world* world_point)
 : organizm(world_point)
@@ -19,9 +20,14 @@ void plant::Draw(YX position)
 
 int plant::Action()
 {
-    //rozmnażanie
-    return 0;
+    if (rand() % 50 == 0) {
+        Reproduct();
+        return 0;
+    }
+    
+    return 1;
 }
+
 
 plant::~plant()
 {

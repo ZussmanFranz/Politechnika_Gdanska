@@ -6,6 +6,11 @@ hogweed::hogweed(YX position, world* world_point)
     avatar = 'h';
 }
 
+organizm* hogweed::MakeChild(YX new_position)
+{
+    return (new hogweed(new_position, world_point));
+}
+
 hogweed::~hogweed()
 {
 }

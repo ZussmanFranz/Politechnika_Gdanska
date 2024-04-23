@@ -6,6 +6,11 @@ guarana::guarana(YX position, world* world_point)
     avatar = 'u';
 }
 
+organizm* guarana::MakeChild(YX new_position)
+{
+    return (new guarana(new_position, world_point));
+}
+
 guarana::~guarana()
 {
 }

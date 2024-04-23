@@ -8,6 +8,7 @@ public:
 
     void Draw(YX position) override;
     int Action() override;
+    organizm* MakeChild(YX new_position) override;
 
     CLASS GetClass() override;
 

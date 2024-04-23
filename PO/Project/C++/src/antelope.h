@@ -7,6 +7,7 @@ public:
 
     int Action() override;
     bool RejectAttak(organizm* attaker) override;
+    organizm* MakeChild(YX new_position) override;
 
     ~antelope();
 };
