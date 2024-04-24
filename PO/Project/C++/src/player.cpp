@@ -1,9 +1,14 @@
 #include "player.h"
+#include "world.h"
+#include <cstdlib>
+#include <ncurses.h>
+#include <vector>
 
 player::player(world* world_point, YX position)
 :animal(5,4, position, world_point)
 {
     avatar = 'P';
+    ability_cooldown = 10;
 }   
 
 void player::Draw(YX position)
@@ -28,6 +33,8 @@ void player::Draw(YX position)
 
 int player::Action()
 {
+    ability_cooldown++;
+
     world_point->Draw();
 
     YX delta = {0,0};
@@ -51,11 +58,44 @@ int player::Action()
     case 'q':
         world_point->StopIt();
         break;
+    case 'e':
+        if (ability_cooldown >= 10) 
+        {
+            ability_cooldown = 0;
+            world_point->GetLogger()->Log("ability activated\n");
+            //input = getch();   
+        }
+        else 
+        {
+            world_point->GetLogger()->Log("it's too early\n");
+        }
+        break;
     default:
         break;
     }
 
     return Move(delta);
+}
+
+bool player::RejectAttak(organizm* attaker)
+{
+    if (ability_cooldown < 5) {
+        std::vector<field*> fields_near_attaker = world_point->GetFieldsNear(attaker->GetPosition());
+        
+        if (fields_near_attaker.size() == 0) {
+            world_point->GetLogger()->Log("Shield of Alzur could not protect :(");
+            return false;
+        }
+
+        YX new_position = (fields_near_attaker[rand() % fields_near_attaker.size()])->id;
+
+        attaker->SetPosition(new_position);
+
+        world_point->GetLogger()->Log("Shield of Alzur protected player");
+        return true;
+    }
+
+    return false;
 }
 
 CLASS player::GetClass() 

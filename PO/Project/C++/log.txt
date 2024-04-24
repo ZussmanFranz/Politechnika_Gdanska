@@ -1,293 +1,33 @@
 ---!log started!---
 
-hogweed killed an organizm with the area attak
-sheep is dead :(
-It's age was 26
+ability activated
 
-hogweed has died because of overpopulation, it had 3 neighbours
+it's too early
 
-hogweed is dead :(
-It's age was 36
+it's too early
 
-hogweed has died because of overpopulation, it had 3 neighbours
+ability activated
 
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 7
-
-hogweed killed an organizm with the area attak
-antelope is dead :(
-It's age was 79
-
-hogweed killed an organizm with the area attak
-fox is dead :(
-It's age was 98
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 27
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 37
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 67
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 48
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 1
-
-hogweed has died because of overpopulation, it had 4 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 31
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 33
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 10
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 178
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 180
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 4 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 6 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 4 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 4 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 56
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 4 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-Fight log: antelope vs player
-location: y = 0 x = 1
-round: 261
-antelope is dead :(
-It's age was 261
-
+Fight log: wolf vs player
+location: y = 4 x = 10
+round: 25
+Shield of Alzur protected player
 the winner is player
 
-hogweed has died because of overpopulation, it had 4 neighbours
+it's too early
 
-hogweed is dead :(
-It's age was 0
+it's too early
 
-hogweed has died because of overpopulation, it had 3 neighbours
+it's too early
 
-hogweed is dead :(
-It's age was 0
+it's too early
 
-hogweed has died because of overpopulation, it had 5 neighbours
+Fight log: wolf vs player
+location: y = 5 x = 10
+round: 30
+player is dead :(
+It's age was 30
 
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 65
-
-hogweed has died because of overpopulation, it had 4 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 4 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 4 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 4 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 4 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 4 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 4 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 5 neighbours
-
-hogweed is dead :(
-It's age was 0
+the winner is wolf
 
 ---!log ended!---

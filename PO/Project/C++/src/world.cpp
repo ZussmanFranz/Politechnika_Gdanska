@@ -185,7 +185,7 @@ void world::DrawInterface()
 
     mvprintw(1, screen_width/2 - 5, "Round is %d", round);
     mvprintw(0, screen_width/2 - 15, "Yauheni Pyryeu 201253 project");
-    mvprintw(screen_height - 1, screen_height/2 - 14, "q - quit, w a s d - controls");
+    mvprintw(screen_height - 1, screen_height/2 - 14, "q - quit, e - ability, w a s d - controls");
     
     return;
 }
