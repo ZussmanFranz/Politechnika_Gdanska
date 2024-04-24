@@ -13,10 +13,11 @@
 #include <chrono>
 #include <ncurses.h>
 #include <vector>
+#include <fstream>
 //#include<unistd.h>
 
 
-world::world(YX field_size, YX padding)
+world::world(int y, int x, YX field_size, YX padding)
 {
     initscr();
     start_color();
@@ -34,19 +35,6 @@ world::world(YX field_size, YX padding)
 
     //initialasing a world's window
     worldWindow = newwin(max_y, window_width, 0, 0);
-
-    int x, y;
-    wprintw(worldWindow,"enter world dimensions: ");
-    wrefresh(worldWindow);
-    wscanw(worldWindow,"%d %d", &y, &x);
-    wclear(worldWindow);
-
-    while (y < 5 || x < 5) {
-        wprintw(worldWindow,"minimal world dimension are 5 x 5\nenter world dimensions: ");
-        wrefresh(worldWindow);
-        wscanw(worldWindow,"%d %d", &y, &x);
-        wclear(worldWindow);
-    }
 
     noecho(); 
     curs_set(0);
@@ -516,6 +504,16 @@ void world::GenerateEvenStart(int number_of_organizms)
 
     return;
 }
+
+void world::Save(const char* filepath)
+{
+
+}
+
+// void world::Load(const char* filepath)
+// {
+
+// }
 
 world::~world()
 {

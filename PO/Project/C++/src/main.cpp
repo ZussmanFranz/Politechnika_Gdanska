@@ -1,3 +1,4 @@
+#include <cstdio>
 #include <ncurses.h>
 #include "world.h"
 #include "organizm.h"
@@ -12,24 +13,39 @@ int main() {
     // start_color();
     // use_default_colors();
 
-    // int x, y;
-    // printw("enter world dimensions: ");
-    // refresh();
-    // scanw("%d %d", &y, &x);
-    // clear();
+    bool load = false;
 
-    // while (y < 5 || x < 5) {
-    //     printw("minimal world dimension are 5 x 5\nenter world dimensions: ");
-    //     refresh();
-    //     scanw("%d %d", &y, &x);
-    //     clear();
-    // }
+    int x, y;
+    printf("Enter \"0 0\" to load an existing game\nenter world dimensions: ");
+    scanf("%d %d", &y, &x);
+    clear();
+
+    if (y == 0 || x == 0) {
+        load = true;
+    }
+
+    while ((y < 5 || x < 5) && (!load)) {
+        printf("minimal world dimension are 5 x 5\nenter world dimensions: ");
+        scanf("%d %d", &y, &x);
+        clear();
+        if (y == 0 || x == 0) {
+            load = true;
+        }
+    }
 
     // noecho(); 
     // curs_set(0); 
 
     // world* my_world = new world(y,x, FIELD_SIZE, PADDING);
-    world* my_world = new world(FIELD_SIZE, PADDING);
+
+    world* my_world = nullptr;
+    
+    if (load) {
+        //load constructor
+    }
+    else {
+        my_world = new world(y,x,FIELD_SIZE, PADDING);
+    }
 
     while (!(my_world->IsOver()))
     {

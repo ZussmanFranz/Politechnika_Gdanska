@@ -77,7 +77,8 @@ private:
     int window_width;
     int window_height;
 public:
-    world(YX field_size, YX padding);
+    //world(const char* filepath);
+    world(int y, int x,YX field_size, YX padding);
 
     void Draw();
     void DrawInterface();
@@ -110,6 +111,9 @@ public:
     void StopIt() { end = true; }
 
     logmanager* GetLogger() { return Logger; }
+
+    void Save(const char* filepath);
+    //void Load(const char* filepath);
 
     ~world();
 };

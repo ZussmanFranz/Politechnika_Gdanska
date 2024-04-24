@@ -165,7 +165,7 @@ void logmanager::LogCollision(organizm* attaker, organizm* prey)
 
     logFile << attaker_name << " strength = " << attaker->GetStrength() << ", " << prey_name << " strength = " << prey->GetStrength() << '\n';
 
-    LogF(FIGHT, ("Fight: " + attaker_name + " vs " + prey_name + "\n").c_str());
+    LogF(FIGHT, "Fight: %s vs %s (%d | %d)\n", attaker_name.c_str(), prey_name.c_str(), attaker->GetStrength(), prey->GetStrength());
 
     return;
 }
