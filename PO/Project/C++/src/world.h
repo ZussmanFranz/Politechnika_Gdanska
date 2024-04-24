@@ -16,6 +16,7 @@ struct field
     YX field_size;
     YX id;
     organizm* member;
+    WINDOW* window;
 
     void draw_box(YX field_size)
     {
@@ -37,22 +38,22 @@ struct field
                 break;
             }
 
-            attron(COLOR_PAIR(pair));
+            wattron(window,COLOR_PAIR(pair));
         }
 
-        mvvline(position.y + 1, position.x, ACS_VLINE, field_size.y - 1);
-        mvvline(position.y, position.x + field_size.x - 1, ACS_VLINE, field_size.y - 1);
-        mvhline(position.y, position.x, ACS_HLINE, field_size.x - 1);
-        mvhline(position.y + field_size.y - 1, position.x, ACS_HLINE, field_size.x - 1);
+        mvwvline(window,position.y + 1, position.x, ACS_VLINE, field_size.y - 1);
+        mvwvline(window,position.y, position.x + field_size.x - 1, ACS_VLINE, field_size.y - 1);
+        mvwhline(window,position.y, position.x, ACS_HLINE, field_size.x - 1);
+        mvwhline(window,position.y + field_size.y - 1, position.x, ACS_HLINE, field_size.x - 1);
 
-        mvaddch(position.y, position.x, ACS_ULCORNER);
-        mvaddch(position.y, position.x + field_size.x - 1, ACS_URCORNER);
+        mvwaddch(window,position.y, position.x, ACS_ULCORNER);
+        mvwaddch(window,position.y, position.x + field_size.x - 1, ACS_URCORNER);
         
-        mvaddch(position.y + field_size.y - 1, position.x, ACS_LLCORNER);
-        mvaddch(position.y + field_size.y - 1, position.x + field_size.x - 1, ACS_LRCORNER);
+        mvwaddch(window,position.y + field_size.y - 1, position.x, ACS_LLCORNER);
+        mvwaddch(window,position.y + field_size.y - 1, position.x + field_size.x - 1, ACS_LRCORNER);
 
         if (member != nullptr){
-            attroff(COLOR_PAIR(pair));
+            wattroff(window,COLOR_PAIR(pair));
         }
         return;
     }
@@ -72,8 +73,11 @@ private:
     bool end;
 
     logmanager* Logger;
+    WINDOW* worldWindow;
+    int window_width;
+    int window_height;
 public:
-    world(int y, int x, YX field_size, YX padding);
+    world(YX field_size, YX padding);
 
     void Draw();
     void DrawInterface();
@@ -99,6 +103,7 @@ public:
     field* GetRandomField();
     field* GetFreeFieldNear(YX position);
     std::vector<field*> GetFieldsNear(YX position);
+    WINDOW* GetWindow() { return worldWindow; }
 
     int GetRound(){ return round; }
     bool IsOver() { return end; }

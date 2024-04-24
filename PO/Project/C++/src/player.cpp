@@ -15,18 +15,18 @@ void player::Draw(YX position)
 {   
     if (strength > starting_strength) 
     {
-        attron(A_BOLD); 
+        wattron(world_point->GetWindow(),A_BOLD); 
     }
 
-    attron(COLOR_PAIR(3));
+    wattron(world_point->GetWindow(),COLOR_PAIR(3));
     
-    mvaddch(position.y, position.x, avatar);
+    mvwaddch(world_point->GetWindow(),position.y, position.x, avatar);
     
-    attroff(COLOR_PAIR(3));
+    wattroff(world_point->GetWindow(),COLOR_PAIR(3));
 
     if (strength > starting_strength) 
     {
-        attroff(A_BOLD); 
+        wattroff(world_point->GetWindow(),A_BOLD); 
     }
 }
 
@@ -35,11 +35,15 @@ int player::Action()
 {
     ability_cooldown++;
 
+    if (ability_cooldown == 6) {
+        world_point->GetLogger()->Log("ability is finished :(\n");
+    }
+
     world_point->Draw();
 
     YX delta = {0,0};
 
-    char input = getch();
+    char input = wgetch(world_point->GetWindow());
 
     switch (input)
     {
@@ -59,15 +63,14 @@ int player::Action()
         world_point->StopIt();
         break;
     case 'e':
-        if (ability_cooldown >= 10) 
+        if (ability_cooldown > 10) 
         {
             ability_cooldown = 0;
-            world_point->GetLogger()->Log("ability activated\n");
-            //input = getch();   
+            world_point->GetLogger()->Log("ability activated :)\n");
         }
         else 
         {
-            world_point->GetLogger()->Log("it's too early\n");
+            world_point->GetLogger()->Log("it's too early :|\n");
         }
         break;
     default:
@@ -79,7 +82,7 @@ int player::Action()
 
 bool player::RejectAttak(organizm* attaker)
 {
-    if (ability_cooldown < 5) {
+    if (ability_cooldown <= 5) {
         std::vector<field*> fields_near_attaker = world_point->GetFieldsNear(attaker->GetPosition());
         
         if (fields_near_attaker.size() == 0) {

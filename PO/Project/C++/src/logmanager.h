@@ -2,7 +2,19 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <ncurses.h>
 #include "organizm.h"
+
+enum message
+{
+    NORMAL,
+    DEATH,
+    SPAWN,
+    FIGHT,
+    WARNING,
+    ABILITY,
+    TECHNICAL
+};
 
 
 class logmanager
@@ -10,12 +22,16 @@ class logmanager
 protected:
     const char* filepath;
     std::ofstream logFile;
+    WINDOW* logWindow;
 public:
     logmanager(const char* filepath);
 
     std::string GetEntityName(organizm* entity);
 
+    WINDOW* GetWindow() { return logWindow; }
+
     void Log(std::string prompt);
+    void LogF(int color, const char* prompt, ...);
 
     void LogTime();
 

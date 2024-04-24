@@ -3,18 +3,39 @@
 #include "plants.h"
 #include "organizm.h"
 #include "plants.h"
+#include <cstdarg>
+#include <ncurses.h>
+#include <string>
 
 logmanager::logmanager(const char* filepath)
 :filepath(filepath), logFile(filepath)
 {
-    logFile << "---!log started!---\n\n";
-    // if (logFile.is_open()) 
-    // {
-    //     logFile << "---!log started!---\n";
-    // } else {
-    //     // Print an error message if the file couldn't be opened
-    //     std::cerr << "Error: Unable to open log file for writing.\n";
-    // }
+    if (logFile.is_open()) 
+    {
+        logFile << "---!log started!---\n";
+    } else {
+        // Print an error message if the file couldn't be opened
+        std::cerr << "Error: Unable to open log file for writing.\n";
+    }
+
+    int max_y, max_x;
+    getmaxyx(stdscr, max_y, max_x);
+
+    logWindow = newwin(max_y, max_x * 0.4, 0, max_x * 0.6);
+
+    init_pair(NORMAL, COLOR_WHITE, -1);
+    init_pair(SPAWN, COLOR_GREEN, -1);
+    init_pair(FIGHT, COLOR_YELLOW, -1);
+    init_pair(DEATH, COLOR_RED, -1);
+    init_pair(WARNING, COLOR_CYAN, -1);
+    init_pair(ABILITY, COLOR_BLUE, -1);
+    init_pair(TECHNICAL, COLOR_MAGENTA, -1);
+
+    //box(logWindow, 0, 0);
+    scrollok(logWindow, TRUE);
+    wrefresh(logWindow);
+
+    LogF(TECHNICAL, "---!log started!---\n\n");
 }
 
 std::string logmanager::GetEntityName(organizm* entity)
@@ -78,9 +99,27 @@ void logmanager::Log(std::string prompt)
     }
 
     logFile << prompt << '\n';
-    
+    LogF(WARNING, (prompt + "\n\n").c_str());
+
     return;
 }
+
+void logmanager::LogF(int color, const char* prompt, ...)
+{
+    wattron(logWindow, COLOR_PAIR(color));
+    va_list args;
+    va_start(args, prompt);
+    char buffer[256];
+    vsnprintf(buffer, sizeof(buffer), prompt, args);
+
+    std::string logMessage = std::string(buffer);
+    wprintw(logWindow, logMessage.c_str());
+    wrefresh(logWindow);
+
+    va_end(args);
+    wattroff(logWindow, COLOR_PAIR(color));
+}
+
 
 void logmanager::LogTime()
 {
@@ -103,6 +142,7 @@ void logmanager::LogCreation(organizm* created)
 
     logFile << "Created " << GetEntityName(created) << " at y = " << created->GetPosition().y << " x = " << created->GetPosition().x << '\n';
 
+    LogF(SPAWN, "Created %s at y = %d and x = %d\n\n",GetEntityName(created).c_str() , created->GetPosition().y, created->GetPosition().x);
     return;
 }
 
@@ -125,6 +165,8 @@ void logmanager::LogCollision(organizm* attaker, organizm* prey)
 
     logFile << attaker_name << " strength = " << attaker->GetStrength() << ", " << prey_name << " strength = " << prey->GetStrength() << '\n';
 
+    LogF(FIGHT, ("Fight: " + attaker_name + " vs " + prey_name + "\n").c_str());
+
     return;
 }
 
@@ -137,6 +179,8 @@ void logmanager::LogCollisionResult(organizm* winner)
     }
 
     logFile << "the winner is " << GetEntityName(winner).c_str() << "\n\n";
+
+    //LogF(FIGHT, ("Winner: " + GetEntityName(winner)).c_str());
 
     return;
 }
@@ -184,6 +228,8 @@ void logmanager::LogStrengthIncrease(organizm* lucky_boy)
 
     logFile << "Strength of the " << GetEntityName(lucky_boy) << " has been increased by 3, new strength is " << lucky_boy->GetStrength() << '\n';
 
+    LogF(ABILITY, "Strength of the %s has been increased by 3, new strength is %d\n\n", GetEntityName(lucky_boy).c_str(), lucky_boy->GetStrength());
+
     return;
 }
 
@@ -210,6 +256,8 @@ void logmanager::NecroLog(organizm* RIP)
 
     logFile << GetEntityName(RIP).c_str() << " is dead :(\nIt's age was " << RIP->GetWorld()->GetRound() - RIP->GetBirth() << "\n\n";
 
+    LogF(DEATH, "%s died at (y = %d, x = %d), it's age was %d\n\n", GetEntityName(RIP).c_str(), RIP->GetPosition().y, RIP->GetPosition().x, RIP->GetWorld()->GetRound() - RIP->GetBirth());
+
     return;
 }
 
@@ -219,5 +267,7 @@ logmanager::~logmanager()
     {
         logFile << "---!log ended!---";
         logFile.close();
-    }   
+    }
+
+    delwin(logWindow);   
 }

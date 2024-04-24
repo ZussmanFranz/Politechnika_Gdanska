@@ -12,18 +12,18 @@ void animal::Draw(YX position)
 {   
     if (strength > starting_strength) 
     {
-        attron(A_BOLD); 
+        wattron(world_point->GetWindow(),A_BOLD); 
     }
 
-    attron(COLOR_PAIR(1));
+    wattron(world_point->GetWindow(),COLOR_PAIR(1));
     
-    mvaddch(position.y, position.x, avatar);
+    mvwaddch(world_point->GetWindow(),position.y, position.x, avatar);
     
-    attroff(COLOR_PAIR(1));
+    wattroff(world_point->GetWindow(),COLOR_PAIR(1));
 
     if (strength > starting_strength) 
     {
-        attroff(A_BOLD); 
+        wattroff(world_point->GetWindow(),A_BOLD); 
     }
 }
 

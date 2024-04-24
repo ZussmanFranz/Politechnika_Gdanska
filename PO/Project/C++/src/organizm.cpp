@@ -29,7 +29,7 @@ void organizm::Reproduct()
 }
 
 void organizm::Draw(YX position) {
-    mvaddch(position.y, position.x, avatar);
+    mvwaddch(world_point->GetWindow(),position.y, position.x, avatar);
     return;
 }
 

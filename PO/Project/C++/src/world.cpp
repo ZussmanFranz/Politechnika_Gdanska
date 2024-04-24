@@ -16,15 +16,43 @@
 //#include<unistd.h>
 
 
-world::world(int y, int x, YX field_size, YX padding)
+world::world(YX field_size, YX padding)
 {
-    //initialising random for the whole project
-    srand(time(NULL));
+    initscr();
+    start_color();
+    use_default_colors();
 
     //initialasing color pairs for different types
     init_pair(1, COLOR_RED, -1);
     init_pair(2, COLOR_GREEN, -1);
     init_pair(3, COLOR_YELLOW, -1);
+
+    int max_y, max_x;
+    getmaxyx(stdscr, max_y, max_x);
+    window_width = max_x * 0.6;
+    window_height = max_y;
+
+    //initialasing a world's window
+    worldWindow = newwin(max_y, window_width, 0, 0);
+
+    int x, y;
+    wprintw(worldWindow,"enter world dimensions: ");
+    wrefresh(worldWindow);
+    wscanw(worldWindow,"%d %d", &y, &x);
+    wclear(worldWindow);
+
+    while (y < 5 || x < 5) {
+        wprintw(worldWindow,"minimal world dimension are 5 x 5\nenter world dimensions: ");
+        wrefresh(worldWindow);
+        wscanw(worldWindow,"%d %d", &y, &x);
+        wclear(worldWindow);
+    }
+
+    noecho(); 
+    curs_set(0);
+
+    //initialising random for the whole project
+    srand(time(NULL));
 
     //Logger initialisation
     Logger = new logmanager("log.txt");
@@ -35,10 +63,7 @@ world::world(int y, int x, YX field_size, YX padding)
     this->field_size = field_size;
     this->padding = padding;
 
-    int max_y, max_x;
-    getmaxyx(stdscr, max_y, max_x);
-
-    YX starting_padding = {2, max_x/2 - (x/2*(field_size.x + padding.x))};
+    YX starting_padding = {2, window_width/2 - (x/2*(field_size.x + padding.x))};
 
     fields = new field*[y];
 
@@ -50,6 +75,8 @@ world::world(int y, int x, YX field_size, YX padding)
     for (int i = 0; i < y; i++) {
         for (int j = 0; j < x; j++) 
         {
+            fields[i][j].window = worldWindow;
+
             fields[i][j].field_size = field_size;
 
             fields[i][j].position.y = i * (field_size.y + padding.y) + starting_padding.y;
@@ -162,7 +189,7 @@ std::vector<field*> world::GetFieldsNear(YX position)
 
 void world::Draw()
 {
-    clear();
+    wclear(worldWindow);
 
     DrawInterface();
 
@@ -181,34 +208,36 @@ void world::Draw()
 
 void world::DrawInterface()
 {
-    int screen_height, screen_width;
-    getmaxyx(stdscr, screen_height, screen_width);
-
-    mvprintw(1, screen_width/2 - 5, "Round is %d", round);
-    mvprintw(0, screen_width/2 - 15, "Yauheni Pyryeu 201253 project");
-    mvprintw(screen_height - 1, screen_height/2 - 14, "q - quit, e - ability, w a s d - controls");
+    mvwprintw(worldWindow,1, window_width/2 - 5, "Round is %d", round);
+    mvwprintw(worldWindow,0, window_width/2 - 15, "Yauheni Pyryeu 201253 project");
+    mvwprintw(worldWindow,window_height - 1, window_height/2 - 14, "q - quit, e - ability, w a s d - controls");
     
     return;
 }
 
 void world::DrawEndscreen()
 {
-    clear();
+    wclear(worldWindow);
+    //wclear(Logger->GetWindow());
 
-    int screen_height, screen_width;
-    getmaxyx(stdscr, screen_height, screen_width);
-
-    mvprintw(0, screen_width/2 - 6, "End of Game!");
-    mvprintw(1, screen_width/2 - 5, "Round is %d", round);
+    mvwprintw(worldWindow,0, window_width/2 - 6, "End of Game!");
+    mvwprintw(worldWindow,1, window_width/2 - 5, "Round is %d", round);
     
     if ((members.size() == 1) && (GetPlayer() != nullptr)) {
-        mvprintw(2, screen_width/2 - 7, "You have won!!", round);
+        mvwprintw(worldWindow,2, window_width/2 - 7, "You have won!!");
     }
     else if (GetPlayer() == nullptr) {
-        mvprintw(2, screen_width/2 - 7, "You have lost!", round);
+        mvwprintw(worldWindow,2, window_width/2 - 7, "You have lost!");
     }
+    // else {
+    //     //save
+    // }
 
     //Draw();
+    Logger->LogF(TECHNICAL, "---!log ended!---");
+    wrefresh(Logger->GetWindow());
+
+    wgetch(worldWindow);
 
     return;
 }
@@ -388,8 +417,8 @@ void world::GenerateRandomOrganizm(int type, int sub_type)
     if (random == nullptr)
     {
         clear();
-        printw("There is no free field!");
-        getch();
+        wprintw(worldWindow,"There is no free field!");
+        wgetch(worldWindow);
         return;
     }
     
@@ -490,8 +519,6 @@ void world::GenerateEvenStart(int number_of_organizms)
 
 world::~world()
 {
-    delete Logger;
-
     for (organizm* org : members) {
         delete org;
     }
@@ -503,6 +530,9 @@ world::~world()
         delete[] fields[i];
     }
 
+    delwin(worldWindow);
+    
     delete[] fields;
-    // delete Logger;
+    delete Logger;  
+    endwin();
 }
