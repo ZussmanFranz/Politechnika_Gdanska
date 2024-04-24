@@ -1,43 +1,63 @@
 ---!log started!---
-Created hogweed at y = 0 x = 6
-hogweed has died because of overpopulation, it had 3 neighbours
+it's too early :|
 
-hogweed is dead :(
-It's age was 16
+it's too early :|
 
-Fight log: wolf vs guarana
-location: y = 17 x = 0
-round: 17
-wolf strength = 9, guarana strength = 0
-Strength of the wolf has been increased by 3, new strength is 12
-guarana is dead :(
-It's age was 17
+it's too early :|
 
-the winner is wolf
+it's too early :|
 
-Fight log: wolf vs guarana
-location: y = 16 x = 0
-round: 17
-wolf strength = 12, guarana strength = 0
-Strength of the wolf has been increased by 3, new strength is 15
-guarana is dead :(
-It's age was 3
+Created wolfberry at y = 0 x = 6
+wolfberry has died because of overpopulation, it had 4 neighbours
 
-the winner is wolf
-
-Created hogweed at y = 1 x = 7
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
+wolfberry is dead :(
 It's age was 0
 
-Fight log: wolf vs turtle
-location: y = 19 x = 0
-round: 20
-wolf strength = 15, turtle strength = 2
-turtle is dead :(
-It's age was 20
+it's too early :|
 
-the winner is wolf
+Created grass at y = 2 x = 0
+grass has died because of overpopulation, it had 3 neighbours
+
+grass is dead :(
+It's age was 43
+
+ability is finished :(
+
+it's too early :|
+
+it's too early :|
+
+it's too early :|
+
+it's too early :|
+
+it's too early :|
+
+ability activated :)
+
+it's too early :|
+
+Created grass at y = 3 x = 0
+it's too early :|
+
+it's too early :|
+
+it's too early :|
+
+it's too early :|
+
+Created wolfberry at y = 1 x = 6
+Created wolfberry at y = 0 x = 6
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+ability is finished :(
 
 ---!log ended!---

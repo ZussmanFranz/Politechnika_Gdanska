@@ -14,6 +14,9 @@ public:
 
     bool RejectAttak(organizm* attaker) override; //The shield of Alzur
 
+    int GetCooldown() { return ability_cooldown; }
+    void SetCooldown(int value) { ability_cooldown = value; }
+
     CLASS GetClass() override;
 
     ~player();

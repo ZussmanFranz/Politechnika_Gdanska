@@ -601,6 +601,9 @@ void world::Save(const char* filepath)
         file << members[i]->GetBirth() << "\n\n";
     }
 
+    player* player_ptr = dynamic_cast<player*>(GetPlayer());
+    file << player_ptr->GetCooldown();
+
     // Close the file
     file.close();
 
@@ -685,6 +688,11 @@ void world::Load(const char* filepath)
         }
     }
 
+    int cooldown;
+    file >> cooldown;
+
+    player* player_ptr = dynamic_cast<player*>(GetPlayer());
+    player_ptr->SetCooldown(cooldown - 1);
 
     // Close the file
     file.close();
