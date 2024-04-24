@@ -18,6 +18,13 @@ int main() {
     scanw("%d %d", &y, &x);
     clear();
 
+    while (y < 5 || x < 5) {
+        printw("minimal world dimension are 5 x 5\nenter world dimensions: ");
+        refresh();
+        scanw("%d %d", &y, &x);
+        clear();
+    }
+
     noecho(); 
     curs_set(0); 
 

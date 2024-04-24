@@ -78,6 +78,9 @@ public:
     void Draw();
     void DrawInterface();
     void DrawEndscreen();
+    
+    organizm* GetPlayer();
+
     void Update();
     void Add(organizm* added);
     void Destroy(organizm* destroyed);
@@ -86,8 +89,9 @@ public:
     bool SameType(organizm* a, organizm* b);
     void Clean();
 
-    void GenerateRandomOrganizm();
+    void GenerateRandomOrganizm(int type, int sub_type);
     void GenerateRandomStart(int number_of_organizms);
+    void GenerateEvenStart(int number_of_organizms);
 
     YX GetDimensions() const { return dimensions; }
     YX GetFieldSize() const { return field_size; }

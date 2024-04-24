@@ -64,7 +64,8 @@ world::world(int y, int x, YX field_size, YX padding)
     player* Player = new player(this, {0,0});
     Add(Player);
 
-    GenerateRandomStart(5);
+    //GenerateRandomStart((y * x) / 6);
+    GenerateEvenStart((y * x) / 12);
 
     SortMembers();
 }
@@ -197,11 +198,30 @@ void world::DrawEndscreen()
     int screen_height, screen_width;
     getmaxyx(stdscr, screen_height, screen_width);
 
+    mvprintw(0, screen_width/2 - 6, "End of Game!");
     mvprintw(1, screen_width/2 - 5, "Round is %d", round);
-    mvprintw(0, screen_width/2 - 15, "End of Game!");
+    
+    if ((members.size() == 1) && (GetPlayer() != nullptr)) {
+        mvprintw(2, screen_width/2 - 7, "You have won!!", round);
+    }
+    else if (GetPlayer() == nullptr) {
+        mvprintw(2, screen_width/2 - 7, "You have lost!", round);
+    }
+
     //Draw();
 
     return;
+}
+
+organizm* world::GetPlayer()
+{
+    for (int i = 0; i < members.size(); i++) {
+        if (player* player_ptr = dynamic_cast<player*>(members[i])) {
+            return player_ptr;
+        }
+    }
+
+    return nullptr;
 }
 
 void world::Update()
@@ -257,6 +277,10 @@ void world::Add(organizm* added)
     FindField(added->GetPosition())->member = added;
 
     SortMembers();
+
+    Logger->LogCreation(added);
+
+    return;
 }
 
 void world::Destroy(organizm* destroyed)
@@ -358,7 +382,7 @@ void world::Clean()
     return;
 }
 
-void world::GenerateRandomOrganizm()
+void world::GenerateRandomOrganizm(int type, int sub_type)
 {
     field* random = GetRandomField();
     if (random == nullptr)
@@ -370,8 +394,8 @@ void world::GenerateRandomOrganizm()
     }
     
 
-    int type = rand() % 2 + 1; // Generates 1 or 2
-    int sub_type = rand() % 5 + 1; // Generates from 1 to 5
+    // int type = rand() % 2 + 1; // Generates 1 or 2
+    // int sub_type = rand() % 5 + 1; // Generates from 1 to 5
 
     if (type == 1) // animal
     {
@@ -431,12 +455,37 @@ void world::GenerateRandomOrganizm()
     }
 }
 
+
 void world::GenerateRandomStart(int number_of_organizms)
 {
     for (int object = 0; object < number_of_organizms; object++)
     {
-        GenerateRandomOrganizm();   
+        GenerateRandomOrganizm(rand() % 2 + 1, rand() % 5 + 1);   
     }
+
+    return;
+}
+
+void world::GenerateEvenStart(int number_of_organizms)
+{
+    int type = 1;
+    int subtype = 1;
+    int count = 0;
+
+    while (count < number_of_organizms)
+    {
+        type = (type == 1) ? 2 : 1;
+
+        if (count % 2 == 0) 
+        {
+            subtype = (subtype >= 5) ? 1 : (subtype + 1);
+        }
+
+        GenerateRandomOrganizm(type, subtype);
+        count++;
+    }
+
+    return;
 }
 
 world::~world()

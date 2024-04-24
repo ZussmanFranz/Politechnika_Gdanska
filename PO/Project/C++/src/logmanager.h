@@ -22,6 +22,8 @@ public:
     void LogCollision(organizm* attaker, organizm* prey);
     void LogCollisionResult(organizm* winner);
 
+    void LogCreation(organizm* created);
+
     void LogReproductionCollision(organizm* roditiel1, organizm* roditiel2);
 
     void LogOrder(std::vector<organizm*> members);

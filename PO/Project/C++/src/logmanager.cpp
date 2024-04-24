@@ -93,6 +93,19 @@ void logmanager::LogTime()
     logFile << "current time is " << time(NULL) << "\n\n";
 }
 
+void logmanager::LogCreation(organizm* created)
+{
+    if (!logFile.is_open())
+    {
+        //error!
+        return;
+    }
+
+    logFile << "Created " << GetEntityName(created) << " at y = " << created->GetPosition().y << " x = " << created->GetPosition().x << '\n';
+
+    return;
+}
+
 void logmanager::LogCollision(organizm* attaker, organizm* prey)
 {
     if (!logFile.is_open())
@@ -109,6 +122,8 @@ void logmanager::LogCollision(organizm* attaker, organizm* prey)
     logFile << "location: y = " << prey->GetPosition().y << " x = " << prey->GetPosition().x << "\n";
 
     logFile << "round: " << attaker->GetWorld()->GetRound() << '\n';
+
+    logFile << attaker_name << " strength = " << attaker->GetStrength() << ", " << prey_name << " strength = " << prey->GetStrength() << '\n';
 
     return;
 }

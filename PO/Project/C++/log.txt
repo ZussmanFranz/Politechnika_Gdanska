@@ -1,33 +1,1469 @@
 ---!log started!---
 
-ability activated
+Created player at y = 0 x = 0
+Created mlecz at y = 10 x = 7
+Created sheep at y = 8 x = 8
+Created guarana at y = 8 x = 1
+Created fox at y = 0 x = 2
+Created wolfberry at y = 2 x = 10
+Created turtle at y = 5 x = 0
+Created hogweed at y = 0 x = 3
+Created antelope at y = 6 x = 9
+Created grass at y = 1 x = 11
+Created wolf at y = 4 x = 6
+Created mlecz at y = 0 x = 7
+Created sheep at y = 11 x = 11
+Created wolfberry at y = 3 x = 10
+Fight log: player vs fox
+location: y = 1 x = 1
+round: 2
+player strength = 5, fox strength = 4
+fox is dead :(
+It's age was 2
 
-it's too early
-
-it's too early
-
-ability activated
-
-Fight log: wolf vs player
-location: y = 4 x = 10
-round: 25
-Shield of Alzur protected player
 the winner is player
 
-it's too early
+Fight log: player vs turtle
+location: y = 4 x = 0
+round: 6
+player strength = 5, turtle strength = 2
+turtle is dead :(
+It's age was 6
 
-it's too early
+the winner is player
 
-it's too early
+Fight log: sheep vs sheep
+location: y = 6 x = 8
+round: 13
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 6 x = 6
+sheep and sheep now have a child!
 
-it's too early
-
-Fight log: wolf vs player
-location: y = 5 x = 10
-round: 30
-player is dead :(
-It's age was 30
+Created guarana at y = 9 x = 0
+Created guarana at y = 8 x = 0
+Fight log: sheep vs wolf
+location: y = 9 x = 5
+round: 17
+sheep strength = 4, wolf strength = 9
+sheep is dead :(
+It's age was 17
 
 the winner is wolf
+
+Fight log: player vs guarana
+location: y = 8 x = 1
+round: 19
+player strength = 5, guarana strength = 0
+Strength of the player has been increased by 3, new strength is 8
+guarana is dead :(
+It's age was 19
+
+the winner is player
+
+Fight log: player vs guarana
+location: y = 8 x = 0
+round: 20
+player strength = 8, guarana strength = 0
+Strength of the player has been increased by 3, new strength is 11
+guarana is dead :(
+It's age was 5
+
+the winner is player
+
+Fight log: player vs guarana
+location: y = 9 x = 0
+round: 21
+player strength = 11, guarana strength = 0
+Strength of the player has been increased by 3, new strength is 14
+guarana is dead :(
+It's age was 6
+
+the winner is player
+
+Fight log: sheep vs mlecz
+location: y = 10 x = 7
+round: 22
+sheep strength = 4, mlecz strength = 0
+mlecz is dead :(
+It's age was 22
+
+the winner is sheep
+
+Created wolfberry at y = 2 x = 9
+Fight log: sheep vs wolfberry
+location: y = 3 x = 10
+round: 27
+sheep strength = 4, wolfberry strength = 99
+wolfberry instantly killed an attaker
+sheep is dead :(
+It's age was 27
+
+the winner is wolfberry
+
+Created hogweed at y = 1 x = 4
+Fight log: antelope vs wolfberry
+location: y = 2 x = 10
+round: 32
+antelope strength = 4, wolfberry strength = 99
+wolfberry instantly killed an attaker
+antelope is dead :(
+It's age was 32
+
+the winner is wolfberry
+
+Created mlecz at y = 0 x = 8
+Fight log: player vs wolf
+location: y = 8 x = 11
+round: 35
+player strength = 14, wolf strength = 9
+wolf is dead :(
+It's age was 35
+
+the winner is player
+
+Created hogweed at y = 0 x = 2
+Created mlecz at y = 1 x = 7
+Created wolfberry at y = 2 x = 11
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 44
+
+Created hogweed at y = 1 x = 1
+Created hogweed at y = 1 x = 0
+Created mlecz at y = 0 x = 9
+mlecz has died because of overpopulation, it had 3 neighbours
+
+mlecz is dead :(
+It's age was 17
+
+Created hogweed at y = 1 x = 2
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Fight log: player vs sheep
+location: y = 9 x = 5
+round: 52
+player strength = 14, sheep strength = 4
+sheep is dead :(
+It's age was 39
+
+the winner is player
+
+Created mlecz at y = 1 x = 8
+mlecz has died because of overpopulation, it had 3 neighbours
+
+mlecz is dead :(
+It's age was 0
+
+Created hogweed at y = 0 x = 0
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 12
+
+Fight log: player vs mlecz
+location: y = 1 x = 7
+round: 64
+player strength = 14, mlecz strength = 0
+mlecz is dead :(
+It's age was 27
+
+the winner is player
+
+Created hogweed at y = 0 x = 4
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 64
+
+Fight log: player vs mlecz
+location: y = 0 x = 7
+round: 65
+player strength = 14, mlecz strength = 0
+mlecz is dead :(
+It's age was 65
+
+the winner is player
+
+Created hogweed at y = 2 x = 0
+Fight log: player vs mlecz
+location: y = 0 x = 9
+round: 67
+player strength = 14, mlecz strength = 0
+mlecz is dead :(
+It's age was 17
+
+the winner is player
+
+Fight log: player vs grass
+location: y = 1 x = 11
+round: 70
+player strength = 14, grass strength = 0
+grass is dead :(
+It's age was 70
+
+the winner is player
+
+Created hogweed at y = 1 x = 1
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 5
+Created wolfberry at y = 3 x = 11
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 96
+
+Created wolfberry at y = 1 x = 9
+Created wolfberry at y = 3 x = 10
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 0 x = 1
+Created hogweed at y = 2 x = 3
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 86
+
+Created wolfberry at y = 1 x = 10
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 1
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 0 x = 5
+Created hogweed at y = 1 x = 1
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 1
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 2 x = 1
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 84
+
+Created hogweed at y = 1 x = 6
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 12
+
+Created hogweed at y = 1 x = 4
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 4
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 3
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 2 x = 8
+Created wolfberry at y = 1 x = 8
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 0 x = 1
+Created hogweed at y = 0 x = 5
+Created hogweed at y = 2 x = 6
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 86
+
+Created hogweed at y = 1 x = 0
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 1 x = 8
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created wolfberry at y = 1 x = 8
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 3 x = 1
+Created hogweed at y = 1 x = 2
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 3 x = 0
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 1
+hogweed has died because of overpopulation, it had 5 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 4 x = 10
+Created hogweed at y = 0 x = 3
+Created wolfberry at y = 1 x = 8
+Created hogweed at y = 1 x = 5
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 1 x = 7
+hogweed killed an organizm with the area attak
+wolfberry is dead :(
+It's age was 0
+
+Created wolfberry at y = 4 x = 11
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 109
+
+Created hogweed at y = 0 x = 5
+Created hogweed at y = 1 x = 0
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 2
+Created hogweed at y = 1 x = 3
+hogweed has died because of overpopulation, it had 6 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 1
+hogweed has died because of overpopulation, it had 5 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 5
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 5 x = 10
+Created hogweed at y = 0 x = 6
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 29
+
+Created hogweed at y = 1 x = 5
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 4
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 4
+Created wolfberry at y = 4 x = 9
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 11
+
+Created wolfberry at y = 0 x = 8
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 138
+
+Created hogweed at y = 1 x = 2
+hogweed has died because of overpopulation, it had 5 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 7
+Created wolfberry at y = 3 x = 7
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+hogweed killed an organizm with the area attak
+wolfberry is dead :(
+It's age was 1
+
+Created hogweed at y = 1 x = 3
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 0
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 5 x = 8
+Created wolfberry at y = 1 x = 9
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 3
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 1
+hogweed has died because of overpopulation, it had 5 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 0 x = 9
+Created hogweed at y = 1 x = 1
+hogweed has died because of overpopulation, it had 5 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 5 x = 10
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 2
+hogweed has died because of overpopulation, it had 5 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 3 x = 8
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created wolfberry at y = 1 x = 9
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 0 x = 5
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 3 x = 10
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 4
+Created hogweed at y = 3 x = 2
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 5 x = 7
+Created hogweed at y = 3 x = 3
+Created hogweed at y = 2 x = 2
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 2
+hogweed has died because of overpopulation, it had 5 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 1 x = 11
+Created hogweed at y = 1 x = 3
+Created hogweed at y = 2 x = 5
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 178
+
+Created hogweed at y = 1 x = 2
+hogweed has died because of overpopulation, it had 5 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 3 x = 10
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created wolfberry at y = 3 x = 8
+Created hogweed at y = 1 x = 1
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 5 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 4
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 3 x = 4
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 2 x = 2
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 6 x = 9
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 67
+
+Created wolfberry at y = 3 x = 9
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 1
+hogweed has died because of overpopulation, it had 5 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 4
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 0
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 0 x = 11
+Created wolfberry at y = 5 x = 6
+Created wolfberry at y = 3 x = 11
+Created hogweed at y = 1 x = 3
+Created wolfberry at y = 5 x = 10
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 0 x = 7
+hogweed killed an organizm with the area attak
+wolfberry is dead :(
+It's age was 0
+
+Created wolfberry at y = 4 x = 7
+Created hogweed at y = 1 x = 0
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 4 x = 5
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 6
+
+Created wolfberry at y = 5 x = 6
+Created hogweed at y = 3 x = 0
+Created hogweed at y = 1 x = 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 3 x = 10
+Created hogweed at y = 1 x = 6
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 1 x = 10
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created wolfberry at y = 1 x = 10
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 5
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 4 x = 6
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 2 x = 2
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 5 x = 9
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created wolfberry at y = 7 x = 9
+Created hogweed at y = 1 x = 2
+hogweed has died because of overpopulation, it had 5 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 1 x = 10
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 3 x = 4
+Created hogweed at y = 1 x = 3
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 3 x = 11
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 0 x = 5
+Created hogweed at y = 1 x = 4
+hogweed has died because of overpopulation, it had 5 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 3 x = 10
+Created hogweed at y = 1 x = 4
+Created hogweed at y = 1 x = 1
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 5 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 5 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 3 x = 4
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 4 x = 4
+hogweed killed an organizm with the area attak
+wolfberry is dead :(
+It's age was 0
+
+Created wolfberry at y = 0 x = 10
+Created wolfberry at y = 2 x = 10
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 2
+Created hogweed at y = 1 x = 0
+hogweed has died because of overpopulation, it had 5 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 0
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 1 x = 9
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 3
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 1 x = 8
+Created hogweed at y = 1 x = 2
+Created hogweed at y = 1 x = 1
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 6 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 5 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 8 x = 8
+Created wolfberry at y = 8 x = 10
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 25
+
+Created wolfberry at y = 0 x = 10
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 2
+hogweed has died because of overpopulation, it had 5 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 3 x = 8
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created wolfberry at y = 1 x = 7
+hogweed killed an organizm with the area attak
+wolfberry is dead :(
+It's age was 0
+
+Created wolfberry at y = 1 x = 10
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 1
+hogweed has died because of overpopulation, it had 5 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 2 x = 10
+Created hogweed at y = 1 x = 6
+Created hogweed at y = 1 x = 3
+Created hogweed at y = 1 x = 1
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 5 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 1 x = 9
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created wolfberry at y = 3 x = 8
+Created hogweed at y = 3 x = 6
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+hogweed killed an organizm with the area attak
+wolfberry is dead :(
+It's age was 64
+
+hogweed killed an organizm with the area attak
+wolfberry is dead :(
+It's age was 67
+
+Created wolfberry at y = 0 x = 10
+Created wolfberry at y = 3 x = 10
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 7
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 234
+
+hogweed killed an organizm with the area attak
+wolfberry is dead :(
+It's age was 162
+
+hogweed killed an organizm with the area attak
+wolfberry is dead :(
+It's age was 265
+
+Created wolfberry at y = 0 x = 10
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 5
+Created hogweed at y = 4 x = 1
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 226
+
+Created wolfberry at y = 6 x = 10
+Created wolfberry at y = 9 x = 9
+Created hogweed at y = 3 x = 2
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 3 x = 2
+Created hogweed at y = 1 x = 0
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 8 x = 9
+Created wolfberry at y = 3 x = 10
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 3 x = 1
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 1 x = 10
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created wolfberry at y = 9 x = 8
+Created hogweed at y = 3 x = 2
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 7
+
+Created wolfberry at y = 9 x = 9
+Created wolfberry at y = 3 x = 11
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created wolfberry at y = 5 x = 9
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created wolfberry at y = 0 x = 10
+Created wolfberry at y = 1 x = 10
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 2 x = 6
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 2 x = 6
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 1 x = 10
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created wolfberry at y = 5 x = 10
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 5
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 3 x = 0
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 5 x = 0
+Created hogweed at y = 1 x = 6
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 2 x = 7
+Created hogweed at y = 0 x = 7
+Created wolfberry at y = 1 x = 8
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 34
+
+Created hogweed at y = 1 x = 6
+hogweed killed an organizm with the area attak
+wolfberry is dead :(
+It's age was 1
+
+hogweed has died because of overpopulation, it had 5 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 4
+hogweed has died because of overpopulation, it had 5 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 9 x = 11
+Created wolfberry at y = 5 x = 8
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created wolfberry at y = 1 x = 10
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 5
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 8 x = 11
+Created wolfberry at y = 5 x = 11
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created wolfberry at y = 3 x = 8
+hogweed killed an organizm with the area attak
+wolfberry is dead :(
+It's age was 1
+
+Created wolfberry at y = 1 x = 10
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 3 x = 0
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 6 x = 0
+Created wolfberry at y = 0 x = 10
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created wolfberry at y = 10 x = 8
+Created wolfberry at y = 3 x = 11
+Created wolfberry at y = 5 x = 10
+Created hogweed at y = 1 x = 3
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created wolfberry at y = 8 x = 7
+Created hogweed at y = 1 x = 4
+Created hogweed at y = 1 x = 0
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 5 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 51
+
+Created wolfberry at y = 1 x = 10
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created wolfberry at y = 10 x = 7
+Created hogweed at y = 1 x = 6
+hogweed has died because of overpopulation, it had 5 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 7 x = 0
+Created hogweed at y = 4 x = 0
+Created wolfberry at y = 5 x = 8
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 39
+
+Created wolfberry at y = 7 x = 7
+Created wolfberry at y = 9 x = 9
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created wolfberry at y = 5 x = 9
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 7
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 4 x = 5
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 80
+
+Created hogweed at y = 3 x = 0
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 0 x = 10
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created wolfberry at y = 11 x = 8
+Created wolfberry at y = 5 x = 8
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 0
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 8
+hogweed killed an organizm with the area attak
+wolfberry is dead :(
+It's age was 231
+
+hogweed killed an organizm with the area attak
+wolfberry is dead :(
+It's age was 486
+
+Created hogweed at y = 1 x = 5
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 5 x = 1
+Created wolfberry at y = 5 x = 10
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+wolfberry has died because of overpopulation, it had 5 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created wolfberry at y = 2 x = 10
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 209
+
+Created hogweed at y = 1 x = 3
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 3 x = 2
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 7 x = 9
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created wolfberry at y = 3 x = 9
+Created hogweed at y = 1 x = 1
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 5 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 5 x = 0
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 8 x = 9
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 142
+
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 142
+
+Created wolfberry at y = 9 x = 8
+Created wolfberry at y = 4 x = 8
+Created hogweed at y = 2 x = 4
+wolfberry has died because of overpopulation, it had 4 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 1 x = 11
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 4
+hogweed has died because of overpopulation, it had 5 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 11 x = 9
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 34
+
+Created wolfberry at y = 1 x = 9
+hogweed killed an organizm with the area attak
+wolfberry is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 2
+hogweed has died because of overpopulation, it had 5 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created hogweed at y = 1 x = 0
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 10 x = 6
+Created hogweed at y = 1 x = 7
+hogweed has died because of overpopulation, it had 4 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Created wolfberry at y = 9 x = 6
+Created hogweed at y = 8 x = 0
+wolfberry has died because of overpopulation, it had 3 neighbours
+
+wolfberry is dead :(
+It's age was 0
 
 ---!log ended!---
