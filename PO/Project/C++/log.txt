@@ -1,58 +1,43 @@
 ---!log started!---
-Created player at y = 0 x = 0
-Created mlecz at y = 14 x = 2
-Created sheep at y = 19 x = 3
-Created guarana at y = 18 x = 6
-Created fox at y = 3 x = 2
-Created wolfberry at y = 18 x = 8
-Created turtle at y = 3 x = 3
-Created hogweed at y = 3 x = 0
-Created antelope at y = 0 x = 1
-Created grass at y = 8 x = 2
-Created wolf at y = 9 x = 6
-Created mlecz at y = 17 x = 4
-Created sheep at y = 16 x = 7
-Created guarana at y = 19 x = 11
-Created fox at y = 1 x = 1
-Created wolfberry at y = 4 x = 6
-Created turtle at y = 18 x = 1
-Created hogweed at y = 15 x = 8
-Created antelope at y = 16 x = 10
-Created grass at y = 4 x = 0
-Created wolf at y = 16 x = 5
-Fight log: sheep vs hogweed
-location: y = 15 x = 8
-round: 1
-sheep strength = 4, hogweed strength = 10
-hogweed instantly killed an attaker
-sheep is dead :(
-It's age was 1
+Created hogweed at y = 0 x = 6
+hogweed has died because of overpopulation, it had 3 neighbours
 
-the winner is hogweed
+hogweed is dead :(
+It's age was 16
 
-hogweed killed an organizm with the area attak
-grass is dead :(
-It's age was 1
+Fight log: wolf vs guarana
+location: y = 17 x = 0
+round: 17
+wolf strength = 9, guarana strength = 0
+Strength of the wolf has been increased by 3, new strength is 12
+guarana is dead :(
+It's age was 17
 
-hogweed killed an organizm with the area attak
-fox is dead :(
-It's age was 1
+the winner is wolf
 
-Fight log: player vs fox
-location: y = 1 x = 1
-round: 2
-player strength = 5, fox strength = 4
-fox is dead :(
-It's age was 2
-
-the winner is player
-
-hogweed killed an organizm with the area attak
-wolf is dead :(
+Fight log: wolf vs guarana
+location: y = 16 x = 0
+round: 17
+wolf strength = 12, guarana strength = 0
+Strength of the wolf has been increased by 3, new strength is 15
+guarana is dead :(
 It's age was 3
 
-hogweed killed an organizm with the area attak
-player is dead :(
-It's age was 3
+the winner is wolf
+
+Created hogweed at y = 1 x = 7
+hogweed has died because of overpopulation, it had 3 neighbours
+
+hogweed is dead :(
+It's age was 0
+
+Fight log: wolf vs turtle
+location: y = 19 x = 0
+round: 20
+wolf strength = 15, turtle strength = 2
+turtle is dead :(
+It's age was 20
+
+the winner is wolf
 
 ---!log ended!---

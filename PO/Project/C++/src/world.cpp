@@ -1,6 +1,7 @@
 #include "world.h"
 #include "animal.h"
 #include "animals.h"
+#include "logmanager.h"
 #include "organizm.h"
 #include "plant.h"
 #include "plants.h"
@@ -17,7 +18,77 @@
 //#include<unistd.h>
 
 
-world::world(int y, int x, YX field_size, YX padding)
+world::world(const char* filepath)
+{
+    dimensions.y = 12;
+    dimensions.x = 12;
+
+    initscr();
+    start_color();
+    use_default_colors();
+
+    //initialasing color pairs for different types
+    init_pair(1, COLOR_RED, -1);
+    init_pair(2, COLOR_GREEN, -1);
+    init_pair(3, COLOR_YELLOW, -1);
+
+    int max_y, max_x;
+    getmaxyx(stdscr, max_y, max_x);
+    window_width = max_x * 0.6;
+    window_height = max_y;
+
+    //initialasing a world's window
+    worldWindow = newwin(max_y, window_width, 0, 0);
+
+    noecho(); 
+    curs_set(0);
+
+    //initialising random for the whole project
+    srand(time(NULL));
+
+    //Logger initialisation
+    Logger = new logmanager("log.txt");
+
+    round = 0;
+    end = false;
+    this->field_size = {3, 5};
+    this->padding = {0, 1};
+
+    YX starting_padding = {2, window_width/2 - (dimensions.x/2*(field_size.x + padding.x))};
+
+    Load(filepath);
+
+    fields = new field*[dimensions.y];
+
+    for (int i = 0; i < dimensions.y; i++) {
+        fields[i] = new field[dimensions.x];
+    }
+
+    // Initializing fields
+    for (int i = 0; i < dimensions.y; i++) {
+        for (int j = 0; j < dimensions.x; j++) 
+        {
+            fields[i][j].window = worldWindow;
+
+            fields[i][j].field_size = field_size;
+
+            fields[i][j].position.y = i * (field_size.y + padding.y) + starting_padding.y;
+            fields[i][j].id.y = i;
+            fields[i][j].position.x = j * (field_size.x + padding.x) + starting_padding.x;
+            fields[i][j].id.x = j;
+
+            fields[i][j].member = nullptr;
+        }
+    }
+    
+    for (int i = 0; i < members.size(); i++) {
+        fields[members[i]->GetPosition().y][members[i]->GetPosition().x].member = members[i];
+    }
+
+    SortMembers();
+}
+
+world::world(int y, int x)
 {
     initscr();
     start_color();
@@ -48,8 +119,8 @@ world::world(int y, int x, YX field_size, YX padding)
     round = 0;
     end = false;
     dimensions = {y, x};
-    this->field_size = field_size;
-    this->padding = padding;
+    this->field_size = {3, 5};
+    this->padding = {0, 1};
 
     YX starting_padding = {2, window_width/2 - (x/2*(field_size.x + padding.x))};
 
@@ -217,9 +288,10 @@ void world::DrawEndscreen()
     else if (GetPlayer() == nullptr) {
         mvwprintw(worldWindow,2, window_width/2 - 7, "You have lost!");
     }
-    // else {
-    //     //save
-    // }
+    else {
+        mvwprintw(worldWindow, 3, window_width/2 - 3, "saved");
+        Save("save.txt");
+    }
 
     //Draw();
     Logger->LogF(TECHNICAL, "---!log ended!---");
@@ -507,13 +579,118 @@ void world::GenerateEvenStart(int number_of_organizms)
 
 void world::Save(const char* filepath)
 {
+    // Open the file for writing
+    std::ofstream file(filepath, std::ios::trunc);
+    if (!file.is_open()) {
+        // Handle error if file cannot be opened
+        Logger->LogF(DEATH, "---!error saving file!---\n");
+        std::cerr << "Error: Unable to open save file for writing.\n";
+        return;
+    }
 
+    // World "info"
+    file << dimensions.y << " " << dimensions.x << "\n";
+    file << round << "\n";
+
+    //members
+    file << members.size() << "\n\n";
+    for (int i = 0; i < members.size(); i++) {
+        file << members[i]->GetAvatar() << "\n";
+        file << members[i]->GetPosition().y << ' ' << members[i]->GetPosition().x << '\n';
+        file << members[i]->GetStrength() << '\n';
+        file << members[i]->GetBirth() << "\n\n";
+    }
+
+    // Close the file
+    file.close();
+
+    Logger->LogF(TECHNICAL, "---!The game is saved!---\n");
+
+    return;
 }
 
-// void world::Load(const char* filepath)
-// {
+void world::Load(const char* filepath)
+{
+    // Open the save file for reading
+    std::ifstream file(filepath);
+    if (!file.is_open()) {
+        // Handle error if file cannot be opened
+        Logger->LogF(DEATH, "---!error loading from file!---\n");
+        std::cerr << "Error: Unable to open save file for reading.\n";
+        return;
+    }
 
-// }
+    file >> dimensions.y >> dimensions.x >> round;
+    round--;
+
+    int n_entities;
+    file >> n_entities;
+
+    for (int i = 0; i < n_entities; i++) {
+        char avatar;
+        file >> avatar;
+
+        YX e_position;
+        int strength, birth;
+
+        file >> e_position.y >> e_position.x;
+        file >> strength;
+        file >> birth;
+
+        organizm* entity = nullptr;
+
+        switch (avatar) 
+        {
+            case 'P':
+                entity = new player(this,{e_position.y, e_position.x});
+                break;
+            case 'W':
+                entity = new wolf(this,{e_position.y, e_position.x});
+                break;
+            case 'F':
+                entity = new fox(this,{e_position.y, e_position.x});
+                break;
+            case 'T':
+                entity = new turtle(this,{e_position.y, e_position.x});
+                break;
+            case 'A':
+                entity = new antelope(this,{e_position.y, e_position.x});
+                break;
+            case 'S':
+                entity = new sheep(this,{e_position.y, e_position.x});
+                break;
+            case 'g':
+                entity = new grass({e_position.y, e_position.x},this);
+                break;
+            case 'u':
+                entity = new guarana({e_position.y, e_position.x},this);
+                break;
+            case 'm':
+                entity = new mlecz({e_position.y, e_position.x},this);
+                break;
+            case 'w':
+                entity = new wolfberry({e_position.y, e_position.x},this);
+                break;
+            case 'h':
+                entity = new hogweed({e_position.y, e_position.x},this);
+                break;
+            default:
+                break;
+        }
+
+        if (entity != nullptr) {
+            entity->SetStrength(strength);
+            entity->SetBirth(birth);
+            members.push_back(entity);
+        }
+    }
+
+
+    // Close the file
+    file.close();
+
+    Logger->LogF(TECHNICAL, "---!The game is loaded!---\n");
+}
 
 world::~world()
 {

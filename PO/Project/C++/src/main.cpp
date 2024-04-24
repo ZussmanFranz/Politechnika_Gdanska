@@ -5,8 +5,6 @@
 
 class world;
 
-const YX FIELD_SIZE = {3, 5};
-const YX PADDING = {0, 1};
 
 int main() {
     // initscr();
@@ -41,10 +39,10 @@ int main() {
     world* my_world = nullptr;
     
     if (load) {
-        //load constructor
+        my_world = new world("save.txt");
     }
     else {
-        my_world = new world(y,x,FIELD_SIZE, PADDING);
+        my_world = new world(y,x);
     }
 
     while (!(my_world->IsOver()))

@@ -44,6 +44,7 @@ public:
     void SetBirth(int new_birth) { birth = new_birth; }
     int GetBirth() { return birth; }
     bool GetSentence() { return death_sentence; }
+    char GetAvatar() {return avatar;}
 
     void IAmEddarOfHouseStartkLordOfWinterfellAndWardenOfTheNorthSentenceYouToDie() { death_sentence = true; }
 
