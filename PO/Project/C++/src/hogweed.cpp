@@ -19,7 +19,7 @@ int hogweed::Action()
 
     for (int i = 0; i < near.size(); i++) 
     {
-        if (near[i]->member != nullptr) 
+        if ((near[i]->member != nullptr) && (dynamic_cast<hogweed*>(near[i]->member) == nullptr))
         {
             world_point->GetLogger()->Log("hogweed killed an organizm with the area attak");
             world_point->Destroy(near[i]->member);
