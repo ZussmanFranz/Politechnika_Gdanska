@@ -71,6 +71,7 @@ private:
 
     int round;
     bool end;
+    int update_order;
 
     logmanager* Logger;
     WINDOW* worldWindow;

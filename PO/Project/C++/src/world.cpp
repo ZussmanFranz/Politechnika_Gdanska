@@ -81,8 +81,13 @@ world::world(const char* filepath)
         }
     }
     
+    update_order = 0;
+
     for (int i = 0; i < members.size(); i++) {
         fields[members[i]->GetPosition().y][members[i]->GetPosition().x].member = members[i];
+        if (dynamic_cast<player*>(members[i]) != nullptr) {
+            update_order = i;
+        }
     }
 
     SortMembers();
@@ -152,6 +157,8 @@ world::world(int y, int x)
 
     //GenerateRandomStart((y * x) / 6);
     GenerateEvenStart((y * x) / 12);
+
+    update_order = 0;
 
     SortMembers();
 }
@@ -329,21 +336,10 @@ void world::Update()
             return;
         }
 
-        // if ((dynamic_cast<animal*>(members[i]) != nullptr) && (dynamic_cast<player*>(members[i]) == nullptr)) {
-        //     Draw();
-        //     Logger->Log("starting time:");
-        //     Logger->LogTime();
-
-        //     mvprintw(0, 0, Logger->GetEntityName(members[i]).c_str());
-        //     mvprintw(1, 0, "%d",members.size());
-
-        //     // unsigned int second = 1000000;
-        //     // usleep(second);//sleeps for 3 second
-        //     getch();
-
-        //     Logger->Log("ending time:");
-        //     Logger->LogTime();
-        // }
+        if ((update_order > 0) && (update_order < members.size())) {
+            i = update_order;
+            update_order = 0;
+        }
 
         members[i]->Action();
     }
