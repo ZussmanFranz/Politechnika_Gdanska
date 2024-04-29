@@ -1,0 +1,27 @@
+1. Początek i pierwsze 24%
+Do plansz warto zrobić jakąś klasę, w której będziemy trzymać planszę, rozmiar i podstawowe staty które można policzyć przy parsowaniu - rozmiar, ilość pionków red/blue. Planszę warto trzymać w 2D arrayu po prostu.
+ Patrzymy na nią jakby przekręcając o 45stopni w lewo, wtedy można łatwo zwizualizować to jako tablicę 2D. Może być stałe 11x11, lub dynamiczne jeżeli używacie getchara i możecie liczbe spacji policzyć ( znać od razu rozmiar na starcie )
+ i od razu do niej wrzucać pionki z bufora, lub na cinie wrzucić najpierw do tablicy pojedynczej i z niej przekopiować do arraya, któego wtedy można dynamicznie stworzyć bo znamy rozmiar. Gdy to mamy to 3 pierwsze funckje to formalność,
+ gdyż mamy rozmiar, liczbę pionków każdego no a correct to tylko sprawdzenie czy red-1==blue lub red==blue.
+2. Isgameover 20%
+Tutaj mamy 2 opcje, użyć stacka na którego będziemy wrzucać sąsiednie pola gracza którego obecnie sprawdzamy, lub rekurencji. Pamiętamy że każda kratka ma maksymalnie 6 sąsiadów naokoło, a te na bokach mniej.
+ Polecam przemyśleć która współrzędna to która w 2D arrayu, rozrysować to w paicie itp. Sprawdzać czy nie wywala za mapę. Na początku iterujecie po hexach krawędzi gracza którego sprawdzacie i wywołujecie dla niego dfs,
+ która będzie albo rekurencyjnie wywoływać tą funkcję dla sąsiadów, lub dokładać do stacka ich. Gdzie przy każdym hexie zapisać go jako odwiedzony, ja np zrobiłem równoległy 2d bool array do planszy,
+ którego adres wrzucam do każdej funkcji dfsa żeby inne wywołania wiedziały o wywołaniu innego. I tak aż znajdziemy drugą krawędź w jakimś wywołaniu funkcji (dla red i blue jest inna)
+ lub gdy skończy się rekurencja/stos będzie pusty co oznacza że nie udało się. No i na początku dla incorrect od razu false.
+3. Isboardpossible 20%
+Jak ładnie napiszecie isgameover to tu prawie nie ma co do roboty.Na start iscorrect. Potem sprawdzacie tylko czy ktoś wygrał i jeżeli wygrał to czy się zgadzają piony - red wygrał to musi być red-1==blue a jak blue to red==blue.
+ Jeśli nie wygrał to jest possible. Jeśli wygrał i zgadzają się te piony to tego gracza co wygrał usuwacie po kolei piony ( nie wiemy jaki był jego poprzedni ruch więc sprawdzamy każdy możliwy przypadek stanu planszy przed jego ruchem),
+ i dla każdego usuniętego piona sprawdzamy czy nadal on wygrywa, jeśli istnieje chociaż 1 gdzie już nie wygrywa to sytuacja jest możliwa, jeśli dla kazdego nadal wygrywa, to nie była możliwa, no i tyle w sumie xd.
+4. Naive 20%
+Tutaj sprawdzamy na start czy board possible i czy ktoś już wygrał, jak nie/tak to fałsz od razu. Po tym sprawdzamy ile ruchów wykona gracz który chce wygrać (ten którego analizujemy) a ile naiwny,
+ w zależności od tego kogo teraz tura, w ile ruchów ma wygrać. Suma tych ruchów musi być <= wolnych miejsc. Jeśli nie to false. Jak tak, to w zależności ile ruchów ma ten co chce wygrać, 
+robimy wszystkie przypadki 1 piona postawionego lub 2.
+Pamiętajcie że tutaj przez chwilę będzie incorrect gdy używacie isgameover. Gdy jest chociaż 1 taki przypadek gdzie wygrywa to koniec, gdyż naive nie może przypadekiem wygrać stawiając w wolnych polach, 
+musiał by stawiać tam gdzie chce stawiać ten co ma wygrać, jeśli stawia na innych to zostnie zablokowany i nie wygra nie ważne co. Dlatego nie trzeba sprawdzać potem głębi 4 każdego case enemy. 
+5. Perfect 16%
+Tutaj nie znam się za dobrze, ale ja podzieliłem na 4 casy, player, enemy-player, player-enemy-player i enemy-player-enemy-player. W pierwszym to samo co naive, 
+w drugim szukam pierwszego lepszego miejsca gdzie zablokuje enemy playerowi wina a potem sprawdzam każde wolne dla playera czy wygrywa, jeśli jest taki gdzie wygrywa to było więcej do blokowania,
+ w sumie można też policzyć po prostu ile ma możliwości wygranej i jeśli >1 to wygra z perfectem bo nie zablokuje więcej niz 1. Nie trzeba sprawdzać czy enemy może wygrać, 
+bo musi postawić tam gdzie red będzie chciał stawiać, podobna sytuacja co ostatnio gdzie się blokują. Dla Trzeciego to losowo playera i potem użyć funkcji z drugiego.
+ A dla czwartego losowo postawić enemy i funkcji z 3. Na pewno są lepsze sposoby, ale podaje to co wydaje się najbardziej bruteforce, nie wymagające wielkiej kreatywności.  

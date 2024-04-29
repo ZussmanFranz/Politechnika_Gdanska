@@ -1,24 +1,47 @@
-CC = g++
-CFLAGS = -I src/include
+# Define the compiler
+CC = /usr/bin/g++
 
-SRC_DIR = src
-INCLUDE_DIR = $(SRC_DIR)/include
+# Define compiler flags
+CFLAGS = -fdiagnostics-color=always -ggdb -pedantic-errors -Wall -Weffc++ -Wconversion -Wsign-conversion -Wextra -Wpedantic -g -lncurses -I $(INCDIR)
 
-SRC_FILES = $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(INCLUDE_DIR)/*.cpp)
+# Define the output executable name
+OUTPUT = main
 
-OBJS = $(SRC_FILES:.cpp=.o)
+# Define directories
+SRCDIR = src
+OBJDIR = build/obj
+BINDIR = build/bin
+INCDIR = $(SRCDIR)/include
 
-TARGET = project
+# Ensure the build directories exist
+MKDIR_P = mkdir -p
 
-.PHONY: all clean
+# Define the source files
+SRCS = $(wildcard $(SRCDIR)/*.cpp)
 
-all: $(TARGET)
+# Define the object files
+OBJS = $(SRCS:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
 
-$(TARGET): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^
+# Define the default target
+all: directories $(BINDIR)/$(OUTPUT)
 
-%.o: %.cpp
-	$(CC) $(CFLAGS) -o $@ -c $<
+# Link all object files into a single executable
+$(BINDIR)/$(OUTPUT): $(OBJS)
+	$(CC) $(CFLAGS) $^ -o $@ -lncurses
 
+# Compile each .cpp file into an object file
+$(OBJDIR)/%.o: $(SRCDIR)/%.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# Ensure necessary directories exist
+directories: $(OBJDIR) $(BINDIR)
+
+$(OBJDIR):
+	$(MKDIR_P) $(OBJDIR)
+
+$(BINDIR):
+	$(MKDIR_P) $(BINDIR)
+
+# Define the clean target
 clean:
-	rm -f $(TARGET) $(OBJS)
+	rm -f $(OBJDIR)/*.o $(BINDIR)/$(OUTPUT)

@@ -1,105 +1,65 @@
 #include <iostream>
+#include <string>
 
-typedef struct YX
+struct YX
 {
     int y;
     int x;
 };
 
+struct field
+{
+    char color;
+    bool checked = false;
+    YX position;
+};
+
+enum task
+{
+    SIZE,
+    PAWNS,
+    IS_CORRECT,
+    IS_OVER,
+    IS_POSSIBLE,
+    CAN_RED_IN_1_NAIVE,
+    CAN_RED_IN_2_NAIVE,
+    CAN_BLUE_IN_1_NAIVE,
+    CAN_BLUE_IN_2_NAIVE,
+    CAN_RED_IN_1_PERFECT,
+    CAN_RED_IN_2_PERFECT,
+    CAN_BLUE_IN_1_PERFECT,
+    CAN_BLUE_IN_2_PERFECT,
+    ERROR
+};
 
 class board
 {
 private:
-    char fields[11][11];
-    int rows;
-    char* current_field;
+    field** fields;
+    std::string string_representation;
+    task current_task;
+    int size;
+    int pawns_b;
+    int pawns_r;
     const YX ERROR_FIELD = {-1,-1}; 
 public:
-    board();
+    board(int rows, std::istream& input_stream);
 
-    void IncrementRows() { rows++; }
-    void SetRows(int rows) { this->rows = rows; }
-    int GetRows() { return rows; }
+    void HandleBoard(std::istream& input_stream);
+    void PrintBoard();
 
-    char* GetCurrent() { return current_field; }
+    void HandleTask(std::istream& input_stream, char start_c);
+    void PrintTask();
+    int SolveTask();
 
-    char* GetField(int y, int x);
-    YX FindField(char* wanted);
+    // void Convert();
+    // void PrintFields();
 
-    char* GetNext();//?
+    void SetSize(int size) { this->size = size; }
+    int GetSize() { return size; }
 
-    void AddField(int y, int x, char c);
+    field* GetField(int y, int x);
 
     ~board();
 };
 
-board::board()
-: rows(0)
-{
-    for (int i = 0; i < 11; i++)
-    {
-        for (int j = 0; j < 11; j++)
-        {
-            fields[i][j] = 0;       
-        }
-    }
-}
-
-char* board::GetField(int y, int x)
-{
-    if (y > rows || x > rows || y < 0 || x < 0)
-    {
-        return &(fields[y][x]);
-    }
-    else{
-        return nullptr;
-    }
-}
-
-YX board::FindField(char* wanted)
-{
-    for (int i = 0; i < rows; i++)
-    {
-        for (int j = 0; j < rows; j++)
-        {
-            if (&(fields[i][j]) == wanted)
-            {
-                return {i, j};
-            }
-        }
-    }
-
-    return ERROR_FIELD;
-}
-
-char* board::GetNext()
-{
-    YX current_field_coords = FindField(current_field);
-
-    if (current_field_coords.y - 1 < 0)
-    {
-        
-    }
-    
-}
-
-void board::AddField(int y, int x, char c)
-{
-    if (y < 0 || x < 0 || y > 11 || x > 11)
-    {
-        return;
-    }
-    
-
-    if (y >= rows || x >= rows)
-    {
-        rows++; 
-    }
-    
-    fields[y][x] = c;
-    return;
-}
-
-board::~board()
-{
-}
