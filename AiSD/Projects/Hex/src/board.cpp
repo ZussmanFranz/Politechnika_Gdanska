@@ -2,7 +2,6 @@
 #include <cstdio>
 #include <cstring>
 #include <iostream>
-#include <string>
 
 board::board(int size, std::istream& input_stream)
 : size(size)
