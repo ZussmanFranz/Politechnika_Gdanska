@@ -57,7 +57,7 @@ void board::HandleBoard(std::istream& input_stream)
         {
             input_stream.ignore(1);
             input_stream >> c;
-            input_stream.ignore(1); //changed!
+            //input_stream.ignore(1); //changed!
 
             if (y == size) {
                 //std::cout << "switch!\n";
@@ -280,16 +280,17 @@ int board::SolveTask()
             break;
         case IS_CORRECT:
             if (IsCorrect()) {
-                printf("YES\n\n");
+                printf("YES\n");
             }
             else {
-                printf("NO\n\n");
+                printf("NO\n");
             }
+            Uncheck();
             return 0;
             break;
         case IS_OVER:
             if (!IsCorrect()) {
-                printf("NO\n\n");
+                printf("NO\n");
                 return 0;
                 break;
             }
@@ -297,19 +298,41 @@ int board::SolveTask()
             if (IsOver()) {
                 printf("YES");
                 if (won_r) {
-                    printf(" RED\n\n");
+                    printf(" RED\n");
                 }
                 else if (won_b) {
-                    printf(" BLUE\n\n");
+                    printf(" BLUE\n");
                 }
             }
             else {
-                printf("NO\n\n");
+                printf("NO\n");
             }
+
+            Uncheck();
             return 0;
             break;
         case IS_POSSIBLE:
-            std::cout << "IS_POSSIBLE\n";
+            if (!IsCorrect()) {
+                printf("NO\n");
+                return 0;
+                break;
+            }
+
+            //Uncheck();
+            if (IsOver()) {
+                Uncheck();
+
+                if (IsPossible()) {
+                    printf("YES\n");
+                }
+                else {
+                    printf("NO\n"); //test 191 (wrong)
+                }
+            }
+            else {
+                printf("YES\n");
+            }
+
             return 0;
             break;
         case CAN_RED_IN_1_NAIVE:
@@ -382,6 +405,88 @@ bool board::IsOver()
 
     return false;
 }
+
+void board::Uncheck()
+{
+    for (int i = 0; i < size; i++) 
+    {
+        for (int j = 0; j < size; j++)
+        {
+            fields[i][j].checked = false;
+        }
+    }
+
+    return;
+}
+
+void board::RefreshConnections()
+{
+    for (int i = 0; i < size; i++) 
+    {
+        for (int j = 0; j < size; j++)
+        {
+            fields[i][j].SetNeighbours(fields, size);
+        }
+    }
+
+    return;
+}
+
+bool board::IsPossible()
+{
+    char color;
+    //std::cout << "pawns red: " << pawns_r << "\npawns blue: " << pawns_b << '\n';
+
+    if (pawns_r == pawns_b + 1) {
+        //red won
+        color = 'r';
+    }
+    else if (pawns_b == pawns_r) {
+        //blue won
+        color = 'b';
+    }
+    else {
+        return false;
+    }
+
+    //std::cout << color << '\n';
+
+    for (int i = 0; i < size; i++) 
+    {
+        for (int j = 0; j < size; j++) 
+        {
+            if (fields[i][j].color == color)
+            {
+                //std::cout << "removing {" << i << ", " << j << "}\n";
+
+                fields[i][j].color = ' '; //putting the pawn out
+                //fields[i][j].RefreshNeighbours(fields, size);
+                //fields[i][j].SetNeighbours(fields, size);
+
+                Uncheck();
+                RefreshConnections();
+
+                //PrintBoard();
+                //PrintBoard(color);
+
+                
+                if (IsOver() == false) {
+                    fields[i][j].color = color; //the return of the pawn
+                    // fields[i][j].RefreshNeighbours(fields, size);
+                    // fields[i][j].SetNeighbours(fields, size);
+                    return true;
+                }
+
+                fields[i][j].color = color; //the return of the pawn
+                // fields[i][j].RefreshNeighbours(fields, size);
+                // fields[i][j].SetNeighbours(fields, size);
+            }
+        }
+    }
+
+    return false;
+}
+
 bool board::CheckPlayer(char color)
 {
     if ((color != 'r') && (color != 'b')) {
@@ -389,6 +494,7 @@ bool board::CheckPlayer(char color)
     }
 
     bool* won = (color == 'r') ? &won_r : &won_b;
+    *won = false;
 
     //recursive check
     if (color == 'r') 
@@ -406,11 +512,13 @@ bool board::CheckPlayer(char color)
     }
     else if (color == 'b') 
     {
+        //std::cout << "checking blue\n";
         for (int i = 0; i < size; i++) 
         {
             if (fields[0][i].color == color) {
                 if (RecursiveCheck(color, &fields[0][i])) 
                 {
+                    //std::cout << "Recursive check for {0, " << i << "} has shown true\n";
                     *won = true;
                     return *won; 
                 }

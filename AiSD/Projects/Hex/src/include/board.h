@@ -79,6 +79,17 @@ struct field
 
         return neighbours_count;
     }
+
+    void RefreshNeighbours(field** fields, int size)
+    {
+        for (int i = 0; i < neighbours_count; i++) {
+            if (neighbours[i] != nullptr) {
+                neighbours[i]->SetNeighbours(fields, size);
+            }
+        }
+
+        return;
+    }
 };
 
 enum task
@@ -122,7 +133,10 @@ public:
     int SolveTask();
 
     bool IsOver();
-    bool IsCorrect() {return ((pawns_r - 1 == pawns_b) || (pawns_r == pawns_b));}
+    void Uncheck();
+    void RefreshConnections();
+    bool IsCorrect() {return ((pawns_r == pawns_b + 1) || (pawns_r == pawns_b));}
+    bool IsPossible();
     bool CheckPlayer(char color);
     bool RecursiveCheck(char color, field* current_field);
 
