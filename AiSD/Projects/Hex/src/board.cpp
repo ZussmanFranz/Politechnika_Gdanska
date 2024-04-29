@@ -21,6 +21,7 @@ board::board(int size, std::istream& input_stream)
     }
 
     pawns_b = pawns_r = 0;
+    won_b = won_r = false;
 
     return;
 }
@@ -68,6 +69,7 @@ void board::HandleBoard(std::istream& input_stream)
 
             //std::cout << "y = " << y << " x = " << x << '\n';
             fields[y][x].color = c;
+            fields[y][x].position = {y, x};
             if (c == 'b') {
                 pawns_b++;
             }
@@ -91,6 +93,13 @@ void board::HandleBoard(std::istream& input_stream)
             }
         }
     }
+
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            fields[i][j].SetNeighbours(fields, size);
+        }
+    }
+
     return;
 }
 
@@ -98,17 +107,54 @@ void board::PrintBoard()
 {
     printf("\n  ");
     for (int r = 0; r < size; r++) {
-        printf("R ");
+        printf("B ");
     }
     printf("\n");
 
     for (int i = 0; i < size; i++) {
-        printf("B ");
+        printf("R ");
         for (int j = 0; j < size; j++) {
             printf("%c ", fields[i][j].color);
         }
-        printf("B\n");
+        printf("R\n");
     }
+    
+    printf("  ");
+    for (int r = 0; r < size; r++) {
+        printf("B ");
+    }
+    printf("\n");
+
+    return;
+}
+
+void board::PrintBoard(char search_color)
+{
+    printf("\n  ");
+    for (int r = 0; r < size; r++) {
+        printf("B ");
+    }
+    printf("\n");
+
+    for (int i = 0; i < size; i++) {
+        printf("R ");
+        for (int j = 0; j < size; j++) {
+
+            if ((fields[i][j].color != search_color)) {
+                printf("  ");
+            }
+            else {
+                printf("%d ", fields[i][j].neighbours_count);
+            }
+        }
+        printf("R\n");
+    }
+    
+    printf("  ");
+    for (int r = 0; r < size; r++) {
+        printf("B ");
+    }
+    printf("\n");
 
     return;
 }
@@ -233,16 +279,33 @@ int board::SolveTask()
             return 0;
             break;
         case IS_CORRECT:
-            if ((pawns_r - 1 == pawns_b) || (pawns_r == pawns_b)) {
-                std::cout << "YES\n\n";
+            if (IsCorrect()) {
+                printf("YES\n\n");
             }
             else {
-                std::cout << "NO\n\n";
+                printf("NO\n\n");
             }
             return 0;
             break;
         case IS_OVER:
-            std::cout << "IS_OVER\n";
+            if (!IsCorrect()) {
+                printf("NO\n\n");
+                return 0;
+                break;
+            }
+
+            if (IsOver()) {
+                printf("YES");
+                if (won_r) {
+                    printf(" RED\n\n");
+                }
+                else if (won_b) {
+                    printf(" BLUE\n\n");
+                }
+            }
+            else {
+                printf("NO\n\n");
+            }
             return 0;
             break;
         case IS_POSSIBLE:
@@ -290,13 +353,94 @@ int board::SolveTask()
     return 1;
 }
 
-// void board::Convert()
-// {
-//     for (int i = 0; i < string_representation.size(); i++) 
-//     {
+bool board::IsOver()
+{
+    bool bottom_b, top_b, left_r, right_r;
+    bottom_b = top_b = left_r = right_r = false;
 
-//     }
-// }
+    for (int i = 0; i < size; i++) {
+        if (fields[0][i].color == 'b') {
+            top_b = true;
+        }
+        if (fields[size - 1][i].color == 'b') {
+            bottom_b = true;
+        }
+        if (fields[i][0].color == 'r') {
+            left_r = true;
+        }
+        if (fields[i][size - 1].color == 'r') {
+            right_r = true;
+        }
+    }
+
+    if ((top_b == true) && (bottom_b == true)) {
+        if (CheckPlayer('b')) { return true; }
+    }
+    if ((left_r == true) && (right_r== true)) {
+        if (CheckPlayer('r')) { return true; }
+    }
+
+    return false;
+}
+bool board::CheckPlayer(char color)
+{
+    if ((color != 'r') && (color != 'b')) {
+        return false;
+    }
+
+    bool* won = (color == 'r') ? &won_r : &won_b;
+
+    //recursive check
+    if (color == 'r') 
+    {
+        for (int i = 0; i < size; i++) 
+        {
+            if (fields[i][0].color == color) {
+                if (RecursiveCheck(color, &fields[i][0])) 
+                {
+                    *won = true;
+                    return *won;
+                }
+            }
+        }
+    }
+    else if (color == 'b') 
+    {
+        for (int i = 0; i < size; i++) 
+        {
+            if (fields[0][i].color == color) {
+                if (RecursiveCheck(color, &fields[0][i])) 
+                {
+                    *won = true;
+                    return *won; 
+                }
+            }
+        }
+    }
+
+    return *won;
+}
+bool board::RecursiveCheck(char color, field* current_field)
+{
+    current_field->checked = true;
+    // printf("checked: {%d, %d}. color: %c\n", current_field->position.y, current_field->position.x, color);
+
+    if ((((color == 'r') && (current_field->position.x == size - 1)) || ((color == 'b') && (current_field->position.y == size - 1)))) 
+    {
+        return true;
+    }
+    else {
+        for (int i = 0; i < 6; i++) {
+            if ((current_field->neighbours[i] != nullptr) && (current_field->neighbours[i]->checked == false)) {
+                if (RecursiveCheck(color, current_field->neighbours[i]))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}
 
 field* board::GetField(int y, int x)
 {

@@ -2,44 +2,6 @@
 #include <iostream>
 #include "include/board.h"
 
-int GetSection(std::istream& input_stream, char start_c)
-{
-    int size = 0;
-
-    if (start_c == ' ') {
-        int size = 1;
-    }
-    else if (start_c == EOF){
-        return 1;
-    }
-    
-
-    //get size by spaces
-    while (start_c == ' ') {
-        size++;
-        input_stream >> start_c;
-    }
-    size = (size + 2) / 3;
-
-    //std::cout << size << '\n';
-
-    board* field = new board(size, input_stream);
-
-    field->HandleBoard(input_stream);
-    //field->PrintBoard();
-
-    field->HandleTask(input_stream, start_c);
-    //field->PrintTask();
-
-
-    if (field->SolveTask() == 1)
-    {
-        return 1;
-    }
-
-    return 0;
-}
-
 board* HandleBoard(std::istream& input_stream, char start_c)
 {
     int size = 0;
@@ -98,7 +60,9 @@ int main()
         if (c == ' ') {
             //std::cout << "board!\n";
             field = HandleBoard(std::cin, c);
-            //field->PrintBoard();
+            // field->PrintBoard();
+            // field->PrintBoard('r');
+            // field->PrintBoard('b');
         }
         else if ((c > 64) && (c < 91)) {
             //std::cout << "task!\n";
