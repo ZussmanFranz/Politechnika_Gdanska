@@ -1,5 +1,4 @@
 #include "include/board.h"
-#include <cstdio>
 #include <cstring>
 #include <iostream>
 
