@@ -12,7 +12,6 @@ struct field
 {
     char color;
     bool checked = false;
-    bool added = false;
     YX position;
     field* neighbours[6];
     int neighbours_count;
@@ -105,6 +104,7 @@ public:
     int SolveTask();
 
     bool IsOver();
+    bool IsOver(char color);
     void Uncheck();
     void RefreshConnections();
     bool IsCorrect() {return ((pawns_r == pawns_b + 1) || (pawns_r == pawns_b));}
@@ -113,7 +113,6 @@ public:
     bool RecursiveCheck(char color, field* current_field);
 
     int FreeFieldsCount();
-    void TurnOffAdded();
     bool Naive(char color, int turns);
 
     void SetSize(int size) { this->size = size; }

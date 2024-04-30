@@ -330,11 +330,13 @@ int board::SolveTask()
         case CAN_RED_IN_1_NAIVE:
             if (!IsCorrect()) {
                 printf("NO\n");
+                // printf("(incorrect)\n");
                 return 0;
                 break;
             }
             else if (IsOver()) {
                 printf("NO\n");
+                // printf("(is over)\n");
                 return 0;
                 break;
             }
@@ -347,16 +349,23 @@ int board::SolveTask()
                 printf("NO\n");
             }
 
+            // PrintBoard();
+            // PrintBoard('r');
+            // PrintBoard('b');
+            RefreshConnections();
+            // PrintBoard('r');
             return 0;
             break;
         case CAN_RED_IN_2_NAIVE:
             if (!IsCorrect()) {
                 printf("NO\n");
+                // printf("(incorrect)\n");
                 return 0;
                 break;
             }
             else if (IsOver()) {
                 printf("NO\n");
+                // printf("(is over)\n");
                 return 0;
                 break;
             }
@@ -369,16 +378,23 @@ int board::SolveTask()
                 printf("NO\n");
             }
 
+            // PrintBoard();
+            // PrintBoard('r');
+            // PrintBoard('b');
+            RefreshConnections();
+            // PrintBoard('r');
             return 0;
             break;
         case CAN_BLUE_IN_1_NAIVE:
             if (!IsCorrect()) {
                 printf("NO\n");
+                // printf("(incorrect)\n");
                 return 0;
                 break;
             }
             else if (IsOver()) {
                 printf("NO\n");
+                // printf("(is over)\n");
                 return 0;
                 break;
             }
@@ -391,16 +407,23 @@ int board::SolveTask()
                 printf("NO\n");
             }
 
+            // PrintBoard();
+            // PrintBoard('r');
+            // PrintBoard('b');
+            RefreshConnections();
+            // PrintBoard('r');
             return 0;
             break;
         case CAN_BLUE_IN_2_NAIVE:
             if (!IsCorrect()) {
                 printf("NO\n");
+                // printf("(incorrect)\n");
                 return 0;
                 break;
             }
             else if (IsOver()) {
                 printf("NO\n");
+                // printf("(is over)\n");
                 return 0;
                 break;
             }
@@ -413,6 +436,11 @@ int board::SolveTask()
                 printf("NO\n");
             }
 
+            // PrintBoard();
+            // PrintBoard('r');
+            // PrintBoard('b');
+            RefreshConnections();
+            // PrintBoard('r');
             return 0;
             break;
         case CAN_RED_IN_1_PERFECT:
@@ -515,6 +543,7 @@ int board::SolveTask()
 bool board::IsOver()
 {
     // printf("checking if the game is over..");
+    // PrintBoard();
 
     bool bottom_b, top_b, left_r, right_r;
     bottom_b = top_b = left_r = right_r = false;
@@ -535,22 +564,42 @@ bool board::IsOver()
     }
 
     if ((top_b == true) && (bottom_b == true)) {
-        // printf(".starting to check player blue\n");
+        // printf("starting to check player blue\n");
         if (CheckPlayer('b')) 
         { 
             Uncheck();
+            // PrintBoard();
+            // PrintBoard('r');
+            // PrintBoard('b');
             return true;
         }
     }
     if ((left_r == true) && (right_r== true)) {
-        // printf(".starting to check player red\n");
+        // printf("starting to check player red\n");
         if (CheckPlayer('r')) 
         {
             Uncheck();
+            // PrintBoard();
+            // PrintBoard('r');
+            // PrintBoard('b');
             return true; 
         }
     }
 
+    Uncheck();
+    return false;
+}
+
+bool board::IsOver(char color)
+{
+    if (CheckPlayer(color)) 
+        { 
+            Uncheck();
+            // PrintBoard();
+            // PrintBoard('r');
+            // PrintBoard('b');
+            return true;
+        }
     Uncheck();
     return false;
 }
@@ -630,7 +679,8 @@ bool board::CheckPlayer(char color)
     bool* won = (color == 'r') ? &won_r : &won_b;
     *won = false;
 
-    // printf("starting recursive check...");
+    // PrintBoard(color);
+    // printf("starting recursive check (%c)...", color);
     //recursive check
     if (color == 'r') 
     {
@@ -644,6 +694,7 @@ bool board::CheckPlayer(char color)
                     // printf("OK\n");
                     return *won;
                 }
+                // printf("\n");
             }
         }
     }
@@ -659,6 +710,7 @@ bool board::CheckPlayer(char color)
                     // printf("OK\n");
                     return *won; 
                 }
+                // printf("\n");
             }
         }
     }
@@ -676,7 +728,7 @@ bool board::RecursiveCheck(char color, field* current_field)
     }
     else {
         for (int i = 0; i < 6; i++) {
-            if ((current_field->neighbours[i] != nullptr) && (current_field->neighbours[i]->checked == false)) {
+            if ((current_field->neighbours[i] != nullptr) && (current_field->neighbours[i]->checked == false) && ((current_field->neighbours[i]->color == current_field->color))) {
                 // printf("{%d, %d}...", current_field->neighbours[i]->position.y, current_field->neighbours[i]->position.x);
                 if (RecursiveCheck(color, current_field->neighbours[i]))
                 {
@@ -685,18 +737,6 @@ bool board::RecursiveCheck(char color, field* current_field)
             }
         }
         return false;
-    }
-}
-
-void board::TurnOffAdded()
-{
-    for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++) {
-            if (fields[i][j].added) {
-                fields[i][j].color = ' ';
-                fields[i][j].added = false;
-            }
-        }
     }
 }
 
@@ -736,7 +776,9 @@ bool board::Naive(char color, int turns)
         free_space = turns * 2;
     }
 
+    //printf("free space: %d\n", FreeFieldsCount());
     if (FreeFieldsCount() < free_space) {
+        //printf("there is no free space!\n");
         return false;
     }
 
@@ -750,15 +792,17 @@ bool board::Naive(char color, int turns)
         {
             if (fields[i][j].color == ' ') {
                 fields[i][j].color = color;
-                fields[i][j].added = true;
+    
                 RefreshConnections();
                 // PrintBoard();
-                if (IsOver()) {
+                // printf("put %c {i = %d, j = %d} ",color, i, j);
+
+                if (IsOver(color)) {
                     //diagnistics:
                     // printf("Is over:");
                     // PrintBoard();
                     fields[i][j].color = ' ';
-                    fields[i][j].added = false;
+        
                     return true;
                 }
 
@@ -769,22 +813,25 @@ bool board::Naive(char color, int turns)
                         {
                             if (fields[a][b].color == ' ') {
                                 fields[a][b].color = color;
-                                fields[a][b].added = true;
+                    
                                 RefreshConnections();
-                                //PrintBoard();
+                                // PrintBoard();
                                 // PrintBoard(color);
-                                if (IsOver()) {
+                                // printf("put %c {a = %d, b = %d} ",color, a, b);
+
+                                if (IsOver(color)) {
                                     //diagnistics:
                                     // printf("Is over:");
                                     // PrintBoard();
+                                    fields[i][j].color = ' ';
                                     fields[a][b].color = ' ';
-                                    fields[a][b].added = false;
+                        
                                     return true;
                                 }
 
                                 // turning off by hands
                                 fields[a][b].color = ' ';
-                                fields[a][b].added = false;
+                                // printf("cleared %c {a = %d, b = %d} ",color, a, b);
                             }
                         }
                     }
@@ -792,7 +839,7 @@ bool board::Naive(char color, int turns)
 
                 // turning off by hands
                 fields[i][j].color = ' ';
-                fields[i][j].added = false;
+                // printf("cleared %c {i = %d, j = %d} ",color, i, j);
             }
         }
     }
