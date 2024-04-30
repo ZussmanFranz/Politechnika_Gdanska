@@ -113,6 +113,7 @@ public:
     bool RecursiveCheck(char color, field* current_field);
 
     int FreeFieldsCount();
+    bool TwoTurnsPossible(char color);
     bool Naive(char color, int turns);
 
     void SetSize(int size) { this->size = size; }

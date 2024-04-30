@@ -328,6 +328,9 @@ int board::SolveTask()
             return 0;
             break;
         case CAN_RED_IN_1_NAIVE:
+            // printf("CAN_RED_IN_1_NAIVE");
+            // PrintBoard();
+            
             if (!IsCorrect()) {
                 printf("NO\n");
                 // printf("(incorrect)\n");
@@ -357,6 +360,9 @@ int board::SolveTask()
             return 0;
             break;
         case CAN_RED_IN_2_NAIVE:
+            // printf("CAN_RED_IN_2_NAIVE");
+            // PrintBoard();
+            
             if (!IsCorrect()) {
                 printf("NO\n");
                 // printf("(incorrect)\n");
@@ -366,6 +372,13 @@ int board::SolveTask()
             else if (IsOver()) {
                 printf("NO\n");
                 // printf("(is over)\n");
+                return 0;
+                break;
+            }
+
+            if (!TwoTurnsPossible('r')) {
+                printf("NO\n");
+                // printf("(two turns are not possible)\n");
                 return 0;
                 break;
             }
@@ -386,6 +399,9 @@ int board::SolveTask()
             return 0;
             break;
         case CAN_BLUE_IN_1_NAIVE:
+            // printf("CAN_BLUE_IN_1_NAIVE");
+            // PrintBoard();
+            
             if (!IsCorrect()) {
                 printf("NO\n");
                 // printf("(incorrect)\n");
@@ -415,6 +431,9 @@ int board::SolveTask()
             return 0;
             break;
         case CAN_BLUE_IN_2_NAIVE:
+            // printf("CAN_BLUE_IN_2_NAIVE");
+            // PrintBoard();
+
             if (!IsCorrect()) {
                 printf("NO\n");
                 // printf("(incorrect)\n");
@@ -424,6 +443,13 @@ int board::SolveTask()
             else if (IsOver()) {
                 printf("NO\n");
                 // printf("(is over)\n");
+                return 0;
+                break;
+            }
+
+            if (!TwoTurnsPossible('b')) {
+                printf("NO\n");
+                // printf("(two turns are not possible)\n");
                 return 0;
                 break;
             }
@@ -755,6 +781,36 @@ int board::FreeFieldsCount()
     return count;
 }
 
+bool board::TwoTurnsPossible(char color)
+{
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            if (fields[i][j].color == ' ') {
+                fields[i][j].color = color;
+                RefreshConnections();
+
+                if (!IsOver(color)) {
+                    //diagnistics:
+                    // printf("This turn will not finish the game:");
+                    // PrintBoard();
+                    fields[i][j].color = ' ';
+                    RefreshConnections();
+                    Uncheck();
+
+                    return true;
+                }
+
+                fields[i][j].color = ' ';
+                RefreshConnections();
+                Uncheck();
+            }
+        }
+    }
+
+    // printf("not possible for %c\n", color);
+    return false;
+}
+
 bool board::Naive(char color, int turns)
 {
     int free_space = 0;
@@ -792,7 +848,6 @@ bool board::Naive(char color, int turns)
         {
             if (fields[i][j].color == ' ') {
                 fields[i][j].color = color;
-    
                 RefreshConnections();
                 // PrintBoard();
                 // printf("put %c {i = %d, j = %d} ",color, i, j);
@@ -802,7 +857,7 @@ bool board::Naive(char color, int turns)
                     // printf("Is over:");
                     // PrintBoard();
                     fields[i][j].color = ' ';
-        
+
                     return true;
                 }
 
