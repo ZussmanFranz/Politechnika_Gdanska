@@ -12,6 +12,7 @@ struct field
 {
     char color;
     bool checked = false;
+    bool added = false;
     YX position;
     field* neighbours[6];
     int neighbours_count;
@@ -30,8 +31,6 @@ struct field
             return neighbours_count;
         }
 
-        //printf("setting a field {%d, %d}: %c.\n", position.y, position.x, color);
-
         for (int i = 0; i <= 1; i++) {
             for (int j = 0; j <= 1; j++) {
                 if ((i == 0) && (j == 0)) {
@@ -41,54 +40,27 @@ struct field
                 if ((position.y + i >= size) || (position.x + j >= size)) {
                     topOFB = true;
                 }
-                // else {
-                //     printf("trying a field {%d, %d}: %c.", position.y + i, position.x + j, fields[position.y + i][position.x + j].color);
-                // }
 
                 if ((!topOFB) && (fields[position.y + i][position.x + j].color == color)){
                     neighbours[neighbours_count] = &fields[position.y + i][position.x + j];
                     neighbours_count++;
-                    //printf(" ...OK\n");
                 }
-                // else if (!topOFB) {
-                //     printf(" ...NOT OK\n");
-                // }
 
                 if ((position.y - i < 0) || (position.x - j < 0)) {
                     bottomOFB = true;
                 }
-                // else {
-                //     printf("trying a field {%d, %d}: %c.", position.y - i, position.x - j, fields[position.y - i][position.x - j].color);
-                // }
 
                 if ((!bottomOFB) && (fields[position.y - i][position.x - j].color == color)){
                     neighbours[neighbours_count] = &fields[position.y - i][position.x - j];
                     neighbours_count++;
-                    //printf(" ...OK\n");
                 }
-                // else if (!bottomOFB) {
-                //     printf(" ...NOT OK\n");
-                // }
 
                 topOFB = false;
                 bottomOFB = false;
             }
         }
 
-        printf("\n");
-
         return neighbours_count;
-    }
-
-    void RefreshNeighbours(field** fields, int size)
-    {
-        for (int i = 0; i < neighbours_count; i++) {
-            if (neighbours[i] != nullptr) {
-                neighbours[i]->SetNeighbours(fields, size);
-            }
-        }
-
-        return;
     }
 };
 
@@ -139,6 +111,10 @@ public:
     bool IsPossible();
     bool CheckPlayer(char color);
     bool RecursiveCheck(char color, field* current_field);
+
+    int FreeFieldsCount();
+    void TurnOffAdded();
+    bool Naive(char color, int turns);
 
     void SetSize(int size) { this->size = size; }
     int GetSize() { return size; }

@@ -59,6 +59,7 @@ int main()
         //std::cout << "starting c:" << c << ".\n";
         if (c == ' ') {
             //std::cout << "board!\n";
+            printf("\n");
             field = HandleBoard(std::cin, c);
             // field->PrintBoard();
             // field->PrintBoard('r');

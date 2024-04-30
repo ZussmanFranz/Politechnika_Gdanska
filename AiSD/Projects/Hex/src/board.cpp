@@ -39,7 +39,6 @@ void board::HandleBoard(std::istream& input_stream)
     while (input_stream >> c) {
         if (c == '\n') {
             nline_n--;
-            //td::cout << nline_n << "\n";
 
             if (nline_n == 0) {
                 break;
@@ -56,17 +55,14 @@ void board::HandleBoard(std::istream& input_stream)
         {
             input_stream.ignore(1);
             input_stream >> c;
-            //input_stream.ignore(1); //changed!
 
             if (y == size) {
-                //std::cout << "switch!\n";
                 downstairs = true;
                 k = 1;
                 y = size - 1;
                 x = k;
             }
 
-            //std::cout << "y = " << y << " x = " << x << '\n';
             fields[y][x].color = c;
             fields[y][x].position = {y, x};
             if (c == 'b') {
@@ -167,8 +163,6 @@ void board::HandleTask(std::istream& input_stream, char start_c)
     char task_buffer[100];
 
     input_stream.getline(task_buffer, 100);
-
-    //printf("task: %s\n", task_buffer);
 
     if (std::strcmp(task_buffer,"OARD_SIZE") == 0) {
         current_task = SIZE;
@@ -307,7 +301,7 @@ int board::SolveTask()
                 printf("NO\n");
             }
 
-            Uncheck();
+            //Uncheck();
             return 0;
             break;
         case IS_POSSIBLE:
@@ -317,15 +311,14 @@ int board::SolveTask()
                 break;
             }
 
-            //Uncheck();
             if (IsOver()) {
-                Uncheck();
+                //Uncheck();
 
                 if (IsPossible()) {
                     printf("YES\n");
                 }
                 else {
-                    printf("NO\n"); //test 191 (wrong)
+                    printf("NO\n");
                 }
             }
             else {
@@ -335,35 +328,179 @@ int board::SolveTask()
             return 0;
             break;
         case CAN_RED_IN_1_NAIVE:
-            std::cout << "CAN_RED_IN_1_NAIVE\n";
+            if (!IsCorrect()) {
+                printf("NO\n");
+                return 0;
+                break;
+            }
+            else if (IsOver()) {
+                printf("NO\n");
+                return 0;
+                break;
+            }
+            
+            if (Naive('r', 1))
+            {
+                printf("YES\n");
+            }
+            else {
+                printf("NO\n");
+            }
+
             return 0;
             break;
         case CAN_RED_IN_2_NAIVE:
-            std::cout << "CAN_RED_IN_2_NAIVE\n";
+            if (!IsCorrect()) {
+                printf("NO\n");
+                return 0;
+                break;
+            }
+            else if (IsOver()) {
+                printf("NO\n");
+                return 0;
+                break;
+            }
+
+            if (Naive('r', 2))
+            {
+                printf("YES\n");
+            }
+            else {
+                printf("NO\n");
+            }
+
             return 0;
             break;
         case CAN_BLUE_IN_1_NAIVE:
-            std::cout << "CAN_BLUE_IN_1_NAIVE\n";
+            if (!IsCorrect()) {
+                printf("NO\n");
+                return 0;
+                break;
+            }
+            else if (IsOver()) {
+                printf("NO\n");
+                return 0;
+                break;
+            }
+
+            if (Naive('b', 1))
+            {
+                printf("YES\n");
+            }
+            else {
+                printf("NO\n");
+            }
+
             return 0;
             break;
         case CAN_BLUE_IN_2_NAIVE:
-            std::cout << "CAN_BLUE_IN_2_NAIVE\n";
+            if (!IsCorrect()) {
+                printf("NO\n");
+                return 0;
+                break;
+            }
+            else if (IsOver()) {
+                printf("NO\n");
+                return 0;
+                break;
+            }
+
+            if (Naive('b', 2))
+            {
+                printf("YES\n");
+            }
+            else {
+                printf("NO\n");
+            }
+
             return 0;
             break;
         case CAN_RED_IN_1_PERFECT:
-            std::cout << "CAN_RED_IN_1_PERFECT\n";
+            if (!IsCorrect()) {
+                printf("NO\n");
+                return 0;
+                break;
+            }
+            else if (IsOver()) {
+                printf("NO\n");
+                return 0;
+                break;
+            }
+
+            if (Naive('r', 1)) // CHANGE TO PERFECT!!
+            {
+                printf("YES\n");
+            }
+            else {
+                printf("NO\n");
+            }
+
             return 0;
             break;
         case CAN_RED_IN_2_PERFECT:
-            std::cout << "CAN_RED_IN_2_PERFECT\n";
+            if (!IsCorrect()) {
+                printf("NO\n");
+                return 0;
+                break;
+            }
+            else if (IsOver()) {
+                printf("NO\n");
+                return 0;
+                break;
+            }
+
+            if (Naive('r', 2)) // CHANGE TO PERFECT!!
+            {
+                printf("YES\n");
+            }
+            else {
+                printf("NO\n");
+            }
+
             return 0;
             break;
         case CAN_BLUE_IN_1_PERFECT:
-            std::cout << "CAN_BLUE_IN_1_PERFECT\n";
+            if (!IsCorrect()) {
+                printf("NO\n");
+                return 0;
+                break;
+            }
+            else if (IsOver()) {
+                printf("NO\n");
+                return 0;
+                break;
+            }
+
+            if (Naive('b', 1)) // CHANGE TO PERFECT!!
+            {
+                printf("YES\n");
+            }
+            else {
+                printf("NO\n");
+            }
+
             return 0;
             break;
         case CAN_BLUE_IN_2_PERFECT:
-            std::cout << "CAN_BLUE_IN_2_PERFECT\n";
+            if (!IsCorrect()) {
+                printf("NO\n");
+                return 0;
+                break;
+            }
+            else if (IsOver()) {
+                printf("NO\n");
+                return 0;
+                break;
+            }
+
+            if (Naive('b', 2)) // CHANGE TO PERFECT!!
+            {
+                printf("YES\n");
+            }
+            else {
+                printf("NO\n");
+            }
+
             return 0;
             break;
         case ERROR:
@@ -377,6 +514,8 @@ int board::SolveTask()
 
 bool board::IsOver()
 {
+    printf("checking if the game is over..");
+
     bool bottom_b, top_b, left_r, right_r;
     bottom_b = top_b = left_r = right_r = false;
 
@@ -396,10 +535,20 @@ bool board::IsOver()
     }
 
     if ((top_b == true) && (bottom_b == true)) {
-        if (CheckPlayer('b')) { return true; }
+        printf(".starting to check player blue\n");
+        if (CheckPlayer('b')) 
+        { 
+            Uncheck();
+            return true;
+        }
     }
     if ((left_r == true) && (right_r== true)) {
-        if (CheckPlayer('r')) { return true; }
+        printf(".starting to check player red\n");
+        if (CheckPlayer('r')) 
+        {
+            Uncheck();
+            return true; 
+        }
     }
 
     return false;
@@ -434,7 +583,6 @@ void board::RefreshConnections()
 bool board::IsPossible()
 {
     char color;
-    //std::cout << "pawns red: " << pawns_r << "\npawns blue: " << pawns_b << '\n';
 
     if (pawns_r == pawns_b + 1) {
         //red won
@@ -448,37 +596,23 @@ bool board::IsPossible()
         return false;
     }
 
-    //std::cout << color << '\n';
-
     for (int i = 0; i < size; i++) 
     {
         for (int j = 0; j < size; j++) 
         {
             if (fields[i][j].color == color)
             {
-                //std::cout << "removing {" << i << ", " << j << "}\n";
 
                 fields[i][j].color = ' '; //putting the pawn out
-                //fields[i][j].RefreshNeighbours(fields, size);
-                //fields[i][j].SetNeighbours(fields, size);
 
-                Uncheck();
                 RefreshConnections();
-
-                //PrintBoard();
-                //PrintBoard(color);
-
                 
                 if (IsOver() == false) {
                     fields[i][j].color = color; //the return of the pawn
-                    // fields[i][j].RefreshNeighbours(fields, size);
-                    // fields[i][j].SetNeighbours(fields, size);
                     return true;
                 }
 
                 fields[i][j].color = color; //the return of the pawn
-                // fields[i][j].RefreshNeighbours(fields, size);
-                // fields[i][j].SetNeighbours(fields, size);
             }
         }
     }
@@ -495,6 +629,7 @@ bool board::CheckPlayer(char color)
     bool* won = (color == 'r') ? &won_r : &won_b;
     *won = false;
 
+    printf("starting recursive check...");
     //recursive check
     if (color == 'r') 
     {
@@ -504,6 +639,7 @@ bool board::CheckPlayer(char color)
                 if (RecursiveCheck(color, &fields[i][0])) 
                 {
                     *won = true;
+                    printf("OK\n");
                     return *won;
                 }
             }
@@ -511,26 +647,25 @@ bool board::CheckPlayer(char color)
     }
     else if (color == 'b') 
     {
-        //std::cout << "checking blue\n";
         for (int i = 0; i < size; i++) 
         {
             if (fields[0][i].color == color) {
                 if (RecursiveCheck(color, &fields[0][i])) 
                 {
-                    //std::cout << "Recursive check for {0, " << i << "} has shown true\n";
                     *won = true;
+                    printf("OK\n");
                     return *won; 
                 }
             }
         }
     }
 
+    printf("NOT OK\n");
     return *won;
 }
 bool board::RecursiveCheck(char color, field* current_field)
 {
     current_field->checked = true;
-    // printf("checked: {%d, %d}. color: %c\n", current_field->position.y, current_field->position.x, color);
 
     if ((((color == 'r') && (current_field->position.x == size - 1)) || ((color == 'b') && (current_field->position.y == size - 1)))) 
     {
@@ -547,6 +682,119 @@ bool board::RecursiveCheck(char color, field* current_field)
         }
         return false;
     }
+}
+
+void board::TurnOffAdded()
+{
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            if (fields[i][j].added) {
+                fields[i][j].color = ' ';
+                fields[i][j].added = false;
+            }
+        }
+    }
+}
+
+int board::FreeFieldsCount()
+{
+    int count = 0;
+
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            if (fields[i][j].color == ' ') {
+                count++;
+            }
+        }
+    }
+
+    return count;
+}
+
+bool board::Naive(char color, int turns)
+{
+    int free_space = 0;
+    char current_turn;
+
+    if (pawns_r == pawns_b) {
+        //red turn
+        current_turn = 'r';
+    }
+    else if (pawns_r == pawns_b + 1) {
+        //blue turn
+        current_turn = 'b';
+    }
+
+    if (current_turn == color) {
+        free_space = 1 + (turns - 1) * 2;
+    }
+    else {
+        free_space = turns * 2;
+    }
+
+    if (FreeFieldsCount() < free_space) {
+        return false;
+    }
+
+    //diagnistics:
+    printf("n turns: %d, color: %c", turns, color);
+    PrintBoard();
+
+    for (int i = 0; i < size; i++) 
+    {
+        for (int j = 0; j < size; j++) 
+        {
+            if (fields[i][j].color == ' ') {
+                fields[i][j].color = color;
+                fields[i][j].added = true;
+                RefreshConnections();
+                PrintBoard();
+                if (IsOver()) {
+                    //diagnistics:
+                    printf("Is over:");
+                    PrintBoard();
+                    fields[i][j].color = ' ';
+                    fields[i][j].added = false;
+                    return true;
+                }
+
+                if (turns == 2) {
+                    for (int a = 0; a < size; a++) 
+                    {
+                        for (int b = 0; b < size; b++) 
+                        {
+                            if (fields[a][b].color == ' ') {
+                                fields[a][b].color = color;
+                                fields[a][b].added = true;
+                                RefreshConnections();
+                                //PrintBoard();
+                                PrintBoard(color);
+                                if (IsOver()) {
+                                    //diagnistics:
+                                    printf("Is over:");
+                                    PrintBoard();
+                                    fields[a][b].color = ' ';
+                                    fields[a][b].added = false;
+                                    return true;
+                                }
+
+                                // turning off by hands
+                                fields[a][b].color = ' ';
+                                fields[a][b].added = false;
+                            }
+                        }
+                    }
+                }
+
+                // turning off by hands
+                fields[i][j].color = ' ';
+                fields[i][j].added = false;
+            }
+        }
+    }
+
+
+    return false;
 }
 
 field* board::GetField(int y, int x)
