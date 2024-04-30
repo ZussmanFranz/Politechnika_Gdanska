@@ -1,19 +1,53 @@
-       ---
-    --<   >--
- --<   >-<   >--
-<   >-<   >-<   >
- --< r >-<   >--
-    --< b >--
-       ---
+          ---
+       --< r >--
+    --< r >-< r >--
+ --<   >-< r >-<   >--
+<   >-<   >-< b >-< b >
+ --< r >-< r >-< b >--
+    --< b >-<   >--
+       --< b >--
+          ---
+CAN_RED_WIN_IN_1_MOVE_WITH_NAIVE_OPPONENT
+CAN_BLUE_WIN_IN_1_MOVE_WITH_NAIVE_OPPONENT
+CAN_RED_WIN_IN_2_MOVES_WITH_NAIVE_OPPONENT
 CAN_BLUE_WIN_IN_2_MOVES_WITH_NAIVE_OPPONENT
-       ---
-    --< r >--
- --<   >-< r >--
-<   >-< b >-<   >
- --<   >-< b >--
-    --<   >--
-       ---
+          ---
+       --< b >--
+    --< b >-< b >--
+ --< r >-<   >-<   >--
+< r >-< b >-<   >-<   >
+ --< r >-< b >-< r >--
+    --< b >-< b >--
+       --< b >--
+          ---
+CAN_RED_WIN_IN_1_MOVE_WITH_NAIVE_OPPONENT
+CAN_BLUE_WIN_IN_1_MOVE_WITH_NAIVE_OPPONENT
+CAN_RED_WIN_IN_2_MOVES_WITH_NAIVE_OPPONENT
+CAN_BLUE_WIN_IN_2_MOVES_WITH_NAIVE_OPPONENT
+          ---
+       --< r >--
+    --< r >-<   >--
+ --< r >-< r >-< r >--
+<   >-< b >-< b >-< r >
+ --< r >-< b >-< r >--
+    --<   >-< b >--
+       --< r >--
+          ---
+CAN_RED_WIN_IN_1_MOVE_WITH_NAIVE_OPPONENT
+CAN_BLUE_WIN_IN_1_MOVE_WITH_NAIVE_OPPONENT
+CAN_RED_WIN_IN_2_MOVES_WITH_NAIVE_OPPONENT
+CAN_BLUE_WIN_IN_2_MOVES_WITH_NAIVE_OPPONENT
+          ---
+       --< b >--
+    --< r >-< r >--
+ --< r >-< b >-< r >--
+<   >-< r >-< r >-< b >
+ --< r >-<   >-< b >--
+    --< b >-< b >--
+       --< r >--
+          ---
+CAN_RED_WIN_IN_1_MOVE_WITH_NAIVE_OPPONENT
+CAN_BLUE_WIN_IN_1_MOVE_WITH_NAIVE_OPPONENT
+CAN_RED_WIN_IN_2_MOVES_WITH_NAIVE_OPPONENT
 CAN_BLUE_WIN_IN_2_MOVES_WITH_NAIVE_OPPONENT
 
-
-(must be YES YES)

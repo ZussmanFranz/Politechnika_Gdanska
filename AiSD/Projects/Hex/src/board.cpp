@@ -514,7 +514,7 @@ int board::SolveTask()
 
 bool board::IsOver()
 {
-    printf("checking if the game is over..");
+    // printf("checking if the game is over..");
 
     bool bottom_b, top_b, left_r, right_r;
     bottom_b = top_b = left_r = right_r = false;
@@ -535,7 +535,7 @@ bool board::IsOver()
     }
 
     if ((top_b == true) && (bottom_b == true)) {
-        printf(".starting to check player blue\n");
+        // printf(".starting to check player blue\n");
         if (CheckPlayer('b')) 
         { 
             Uncheck();
@@ -543,7 +543,7 @@ bool board::IsOver()
         }
     }
     if ((left_r == true) && (right_r== true)) {
-        printf(".starting to check player red\n");
+        // printf(".starting to check player red\n");
         if (CheckPlayer('r')) 
         {
             Uncheck();
@@ -551,6 +551,7 @@ bool board::IsOver()
         }
     }
 
+    Uncheck();
     return false;
 }
 
@@ -629,17 +630,18 @@ bool board::CheckPlayer(char color)
     bool* won = (color == 'r') ? &won_r : &won_b;
     *won = false;
 
-    printf("starting recursive check...");
+    // printf("starting recursive check...");
     //recursive check
     if (color == 'r') 
     {
         for (int i = 0; i < size; i++) 
         {
             if (fields[i][0].color == color) {
+                // printf("for {%d, 0} (%d)...", i, fields[i][0].neighbours_count);
                 if (RecursiveCheck(color, &fields[i][0])) 
                 {
                     *won = true;
-                    printf("OK\n");
+                    // printf("OK\n");
                     return *won;
                 }
             }
@@ -650,17 +652,18 @@ bool board::CheckPlayer(char color)
         for (int i = 0; i < size; i++) 
         {
             if (fields[0][i].color == color) {
+                // printf("for {0, %d} (%d)...", i, fields[i][0].neighbours_count);
                 if (RecursiveCheck(color, &fields[0][i])) 
                 {
                     *won = true;
-                    printf("OK\n");
+                    // printf("OK\n");
                     return *won; 
                 }
             }
         }
     }
 
-    printf("NOT OK\n");
+    // printf("NOT OK\n");
     return *won;
 }
 bool board::RecursiveCheck(char color, field* current_field)
@@ -674,6 +677,7 @@ bool board::RecursiveCheck(char color, field* current_field)
     else {
         for (int i = 0; i < 6; i++) {
             if ((current_field->neighbours[i] != nullptr) && (current_field->neighbours[i]->checked == false)) {
+                // printf("{%d, %d}...", current_field->neighbours[i]->position.y, current_field->neighbours[i]->position.x);
                 if (RecursiveCheck(color, current_field->neighbours[i]))
                 {
                     return true;
@@ -737,8 +741,8 @@ bool board::Naive(char color, int turns)
     }
 
     //diagnistics:
-    printf("n turns: %d, color: %c", turns, color);
-    PrintBoard();
+    // printf("n turns: %d, color: %c", turns, color);
+    // PrintBoard();
 
     for (int i = 0; i < size; i++) 
     {
@@ -748,11 +752,11 @@ bool board::Naive(char color, int turns)
                 fields[i][j].color = color;
                 fields[i][j].added = true;
                 RefreshConnections();
-                PrintBoard();
+                // PrintBoard();
                 if (IsOver()) {
                     //diagnistics:
-                    printf("Is over:");
-                    PrintBoard();
+                    // printf("Is over:");
+                    // PrintBoard();
                     fields[i][j].color = ' ';
                     fields[i][j].added = false;
                     return true;
@@ -768,11 +772,11 @@ bool board::Naive(char color, int turns)
                                 fields[a][b].added = true;
                                 RefreshConnections();
                                 //PrintBoard();
-                                PrintBoard(color);
+                                // PrintBoard(color);
                                 if (IsOver()) {
                                     //diagnistics:
-                                    printf("Is over:");
-                                    PrintBoard();
+                                    // printf("Is over:");
+                                    // PrintBoard();
                                     fields[a][b].color = ' ';
                                     fields[a][b].added = false;
                                     return true;
