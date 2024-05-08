@@ -556,8 +556,11 @@ int board::SolveTask()
 
             return 0;
             break;
-        case ERROR:
-            std::cout << "ERROR\n";
+        // case ERROR:
+        //     std::cout << "ERROR\n";
+        //     return 1;
+        //     break;
+        default:
             return 1;
             break;
     }
