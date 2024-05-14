@@ -1,114 +1,749 @@
 ---!log started!---
-Created wolfberry at y = 10 x = 3
-Created hogweed at y = 14 x = 6
-hogweed has died because of overpopulation, it had 3 neighbours
+Fight log: fox vs mlecz
+location: y = 9 x = 3
+round: 11
+fox strength = 4, mlecz strength = 0
+mlecz is dead :(
+It's age was 11
 
-hogweed is dead :(
-It's age was 50
+the winner is fox
 
-Created hogweed at y = 17 x = 7
-hogweed has died because of overpopulation, it had 3 neighbours
+Created mlecz at y = 11 x = 5
+Created mlecz at y = 10 x = 3
+Fight log: fox vs mlecz
+location: y = 10 x = 3
+round: 13
+fox strength = 4, mlecz strength = 0
+mlecz is dead :(
+It's age was 1
 
-hogweed is dead :(
-It's age was 54
+the winner is fox
 
-Created hogweed at y = 18 x = 7
-Created wolfberry at y = 7 x = 1
-wolfberry has died because of overpopulation, it had 4 neighbours
+Fight log: sheep vs sheep
+location: y = 9 x = 9
+round: 15
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 11 x = 9
+sheep and sheep now have a child!
 
-wolfberry is dead :(
+Created hogweed at y = 12 x = 0
+ability activated :)
+
+Created mlecz at y = 11 x = 4
+Fight log: sheep vs grass
+location: y = 13 x = 9
+round: 19
+sheep strength = 4, grass strength = 0
+grass is dead :(
+It's age was 18
+
+the winner is sheep
+
+Fight log: fox vs guarana
+location: y = 9 x = 6
+round: 19
+fox strength = 4, guarana strength = 0
+Strength of the fox has been increased by 3, new strength is 7
+guarana is dead :(
+It's age was 18
+
+the winner is fox
+
+Created grass at y = 15 x = 11
+Fight log: sheep vs sheep
+location: y = 13 x = 10
+round: 20
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 12 x = 10
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 13 x = 10
+round: 20
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 12 x = 9
+sheep and sheep now have a child!
+
+Fight log: fox vs wolfberry
+location: y = 3 x = 11
+round: 20
+fox strength = 4, wolfberry strength = 99
+fox avoided the fight
+the winner is wolfberry
+
+sheep has died because of overpopulation, it had 3 neighbours
+
+sheep is dead :(
+It's age was 11
+
+Created mlecz at y = 10 x = 3
+mlecz has died because of overpopulation, it had 3 neighbours
+
+mlecz is dead :(
+It's age was 3
+
+Fight log: fox vs sheep
+location: y = 10 x = 7
+round: 22
+fox strength = 7, sheep strength = 4
+sheep is dead :(
+It's age was 15
+
+the winner is fox
+
+Fight log: sheep vs mlecz
+location: y = 11 x = 5
+round: 23
+sheep strength = 4, mlecz strength = 0
+mlecz is dead :(
+It's age was 11
+
+the winner is sheep
+
+Fight log: sheep vs mlecz
+location: y = 10 x = 4
+round: 24
+sheep strength = 4, mlecz strength = 0
+mlecz is dead :(
+It's age was 15
+
+the winner is sheep
+
+Fight log: sheep vs sheep
+location: y = 8 x = 10
+round: 24
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 8 x = 11
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 8 x = 11
+round: 24
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 9 x = 10
+sheep and sheep now have a child!
+
+sheep has died because of overpopulation, it had 3 neighbours
+
+sheep is dead :(
 It's age was 0
 
-Created wolfberry at y = 12 x = 1
-Created hogweed at y = 16 x = 7
-Created hogweed at y = 0 x = 7
-hogweed has died because of overpopulation, it had 4 neighbours
+Fight log: sheep vs sheep
+location: y = 9 x = 10
+round: 25
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 9 x = 11
+sheep and sheep now have a child!
 
-hogweed is dead :(
-It's age was 0
+ability is finished :(
 
-Created hogweed at y = 16 x = 9
-hogweed has died because of overpopulation, it had 3 neighbours
+Fight log: sheep vs sheep
+location: y = 10 x = 9
+round: 26
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 8 x = 11
+sheep and sheep now have a child!
 
-hogweed is dead :(
-It's age was 50
+it's too early :|
 
-Created wolfberry at y = 5 x = 0
-wolfberry has died because of overpopulation, it had 3 neighbours
+Fight log: sheep vs player
+location: y = 8 x = 10
+round: 27
+sheep strength = 4, player strength = 8
+sheep is dead :(
+It's age was 1
 
-wolfberry is dead :(
+the winner is player
+
+Fight log: sheep vs player
+location: y = 8 x = 10
+round: 27
+sheep strength = 4, player strength = 8
+sheep is dead :(
+It's age was 3
+
+the winner is player
+
+Fight log: fox vs sheep
+location: y = 6 x = 9
+round: 28
+fox strength = 4, sheep strength = 4
+sheep is dead :(
+It's age was 8
+
+the winner is fox
+
+Fight log: sheep vs player
+location: y = 9 x = 9
+round: 29
+sheep strength = 4, player strength = 8
+sheep is dead :(
+It's age was 4
+
+the winner is player
+
+Fight log: sheep vs guarana
+location: y = 9 x = 5
+round: 29
+sheep strength = 4, guarana strength = 0
+Strength of the sheep has been increased by 3, new strength is 7
+guarana is dead :(
 It's age was 29
 
-Created hogweed at y = 0 x = 6
-hogweed has died because of overpopulation, it had 3 neighbours
+the winner is sheep
 
-hogweed is dead :(
+ability activated :)
+
+Created mlecz at y = 4 x = 7
+Fight log: sheep vs mlecz
+location: y = 10 x = 3
+round: 31
+sheep strength = 7, mlecz strength = 0
+mlecz is dead :(
+It's age was 10
+
+the winner is sheep
+
+Created grass at y = 13 x = 10
+Fight log: sheep vs sheep
+location: y = 13 x = 8
+round: 35
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 13 x = 9
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 13 x = 9
+round: 35
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 12 x = 10
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 13 x = 8
+round: 35
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 11 x = 8
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 13 x = 8
+round: 35
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 11 x = 10
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 13 x = 9
+round: 35
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 12 x = 8
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 11 x = 8
+round: 35
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 11 x = 9
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 11 x = 10
+round: 35
+sheep strength = 4, sheep strength = 4
+sheep and sheep now have a child!
+
+sheep has died because of overpopulation, it had 4 neighbours
+
+sheep is dead :(
+It's age was 0
+
+sheep has died because of overpopulation, it had 3 neighbours
+
+sheep is dead :(
+It's age was 0
+
+sheep has died because of overpopulation, it had 5 neighbours
+
+sheep is dead :(
+It's age was 20
+
+Fight log: sheep vs sheep
+location: y = 12 x = 7
+round: 36
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 14 x = 7
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 12 x = 8
+round: 36
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 12 x = 9
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 14 x = 7
+round: 36
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 14 x = 9
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 12 x = 7
+round: 36
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 13 x = 7
+sheep and sheep now have a child!
+
+ability is finished :(
+
+sheep has died because of overpopulation, it had 5 neighbours
+
+sheep is dead :(
+It's age was 0
+
+sheep has died because of overpopulation, it had 3 neighbours
+
+sheep is dead :(
+It's age was 1
+
+sheep has died because of overpopulation, it had 5 neighbours
+
+sheep is dead :(
+It's age was 16
+
+Fight log: sheep vs sheep
+location: y = 11 x = 9
+round: 37
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 12 x = 8
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 12 x = 8
+round: 37
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 11 x = 8
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 11 x = 8
+round: 37
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 13 x = 6
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 12 x = 8
+round: 37
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 13 x = 7
+sheep and sheep now have a child!
+
+sheep has died because of overpopulation, it had 4 neighbours
+
+sheep is dead :(
+It's age was 0
+
+sheep has died because of overpopulation, it had 4 neighbours
+
+sheep is dead :(
+It's age was 1
+
+sheep has died because of overpopulation, it had 4 neighbours
+
+sheep is dead :(
+It's age was 2
+
+Fight log: sheep vs sheep
+location: y = 11 x = 8
+round: 38
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 12 x = 7
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 12 x = 7
+round: 38
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 11 x = 7
+sheep and sheep now have a child!
+
+sheep has died because of overpopulation, it had 3 neighbours
+
+sheep is dead :(
+It's age was 1
+
+Fight log: sheep vs sheep
+location: y = 11 x = 7
+round: 39
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 12 x = 8
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 14 x = 9
+round: 39
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 12 x = 10
+sheep and sheep now have a child!
+
+Fight log: player vs sheep
+location: y = 12 x = 8
+round: 39
+player strength = 8, sheep strength = 4
+sheep is dead :(
+It's age was 0
+
+the winner is player
+
+Fight log: sheep vs grass
+location: y = 13 x = 10
+round: 40
+sheep strength = 4, grass strength = 0
+grass is dead :(
+It's age was 8
+
+the winner is sheep
+
+Fight log: sheep vs sheep
+location: y = 14 x = 9
+round: 40
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 15 x = 9
+sheep and sheep now have a child!
+
+Fight log: sheep vs grass
+location: y = 15 x = 11
+round: 40
+sheep strength = 4, grass strength = 0
+grass is dead :(
+It's age was 21
+
+the winner is sheep
+
+Fight log: sheep vs grass
+location: y = 14 x = 10
+round: 41
+sheep strength = 4, grass strength = 0
+grass is dead :(
+It's age was 41
+
+the winner is sheep
+
+Fight log: sheep vs sheep
+location: y = 14 x = 10
+round: 41
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 12 x = 10
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 12 x = 10
+round: 41
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 12 x = 11
+sheep and sheep now have a child!
+
+Fight log: fox vs sheep
+location: y = 11 x = 8
+round: 41
+fox strength = 7, sheep strength = 4
+sheep is dead :(
+It's age was 4
+
+the winner is fox
+
+sheep has died because of overpopulation, it had 3 neighbours
+
+sheep is dead :(
+It's age was 1
+
+sheep has died because of overpopulation, it had 3 neighbours
+
+sheep is dead :(
 It's age was 5
 
-Created hogweed at y = 14 x = 7
-hogweed has died because of overpopulation, it had 3 neighbours
+hogweed killed an organizm with the area attak
+sheep is dead :(
+It's age was 5
 
-hogweed is dead :(
+sheep has died because of overpopulation, it had 3 neighbours
+
+sheep is dead :(
+It's age was 1
+
+Fight log: sheep vs sheep
+location: y = 12 x = 11
+round: 43
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 13 x = 11
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 15 x = 11
+round: 43
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 14 x = 10
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 15 x = 11
+round: 43
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 14 x = 9
+sheep and sheep now have a child!
+
+sheep has died because of overpopulation, it had 3 neighbours
+
+sheep is dead :(
 It's age was 0
 
-Created wolfberry at y = 10 x = 0
-Created wolfberry at y = 8 x = 1
-wolfberry has died because of overpopulation, it had 4 neighbours
+Fight log: sheep vs sheep
+location: y = 13 x = 11
+round: 44
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 13 x = 10
+sheep and sheep now have a child!
 
-wolfberry is dead :(
+Fight log: sheep vs sheep
+location: y = 13 x = 10
+round: 44
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 11 x = 10
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 11 x = 10
+round: 44
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 10 x = 11
+sheep and sheep now have a child!
+
+sheep has died because of overpopulation, it had 4 neighbours
+
+sheep is dead :(
 It's age was 0
 
-Created hogweed at y = 14 x = 5
-Created hogweed at y = 15 x = 5
-hogweed has died because of overpopulation, it had 3 neighbours
+sheep has died because of overpopulation, it had 5 neighbours
 
-hogweed is dead :(
+sheep is dead :(
 It's age was 0
 
-Created hogweed at y = 2 x = 5
-hogweed has died because of overpopulation, it had 3 neighbours
+sheep has died because of overpopulation, it had 4 neighbours
 
-hogweed is dead :(
+sheep is dead :(
+It's age was 5
+
+Fight log: sheep vs sheep
+location: y = 11 x = 11
+round: 46
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 12 x = 11
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 13 x = 10
+round: 46
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 12 x = 9
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 11 x = 8
+round: 46
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 13 x = 7
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 14 x = 10
+round: 46
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 12 x = 10
+sheep and sheep now have a child!
+
+sheep has died because of overpopulation, it had 4 neighbours
+
+sheep is dead :(
 It's age was 0
 
-Created wolfberry at y = 4 x = 0
-Created hogweed at y = 1 x = 9
-Created hogweed at y = 14 x = 7
-hogweed has died because of overpopulation, it had 3 neighbours
+sheep has died because of overpopulation, it had 4 neighbours
 
-hogweed is dead :(
+sheep is dead :(
+It's age was 3
+
+sheep has died because of overpopulation, it had 3 neighbours
+
+sheep is dead :(
+It's age was 10
+
+Fight log: sheep vs sheep
+location: y = 11 x = 10
+round: 47
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 10 x = 11
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 12 x = 7
+round: 47
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 12 x = 8
+sheep and sheep now have a child!
+
+Created mlecz at y = 5 x = 7
+Fight log: sheep vs sheep
+location: y = 11 x = 9
+round: 48
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 12 x = 9
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 11 x = 7
+round: 48
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 12 x = 7
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 14 x = 10
+round: 48
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 15 x = 9
+sheep and sheep now have a child!
+
+sheep has died because of overpopulation, it had 3 neighbours
+
+sheep is dead :(
 It's age was 0
 
-Created hogweed at y = 14 x = 4
-Created hogweed at y = 1 x = 7
-hogweed has died because of overpopulation, it had 4 neighbours
+sheep has died because of overpopulation, it had 3 neighbours
 
-hogweed is dead :(
-It's age was 0
-
-hogweed has died because of overpopulation, it had 3 neighbours
-
-hogweed is dead :(
+sheep is dead :(
 It's age was 13
 
-Created wolfberry at y = 9 x = 3
-wolfberry has died because of overpopulation, it had 3 neighbours
+Fight log: sheep vs sheep
+location: y = 11 x = 10
+round: 49
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 12 x = 10
+sheep and sheep now have a child!
 
-wolfberry is dead :(
+Fight log: sheep vs sheep
+location: y = 11 x = 10
+round: 49
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 12 x = 8
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 14 x = 10
+round: 49
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 14 x = 9
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 12 x = 11
+round: 49
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 14 x = 11
+sheep and sheep now have a child!
+
+sheep has died because of overpopulation, it had 3 neighbours
+
+sheep is dead :(
 It's age was 0
 
-Created hogweed at y = 2 x = 9
-Created hogweed at y = 14 x = 9
-Created hogweed at y = 0 x = 5
-hogweed has died because of overpopulation, it had 3 neighbours
+sheep has died because of overpopulation, it had 4 neighbours
 
-hogweed is dead :(
-It's age was 120
+sheep is dead :(
+It's age was 2
 
-Created hogweed at y = 16 x = 7
-hogweed has died because of overpopulation, it had 3 neighbours
+sheep has died because of overpopulation, it had 4 neighbours
 
-hogweed is dead :(
-It's age was 0
+sheep is dead :(
+It's age was 3
+
+sheep has died because of overpopulation, it had 3 neighbours
+
+sheep is dead :(
+It's age was 3
+
+sheep has died because of overpopulation, it had 3 neighbours
+
+sheep is dead :(
+It's age was 3
+
+Fight log: sheep vs sheep
+location: y = 11 x = 8
+round: 50
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 12 x = 7
+sheep and sheep now have a child!
+
+Fight log: sheep vs fox
+location: y = 9 x = 9
+round: 50
+sheep strength = 4, fox strength = 4
+fox is dead :(
+It's age was 50
+
+the winner is sheep
+
+Fight log: sheep vs sheep
+location: y = 10 x = 8
+round: 50
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 10 x = 7
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 12 x = 7
+round: 50
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 10 x = 9
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 11 x = 7
+round: 50
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 11 x = 9
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 10 x = 8
+round: 50
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 12 x = 8
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 10 x = 7
+round: 50
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 12 x = 9
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 12 x = 9
+round: 50
+sheep strength = 4, sheep strength = 4
+sheep and sheep now have a child!
+
+Fight log: sheep vs sheep
+location: y = 14 x = 9
+round: 50
+sheep strength = 4, sheep strength = 4
+Created sheep at y = 15 x = 10
+sheep and sheep now have a child!
+
+hogweed killed an organizm with the area attak
+player is dead :(
+It's age was 50
 
 ---!log ended!---
