@@ -1,2 +1,118 @@
-package Animals;public class Player {
+package Animals;
+
+import Abstractions.*;
+
+import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
+public class Player extends Animal {
+    private int abilityCooldown;
+
+    public Player(World world, Point position) {
+        super(5, 4, position, world);
+        this.avatar = 'P';
+        this.abilityCooldown = 10;
+    }
+
+    @Override
+    public void draw(Graphics g, Point position, Dimension fieldSize) {
+        if (strength > startingStrength) {
+            g.setFont(new Font("default", Font.BOLD, 12));
+        }
+        g.setColor(Color.YELLOW); // Placeholder for COLOR_PAIR(3) in ncurses
+        g.drawString(String.valueOf(avatar), position.x + fieldSize.width / 2, position.y + fieldSize.height / 2);
+        g.setFont(new Font("default", Font.PLAIN, 12));
+    }
+
+    @Override
+    public int action() {
+        abilityCooldown++;
+
+        if (abilityCooldown == 6) {
+            world.getLogger().log("Ability is finished :(\n");
+        }
+
+        world.repaint();
+
+        Point delta = new Point(0, 0);
+
+        char input = getKeyInput(); // Implement this method to capture key inputs
+
+        switch (input) {
+            case 'w':
+                delta = new Point(0, -1);
+                break;
+            case 'a':
+                delta = new Point(-1, 0);
+                break;
+            case 's':
+                delta = new Point(0, 1);
+                break;
+            case 'd':
+                delta = new Point(1, 0);
+                break;
+            case 'q':
+                world.stop();
+                break;
+            case 'e':
+                if (abilityCooldown > 10) {
+                    abilityCooldown = 0;
+                    world.getLogger().log("Ability activated :)\n");
+                } else {
+                    world.getLogger().log("It's too early :|\n");
+                }
+                break;
+            default:
+                break;
+        }
+
+        return move(delta);
+    }
+
+    @Override
+    public boolean rejectAttack(Organism attacker) {
+        if (abilityCooldown <= 5) {
+            List<Field> fieldsNearAttacker = world.getFieldsNear(attacker.getPosition());
+
+            if (fieldsNearAttacker.isEmpty()) {
+                world.getLogger().log("Shield of Alzur could not protect :(");
+                return false;
+            }
+
+            Point newPosition = fieldsNearAttacker.get(ThreadLocalRandom.current().nextInt(fieldsNearAttacker.size())).getId();
+            attacker.setPosition(newPosition);
+
+            world.getLogger().log("Shield of Alzur protected player");
+            return true;
+        }
+
+        return false;
+    }
+
+    @Override
+    public ClassType getClassType() {
+        return ClassType.PLAYER;
+    }
+
+    @Override
+    public Organism makeChild(Point newPosition) {
+        return new Player(world, newPosition);
+    }
+
+    public int getCooldown() {
+        return abilityCooldown;
+    }
+
+    public void setCooldown(int value) {
+        this.abilityCooldown = value;
+    }
+
+    private char getKeyInput() {
+        // This method should capture and return the key input from the player
+        // Use appropriate method to get input from user in Java
+        // This can be done using KeyListeners in Java Swing
+        return ' '; // Placeholder
+    }
 }

@@ -1,4 +1,4 @@
-package Components;
+package Abstractions;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +23,7 @@ public class Field {
 
     public void drawBox(Graphics g) {
         if (member != null) {
-            switch (member.getOrganismClass()) {
+            switch (member.getClassType()) {
                 case ANIMAL:
                     g.setColor(Color.RED);
                     break;
@@ -47,6 +47,18 @@ public class Field {
         if (member != null) {
             g.setColor(Color.BLACK); // Reset color
         }
+    }
+
+    public Organism getMember() {
+        return member;
+    }
+
+    public void setMember(Organism member) {
+        this.member = member;
+    }
+
+    public Point getId() {
+        return id;
     }
 }
 
