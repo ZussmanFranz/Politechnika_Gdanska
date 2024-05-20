@@ -1,5 +1,7 @@
 package Abstractions;
 
+import com.google.gson.JsonObject;
+
 import java.awt.*;
 
 public abstract class Organism {
@@ -68,7 +70,7 @@ public abstract class Organism {
         return avatar;
     }
 
-    public void setDeathSentence() {
+    public void die() {
         this.deathSentence = true;
     }
 

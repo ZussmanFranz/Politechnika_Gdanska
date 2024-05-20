@@ -38,16 +38,16 @@ public class LogManager {
 
     public String getEntityName(Organism entity) {
         if (entity instanceof Player) return "player";
-//        else if (entity instanceof Wolf) return "wolf";
-//        else if (entity instanceof Sheep) return "sheep";
-//        else if (entity instanceof Fox) return "fox";
-//        else if (entity instanceof Turtle) return "turtle";
-//        else if (entity instanceof Antelope) return "antelope";
-//        else if (entity instanceof Grass) return "grass";
-//        else if (entity instanceof Mlecz) return "mlecz";
-//        else if (entity instanceof Guarana) return "guarana";
-//        else if (entity instanceof Wolfberry) return "wolfberry";
-//        else if (entity instanceof Hogweed) return "hogweed";
+        else if (entity instanceof Wolf) return "wolf";
+        else if (entity instanceof Sheep) return "sheep";
+        else if (entity instanceof Fox) return "fox";
+        else if (entity instanceof Turtle) return "turtle";
+        else if (entity instanceof Antelope) return "antelope";
+        else if (entity instanceof Grass) return "grass";
+        else if (entity instanceof Mlecz) return "mlecz";
+        else if (entity instanceof Guarana) return "guarana";
+        else if (entity instanceof Wolfberry) return "wolfberry";
+        else if (entity instanceof Hogweed) return "hogweed";
         else return "ERROR";
     }
 

@@ -1,6 +1,7 @@
 package Animals;
 
 import Abstractions.*;
+import com.google.gson.JsonObject;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;

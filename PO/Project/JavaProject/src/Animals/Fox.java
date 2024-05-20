@@ -1,5 +1,10 @@
 package Animals;
 
+import Abstractions.*;
+import com.google.gson.JsonObject;
+
+import java.awt.*;
+
 public class Fox extends Animal {
 
     public Fox(World world, Point position) {
@@ -23,12 +28,6 @@ public class Fox extends Animal {
     @Override
     public Organism makeChild(Point newPosition) {
         return new Fox(world, newPosition);
-    }
-
-    @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
-        // Custom cleanup code, if necessary
     }
 }
 

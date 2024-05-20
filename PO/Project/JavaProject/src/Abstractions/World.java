@@ -11,6 +11,19 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.List;
+import java.util.ArrayList;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 public class World extends JPanel implements ActionListener {
     private List<Organism> members;
@@ -249,11 +262,11 @@ public class World extends JPanel implements ActionListener {
                 break;
             case 2:
                 organism = switch (subType) {
-                    case 1 -> new Grass(randomField.id, this);
-                    case 2 -> new Mlecz(randomField.id, this);
-                    case 3 -> new Guarana(randomField.id, this);
-                    case 4 -> new Wolfberry(randomField.id, this);
-                    case 5 -> new Hogweed(randomField.id, this);
+                    case 1 -> new Grass(this,randomField.id);
+                    case 2 -> new Mlecz(this,randomField.id);
+                    case 3 -> new Guarana(this,randomField.id);
+                    case 4 -> new Wolfberry(this,randomField.id);
+                    case 5 -> new Hogweed(this,randomField.id);
                     default -> null;
                 };
                 break;
@@ -324,9 +337,54 @@ public class World extends JPanel implements ActionListener {
             JsonArray array = jsonObject.getAsJsonArray("members");
             for (JsonElement element : array) {
                 JsonObject member = element.getAsJsonObject();
-                Organism newMember = Organism.createFromJson(this, member);
-                members.add(newMember);
-                findField(newMember.getPosition()).member = newMember;
+                char avatar = (char)(member.get("avatar").getAsInt());
+
+                Organism entity = null;
+                Point new_position = new Point();
+                new_position.x = member.get("x").getAsInt(); // Assuming 'x' represents the x-coordinate of the position
+                new_position.y = member.get("y").getAsInt();
+
+                switch (avatar)
+                {
+                    case 'P':
+                        entity = new Player(this,new_position);
+                        break;
+                    case 'W':
+                        entity = new Wolf(this,new_position);
+                        break;
+                    case 'F':
+                        entity = new Fox(this,new_position);
+                        break;
+                    case 'T':
+                        entity = new Turtle(this,new_position);
+                        break;
+                    case 'A':
+                        entity = new Antelope(this,new_position);
+                        break;
+                    case 'S':
+                        entity = new Sheep(this,new_position);
+                        break;
+                    case 'g':
+                        entity = new Grass(this, new_position);
+                        break;
+                    case 'u':
+                        entity = new Guarana(this, new_position);
+                        break;
+                    case 'm':
+                        entity = new Mlecz(this, new_position);
+                        break;
+                    case 'w':
+                        entity = new Wolfberry(this, new_position);
+                        break;
+                    case 'h':
+                        entity = new Hogweed(this, new_position);
+                        break;
+                    default:
+                        break;
+                }
+
+                members.add(entity);
+                findField(entity.getPosition()).setMember(entity);
             }
             sortMembers();
         } catch (FileNotFoundException e) {
