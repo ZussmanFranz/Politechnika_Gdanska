@@ -1,4 +1,4 @@
-package com.vartius.worldsim.utils;
+package Abstractions;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -25,6 +25,8 @@ public class KeyHandler implements KeyListener {
     }
 
     public char getKey() throws InterruptedException {
-        return keyQueue.take();
+        char key = keyQueue.take();
+        System.out.println("key"+ key +"handled\n");
+        return key;
     }
 }

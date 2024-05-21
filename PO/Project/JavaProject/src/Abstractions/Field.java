@@ -34,8 +34,12 @@ public class Field {
                     g.setColor(Color.YELLOW);
                     break;
                 default:
+                    g.setColor(Color.BLACK);
                     break;
             }
+        }
+        else {
+            g.setColor(Color.BLACK);
         }
 
         g.drawRect(position.x, position.y, fieldSize.width, fieldSize.height);

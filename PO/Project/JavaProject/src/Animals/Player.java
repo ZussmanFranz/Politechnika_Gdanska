@@ -39,7 +39,19 @@ public class Player extends Animal {
 
         Point delta = new Point(0, 0);
 
-        char input = getKeyInput(); // Implement this method to capture key inputs
+        char input = world.getPlayerDirection();
+
+        synchronized (world) {
+            while (input == ' ') {
+                try {
+                    System.out.println("waiting for player's action");
+                    world.wait(); // Wait for the player's input
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                input = world.getPlayerDirection();
+            }
+        }
 
         switch (input) {
             case 'w':
@@ -68,6 +80,7 @@ public class Player extends Animal {
             default:
                 break;
         }
+        world.resetPlayerDirection();
 
         return move(delta);
     }
@@ -108,12 +121,5 @@ public class Player extends Animal {
 
     public void setCooldown(int value) {
         this.abilityCooldown = value;
-    }
-
-    private char getKeyInput() {
-        // This method should capture and return the key input from the player
-        // Use appropriate method to get input from user in Java
-        // This can be done using KeyListeners in Java Swing
-        return ' '; // Placeholder
     }
 }

@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -29,8 +31,10 @@ public class World extends JPanel implements ActionListener {
     private List<Organism> members;
     private Field[][] fields;
     private Dimension dimensions;
+
+    private Dimension window_size;
     private Dimension fieldSize;
-    private Point padding;
+    private Dimension padding;
     private int round;
     private boolean end;
     private int updateOrder;
@@ -38,6 +42,16 @@ public class World extends JPanel implements ActionListener {
     private int windowWidth;
     private int windowHeight;
     private JFrame frame;
+    private GamePanel gamePanel;
+    private JButton quitButton;
+    private JButton skipButton;
+    private JButton saveButton;
+    private JButton upButton;
+    private JButton downButton;
+    private JButton leftButton;
+    private JButton rightButton;
+
+    private char playerDirection;
 
     public World(String filepath) {
         this(12, 12);
@@ -47,7 +61,8 @@ public class World extends JPanel implements ActionListener {
     public World(int y, int x) {
         this.dimensions = new Dimension(x, y);
         this.fieldSize = new Dimension(30, 50);
-        this.padding = new Point(0, 10);
+        this.padding = new Dimension(10, 10);
+        this.window_size = new Dimension(dimensions.width * (fieldSize.width + padding.width) + 100, dimensions.height * (fieldSize.height + padding.height) + 100);
         this.members = new ArrayList<>();
         this.round = 0;
         this.end = false;
@@ -55,27 +70,147 @@ public class World extends JPanel implements ActionListener {
 
         this.frame = new JFrame("World Simulation");
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.frame.setSize(new Dimension(800, 600));
-        this.frame.add(this);
-        this.frame.setVisible(true);
+        this.frame.setSize(new Dimension(window_size.width, window_size.height));
+        this.frame.setLocationRelativeTo(null);
+        this.gamePanel = new GamePanel(x, y);
+        this.frame.add(gamePanel);
+        gamePanel.startGameThread();
+        this.frame.pack();
 
-        this.logger = new LogManager("log.txt");
+        // Set layout for the frame
+        this.frame.setLayout(new BorderLayout());
+
+        // Create buttons
+        quitButton = new JButton("Quit");
+        skipButton = new JButton("Skip");
+        saveButton = new JButton("Save");
+        upButton = new JButton("Up");
+        downButton = new JButton("Down");
+        leftButton = new JButton("Left");
+        rightButton = new JButton("Right");
+
+        // Add action listeners to buttons
+        quitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                synchronized (World.this) {
+                    end = true;
+                    World.this.notify(); // Notify the waiting thread
+                }
+            }
+        });
+
+        skipButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                synchronized (World.this) {
+                    playerDirection = ' ';
+                    World.this.notify(); // Notify the waiting thread
+                }
+            }
+        });
+
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                synchronized (World.this) {
+                    save("save.txt");
+                    World.this.notify(); // Notify the waiting thread
+                }
+            }
+        });
+
+        upButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                synchronized (World.this) {
+                    playerDirection = 'w';
+                    World.this.notify(); // Notify the waiting thread
+                }
+            }
+        });
+
+        downButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                synchronized (World.this) {
+                    playerDirection = 's';
+                    World.this.notify(); // Notify the waiting thread
+                }
+            }
+        });
+
+        leftButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                synchronized (World.this) {
+                    playerDirection = 'a';
+                    World.this.notify(); // Notify the waiting thread
+                }
+            }
+        });
+
+        rightButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                synchronized (World.this) {
+                    playerDirection = 'd';
+                    World.this.notify(); // Notify the waiting thread
+                }
+            }
+        });
+
+        JPanel buttonPanel = new JPanel(new GridLayout(3, 3));
+        buttonPanel.add(quitButton);
+        buttonPanel.add(skipButton);
+        buttonPanel.add(saveButton);
+        buttonPanel.add(upButton);
+        buttonPanel.add(new JPanel()); // Empty space for layout
+        buttonPanel.add(downButton);
+        buttonPanel.add(leftButton);
+        buttonPanel.add(new JPanel()); // Empty space for layout
+        buttonPanel.add(rightButton);
+
+        this.frame.add(buttonPanel, BorderLayout.SOUTH);
+        this.frame.add(this, BorderLayout.CENTER);
+
+        this.frame.setVisible(true);
+        this.frame.revalidate();
+        this.frame.repaint();
+
+        this.logger = new LogManager("log.txt", 50, window_size.height / 20);
         initializeFields();
     }
 
+    public char getPlayerDirection() {
+        return playerDirection;
+    }
+    public void resetPlayerDirection() {
+        playerDirection = ' ';
+    }
+
     private void initializeFields() {
+        logger.log("Initialising fields...");
         this.fields = new Field[dimensions.height][dimensions.width];
         for (int i = 0; i < dimensions.height; i++) {
             for (int j = 0; j < dimensions.width; j++) {
                 Point position = new Point(
-                        j * (fieldSize.width + padding.x),
-                        i * (fieldSize.height + padding.y)
+                        j * (fieldSize.width + padding.width),
+                        i * (fieldSize.height + padding.height)
                 );
                 fields[i][j] = new Field(position, fieldSize, new Point(j, i), null);
             }
         }
+
+        logger.log("Initialised!\nAdding the player...");
+        add(new Player(this, new Point(0,0)));
+
+        logger.log("Added!\nGenerating random start...");
         generateRandomStart((dimensions.width * dimensions.height) / 12);
+
+        logger.log("Generated!\nSorting members...");
         sortMembers();
+        logger.log("Sorted!");
     }
 
     @Override
@@ -85,7 +220,7 @@ public class World extends JPanel implements ActionListener {
     }
 
     private void draw(Graphics g) {
-        drawInterface(g);
+        drawInterface(g); //?
         for (Field[] row : fields) {
             for (Field field : row) {
                 field.drawBox(g);
@@ -120,6 +255,20 @@ public class World extends JPanel implements ActionListener {
                 i = updateOrder;
                 updateOrder = 0;
             }
+
+            if (members.get(i) instanceof Player) {
+                // Wait for player's action
+                JOptionPane.showMessageDialog(null, "Player's turn!");
+                clean();
+                repaint();
+
+//                try {
+//                    Thread.sleep(50);
+//                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+//                }
+            }
+
             members.get(i).action();
         }
         clean();
@@ -150,6 +299,10 @@ public class World extends JPanel implements ActionListener {
         this.end = true;
     }
 
+    public boolean isOver() {
+        return end;
+    }
+
     public Dimension getDimensions()
     {
         return dimensions;
@@ -163,8 +316,7 @@ public class World extends JPanel implements ActionListener {
         }
     }
 
-    public List<Field> getFieldsNear(Point position)
-    {
+    public List<Field> getFieldsNear(Point position){
         List<Field> near = new ArrayList<>();
 
         for (int i = -1; i < 2; i++) {
@@ -248,29 +400,25 @@ public class World extends JPanel implements ActionListener {
             System.out.println("There is no free field!");
             return;
         }
-        Organism organism = null;
-        switch (type) {
-            case 1:
-                organism = switch (subType) {
-                    case 1 -> new Wolf(this, randomField.id);
-                    case 2 -> new Sheep(this, randomField.id);
-                    case 3 -> new Fox(this, randomField.id);
-                    case 4 -> new Turtle(this, randomField.id);
-                    case 5 -> new Antelope(this, randomField.id);
-                    default -> null;
-                };
-                break;
-            case 2:
-                organism = switch (subType) {
-                    case 1 -> new Grass(this,randomField.id);
-                    case 2 -> new Mlecz(this,randomField.id);
-                    case 3 -> new Guarana(this,randomField.id);
-                    case 4 -> new Wolfberry(this,randomField.id);
-                    case 5 -> new Hogweed(this,randomField.id);
-                    default -> null;
-                };
-                break;
-        }
+        Organism organism = switch (type) {
+            case 1 -> switch (subType) {
+                case 1 -> new Wolf(this, randomField.id);
+                case 2 -> new Sheep(this, randomField.id);
+                case 3 -> new Fox(this, randomField.id);
+                case 4 -> new Turtle(this, randomField.id);
+                case 5 -> new Antelope(this, randomField.id);
+                default -> null;
+            };
+            case 2 -> switch (subType) {
+                case 1 -> new Grass(this, randomField.id);
+                case 2 -> new Mlecz(this, randomField.id);
+                case 3 -> new Guarana(this, randomField.id);
+                case 4 -> new Wolfberry(this, randomField.id);
+                case 5 -> new Hogweed(this, randomField.id);
+                default -> null;
+            };
+            default -> null;
+        };
         if (organism != null) {
             add(organism);
         }

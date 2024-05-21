@@ -15,16 +15,16 @@ public class LogManager {
     private PrintWriter logFile;
     private JTextArea logArea;
 
-    public LogManager(String filepath) {
+    public LogManager(String filepath, int width, int height) {
         this.filepath = filepath;
         try {
-            logFile = new PrintWriter(new FileWriter(filepath, true), true);
+            logFile = new PrintWriter(new FileWriter(filepath, false), true);
             logFile.println("---!log started!---");
         } catch (IOException e) {
             System.err.println("Error: Unable to open log file for writing.");
         }
 
-        logArea = new JTextArea(10, 40);
+        logArea = new JTextArea(height, width);
         logArea.setEditable(false);
 
         JFrame frame = new JFrame("Log");
@@ -60,13 +60,14 @@ public class LogManager {
     public void logF(LogMessageType type, String prompt, Object... args) {
         String formattedMessage = String.format(prompt, args);
         logArea.append(formattedMessage);
-        logFile.println(formattedMessage);
+        //logFile.println(formattedMessage);
     }
 
     public void logTime() {
         if (logFile == null) return;
         String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         logFile.println("Current time is " + time + "\n\n");
+        logF(LogMessageType.WARNING, "Current time is " + time + "\n\n");
     }
 
     public void logCreation(Organism created) {

@@ -64,7 +64,7 @@ public class Animal extends Organism {
             return 0;
         }
 
-        return move(new Point(deltaY, deltaX));
+        return move(new Point(deltaX, deltaY));
     }
 
     @Override
