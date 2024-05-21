@@ -53,6 +53,7 @@ public class Main {
                     JOptionPane.showMessageDialog(frame, "Minimum world dimensions are 5 x 5.");
                 } else {
                     JOptionPane.showMessageDialog(frame, "starting the new game!");
+                    frame.dispose();
                     startNewGame(width, height);
                 }
             }
@@ -83,6 +84,7 @@ public class Main {
             // For a Swing GUI, you might use a timer or event-based updates
         }
 
+        myWorld.clearWorld();
         drawEndScreen();
     }
 

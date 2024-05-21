@@ -5,26 +5,18 @@ Adding the player...
 Created player at y = 0 and x = 0
 Added!
 Generating random start...
-Created turtle at y = 8 and x = 4
-Created antelope at y = 11 and x = 2
-Created sheep at y = 4 and x = 11
-Created sheep at y = 7 and x = 4
-Created hogweed at y = 10 and x = 5
-Created antelope at y = 8 and x = 5
-Created turtle at y = 11 and x = 5
-Created wolfberry at y = 6 and x = 0
-Created hogweed at y = 6 and x = 6
-Created sheep at y = 7 and x = 6
-Created wolf at y = 5 and x = 0
-Created turtle at y = 10 and x = 1
+Created guarana at y = 11 and x = 10
+Created antelope at y = 4 and x = 7
+Created grass at y = 6 and x = 9
+Created sheep at y = 0 and x = 6
+Created guarana at y = 2 and x = 1
+Created turtle at y = 3 and x = 9
+Created grass at y = 10 and x = 10
+Created wolf at y = 5 and x = 3
+Created grass at y = 4 and x = 3
+Created sheep at y = 10 and x = 4
+Created hogweed at y = 0 and x = 2
+Created wolf at y = 2 and x = 11
 Generated!
 Sorting members...
 Sorted!
-hogweed killed an organism with the area attack
-antelope is dead :( It was 1 rounds old.
-
-
-hogweed killed an organism with the area attack
-turtle is dead :( It was 1 rounds old.
-
-

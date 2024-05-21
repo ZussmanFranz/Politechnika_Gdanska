@@ -43,13 +43,6 @@ public class World extends JPanel implements ActionListener {
     private int windowHeight;
     private JFrame frame;
     private GamePanel gamePanel;
-    private JButton quitButton;
-    private JButton skipButton;
-    private JButton saveButton;
-    private JButton upButton;
-    private JButton downButton;
-    private JButton leftButton;
-    private JButton rightButton;
 
     private char playerDirection;
 
@@ -70,115 +63,26 @@ public class World extends JPanel implements ActionListener {
 
         this.frame = new JFrame("World Simulation");
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.frame.setSize(new Dimension(window_size.width, window_size.height));
+        this.frame.setSize(new Dimension(window_size.width + 480, window_size.height));
         this.frame.setLocationRelativeTo(null);
-        this.gamePanel = new GamePanel(x, y);
-        this.frame.add(gamePanel);
-        gamePanel.startGameThread();
-        this.frame.pack();
+        //this.gamePanel = new GamePanel(x, y);
+        //this.frame.add(gamePanel);
+        //gamePanel.startGameThread();
+        //this.frame.pack();
 
         // Set layout for the frame
         this.frame.setLayout(new BorderLayout());
 
-        // Create buttons
-        quitButton = new JButton("Quit");
-        skipButton = new JButton("Skip");
-        saveButton = new JButton("Save");
-        upButton = new JButton("Up");
-        downButton = new JButton("Down");
-        leftButton = new JButton("Left");
-        rightButton = new JButton("Right");
-
-        // Add action listeners to buttons
-        quitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                synchronized (World.this) {
-                    end = true;
-                    World.this.notify(); // Notify the waiting thread
-                }
-            }
-        });
-
-        skipButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                synchronized (World.this) {
-                    playerDirection = ' ';
-                    World.this.notify(); // Notify the waiting thread
-                }
-            }
-        });
-
-        saveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                synchronized (World.this) {
-                    save("save.txt");
-                    World.this.notify(); // Notify the waiting thread
-                }
-            }
-        });
-
-        upButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                synchronized (World.this) {
-                    playerDirection = 'w';
-                    World.this.notify(); // Notify the waiting thread
-                }
-            }
-        });
-
-        downButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                synchronized (World.this) {
-                    playerDirection = 's';
-                    World.this.notify(); // Notify the waiting thread
-                }
-            }
-        });
-
-        leftButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                synchronized (World.this) {
-                    playerDirection = 'a';
-                    World.this.notify(); // Notify the waiting thread
-                }
-            }
-        });
-
-        rightButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                synchronized (World.this) {
-                    playerDirection = 'd';
-                    World.this.notify(); // Notify the waiting thread
-                }
-            }
-        });
-
-        JPanel buttonPanel = new JPanel(new GridLayout(3, 3));
-        buttonPanel.add(quitButton);
-        buttonPanel.add(skipButton);
-        buttonPanel.add(saveButton);
-        buttonPanel.add(upButton);
-        buttonPanel.add(new JPanel()); // Empty space for layout
-        buttonPanel.add(downButton);
-        buttonPanel.add(leftButton);
-        buttonPanel.add(new JPanel()); // Empty space for layout
-        buttonPanel.add(rightButton);
-
-        this.frame.add(buttonPanel, BorderLayout.SOUTH);
+        this.logger = new LogManager( 50, window_size.height / 240);
+        this.frame.add(logger, BorderLayout.EAST);
+        this.frame.add(new JScrollPane(logger), BorderLayout.EAST);
         this.frame.add(this, BorderLayout.CENTER);
 
         this.frame.setVisible(true);
+        this.frame.setFocusable(true);
         this.frame.revalidate();
         this.frame.repaint();
 
-        this.logger = new LogManager("log.txt", 50, window_size.height / 20);
         initializeFields();
     }
 
@@ -539,6 +443,11 @@ public class World extends JPanel implements ActionListener {
             e.printStackTrace();
             throw new RuntimeException(e);
         }
+    }
+
+    public void clearWorld() {
+        members.clear();
+        frame.dispose();
     }
 
 //    public static void main(String[] args) {
