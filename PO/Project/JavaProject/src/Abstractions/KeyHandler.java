@@ -15,10 +15,6 @@ public class KeyHandler implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-//        char keyChar = e.getKeyChar();
-//        if (keyChar == 'w' || keyChar == 'a' || keyChar == 's' || keyChar == 'd' || keyChar == 'e' || keyChar == 'q') {
-//            keyQueue.offer(keyChar);
-//        }
         int code = e.getKeyCode();
 
         if (code == KeyEvent.VK_W){
@@ -33,6 +29,8 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_D){
             rightPressed = true;
         }
+
+        System.out.println("pressed!");
     }
 
     @Override
@@ -51,11 +49,7 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_D){
             rightPressed = false;
         }
-    }
 
-    public char getKey() throws InterruptedException {
-        char key = keyQueue.take();
-        System.out.println("key"+ key +"handled\n");
-        return key;
+        System.out.println("released!");
     }
 }

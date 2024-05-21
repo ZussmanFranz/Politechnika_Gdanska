@@ -42,7 +42,7 @@ public class World extends JPanel implements ActionListener {
     private int windowWidth;
     private int windowHeight;
     private JFrame frame;
-    private GamePanel gamePanel;
+    private KeyHandler keyHandler;
 
     private char playerDirection;
 
@@ -77,6 +77,9 @@ public class World extends JPanel implements ActionListener {
         this.frame.add(logger, BorderLayout.EAST);
         this.frame.add(new JScrollPane(logger), BorderLayout.EAST);
         this.frame.add(this, BorderLayout.CENTER);
+
+        this.keyHandler = new KeyHandler();
+        frame.addKeyListener(keyHandler);
 
         this.frame.setVisible(true);
         this.frame.setFocusable(true);
@@ -136,9 +139,10 @@ public class World extends JPanel implements ActionListener {
     }
 
     private void drawInterface(Graphics g) {
-        g.drawString("Round: " + round, windowWidth / 2 - 50, 20);
-        g.drawString("Yauheni Pyryeu 201253 project", windowWidth / 2 - 150, 40);
-        g.drawString("q - quit, e - ability, w a s d - controls", 10, windowHeight - 20);
+//        g.drawString("Round: " + round, 200, 20);
+//        g.drawString("Yauheni Pyryeu 201253 project", 200, 40);
+//        g.drawString("q - quit, e - ability, w a s d - controls", 10, 200);
+        System.out.println("Round " + (round + 1));
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -160,20 +164,28 @@ public class World extends JPanel implements ActionListener {
                 updateOrder = 0;
             }
 
-            if (members.get(i) instanceof Player) {
-                // Wait for player's action
-                JOptionPane.showMessageDialog(null, "Player's turn!");
-                clean();
-                repaint();
-
+//            if (members.get(i) instanceof Player) {
+//                // Wait for player's action
+////                JOptionPane.showMessageDialog(null, "Player's turn!");
+////                clean();
+////                repaint();
+//
+////                try {
+////                    Thread.sleep(50);
+////                } catch (InterruptedException e) {
+////                    e.printStackTrace();
+////                }
+////                playerDirection = ' ';
+//                Player player = (Player) members.get(i);
 //                try {
-//                    Thread.sleep(50);
+//                    player.action(keyHandler);
 //                } catch (InterruptedException e) {
-//                    e.printStackTrace();
+//                    throw new RuntimeException(e);
 //                }
-            }
-
-            members.get(i).action();
+//            }
+//            else {
+                members.get(i).action();
+//            }
         }
         clean();
         repaint();
@@ -247,6 +259,9 @@ public class World extends JPanel implements ActionListener {
 
     public LogManager getLogger() {
         return logger;
+    }
+    public KeyHandler getKeyHandler(){
+        return keyHandler;
     }
 
     public Field getRandomField() {
@@ -328,7 +343,7 @@ public class World extends JPanel implements ActionListener {
         }
     }
 
-    private void drawEndscreen() {
+    public void drawEndscreen() {
         JOptionPane.showMessageDialog(frame, "End of Game! Round: " + round + (getPlayer() != null ? " You have won!!" : " You have lost!"));
     }
 
