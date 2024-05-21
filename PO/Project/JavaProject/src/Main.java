@@ -76,22 +76,7 @@ public class Main {
         myWorld = new World(width, height);
         runGame();
     }
-
-//    private static void runGame() {
-//        while (!myWorld.isOver()) {
-//            myWorld.update();
-//            try {
-//                Thread.sleep(1000); // Adjust the delay as needed
-//            } catch (InterruptedException e) {
-//                throw new RuntimeException(e);
-//            }
-//            // Here you would typically have a delay or wait for user input
-//            // For a Swing GUI, you might use a timer or event-based updates
-//        }
-//
-//        myWorld.clearWorld();
-//        drawEndScreen();
-//    }
+    
     private static void runGame() {
         GameWorker gameWorker = new GameWorker(myWorld);
         gameWorker.execute();

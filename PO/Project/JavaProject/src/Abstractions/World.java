@@ -158,28 +158,10 @@ public class World extends JPanel implements ActionListener {
                 updateOrder = 0;
             }
 
-//            if (members.get(i) instanceof Player) {
-//                // Wait for player's action
-////                JOptionPane.showMessageDialog(null, "Player's turn!");
-////                clean();
-////                repaint();
-//
-////                try {
-////                    Thread.sleep(50);
-////                } catch (InterruptedException e) {
-////                    e.printStackTrace();
-////                }
-////                playerDirection = ' ';
-//                Player player = (Player) members.get(i);
-//                try {
-//                    player.action(keyHandler);
-//                } catch (InterruptedException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }
-//            else {
-                members.get(i).action();
-//            }
+            members.get(i).action();
+        }
+        if (getPlayer() == null){
+            end = true;
         }
         clean();
         repaint();

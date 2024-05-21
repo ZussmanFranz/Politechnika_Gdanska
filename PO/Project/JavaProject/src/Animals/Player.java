@@ -39,7 +39,7 @@ public class Player extends Animal {
 
         Point delta = new Point(0, 0);
 
-        char input = world.getKeyHandler().getPlayerDirection();
+        char input = world.getKeyHandler().getPlayerInput();
 
         switch (input) {
             case 'w':
@@ -70,36 +70,10 @@ public class Player extends Animal {
         }
 
         System.out.println("Key pressed: " + input);
-//        world.resetPlayerDirection();
 
         return move(delta);
     }
 
-//    public void action(KeyHandler keyHandler) throws InterruptedException {
-//        System.err.println("Human action");
-//        char key = keyHandler.getKey();
-//        switch (key) {
-//            case 'w':
-//                // move up
-//                break;
-//            case 'a':
-//                // move left
-//                break;
-//            case 's':
-//                // move down
-//                break;
-//            case 'd':
-//                // move right
-//                break;
-//            case 'e':
-//                // custom action
-//                break;
-//            case 'q':
-//                // quit or another action
-//                break;
-//        }
-//        System.out.println("Key pressed: " + key);
-//    }
 
     @Override
     public boolean rejectAttack(Organism attacker) {

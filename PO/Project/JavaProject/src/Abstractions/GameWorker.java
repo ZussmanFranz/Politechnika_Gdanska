@@ -14,7 +14,7 @@ public class GameWorker extends SwingWorker<Void, Void> {
     protected Void doInBackground() throws Exception {
         while (!world.isOver()) {
             publish();
-            Thread.sleep(1000); // Adjust the delay as needed
+            Thread.sleep(500); // Adjust the delay as needed
         }
         return null;
     }
