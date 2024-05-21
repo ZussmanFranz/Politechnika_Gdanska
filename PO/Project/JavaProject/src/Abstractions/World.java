@@ -89,12 +89,6 @@ public class World extends JPanel implements ActionListener {
         initializeFields();
     }
 
-    public char getPlayerDirection() {
-        return playerDirection;
-    }
-    public void resetPlayerDirection() {
-        playerDirection = ' ';
-    }
 
     private void initializeFields() {
         logger.log("Initialising fields...");

@@ -52,4 +52,16 @@ public class KeyHandler implements KeyListener {
 
         System.out.println("released!");
     }
+
+    public char getPlayerDirection(){
+        if (upPressed){
+            return 'w';
+        } else if (downPressed) {
+            return 's';
+        } else if (rightPressed) {
+        } else if (leftPressed) {
+            return 'a';
+        }
+        return ' ';
+    }
 }

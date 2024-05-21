@@ -39,25 +39,7 @@ public class Player extends Animal {
 
         Point delta = new Point(0, 0);
 
-        char input = ' ';
-//        System.out.println("Player is handling input");
-//        try {
-//            input = world.getKeyHandler().getKey();
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-
-        synchronized (world) {
-            while (input == ' ') {
-                try {
-                    System.out.println("waiting for player's action");
-                    world.wait(); // Wait for the player's input
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                input = world.getPlayerDirection();
-            }
-        }
+        char input = world.getKeyHandler().getPlayerDirection();
 
         switch (input) {
             case 'w':
