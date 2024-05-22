@@ -77,7 +77,7 @@ public class World extends JPanel implements ActionListener {
         this.frame.revalidate();
         this.frame.repaint();
 
-        speed = 2;
+        speed = 1;
         load(filepath);
         this.window_size = new Dimension(dimensions.width * (fieldSize.width + padding.width) + 100, dimensions.height * (fieldSize.height + padding.height) + 100);
         this.frame.setSize(new Dimension(window_size.width + 480, window_size.height));
@@ -122,7 +122,7 @@ public class World extends JPanel implements ActionListener {
         add(new Player(this, new Point(0,0)));
 
         logger.log("Added!\nGenerating random start...");
-        generateRandomStart((dimensions.width * dimensions.height) / 12);
+        generateEvenStart((dimensions.width * dimensions.height) / 12);
 
         logger.log("Generated!\nSorting members...");
         sortMembers();
@@ -326,6 +326,27 @@ public class World extends JPanel implements ActionListener {
         for (int i = 0; i < numberOfOrganisms; i++) {
             generateRandomOrganism(ThreadLocalRandom.current().nextInt(1, 3), ThreadLocalRandom.current().nextInt(1, 6));
         }
+    }
+
+    public void generateEvenStart(int numberOfOrganisms){
+        int type = 1;
+        int subtype = 1;
+        int count = 0;
+
+        while (count < numberOfOrganisms)
+        {
+            type = (type == 1) ? 2 : 1;
+
+            if (count % 2 == 0)
+            {
+                subtype = (subtype >= 5) ? 1 : (subtype + 1);
+            }
+
+            generateRandomOrganism(type, subtype);
+            count++;
+        }
+
+        return;
     }
 
     public void generateRandomOrganism(int type, int subType) {
