@@ -4,6 +4,7 @@ import Abstractions.*;
 import com.google.gson.JsonObject;
 
 import java.awt.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Antelope extends Animal {
 
@@ -16,14 +17,17 @@ public class Antelope extends Animal {
 
     @Override
     public int action() {
-        int deltaY = (int) (Math.random() * 5) - 2; // Generates random number between -2 and 2
-        int deltaX = (int) (Math.random() * 5) - 2; // Generates random number between -2 and 2
+        int deltaX, deltaY;
+        do {
+            deltaY = ThreadLocalRandom.current().nextInt(-2, 3); // Generates random number between -2 and 2
+            deltaX = ThreadLocalRandom.current().nextInt(-2, 3); // Generates random number between -2 and 2
+        } while ((deltaX == 0 && deltaY == 0) || (world.findField(new Point(position.x + deltaX, position.y + deltaY)) == null));
 
         if (deltaX == 0 && deltaY == 0) {
             return 0;
         }
 
-        return move(new Point(position.x + deltaX, position.y + deltaY));
+        return move(new Point(deltaX, deltaY));
     }
 
     @Override

@@ -383,7 +383,7 @@ public class World extends JPanel implements ActionListener {
         String status = " You have won!!";
         if (getPlayer() == null)
         {
-            status = " You have lost.";
+            status = " You have died.";
         } else if (members.size() > 1) {
             status = " Saving...";
         }

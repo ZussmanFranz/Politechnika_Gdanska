@@ -13,6 +13,7 @@ public class Animal extends Organism {
 
 
     public int move(Point delta) {
+        System.out.println("delta is {" + delta.x + ", " + delta.y + '}');
         boolean collided = false;
         world.findField(position).setMember(null);
 
@@ -20,22 +21,18 @@ public class Animal extends Organism {
 
         if (newPosition.x >= world.getDimensions().width) {
             newPosition.x = world.getDimensions().width - 1;
-            delta.x = 0;
-            System.out.println("collision Right!");
+//            System.out.println("collision Right! delta_x = "+delta.x);
         } else if (newPosition.x < 0) {
             newPosition.x = 0;
-            delta.x = 0;
-            System.out.println("collision Left!");
+//            System.out.println("collision Left! delta_x = "+delta.x);
         }
 
         if (newPosition.y >= world.getDimensions().height) {
             newPosition.y = world.getDimensions().height - 1;
-            delta.y = 0;
-            System.out.println("collision Bottom!");
+//            System.out.println("collision Bottom! delta_y = " + delta.y);
         } else if (newPosition.y < 0) {
             newPosition.y = 0;
-            delta.y = 0;
-            System.out.println("collision Top!");
+//            System.out.println("collision Top! delta_y = " + delta.y);
         }
 
         if (delta.x == 0 && delta.y == 0) {
