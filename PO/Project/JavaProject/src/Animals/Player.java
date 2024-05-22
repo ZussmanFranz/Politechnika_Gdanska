@@ -53,6 +53,7 @@ public class Player extends Animal {
                 break;
             case 'q':
                 world.stop();
+                world.save("save.txt");
                 break;
             case 'e':
                 if (abilityCooldown > 10) {

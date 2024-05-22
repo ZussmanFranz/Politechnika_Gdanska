@@ -55,7 +55,7 @@ public class World extends JPanel implements ActionListener {
         this.members = new ArrayList<>();
         this.round = 0;
         this.end = false;
-        this.loaded = false;
+        this.loaded = true;
 
         this.frame = new JFrame("World Simulation");
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -78,11 +78,10 @@ public class World extends JPanel implements ActionListener {
         this.frame.repaint();
 
         speed = 2;
-
-        initializeFields();
-        this.end = false;
-        this.loaded = true;
         load(filepath);
+        this.window_size = new Dimension(dimensions.width * (fieldSize.width + padding.width) + 100, dimensions.height * (fieldSize.height + padding.height) + 100);
+        this.frame.setSize(new Dimension(window_size.width + 480, window_size.height));
+
     }
 
     public World(int x, int y) {
@@ -118,6 +117,16 @@ public class World extends JPanel implements ActionListener {
         speed = 2;
 
         initializeFields();
+
+        logger.log("Adding the player...");
+        add(new Player(this, new Point(0,0)));
+
+        logger.log("Added!\nGenerating random start...");
+        generateRandomStart((dimensions.width * dimensions.height) / 12);
+
+        logger.log("Generated!\nSorting members...");
+        sortMembers();
+        logger.log("Sorted!");
     }
 
 
@@ -133,16 +142,7 @@ public class World extends JPanel implements ActionListener {
                 fields[i][j] = new Field(position, fieldSize, new Point(j, i), null);
             }
         }
-
-        logger.log("Initialised!\nAdding the player...");
-        add(new Player(this, new Point(0,0)));
-
-        logger.log("Added!\nGenerating random start...");
-        generateRandomStart((dimensions.width * dimensions.height) / 12);
-
-        logger.log("Generated!\nSorting members...");
-        sortMembers();
-        logger.log("Sorted!");
+        logger.log("Initialised!");
     }
 
     @Override
@@ -186,9 +186,13 @@ public class World extends JPanel implements ActionListener {
                 drawEndscreen();
                 return;
             }
-            if (updateOrder > 0 && updateOrder < members.size()) {
-                i = updateOrder;
-                updateOrder = 0;
+            if (loaded) {
+                if (members.get(i) instanceof Player){
+                    loaded = false;
+                }
+                else {
+                    continue;
+                }
             }
 
             members.get(i).action();
