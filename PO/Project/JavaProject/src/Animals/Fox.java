@@ -10,6 +10,8 @@ public class Fox extends Animal {
     public Fox(World world, Point position) {
         super(4, 4, position, world);
         this.avatar = 'F';
+        this.image_path = "Fox.png";
+        loadImage();
     }
 
     @Override

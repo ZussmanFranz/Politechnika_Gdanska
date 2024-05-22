@@ -10,6 +10,8 @@ public class Antelope extends Animal {
     public Antelope(World world, Point position) {
         super(4, 4, position, world);
         this.avatar = 'A';
+        this.image_path = "Antelope.png";
+        loadImage();
     }
 
     @Override

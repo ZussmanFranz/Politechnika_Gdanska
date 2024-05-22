@@ -8,6 +8,8 @@ public class Wolfberry extends Plant {
     public Wolfberry(World world,Point position) {
         super(99, position, world);
         this.avatar = 'w';
+        this.image_path = "Wolfberry.png";
+        loadImage();
     }
 
     @Override

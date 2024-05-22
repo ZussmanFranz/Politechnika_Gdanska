@@ -11,6 +11,8 @@ public class Turtle extends Animal {
     public Turtle(World world, Point position) {
         super(2, 1, position, world);
         this.avatar = 'T';
+        this.image_path = "Turtle.png";
+        loadImage();
     }
 
     @Override

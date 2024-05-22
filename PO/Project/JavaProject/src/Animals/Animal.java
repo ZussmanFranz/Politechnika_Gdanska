@@ -8,18 +8,18 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Animal extends Organism {
 
     public Animal(int strength, int initiative, Point position, World world) {
-        super(world, strength, initiative, position);
+        super(world, strength, initiative, position, "Anon.png");
     }
 
-    @Override
-    public void draw(Graphics g, Point position, Dimension fieldSize) {
-        if (strength > startingStrength) {
-            g.setFont(new Font("default", Font.BOLD, 12));
-        }
-        g.setColor(Color.RED); // Placeholder for COLOR_PAIR in ncurses
-        g.drawString(String.valueOf(avatar), position.x + fieldSize.width / 2, position.y + fieldSize.height / 2);
-        g.setFont(new Font("default", Font.PLAIN, 12));
-    }
+//    @Override
+//    public void draw(Graphics g, Point position, Dimension fieldSize) {
+//        if (strength > startingStrength) {
+//            g.setFont(new Font("default", Font.BOLD, 12));
+//        }
+//        g.setColor(Color.RED); // Placeholder for COLOR_PAIR in ncurses
+//        g.drawString(String.valueOf(avatar), position.x + fieldSize.width / 2, position.y + fieldSize.height / 2);
+//        g.setFont(new Font("default", Font.PLAIN, 12));
+//    }
 
     public int move(Point delta) {
         boolean collided = false;

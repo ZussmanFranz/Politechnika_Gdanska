@@ -10,6 +10,8 @@ public class Hogweed extends Plant {
     public Hogweed(World world,Point position) {
         super(10, position, world);
         this.avatar = 'h';
+        this.image_path = "Hogweed.png";
+        loadImage();
     }
 
     @Override

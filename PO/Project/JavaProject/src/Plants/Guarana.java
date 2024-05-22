@@ -8,6 +8,8 @@ public class Guarana extends Plant {
     public Guarana(World world,Point position) {
         super(0, position, world);
         this.avatar = 'u';
+        this.image_path = "Guarana.png";
+        loadImage();
     }
 
     @Override

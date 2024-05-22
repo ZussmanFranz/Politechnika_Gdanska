@@ -3,10 +3,15 @@ package Animals;
 import Abstractions.*;
 import com.google.gson.JsonObject;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class Player extends Animal {
     private int abilityCooldown;
@@ -14,17 +19,21 @@ public class Player extends Animal {
     public Player(World world, Point position) {
         super(5, 4, position, world);
         this.avatar = 'P';
+        this.image_path = "Player.png";
+        loadImage();
         this.abilityCooldown = 10;
     }
 
     @Override
     public void draw(Graphics g, Point position, Dimension fieldSize) {
-        if (strength > startingStrength) {
-            g.setFont(new Font("default", Font.BOLD, 12));
-        }
-        g.setColor(Color.YELLOW); // Placeholder for COLOR_PAIR(3) in ncurses
-        g.drawString(String.valueOf(avatar), position.x + fieldSize.width / 2, position.y + fieldSize.height / 2);
-        g.setFont(new Font("default", Font.PLAIN, 12));
+//        if (strength > startingStrength) {
+//            g.setFont(new Font("default", Font.BOLD, 12));
+//        }
+        // Construct the path to the image file
+
+
+        // Draw the image at the specified position
+        g.drawImage(image, position.x, position.y, fieldSize.width, fieldSize.height, null);
     }
 
     @Override
@@ -78,7 +87,9 @@ public class Player extends Animal {
                 break;
         }
 
-        System.out.println("Key pressed: " + input);
+        if (input != ' '){
+            System.out.println("Key pressed: " + input);
+        }
 
         return move(delta);
     }

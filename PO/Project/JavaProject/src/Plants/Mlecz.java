@@ -9,6 +9,8 @@ public class Mlecz extends Plant {
     public Mlecz(World world,Point position) {
         super(0, position, world);
         this.avatar = 'm';
+        this.image_path = "Mlecz.png";
+        loadImage();
     }
 
     @Override

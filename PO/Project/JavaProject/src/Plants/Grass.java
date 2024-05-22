@@ -11,6 +11,8 @@ public class Grass extends Plant {
     public Grass(World world,Point position) {
         super(0, position, world);
         this.avatar = 'g';
+        this.image_path = "Grass.png";
+        loadImage();
     }
 
     @Override

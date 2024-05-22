@@ -10,6 +10,8 @@ public class Wolf extends Animal {
     public Wolf(World world, Point position) {
         super(9, 5, position, world);
         this.avatar = 'W';
+        this.image_path = "Wolf.png";
+        loadImage();
     }
 
     @Override

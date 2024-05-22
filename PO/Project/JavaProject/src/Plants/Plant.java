@@ -8,18 +8,18 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Plant extends Organism {
 
     public Plant(int strength, Point position, World world) {
-        super(world, strength, 0, position);
+        super(world, strength, 0, position, "Anon.png");
     }
 
-    @Override
-    public void draw(Graphics g, Point position, Dimension fieldSize) {
-        if (strength > startingStrength) {
-            g.setFont(new Font("default", Font.BOLD, 12));
-        }
-        g.setColor(Color.GREEN); // Placeholder for COLOR_PAIR in ncurses
-        g.drawString(String.valueOf(avatar), position.x + fieldSize.width / 2, position.y + fieldSize.height / 2);
-        g.setFont(new Font("default", Font.PLAIN, 12));
-    }
+//    @Override
+//    public void draw(Graphics g, Point position, Dimension fieldSize) {
+//        if (strength > startingStrength) {
+//            g.setFont(new Font("default", Font.BOLD, 12));
+//        }
+//        g.setColor(Color.GREEN); // Placeholder for COLOR_PAIR in ncurses
+//        g.drawString(String.valueOf(avatar), position.x + fieldSize.width / 2, position.y + fieldSize.height / 2);
+//        g.setFont(new Font("default", Font.PLAIN, 12));
+//    }
 
     @Override
     public int action() {

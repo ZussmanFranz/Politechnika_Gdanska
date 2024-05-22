@@ -36,6 +36,7 @@ public class World extends JPanel implements ActionListener {
     private Dimension fieldSize;
     private Dimension padding;
     private int round;
+    private int speed;
     private boolean end;
     private int updateOrder;
     private LogManager logger;
@@ -51,9 +52,9 @@ public class World extends JPanel implements ActionListener {
         load(filepath);
     }
 
-    public World(int y, int x) {
+    public World(int x, int y) {
         this.dimensions = new Dimension(x, y);
-        this.fieldSize = new Dimension(30, 50);
+        this.fieldSize = new Dimension(48, 48);
         this.padding = new Dimension(10, 10);
         this.window_size = new Dimension(dimensions.width * (fieldSize.width + padding.width) + 100, dimensions.height * (fieldSize.height + padding.height) + 100);
         this.members = new ArrayList<>();
@@ -85,6 +86,8 @@ public class World extends JPanel implements ActionListener {
         this.frame.setFocusable(true);
         this.frame.revalidate();
         this.frame.repaint();
+
+        speed = 2;
 
         initializeFields();
     }
@@ -144,6 +147,8 @@ public class World extends JPanel implements ActionListener {
     }
 
     public void update() {
+        speed = keyHandler.getSpeed();
+
         round++;
         for (int i = 0; i < members.size(); i++) {
             if (members.size() <= 1) {
@@ -165,6 +170,8 @@ public class World extends JPanel implements ActionListener {
         }
         clean();
         repaint();
+
+
     }
 
     public void add(Organism added) {
@@ -330,6 +337,10 @@ public class World extends JPanel implements ActionListener {
             }
         }
         return null;
+    }
+
+    public int getSpeed(){
+        return speed;
     }
 
     public void clean() {

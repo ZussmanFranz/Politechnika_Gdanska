@@ -9,6 +9,8 @@ public class Sheep extends Animal {
     public Sheep(World world, Point position) {
         super(4, 4, position, world);
         this.avatar = 'S';
+        this.image_path = "Sheep.png";
+        loadImage();
     }
 
     @Override

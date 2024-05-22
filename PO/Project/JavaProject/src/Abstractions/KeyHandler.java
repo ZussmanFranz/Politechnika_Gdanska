@@ -8,6 +8,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class KeyHandler implements KeyListener {
     private BlockingQueue<Character> keyQueue = new LinkedBlockingQueue<>();
     public boolean upPressed, downPressed, leftPressed, rightPressed, end, ability, pause;
+    private int speed = 2;
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -37,6 +38,14 @@ public class KeyHandler implements KeyListener {
         }
         if (code == KeyEvent.VK_P){
             pause = true;
+        }
+
+        if (code == KeyEvent.VK_1){
+            speed = 1;
+        } else if (code == KeyEvent.VK_2) {
+            speed = 2;
+        } else if (code == KeyEvent.VK_3) {
+            speed = 3;
         }
 
 //        System.out.println("pressed!");
@@ -89,5 +98,9 @@ public class KeyHandler implements KeyListener {
             return 'a';
         }
         return ' ';
+    }
+
+    public int getSpeed(){
+        return speed;
     }
 }
