@@ -7,7 +7,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public class KeyHandler implements KeyListener {
     private BlockingQueue<Character> keyQueue = new LinkedBlockingQueue<>();
-    public boolean upPressed, downPressed, leftPressed, rightPressed, end, ability;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, end, ability, pause;
 
     @Override
     public void keyTyped(KeyEvent e) {
@@ -35,6 +35,9 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_E){
             ability = true;
         }
+        if (code == KeyEvent.VK_P){
+            pause = true;
+        }
 
 //        System.out.println("pressed!");
     }
@@ -58,6 +61,9 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_E){
             ability = false;
         }
+        if (code == KeyEvent.VK_P){
+            pause = false;
+        }
 
 //        System.out.println("released!");
     }
@@ -68,6 +74,9 @@ public class KeyHandler implements KeyListener {
         }
         if (ability){
             return 'e';
+        }
+        if (pause){
+            return 'p';
         }
 
         if (upPressed){

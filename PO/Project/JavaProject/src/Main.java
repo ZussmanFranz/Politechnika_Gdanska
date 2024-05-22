@@ -76,7 +76,7 @@ public class Main {
         myWorld = new World(width, height);
         runGame();
     }
-    
+
     private static void runGame() {
         GameWorker gameWorker = new GameWorker(myWorld);
         gameWorker.execute();

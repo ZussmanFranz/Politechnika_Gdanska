@@ -65,6 +65,15 @@ public class Player extends Animal {
                     world.getLogger().log("It's too early :|\n");
                 }
                 break;
+            case 'p':
+                System.out.println("paused!");
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                delta = new Point(0, 0);
+                break;
             default:
                 break;
         }
