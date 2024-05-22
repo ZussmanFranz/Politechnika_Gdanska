@@ -38,7 +38,7 @@ public class World extends JPanel implements ActionListener {
     private int round;
     private int speed;
     private boolean end;
-    private int updateOrder;
+    private boolean loaded;
     private LogManager logger;
     private int windowWidth;
     private int windowHeight;
@@ -48,7 +48,40 @@ public class World extends JPanel implements ActionListener {
     private char playerDirection;
 
     public World(String filepath) {
-        this(12, 12);
+        this.dimensions = new Dimension(0, 0);
+        this.fieldSize = new Dimension(48, 48);
+        this.padding = new Dimension(10, 10);
+        this.window_size = new Dimension(dimensions.width * (fieldSize.width + padding.width) + 100, dimensions.height * (fieldSize.height + padding.height) + 100);
+        this.members = new ArrayList<>();
+        this.round = 0;
+        this.end = false;
+        this.loaded = false;
+
+        this.frame = new JFrame("World Simulation");
+        this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.frame.setSize(new Dimension(window_size.width + 480, window_size.height));
+        this.frame.setLocationRelativeTo(null);
+
+        this.frame.setLayout(new BorderLayout());
+
+        this.logger = new LogManager( 50, window_size.height / 240);
+        this.frame.add(logger, BorderLayout.EAST);
+        this.frame.add(new JScrollPane(logger), BorderLayout.EAST);
+        this.frame.add(this, BorderLayout.CENTER);
+
+        this.keyHandler = new KeyHandler();
+        frame.addKeyListener(keyHandler);
+
+        this.frame.setVisible(true);
+        this.frame.setFocusable(true);
+        this.frame.revalidate();
+        this.frame.repaint();
+
+        speed = 2;
+
+        initializeFields();
+        this.end = false;
+        this.loaded = true;
         load(filepath);
     }
 
@@ -60,18 +93,13 @@ public class World extends JPanel implements ActionListener {
         this.members = new ArrayList<>();
         this.round = 0;
         this.end = false;
-        this.updateOrder = 0;
+        this.loaded = false;
 
         this.frame = new JFrame("World Simulation");
         this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.frame.setSize(new Dimension(window_size.width + 480, window_size.height));
         this.frame.setLocationRelativeTo(null);
-        //this.gamePanel = new GamePanel(x, y);
-        //this.frame.add(gamePanel);
-        //gamePanel.startGameThread();
-        //this.frame.pack();
 
-        // Set layout for the frame
         this.frame.setLayout(new BorderLayout());
 
         this.logger = new LogManager( 50, window_size.height / 240);
@@ -327,7 +355,14 @@ public class World extends JPanel implements ActionListener {
     }
 
     public void drawEndscreen() {
-        JOptionPane.showMessageDialog(frame, "End of Game! Round: " + round + (getPlayer() != null ? " You have won!!" : " You have lost!"));
+        String status = " You have won!!";
+        if (getPlayer() == null)
+        {
+            status = " You have lost.";
+        } else if (members.size() > 1) {
+            status = " Saving...";
+        }
+        JOptionPane.showMessageDialog(frame, "End of Game! Round: " + round + status);
     }
 
     public Organism getPlayer() {
@@ -369,34 +404,72 @@ public class World extends JPanel implements ActionListener {
     }
 
     public void save(String path) {
+        System.out.println("Saving at " + path + "...");
+        FileWriter writer = null;
         try {
-            FileWriter writer = new FileWriter(path);
-            writer.write("{\"round\":" + round + ",\"dimensions\":{\"height\":" + dimensions.height + ",\"width\":" + dimensions.width + "},\"members\":");
-            String json = new Gson().toJson(members);
-            writer.write(json + "}");
-            writer.close();
+            writer = new FileWriter(path);
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("round", round);
+            JsonObject dimensionsObject = new JsonObject();
+            dimensionsObject.addProperty("height", dimensions.height);
+            dimensionsObject.addProperty("width", dimensions.width);
+            jsonObject.add("dimensions", dimensionsObject);
+
+            // Convert members to JSON
+            JsonArray membersArray = new JsonArray();
+            for (Organism member : members) {
+                JsonObject memberObject = new JsonObject();
+                memberObject.addProperty("avatar", member.getAvatar());
+                JsonObject positionObject = new JsonObject();
+                positionObject.addProperty("x", member.getPosition().x);
+                positionObject.addProperty("y", member.getPosition().y);
+                memberObject.add("position", positionObject);
+                memberObject.addProperty("strength", member.getStrength());
+                membersArray.add(memberObject);
+            }
+            jsonObject.add("members", membersArray);
+
+            // Write JSON to file
+            new Gson().toJson(jsonObject, writer);
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
     public void load(String path) {
+        System.out.println("Loading from " + path + "...");
         try {
             BufferedReader br = new BufferedReader(new FileReader(path));
             JsonObject jsonObject = new Gson().fromJson(br, JsonObject.class);
             this.round = jsonObject.get("round").getAsInt();
+            //System.out.println("round: " + round);
             JsonObject dims = jsonObject.getAsJsonObject("dimensions");
             this.dimensions = new Dimension(dims.get("width").getAsInt(), dims.get("height").getAsInt());
+            //System.out.println("dimensions: width = " + dimensions.width + ", height = " + dimensions.height);
             initializeFields();
             JsonArray array = jsonObject.getAsJsonArray("members");
             for (JsonElement element : array) {
+                //System.out.println("New entity... " + round);
                 JsonObject member = element.getAsJsonObject();
-                char avatar = (char)(member.get("avatar").getAsInt());
+                char avatar = member.get("avatar").getAsString().charAt(0);
+                //System.out.println("avatar: " + avatar);
+                int new_strength = member.get("strength").getAsInt();
+                //System.out.println("strength: " + new_strength);
 
                 Organism entity = null;
                 Point new_position = new Point();
-                new_position.x = member.get("x").getAsInt(); // Assuming 'x' represents the x-coordinate of the position
-                new_position.y = member.get("y").getAsInt();
+                JsonObject positionObject = member.get("position").getAsJsonObject();
+                new_position.x = positionObject.get("x").getAsInt(); // Assuming 'x' represents the x-coordinate of the position
+                new_position.y = positionObject.get("y").getAsInt();
+                //System.out.println("position: x = " + new_position.x + " y = " + new_position.y);
 
                 switch (avatar)
                 {
@@ -437,6 +510,7 @@ public class World extends JPanel implements ActionListener {
                         break;
                 }
 
+                entity.setStrength(new_strength);
                 members.add(entity);
                 findField(entity.getPosition()).setMember(entity);
             }

@@ -16,6 +16,8 @@ public class GameWorker extends SwingWorker<Void, Void> {
             publish();
             Thread.sleep(1000 / world.getSpeed()); // Adjust the delay as needed
         }
+        world.save("save.txt");
+        world.clean();
         return null;
     }
 

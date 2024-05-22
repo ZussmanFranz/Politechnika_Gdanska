@@ -86,6 +86,7 @@ public class LogManager extends JTextArea {
         String message = String.format("Strength of the %s has been increased by 3, new strength is %d",
                 getEntityName(luckyOne), luckyOne.getStrength());
         logF(LogMessageType.ABILITY, message + "\n\n");
+        System.out.println(luckyOne.getStrength() + " > " + luckyOne.getStartingStrength());
     }
 
     public void logOverpopulation(Organism unluckyOne, int neighbours) {

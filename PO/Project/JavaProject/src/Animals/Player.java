@@ -25,18 +25,6 @@ public class Player extends Animal {
     }
 
     @Override
-    public void draw(Graphics g, Point position, Dimension fieldSize) {
-//        if (strength > startingStrength) {
-//            g.setFont(new Font("default", Font.BOLD, 12));
-//        }
-        // Construct the path to the image file
-
-
-        // Draw the image at the specified position
-        g.drawImage(image, position.x, position.y, fieldSize.width, fieldSize.height, null);
-    }
-
-    @Override
     public int action() {
         abilityCooldown++;
 

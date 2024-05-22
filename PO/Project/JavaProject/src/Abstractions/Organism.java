@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public abstract class Organism {
     protected int strength;
-    protected int startingStrength;
+    protected final int startingStrength;
     protected boolean strong;
     protected int initiative;
     protected int birth;
@@ -87,7 +87,9 @@ public abstract class Organism {
     public int getStrength() {
         return strength;
     }
-
+    public int getStartingStrength(){
+        return startingStrength;
+    }
     public void setStrength(int newStrength) {
         this.strength = newStrength;
     }
