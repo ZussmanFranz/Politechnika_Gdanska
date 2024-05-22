@@ -404,9 +404,21 @@ public class World extends JPanel implements ActionListener {
     }
 
     public void clean() {
+        int current_type_counter = 0;
+        Class<?> prev_type = null;
+
         for (int i = 0; i < members.size(); i++) {
+            Class<?> current_type = members.get(i).getClass();
+            if (current_type.equals(prev_type)) {
+                current_type_counter++;
+            } else {
+                // If the current type is different from the previous type, reset the counter
+                prev_type = current_type;
+                current_type_counter = 1; // Start counting from 1 for the current type
+            }
+
             int neighbours = countNeighboursSameType(members.get(i));
-            if (neighbours > 2) {
+            if (neighbours > 2 || current_type_counter > 6) {
                 logger.logOverpopulation(members.get(i), neighbours);
                 destroy(members.get(i));
                 i--;
@@ -418,7 +430,9 @@ public class World extends JPanel implements ActionListener {
         int count = 0;
         for (int i = -1; i < 2; i++) {
             for (int j = -1; j < 2; j++) {
-                if (i == 0 && j == 0) continue;
+                if (i == 0 && j == 0) {
+                    continue;
+                }
                 Field target = findField(new Point(me.getPosition().x + j, me.getPosition().y + i));
                 if (target != null && target.member != null && target.member.getClass() == me.getClass()) {
                     count++;

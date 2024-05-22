@@ -11,15 +11,6 @@ public class Animal extends Organism {
         super(world, strength, initiative, position, "Anon.png");
     }
 
-//    @Override
-//    public void draw(Graphics g, Point position, Dimension fieldSize) {
-//        if (strength > startingStrength) {
-//            g.setFont(new Font("default", Font.BOLD, 12));
-//        }
-//        g.setColor(Color.RED); // Placeholder for COLOR_PAIR in ncurses
-//        g.drawString(String.valueOf(avatar), position.x + fieldSize.width / 2, position.y + fieldSize.height / 2);
-//        g.setFont(new Font("default", Font.PLAIN, 12));
-//    }
 
     public int move(Point delta) {
         boolean collided = false;
@@ -29,14 +20,27 @@ public class Animal extends Organism {
 
         if (newPosition.x >= world.getDimensions().width) {
             newPosition.x = world.getDimensions().width - 1;
+            delta.x = 0;
+            System.out.println("collision Right!");
         } else if (newPosition.x < 0) {
             newPosition.x = 0;
+            delta.x = 0;
+            System.out.println("collision Left!");
         }
 
         if (newPosition.y >= world.getDimensions().height) {
             newPosition.y = world.getDimensions().height - 1;
+            delta.y = 0;
+            System.out.println("collision Bottom!");
         } else if (newPosition.y < 0) {
             newPosition.y = 0;
+            delta.y = 0;
+            System.out.println("collision Top!");
+        }
+
+        if (delta.x == 0 && delta.y == 0) {
+            world.findField(position).setMember(this);
+            return 0;
         }
 
         Organism target = world.findField(newPosition).getMember();
@@ -57,12 +61,11 @@ public class Animal extends Organism {
 
     @Override
     public int action() {
-        int deltaY = ThreadLocalRandom.current().nextInt(-1, 2); // Generates random number between -1 and 1
-        int deltaX = ThreadLocalRandom.current().nextInt(-1, 2); // Generates random number between -1 and 1
-
-        if (deltaX == 0 && deltaY == 0) {
-            return 0;
-        }
+        int deltaX, deltaY;
+        do {
+            deltaY = ThreadLocalRandom.current().nextInt(-1, 2); // Generates random number between -1 and 1
+            deltaX = ThreadLocalRandom.current().nextInt(-1, 2); // Generates random number between -1 and 1
+        } while ((deltaX == 0 && deltaY == 0) || (world.findField(new Point(position.x + deltaX, position.y + deltaY)) == null));
 
         return move(new Point(deltaX, deltaY));
     }
@@ -78,7 +81,7 @@ public class Animal extends Organism {
         }
 
         int result = fight(target);
-        world.getLogger().logCollisionResult(result == 1 ? target : this);
+        world.getLogger().logCollisionResult((result == 1) ? target : this);
 
         return result;
     }
