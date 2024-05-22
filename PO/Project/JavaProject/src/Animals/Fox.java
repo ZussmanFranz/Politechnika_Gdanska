@@ -17,7 +17,7 @@ public class Fox extends Animal {
     @Override
     public int fight(Organism target) {
         if (target.getStrength() > this.strength) {
-            world.getLogger().log("Fox avoided the fight");
+            world.getLogger().log(LogManager.LogMessageType.ABILITY,"Fox avoided the fight");
 
             world.findField(this.position).setMember(this);
 

@@ -33,7 +33,7 @@ public class Antelope extends Animal {
     @Override
     public boolean rejectAttack(Organism attacker) {
         if (Math.random() < 0.5) {
-            world.getLogger().log("Antelope avoided attack");
+            world.getLogger().log(LogManager.LogMessageType.ABILITY,"Antelope avoided attack");
 
             Field newLocation = world.getFreeFieldNear(position);
             if (newLocation == null) {

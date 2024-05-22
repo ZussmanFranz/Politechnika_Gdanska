@@ -14,7 +14,9 @@ import java.io.File;
 import java.io.IOException;
 
 public class Player extends Animal {
+    private int abilityCooldown_parameter;
     private int abilityCooldown;
+    private int abilityDuration;
 
     public Player(World world, Point position) {
         super(5, 4, position, world);
@@ -22,14 +24,16 @@ public class Player extends Animal {
         this.image_path = "Player.png";
         loadImage();
         this.abilityCooldown = 10;
+        this.abilityCooldown_parameter = 10;
+        this.abilityDuration = 5;
     }
 
     @Override
     public int action() {
         abilityCooldown++;
 
-        if (abilityCooldown == 6) {
-            world.getLogger().log("Ability is finished :(\n");
+        if (abilityCooldown == abilityDuration + 1) {
+            world.getLogger().log(LogManager.LogMessageType.ABILITY,"Ability is finished :(\n");
         }
 
         world.repaint();
@@ -56,11 +60,11 @@ public class Player extends Animal {
                 world.save("save.txt");
                 break;
             case 'e':
-                if (abilityCooldown > 10) {
+                if (abilityCooldown > abilityCooldown_parameter) {
                     abilityCooldown = 0;
-                    world.getLogger().log("Ability activated :)\n");
+                    world.getLogger().log(LogManager.LogMessageType.ABILITY,"Ability activated :)\n");
                 } else {
-                    world.getLogger().log("It's too early :|\n");
+                    world.getLogger().log(LogManager.LogMessageType.ABILITY,"It's too early :|\n");
                 }
                 break;
             case 'p':
@@ -86,18 +90,18 @@ public class Player extends Animal {
 
     @Override
     public boolean rejectAttack(Organism attacker) {
-        if (abilityCooldown <= 5) {
+        if (abilityCooldown <= abilityDuration) {
             List<Field> fieldsNearAttacker = world.getFieldsNear(attacker.getPosition());
 
             if (fieldsNearAttacker.isEmpty()) {
-                world.getLogger().log("Shield of Alzur could not protect :(");
+                world.getLogger().log(LogManager.LogMessageType.ABILITY,"Shield of Alzur could not protect :(");
                 return false;
             }
 
             Point newPosition = fieldsNearAttacker.get(ThreadLocalRandom.current().nextInt(fieldsNearAttacker.size())).getId();
             attacker.setPosition(newPosition);
 
-            world.getLogger().log("Shield of Alzur protected player");
+            world.getLogger().log(LogManager.LogMessageType.ABILITY,"Shield of Alzur protected player");
             return true;
         }
 

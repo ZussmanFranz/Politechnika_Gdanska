@@ -15,7 +15,7 @@ public class Wolfberry extends Plant {
     @Override
     public boolean rejectAttack(Organism attacker) {
         attacker.die();
-        world.getLogger().log("Wolfberry instantly killed an attacker");
+        world.getLogger().log(LogManager.LogMessageType.ABILITY,"Wolfberry instantly killed an attacker");
         return true;
     }
 

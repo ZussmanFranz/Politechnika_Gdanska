@@ -32,24 +32,34 @@ public class LogManager extends JTextArea {
         else return "ERROR";
     }
 
-    public void log(String prompt) {
-        append(prompt + "\n\n");
+    public void log(LogMessageType type, String prompt, Object... args) {
+        // Get the color associated with the LogMessageType
+        Color color = type.getColor();
+
+        // Create a formatter to format the message with arguments
+        Formatter formatter = new Formatter();
+        formatter.format(prompt, args);
+
+        // Set the color of the text
+        setForeground(color);
+
+        // Append the formatted message to the text area
+        append(formatter.toString());
+
+        // Reset the color to default (black)
+        setForeground(Color.BLACK);
     }
 
-    public void logF(LogMessageType type, String prompt, Object... args) {
-        String formattedMessage = String.format(prompt, args);
-        append(formattedMessage);
-    }
 
     public void logTime() {
         String time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-        logF(LogMessageType.WARNING, "Current time is " + time + "\n\n");
+        log(LogMessageType.WARNING, "Current time is " + time + "\n\n");
     }
 
     public void logCreation(Organism created) {
         String message = String.format("Created %s at y = %d and x = %d",
                 getEntityName(created), created.getPosition().y, created.getPosition().x);
-        logF(LogMessageType.SPAWN, message + "\n\n");
+        log(LogMessageType.SPAWN, message + "\n\n");
     }
 
     public void logCollision(Organism attacker, Organism prey) {
@@ -59,46 +69,45 @@ public class LogManager extends JTextArea {
         String message = String.format("Fight log: %s vs %s\nLocation: y = %d, x = %d\nRound: %d\n%s strength = %d, %s strength = %d",
                 attackerName, preyName, prey.getPosition().y, prey.getPosition().x,
                 attacker.getWorld().getRound(), attackerName, attacker.getStrength(), preyName, prey.getStrength());
-        logF(LogMessageType.FIGHT, "Fight: %s vs %s (%d | %d)\n",
+        log(LogMessageType.FIGHT, "Fight: %s vs %s (%d | %d)\n",
                 attackerName, preyName, attacker.getStrength(), prey.getStrength());
     }
 
     public void logCollisionResult(Organism winner) {
         String message = String.format("The winner is %s\n\n", getEntityName(winner));
-        log(message);
+        log(LogMessageType.FIGHT,message);
     }
 
     public void logReproductionCollision(Organism parent1, Organism parent2) {
         String message = String.format("%s and %s now have a child!\n\n",
                 getEntityName(parent1), getEntityName(parent2));
-        log(message);
+        log(LogMessageType.SPAWN,message);
     }
 
     public void logOrder(List<Organism> members) {
-        log("The New Order:");
+        log(LogMessageType.WARNING,"The New Order:");
         for (int i = 0; i < members.size(); i++) {
-            log(i + ") " + getEntityName(members.get(i)));
+            log(LogMessageType.TECHNICAL,i + ") " + getEntityName(members.get(i)));
         }
-        log("");
     }
 
     public void logStrengthIncrease(Organism luckyOne) {
         String message = String.format("Strength of the %s has been increased by 3, new strength is %d",
                 getEntityName(luckyOne), luckyOne.getStrength());
-        logF(LogMessageType.ABILITY, message + "\n\n");
+        log(LogMessageType.ABILITY, message + "\n\n");
         System.out.println(luckyOne.getStrength() + " > " + luckyOne.getStartingStrength());
     }
 
     public void logOverpopulation(Organism unluckyOne, int neighbours) {
         String message = String.format("%s has died because of overpopulation, it had %d neighbours\n\n",
                 getEntityName(unluckyOne), neighbours);
-        log(message);
+        log(LogMessageType.DEATH,message);
     }
 
     public void necroLog(Organism rip) {
         String message = String.format("%s is dead :( It was %d rounds old.\n\n",
                 getEntityName(rip), rip.getWorld().getRound() - rip.getBirth());
-        logF(LogMessageType.DEATH, "%s died at (y = %d, x = %d), it was %d rounds old.\n\n",
+        log(LogMessageType.DEATH, "%s died at (y = %d, x = %d), it was %d rounds old.\n\n",
                 getEntityName(rip), rip.getPosition().y, rip.getPosition().x, rip.getWorld().getRound() - rip.getBirth());
     }
 

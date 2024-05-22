@@ -36,7 +36,7 @@ public class Turtle extends Animal {
     @Override
     public boolean rejectAttack(Organism attacker) {
         if (attacker.getStrength() < 5) {
-            world.getLogger().log("Turtle rejected attack");
+            world.getLogger().log(LogManager.LogMessageType.ABILITY,"Turtle rejected attack");
             return true;
         }
         return false;

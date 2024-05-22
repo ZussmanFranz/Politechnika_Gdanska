@@ -118,20 +118,20 @@ public class World extends JPanel implements ActionListener {
 
         initializeFields();
 
-        logger.log("Adding the player...");
+        logger.log(LogManager.LogMessageType.NORMAL,"Adding the player...");
         add(new Player(this, new Point(0,0)));
 
-        logger.log("Added!\nGenerating random start...");
+        logger.log(LogManager.LogMessageType.NORMAL,"Added!\nGenerating random start...");
         generateEvenStart((dimensions.width * dimensions.height) / 12);
 
-        logger.log("Generated!\nSorting members...");
+        logger.log(LogManager.LogMessageType.NORMAL,"Generated!\nSorting members...");
         sortMembers();
-        logger.log("Sorted!");
+        logger.log(LogManager.LogMessageType.NORMAL,"Sorted!");
     }
 
 
     private void initializeFields() {
-        logger.log("Initialising fields...");
+        logger.log(LogManager.LogMessageType.NORMAL,"Initialising fields...");
         this.fields = new Field[dimensions.height][dimensions.width];
         for (int i = 0; i < dimensions.height; i++) {
             for (int j = 0; j < dimensions.width; j++) {
@@ -142,7 +142,7 @@ public class World extends JPanel implements ActionListener {
                 fields[i][j] = new Field(position, fieldSize, new Point(j, i), null);
             }
         }
-        logger.log("Initialised!");
+        logger.log(LogManager.LogMessageType.NORMAL,"Initialised!");
     }
 
     @Override

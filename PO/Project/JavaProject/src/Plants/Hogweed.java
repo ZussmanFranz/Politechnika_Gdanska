@@ -26,7 +26,7 @@ public class Hogweed extends Plant {
 
         for (Field field : near) {
             if (field.getMember() != null && !(field.getMember() instanceof Hogweed)) {
-                world.getLogger().log("hogweed killed an organism with the area attack");
+                world.getLogger().log(LogManager.LogMessageType.ABILITY,"hogweed killed an organism with the area attack");
                 world.destroy(field.getMember());
             }
         }
@@ -37,7 +37,7 @@ public class Hogweed extends Plant {
     @Override
     public boolean rejectAttack(Organism attacker) {
         attacker.die();
-        world.getLogger().log("hogweed instantly killed an attacker");
+        world.getLogger().log(LogManager.LogMessageType.ABILITY,"hogweed instantly killed an attacker");
         return true;
     }
 
