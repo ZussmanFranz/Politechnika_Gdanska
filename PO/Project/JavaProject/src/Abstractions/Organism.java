@@ -62,7 +62,6 @@ public abstract class Organism {
     public abstract boolean rejectAttack(Organism attacker);
     public void draw(Graphics g, Point position, Dimension fieldSize){
         if ((strength > startingStrength) && (!strong)){
-            System.out.println(strength + " > " + startingStrength);
             strong = true;
             image_path = "strong/" + image_path;
             loadImage();

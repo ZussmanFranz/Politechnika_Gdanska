@@ -17,6 +17,8 @@ public class Main {
     }
 
     private static void createAndShowGUI() {
+        System.out.println("Java project by Yauheni Pyryeu 201253\nw a s d - directions, q - exit, e - special ability, p - pause, 1 2 3 - speed modes\nclick on free field to spawn any organizm (except of your clone)");
+
         JFrame frame = new JFrame("World Simulation");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(400, 300);

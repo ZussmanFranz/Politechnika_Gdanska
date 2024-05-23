@@ -238,7 +238,7 @@ public class World extends JPanel implements ActionListener, MouseListener {
     }
 
     private void draw(Graphics g) {
-        drawInterface(g); //?
+        //drawInterface(g);
         for (Field[] row : fields) {
             for (Field field : row) {
                 field.drawBox(g);
