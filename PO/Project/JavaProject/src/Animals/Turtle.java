@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 
 import java.util.Random;
 import java.awt.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Turtle extends Animal {
 
@@ -23,14 +24,14 @@ public class Turtle extends Animal {
             return 0;
         }
 
-        int deltaY = rand.nextInt(3) - 1; // Generates random number between -1 and 1
-        int deltaX = rand.nextInt(3) - 1; // Generates random number between -1 and 1
+        int deltaY = ThreadLocalRandom.current().nextInt(-1, 2);; // Generates random number between -1 and 1
+        int deltaX = ThreadLocalRandom.current().nextInt(-1, 2);; // Generates random number between -1 and 1
 
         if (deltaX == 0 && deltaY == 0) {
             return 0;
         }
 
-        return move(new Point(position.x + deltaX, position.y + deltaY));
+        return move(new Point(deltaX, deltaY));
     }
 
     @Override
