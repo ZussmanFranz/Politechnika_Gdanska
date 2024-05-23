@@ -4,36 +4,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class Field extends JPanel {
+public class Field extends JButton {
     Point position;
     Dimension fieldSize;
+    Dimension padding;
     Point id;
     Organism member;
 
-    public Field(Point position, Dimension fieldSize, Point id, Organism member) {
+    boolean clicked;
+
+    public Field(Point position, Dimension fieldSize, Dimension padding, Point id, Organism member) {
         this.position = position;
         this.fieldSize = fieldSize;
+        this.padding = padding;
         this.id = id;
         this.member = member;
 
         // Set the size of the panel
         setPreferredSize(fieldSize);
-        // Set the background color to black
-        //setBackground(Color.BLACK);
-        setFocusable(true);
-
-        // Add mouse listener for click events
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                handleClickEvent(e);
-            }
-        });
-    }
-
-    private void handleClickEvent(MouseEvent e) {
-        System.out.println("Field clicked at: " + id);
-        // Add additional logic for click event if needed
     }
 
     @Override
@@ -44,7 +32,7 @@ public class Field extends JPanel {
 
     public void drawBox(Graphics g) {
         g.setColor(Color.BLACK);
-        g.fillRect(position.x, position.y, fieldSize.width + 10, fieldSize.height + 10);
+        g.fillRect(position.x, position.y, fieldSize.width + padding.width, fieldSize.height + padding.height);
 
         // Set the color based on the member type
         if (member != null) {
@@ -64,6 +52,9 @@ public class Field extends JPanel {
             }
         } else {
             g.setColor(Color.WHITE);
+            if (clicked) {
+                g.setColor(Color.CYAN);
+            }
         }
 
         g.drawRect(position.x, position.y, fieldSize.width, fieldSize.height);
@@ -85,5 +76,9 @@ public class Field extends JPanel {
 
     public Point getId() {
         return id;
+    }
+
+    public void setClicked() {
+        this.clicked = true;
     }
 }

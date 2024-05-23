@@ -13,7 +13,7 @@ public class Animal extends Organism {
 
 
     public int move(Point delta) {
-        System.out.println("delta is {" + delta.x + ", " + delta.y + '}');
+//        System.out.println("delta is {" + delta.x + ", " + delta.y + '}');
         boolean collided = false;
         world.findField(position).setMember(null);
 

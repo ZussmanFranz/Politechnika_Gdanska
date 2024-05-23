@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -27,7 +29,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-public class World extends JPanel implements ActionListener {
+public class World extends JPanel implements ActionListener, MouseListener {
     private List<Organism> members;
     private Field[][] fields;
     private Dimension dimensions;
@@ -82,6 +84,7 @@ public class World extends JPanel implements ActionListener {
         this.window_size = new Dimension(dimensions.width * (fieldSize.width + padding.width) + 100, dimensions.height * (fieldSize.height + padding.height) + 100);
         this.frame.setSize(new Dimension(window_size.width + 480, window_size.height));
 
+        addMouseListener(this);
     }
 
     public World(int x, int y) {
@@ -127,7 +130,90 @@ public class World extends JPanel implements ActionListener {
         logger.log(LogManager.LogMessageType.NORMAL,"Generated!\nSorting members...");
         sortMembers();
         logger.log(LogManager.LogMessageType.NORMAL,"Sorted!");
+
+        addMouseListener(this);
     }
+
+    public void mouseClicked(MouseEvent e) {
+        // Get the coordinates of the mouse click
+        int mouseX = e.getX();
+        int mouseY = e.getY();
+
+        // Calculate the clicked field based on mouse coordinates
+        int fieldX = mouseX / (fieldSize.width + padding.width);
+        int fieldY = mouseY / (fieldSize.height + padding.height);
+
+        // Check if the clicked field is within the valid range
+        if (fieldX >= 0 && fieldX < dimensions.width && fieldY >= 0 && fieldY < dimensions.height) {
+            // Perform action based on the clicked field
+            handleFieldClick(new Point(fieldX, fieldY));
+            System.out.println("Clicked on {" + fieldX + ", " + fieldY + "} field");
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
+    private void handleFieldClick(Point clickedField) {
+        // Implement your logic to handle the clicked field
+        Field clickedFieldObject = fields[clickedField.y][clickedField.x];
+        clickedFieldObject.setClicked();
+
+        if (clickedFieldObject.getMember() == null) {
+            JFrame addingFrame = new JFrame("add new entity!");
+            addingFrame.setSize(500, 200);
+            addingFrame.setLocationRelativeTo(null);
+
+            // Create a panel to hold the buttons
+            JPanel buttonPanel = new JPanel(new GridLayout(2, 5)); // Adjust the grid layout as needed
+
+            // Create buttons for each type of animal and plant (excluding Player)
+            JButton[] buttons = new JButton[10]; // Adjust the array size based on the number of types
+
+            buttons[0] = new JButton("Wolf");
+            buttons[1] = new JButton("Sheep");
+            buttons[2] = new JButton("Fox");
+            buttons[3] = new JButton("Turtle");
+            buttons[4] = new JButton("Antelope");
+            buttons[5] = new JButton("Grass");
+            buttons[6] = new JButton("Mlecz");
+            buttons[7] = new JButton("Guarana");
+            buttons[8] = new JButton("Wolfberry");
+            buttons[9] = new JButton("Hogweed");
+
+            // Add action listeners to the buttons
+            for (JButton button : buttons) {
+                buttonPanel.add(button);
+                button.addActionListener(e -> {
+                    // Spawn the corresponding organism when the button is clicked
+                    spawnOrganism(clickedField, button.getText());
+                    addingFrame.dispose(); // Close the frame after spawning
+                });
+            }
+
+            // Add the button panel to the frame
+            addingFrame.add(buttonPanel);
+            addingFrame.setVisible(true);
+        }
+    }
+
 
 
     private void initializeFields() {
@@ -139,7 +225,7 @@ public class World extends JPanel implements ActionListener {
                         j * (fieldSize.width + padding.width),
                         i * (fieldSize.height + padding.height)
                 );
-                fields[i][j] = new Field(position, fieldSize, new Point(j, i), null);
+                fields[i][j] = new Field(position, fieldSize, padding, new Point(j, i), null);
             }
         }
         logger.log(LogManager.LogMessageType.NORMAL,"Initialised!");
@@ -212,6 +298,51 @@ public class World extends JPanel implements ActionListener {
         findField(added.getPosition()).setMember(added);
         sortMembers();
         logger.logCreation(added);
+    }
+
+    public void spawnOrganism(Point new_position, String entityType){
+        Organism entity;
+
+        switch (entityType)
+        {
+            case "Wolf":
+                entity = new Wolf(this,new_position);
+                break;
+            case "Fox":
+                entity = new Fox(this,new_position);
+                break;
+            case "Turtle":
+                entity = new Turtle(this,new_position);
+                break;
+            case "Antelope":
+                entity = new Antelope(this,new_position);
+                break;
+            case "Sheep":
+                entity = new Sheep(this,new_position);
+                break;
+            case "Grass":
+                entity = new Grass(this, new_position);
+                break;
+            case "Guarana":
+                entity = new Guarana(this, new_position);
+                break;
+            case "Mlecz":
+                entity = new Mlecz(this, new_position);
+                break;
+            case "Wolfberry":
+                entity = new Wolfberry(this, new_position);
+                break;
+            case "Hogweed":
+                entity = new Hogweed(this, new_position);
+                break;
+            default:
+                entity = null;
+                break;
+        }
+
+        if (entity != null){
+            add(entity);
+        }
     }
 
     public void destroy(Organism destroyed) {
