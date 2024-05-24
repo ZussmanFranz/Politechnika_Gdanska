@@ -268,6 +268,9 @@ public class World extends JPanel implements ActionListener, MouseListener {
             if (members.size() <= 1) {
                 end = true;
             }
+            if (getPlayer() == null){
+                end = true;
+            }
             if (end) {
                 drawEndscreen();
                 return;
@@ -283,9 +286,7 @@ public class World extends JPanel implements ActionListener, MouseListener {
 
             members.get(i).action();
         }
-        if (getPlayer() == null){
-            end = true;
-        }
+
         clean();
         repaint();
 

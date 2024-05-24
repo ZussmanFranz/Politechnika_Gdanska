@@ -25,7 +25,7 @@ public class Player extends Animal {
         loadImage();
         this.abilityCooldown = 10;
         this.abilityCooldown_parameter = 10;
-        this.abilityDuration = 5;
+        this.abilityDuration = 500;
     }
 
     @Override

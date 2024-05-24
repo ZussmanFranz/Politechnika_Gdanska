@@ -18,7 +18,6 @@ public class Hogweed extends Plant {
     public int action() {
         if (new Random().nextInt(50) == 0) {
             reproduct();
-            // return 0;
         }
 
         // Kill neighbors

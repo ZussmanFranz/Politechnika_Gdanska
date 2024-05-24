@@ -16,7 +16,7 @@ public class GameWorker extends SwingWorker<Void, Void> {
             publish();
             Thread.sleep(1000 / world.getSpeed()); // Adjust the delay as needed
         }
-        world.clean();
+        world.clearWorld();
         return null;
     }
 
@@ -27,6 +27,5 @@ public class GameWorker extends SwingWorker<Void, Void> {
 
     @Override
     protected void done() {
-        world.drawEndscreen();
     }
 }
