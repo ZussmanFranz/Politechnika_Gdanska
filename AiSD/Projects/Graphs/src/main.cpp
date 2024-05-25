@@ -22,7 +22,8 @@ void degree_sequence(std::vector<int> graph[], int graph_size);
 int partition(int degrees[], int low, int high);
 void quickSort(int degrees[], int low, int high); 
 
-void components(std::vector<int> graph[], int graph_size); //TODO
+void components(std::vector<int> graph[], int graph_size);
+void DFS(std::vector<int> graph[], int graph_size, int current, int* checked_count, bool checked[]);
 
 void bipartiteness(std::vector<int> graph[], int graph_size); //TODO
 
@@ -131,12 +132,53 @@ void quickSort(int degrees[], int low, int high) {
         quickSort(degrees, low, pi - 1);
         quickSort(degrees, pi + 1, high);
     }
+
+    return;
 }
 
 
 void components(std::vector<int> graph[], int graph_size)
 {
-    printf("?\n");
+    int components_count = 0;
+    int checked_count = 0;
+    bool *checked = new bool[graph_size];
+    
+    for (int i = 0; i < graph_size; i++) {
+        checked[i] = false;
+    }
+
+    
+    for (int i = 0; i < graph_size; i++) {
+        if (!checked[i]) {
+            DFS(graph, graph_size, i, &checked_count, checked);
+            components_count++;
+        }
+    }
+    
+
+    printf("%d\n", components_count);
+
+    delete [] checked;
+    return;
+}
+
+void DFS(std::vector<int> graph[], int graph_size, int current, int* checked_count, bool checked[])
+{
+    if (checked[current]) {
+        return;
+    }
+
+    //printf("checking V%d\n", current + 1);
+
+    *checked_count += 1;
+    checked[current] = true;
+
+    for (int neighbour : graph[current]) {
+        if (!checked[neighbour - 1]) {
+            DFS(graph, graph_size, neighbour - 1, checked_count, checked);
+        }
+    }
+
     return;
 }
 
