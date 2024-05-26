@@ -34,13 +34,13 @@ void components(std::vector<int> graph[], int graph_size);
 void DFS(std::vector<int> graph[], int graph_size, int current, int* checked_count, bool checked[]);
 
 bool bipartiteness(std::vector<int> graph[], int graph_size);
-bool paint(std::vector<int> graph[], int side[], int start);
+bool choose_side(std::vector<int> graph[], int side[], int start);
 
 // void eccentricity_sequence(std::vector<int> graph[], int graph_size); //TODO
 
 // void planarity(std::vector<int> graph[], int graph_size); //TODO
 
-// void colours_greedy(std::vector<int> graph[], int graph_size); //TODO
+void colours_greedy(std::vector<int> graph[], int graph_size); //TODO
 
 // void colours_LF(std::vector<int> graph[], int graph_size); //TODO
 
@@ -78,7 +78,7 @@ int main()
         // printf("\n?");
 
         char bipart = (bipartiteness(graph, graph_size)) ? 'T' : 'F';
-        printf("\n%c", bipart);
+        printf("%c", bipart);
 
         // eccentricity_sequence(graph, graph_size);
         printf("\n?");
@@ -86,8 +86,8 @@ int main()
         // planarity(graph, graph_size);
         printf("\n?");
 
-        // colours_greedy(graph, graph_size);
-        printf("\n?");
+        colours_greedy(graph, graph_size);
+        // printf("\n?");
 
         // colours_LF(graph, graph_size);
         printf("\n?");
@@ -227,7 +227,7 @@ bool bipartiteness(std::vector<int> graph[], int graph_size)
 
     for (int v = 0; v < graph_size; v++)
     {
-        if (paint(graph, side, v) == false) {
+        if (choose_side(graph, side, v) == false) {
             delete [] side;
             return false;
         }
@@ -237,13 +237,13 @@ bool bipartiteness(std::vector<int> graph[], int graph_size)
     return true;
 }
 
-bool paint(std::vector<int> graph[], int side[], int start)
+bool choose_side(std::vector<int> graph[], int side[], int start)
 {
     for (int neighbour : graph[start]) 
     {
         if (side[neighbour - 1] == 0) {
             side[neighbour - 1] = (side[start] == 1) ? 2 : 1;
-            if (paint(graph, side, neighbour - 1) == false) {
+            if (choose_side(graph, side, neighbour - 1) == false) {
                 return false;
             }
         }
@@ -270,11 +270,43 @@ bool paint(std::vector<int> graph[], int side[], int start)
 //     return;
 // }
 
-// void colours_greedy(std::vector<int> graph[], int graph_size)
-// {
-//     printf("?\n");
-//     return;
-// }
+void colours_greedy(std::vector<int> graph[], int graph_size)
+{
+    int* colors = new int[graph_size]();
+    bool* colors_used = new bool[graph_size];
+
+
+    for (int v = 0; v < graph_size; v++) 
+    {
+        for (int z = 0; z < graph_size; z++) {
+            colors_used[z] = false;
+        }
+
+        for (int neighbour : graph[v]) 
+        {
+            if (colors[neighbour - 1] != 0) {
+                colors_used[colors[neighbour - 1]] = true;
+            }    
+        }
+        
+        for (int i = 1; i < graph_size + 1; i++) {
+            if (colors_used[i] == false) {
+                colors[v] = i;
+                break;
+            }
+        }
+    }
+
+    printf("\n");
+    for (int c = 0; c < graph_size; c++) 
+    {
+        printf("%d ", colors[c]);    
+    }
+
+    delete [] colors;
+    delete [] colors_used;
+    return;
+}
 
 
 // void colours_LF(std::vector<int> graph[], int graph_size)
