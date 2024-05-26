@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <vector> //must be removed!
 
-void parse_graph(std::vector<int> graph[], int degrees[], unsigned long long graph_size, unsigned long long* edges_count)
+void parse_graph(std::vector<int> graph[], int degrees[], int start_degrees[], unsigned long long graph_size, unsigned long long* edges_count)
 {
     int n_edges;
     int connected;
@@ -11,6 +11,7 @@ void parse_graph(std::vector<int> graph[], int degrees[], unsigned long long gra
     {
         scanf("%d",&n_edges);  
         degrees[i] = n_edges;
+        start_degrees[i] = n_edges;
 
         for (int e = 0; e < n_edges; e++) {
             scanf("%d",&connected);
@@ -46,7 +47,7 @@ void colours_greedy(std::vector<int> graph[], unsigned long long graph_size);
 
 void colours_LF(std::vector<int> graph[], unsigned long long graph_size, int degrees[]);
 
-void colours_SLF(std::vector<int> graph[], unsigned long long graph_size); //TODO
+void colours_SLF(std::vector<int> graph[], unsigned long long graph_size, int degrees[]); //TODO
 
 // void subgraphs(std::vector<int> graph[], unsigned long long graph_size); //TODO
 
@@ -66,13 +67,14 @@ int main()
 
         std::vector<int>* graph = new std::vector<int> [graph_size];
         int *degrees = new int[graph_size];
+        int* start_degrees = new int[graph_size];
         int* degrees_indexes = new int[graph_size];
         for (int i = 0; i < graph_size; i++) {
             degrees_indexes[i] = i;
         }
         
 
-        parse_graph(graph,degrees, graph_size, &edges_count);
+        parse_graph(graph,degrees, start_degrees, graph_size, &edges_count);
 
         //testing start:
         // for (int i = graph_size - 1; i >= 0 ; i--) {
@@ -104,8 +106,8 @@ int main()
         colours_LF(graph, graph_size, degrees_indexes);
         // printf("\n?");
 
-        // colours_SLF(graph, graph_size);
-        printf("\n?");
+        colours_SLF(graph, graph_size, start_degrees);
+        // printf("\n?");
 
         // subgraphs(graph, graph_size);
         printf("\n?");
@@ -115,6 +117,7 @@ int main()
 
         delete [] graph;
         delete [] degrees;
+        delete [] start_degrees;
     }
     
     return 0;
@@ -448,22 +451,69 @@ void colours_LF(std::vector<int> graph[], unsigned long long graph_size, int deg
     return;
 }
 
-void colours_SLF(std::vector<int> graph[], unsigned long long graph_size)
+void colours_SLF(std::vector<int> graph[], unsigned long long graph_size, int degrees[])
 {
+    // printf("started SLF, current graph size is %lld", graph_size);
     int* colors = new int[graph_size]();
     int* colors_used = new int[graph_size](); // 0 - false, 1 - true
     int* saturation = new int[graph_size](); 
     int max_color_index = 1;
+    int max_saturation;
+    int max_degrees;
 
-    printf("\n");
+
+    //starting index
+    unsigned long long index = 0;
+    for (int i = 0; i < graph_size; i++) {
+        if (degrees[i] > degrees[index]) {
+            index = i;
+        }
+    }
+    // colors[index] = 1;
+    // saturation[index] = -1;
+    // printf("\n  current index is %lld, saturations: ", index + 1);
+    // for (int i = 0; i < graph_size; i++) {
+    //     printf("%d ", saturation[i]);
+    // }  
+    // for (unsigned long long neighbor : graph[index]) {
+    //     if (saturation[neighbor - 1] != -1) {
+    //         saturation[neighbor - 1]++;
+    //     }
+    // } 
+
+    // printf("\n");
 
     for (unsigned long long v = 0; v < graph_size; v++) 
     {
+        max_saturation = 0;
+        max_degrees = 0;
+
+        for (unsigned long long i = 0; i < graph_size; i++) {
+            if (colors[i] == 0) { // Only consider uncolored vertices
+                if ((saturation[i] > max_saturation) || ((saturation[i] == max_saturation) && (degrees[i] > max_degrees))) {
+                    max_saturation = saturation[i];
+                    max_degrees = degrees[i];
+                    index = i;
+                }
+            }
+        }
+
+        // printf("\n  current index is %lld, saturations: ", index + 1);
+        // for (int i = 0; i < graph_size; i++) {
+            // if (saturation[i] == -1) {
+                // printf("- ");
+            // }
+            // else {
+                // printf("%d ", saturation[i]);
+            // }
+        // }
+
+
         for (unsigned long long z = 0; z < max_color_index + 1; z++) {
             colors_used[z] = 0;
         }
 
-        for (unsigned long long neighbour : graph[v]) 
+        for (unsigned long long neighbour : graph[index]) 
         {
             if (colors[neighbour - 1] != 0) {
                 colors_used[colors[neighbour - 1]] = 1;
@@ -475,11 +525,24 @@ void colours_SLF(std::vector<int> graph[], unsigned long long graph_size)
         
         for (unsigned long long i = 1; i < graph_size + 1; i++) {
             if (colors_used[i] == 0) {
-                colors[v] = i;
-                printf("%d ", colors[v]);
+                colors[index] = i;
+                saturation[index] = -1;
+                // printf("\n  %lld painted ", index + 1);
                 break;
             }
         }
+
+        for (unsigned long long neighbor : graph[index]) {
+            if (saturation[neighbor - 1] != -1) {
+                saturation[neighbor - 1]++;
+            }
+        }
+    }
+
+    printf("\n");
+    // Print the colors assigned to each vertex
+    for (int i = 0; i < graph_size; i++) {
+        printf("%d ", colors[i]);
     }
 
     delete [] colors;
@@ -487,6 +550,7 @@ void colours_SLF(std::vector<int> graph[], unsigned long long graph_size)
     delete [] saturation;
     return;
 }
+
 
 // void subgraphs(std::vector<int> graph[], int graph_size)
 // {
