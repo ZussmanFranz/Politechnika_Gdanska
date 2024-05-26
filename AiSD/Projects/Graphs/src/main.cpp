@@ -1,5 +1,5 @@
 #include <cstdio>
-#include <iostream>
+#include <cstdlib>
 #include <vector> //must be removed!
 
 void parse_graph(std::vector<int> graph[], int degrees[], int graph_size)
@@ -9,19 +9,19 @@ void parse_graph(std::vector<int> graph[], int degrees[], int graph_size)
 
     for (int i = 0; i < graph_size; i++) 
     {
-        std::cin >> n_edges;
+        scanf("%d",&n_edges);  
         degrees[i] = n_edges;
 
         for (int e = 0; e < n_edges; e++) {
-            std::cin >> connected;
+            scanf("%d",&connected);
             graph[i].push_back(connected);
         }
     }
     return;
 }
 
-int partition(int degrees[], int low, int high);
-void quickSort(int degrees[], int low, int high); 
+void merge(int arr[], int left, int mid, int right);
+void mergeSort(int arr[], int left, int right);
 
 void components(std::vector<int> graph[], int graph_size);
 void DFS(std::vector<int> graph[], int graph_size, int current, int* checked_count, bool checked[]);
@@ -45,16 +45,14 @@ void DFS(std::vector<int> graph[], int graph_size, int current, int* checked_cou
 
 int main()
 {
-    std::ios_base::sync_with_stdio(false);
-
     int n_graphs;
-    std::cin >> n_graphs;
+    scanf("%d",&n_graphs);
 
     for (int g = 0; g < n_graphs; g++) 
     {
         int graph_size;
 
-        std::cin >> graph_size;
+        scanf("%d",&graph_size);
 
         std::vector<int>* graph = new std::vector<int> [graph_size];
         int *degrees = new int[graph_size];
@@ -62,8 +60,8 @@ int main()
         parse_graph(graph,degrees, graph_size);
 
         //testing start:
-        quickSort(degrees, 0, graph_size - 1);
-        for (int i = 0; i < graph_size; i++) {
+        mergeSort(degrees, 0, graph_size - 1);
+        for (int i = graph_size - 1; i >= 0 ; i--) {
             printf("%d ", degrees[i]);
         }
         
@@ -92,7 +90,7 @@ int main()
         printf("\n?");
 
         // comlements_edges(graph, graph_size);
-        printf("\n?");
+        printf("\n?\n");
 
         delete [] graph;
         delete [] degrees;
@@ -102,33 +100,69 @@ int main()
 }
 
 
-int partition(int degrees[], int low, int high) {
-    int pivot = degrees[high]; // Choosing the last element as the pivot
-    int i = low - 1; // Index of the smaller element
 
-    for (int j = low; j < high; j++) {
-        // If the current element is smaller than or equal to the pivot
-        if (degrees[j] > pivot){ 
-            i++; // Increment index of smaller element
-            std::swap(degrees[i], degrees[j]);
+// Function to merge two halves
+void merge(int arr[], int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
+    // Create temp arrays
+    int* L = (int*)malloc(n1 * sizeof(int));
+    int* R = (int*)malloc(n2 * sizeof(int));
+
+    // Copy data to temp arrays L[] and R[]
+    for (int i = 0; i < n1; i++)
+        L[i] = arr[left + i];
+    for (int j = 0; j < n2; j++)
+        R[j] = arr[mid + 1 + j];
+
+    // Merge the temp arrays back into arr[left..right]
+    int i = 0; // Initial index of first subarray
+    int j = 0; // Initial index of second subarray
+    int k = left; // Initial index of merged subarray
+    while (i < n1 && j < n2) {
+        if (L[i] <= R[j]) {
+            arr[k] = L[i];
+            i++;
+        } else {
+            arr[k] = R[j];
+            j++;
         }
+        k++;
     }
 
-    std::swap(degrees[i + 1], degrees[high]); // Swap pivot to its correct position
-    return i + 1;
+    // Copy the remaining elements of L[], if there are any
+    while (i < n1) {
+        arr[k] = L[i];
+        i++;
+        k++;
+    }
+
+    // Copy the remaining elements of R[], if there are any
+    while (j < n2) {
+        arr[k] = R[j];
+        j++;
+        k++;
+    }
+
+    // Free the temporary arrays
+    free(L);
+    free(R);
 }
 
-void quickSort(int degrees[], int low, int high) {
-    if (low < high) {
-        // Partitioning index
-        int pi = partition(degrees, low, high);
+// l is for left index and r is right index of the sub-array of arr to be sorted
+void mergeSort(int arr[], int left, int right) {
+    if (left < right) {
+        // Same as (left + right) / 2, but avoids overflow for large left and right
+        int mid = left + (right - left) / 2;
 
-        // Separately sort elements before and after partition
-        quickSort(degrees, low, pi - 1);
-        quickSort(degrees, pi + 1, high);
+        // Sort first and second halves
+        mergeSort(arr, left, mid);
+        mergeSort(arr, mid + 1, right);
+
+        // Merge the sorted halves
+        merge(arr, left, mid, right);
     }
-
-    return;
 }
 
 
