@@ -2,18 +2,18 @@
 #include <cstdlib>
 #include <vector> //must be removed!
 
-void parse_graph(std::vector<int> graph[], int degrees[], int graph_size, int* edges_count)
+void parse_graph(std::vector<int> graph[], int degrees[], unsigned long long graph_size, unsigned long long* edges_count)
 {
-    int n_edges;
-    int connected;
+    unsigned long long n_edges;
+    unsigned long long connected;
 
     for (int i = 0; i < graph_size; i++) 
     {
-        scanf("%d",&n_edges);  
+        scanf("%lld",&n_edges);  
         degrees[i] = n_edges;
 
         for (int e = 0; e < n_edges; e++) {
-            scanf("%d",&connected);
+            scanf("%lld",&connected);
 
             if (connected > i + 1) {
                 // printf("edge: %d -- %d\n", i + 1, connected);
@@ -47,8 +47,6 @@ void DFS(std::vector<int> graph[], int graph_size, int current, int* checked_cou
 
 // void subgraphs(std::vector<int> graph[], int graph_size); //TODO
 
-// void comlements_edges(std::vector<int> graph[], int graph_size); //TODO
-
 
 int main()
 {
@@ -57,11 +55,11 @@ int main()
 
     for (int g = 0; g < n_graphs; g++) 
     {
-        int graph_size;
-        int edges_count = 0;
+        unsigned long long graph_size;
+        unsigned long long edges_count = 0;
 
-        scanf("%d",&graph_size);
-        int max_edges = (graph_size * (graph_size - 1)) / 2;
+        scanf("%lld",&graph_size);
+        unsigned long long max_edges = (graph_size * (graph_size - 1)) / 2;
 
         std::vector<int>* graph = new std::vector<int> [graph_size];
         int *degrees = new int[graph_size];
@@ -98,9 +96,8 @@ int main()
         // subgraphs(graph, graph_size);
         printf("\n?");
 
-        // comlements_edges(graph, graph_size);
         // printf("\n?\n");
-        printf("\n%d\n", max_edges - edges_count);
+        printf("\n%llu\n", max_edges - edges_count);
 
         delete [] graph;
         delete [] degrees;
@@ -259,12 +256,6 @@ void DFS(std::vector<int> graph[], int graph_size, int current, int* checked_cou
 // }
 
 // void subgraphs(std::vector<int> graph[], int graph_size)
-// {
-//     printf("?\n");
-//     return;
-// }
-
-// void comlements_edges(std::vector<int> graph[], int graph_size)
 // {
 //     printf("?\n");
 //     return;
