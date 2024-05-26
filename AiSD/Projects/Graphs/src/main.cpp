@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <vector> //must be removed!
 
-void parse_graph(std::vector<int> graph[], int degrees[], int graph_size)
+void parse_graph(std::vector<int> graph[], int degrees[], int graph_size, int* edges_count)
 {
     int n_edges;
     int connected;
@@ -14,9 +14,16 @@ void parse_graph(std::vector<int> graph[], int degrees[], int graph_size)
 
         for (int e = 0; e < n_edges; e++) {
             scanf("%d",&connected);
+
+            if (connected > i + 1) {
+                // printf("edge: %d -- %d\n", i + 1, connected);
+                *edges_count += 1;
+            }
+
             graph[i].push_back(connected);
         }
     }
+    //printf("number of edges: %d\n", *edges_count);
     return;
 }
 
@@ -51,13 +58,15 @@ int main()
     for (int g = 0; g < n_graphs; g++) 
     {
         int graph_size;
+        int edges_count = 0;
 
         scanf("%d",&graph_size);
+        int max_edges = (graph_size * (graph_size - 1)) / 2;
 
         std::vector<int>* graph = new std::vector<int> [graph_size];
         int *degrees = new int[graph_size];
 
-        parse_graph(graph,degrees, graph_size);
+        parse_graph(graph,degrees, graph_size, &edges_count);
 
         //testing start:
         mergeSort(degrees, 0, graph_size - 1);
@@ -90,7 +99,8 @@ int main()
         printf("\n?");
 
         // comlements_edges(graph, graph_size);
-        printf("\n?\n");
+        // printf("\n?\n");
+        printf("\n%d\n", max_edges - edges_count);
 
         delete [] graph;
         delete [] degrees;
