@@ -6,9 +6,9 @@ from colorama import Fore, Style, init
 
 init(autoreset=True)
 
-PROGRAM = 'build/bin/main'
-TESTS_IN_FOLDER = 'tests/in'
-TESTS_OUT_FOLDER = 'tests/out'
+PROGRAM = './build/bin/main'
+TESTS_IN_FOLDER = './tests/in'
+TESTS_OUT_FOLDER = './tests/out'
 
 def check_folders():
     if not os.path.exists(TESTS_IN_FOLDER):
@@ -27,7 +27,7 @@ def get_dict():
     # in: out
     for fileIn in filesIn:
         for fileOut in filesOut:
-            if fileIn.split('.')[0] == fileOut.split('.')[0]:
+            if fileIn.split('.')[0].replace("_in", "") == fileOut.split('.')[0].replace("_out", ""):
                 dict[fileIn] = fileOut
     return dict
 
@@ -35,20 +35,22 @@ def compare_files(actualFile, expectedFile):
     is_same = True
     with open(actualFile, 'r') as f1:
         with open(expectedFile, 'r') as f2:
-            actual = re.sub(r'\s+', ' ', f1.read().strip())
-            expected = re.sub(r'\s+', ' ', f2.read().strip())
-
-    actual = actual.split(' ')
-    expected = expected.split(' ')
+            actual = f1.read().strip()
+            expected = f2.read().strip()
+    
+    actual = actual.split('\n')
+    expected = expected.split('\n')
     # if len(actual) != len(expected):
     #     print(Fore.RED + 'Files have different length')
     #     print(Fore.RED + f'Expected: {len(expected)}, got: {len(actual)}')
     #     return False
     for k, (word1, word2) in enumerate(zip(actual, expected)):
         if word1 != word2:
-            print(Fore.RED + f'Expected: {word2}, got: {word1} at position {k}')
+            print(Fore.RED + f'Expected: "{word2}", got: "{word1}" at position {k}')
             # exit(1)
             is_same = False
+        else:
+            print(Fore.GREEN + f'Correct "{word2}" at position {k}')
     return is_same
 
 
@@ -70,7 +72,6 @@ if __name__ == '__main__':
             os.system(f'{PROGRAM} < {TESTS_IN_FOLDER}/{key} > .cache/{key}')
             averageInside += timeit.default_timer() - start
         average += averageInside / 5
-
         if compare_files(f'.cache/{key}', f'{TESTS_OUT_FOLDER}/{dict[key]}'):
             print(Fore.GREEN + 'Test passed')
         print()
