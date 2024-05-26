@@ -46,7 +46,8 @@ def compare_files(actualFile, expectedFile):
     #     return False
     for k, (word1, word2) in enumerate(zip(actual, expected)):
         if word1 != word2:
-            print(Fore.RED + f'Expected: "{word2}", got: "{word1}" at position {k}')
+            if word1 != "?":
+                print(Fore.RED + f'Expected: "{word2}", got: "{word1}" at position {k}')
             # exit(1)
             is_same = False
         else:
