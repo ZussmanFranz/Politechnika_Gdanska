@@ -65,8 +65,8 @@ int main()
             printf("%d ", degrees[i]);
         }
         
-        // components(graph, graph_size);
-        printf("\n?");
+        components(graph, graph_size);
+        // printf("\n?");
 
         // bipartiteness(graph, graph_size);
         printf("\n?");
@@ -185,7 +185,7 @@ void components(std::vector<int> graph[], int graph_size)
     }
     
 
-    printf("%d\n", components_count);
+    printf("\n%d", components_count);
 
     delete [] checked;
     return;
@@ -197,7 +197,7 @@ void DFS(std::vector<int> graph[], int graph_size, int current, int* checked_cou
         return;
     }
 
-    //printf("checking V%d\n", current + 1);
+    // printf("checking V%d\n", current + 1);
 
     *checked_count += 1;
     checked[current] = true;
