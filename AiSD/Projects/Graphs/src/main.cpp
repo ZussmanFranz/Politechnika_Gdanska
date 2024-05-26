@@ -4,16 +4,16 @@
 
 void parse_graph(std::vector<int> graph[], int degrees[], unsigned long long graph_size, unsigned long long* edges_count)
 {
-    unsigned long long n_edges;
-    unsigned long long connected;
+    int n_edges;
+    int connected;
 
     for (int i = 0; i < graph_size; i++) 
     {
-        scanf("%lld",&n_edges);  
+        scanf("%d",&n_edges);  
         degrees[i] = n_edges;
 
         for (int e = 0; e < n_edges; e++) {
-            scanf("%lld",&connected);
+            scanf("%d",&connected);
 
             if (connected > i + 1) {
                 // printf("edge: %d -- %d\n", i + 1, connected);
