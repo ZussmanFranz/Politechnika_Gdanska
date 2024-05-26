@@ -27,8 +27,8 @@ void parse_graph(std::vector<int> graph[], int degrees[], unsigned long long gra
     return;
 }
 
-void merge(int arr[], int left, int mid, int right);
-void mergeSort(int arr[], int left, int right);
+void merge(int arr[], int indexes_arr[], int left, int mid, int right);
+void mergeSort(int arr[], int indexes_arr[], int left, int right);
 
 void components(std::vector<int> graph[], int graph_size);
 void DFS(std::vector<int> graph[], int graph_size, int current, int* checked_count, bool checked[]);
@@ -36,17 +36,17 @@ void DFS(std::vector<int> graph[], int graph_size, int current, int* checked_cou
 bool bipartiteness(std::vector<int> graph[], int graph_size);
 bool choose_side(std::vector<int> graph[], int side[], int start);
 
-// void eccentricity_sequence(std::vector<int> graph[], int graph_size); //TODO
+// void eccentricity_sequence(std::vector<int> graph[], unsigned long long graph_size); //TODO
 
-// void planarity(std::vector<int> graph[], int graph_size); //TODO
+// void planarity(std::vector<int> graph[], unsigned long long graph_size); //TODO
 
-void colours_greedy(std::vector<int> graph[], unsigned long long graph_size); //TODO
+void colours_greedy(std::vector<int> graph[], unsigned long long graph_size);
 
-// void colours_LF(std::vector<int> graph[], int graph_size); //TODO
+void colours_LF(std::vector<int> graph[], unsigned long long graph_size, int degrees[]); //TODO
 
-// void colours_SLF(std::vector<int> graph[], int graph_size); //TODO
+// void colours_SLF(std::vector<int> graph[], unsigned long long graph_size); //TODO
 
-// void subgraphs(std::vector<int> graph[], int graph_size); //TODO
+// void subgraphs(std::vector<int> graph[], unsigned long long graph_size); //TODO
 
 
 int main()
@@ -64,13 +64,23 @@ int main()
 
         std::vector<int>* graph = new std::vector<int> [graph_size];
         int *degrees = new int[graph_size];
+        int* degrees_indexes = new int[graph_size];
+        for (int i = 0; i < graph_size; i++) {
+            degrees_indexes[i] = i;
+        }
         
 
         parse_graph(graph,degrees, graph_size, &edges_count);
 
         //testing start:
-        mergeSort(degrees, 0, graph_size - 1);
+        // for (int i = graph_size - 1; i >= 0 ; i--) {
+        //     printf("%d(%d) ", degrees[i], degrees_indexes[i]);
+        //     // printf("%d ", degrees[i]);
+        // }
+        // printf("\n");
+        mergeSort(degrees, degrees_indexes, 0, graph_size - 1);
         for (int i = graph_size - 1; i >= 0 ; i--) {
+            // printf("%d(%d) ", degrees[i], degrees_indexes[i]);
             printf("%d ", degrees[i]);
         }
         
@@ -89,8 +99,8 @@ int main()
         colours_greedy(graph, graph_size);
         // printf("\n?");
 
-        // colours_LF(graph, graph_size);
-        printf("\n?");
+        colours_LF(graph, graph_size, degrees_indexes);
+        // printf("\n?");
 
         // colours_SLF(graph, graph_size);
         printf("\n?");
@@ -111,30 +121,39 @@ int main()
 
 
 // Function to merge two halves
-void merge(int arr[], int left, int mid, int right) {
+void merge(int arr[], int indexes_arr[], int left, int mid, int right) {
     int n1 = mid - left + 1;
     int n2 = right - mid;
 
     // Create temp arrays
-    int* L = (int*)malloc(n1 * sizeof(int));
-    int* R = (int*)malloc(n2 * sizeof(int));
+    int* L1 = (int*)malloc(n1 * sizeof(int));
+    int* L2 = (int*)malloc(n1 * sizeof(int));
+    int* R1 = (int*)malloc(n2 * sizeof(int));
+    int* R2 = (int*)malloc(n2 * sizeof(int));
+
 
     // Copy data to temp arrays L[] and R[]
-    for (int i = 0; i < n1; i++)
-        L[i] = arr[left + i];
-    for (int j = 0; j < n2; j++)
-        R[j] = arr[mid + 1 + j];
+    for (int i = 0; i < n1; i++){
+        L1[i] = arr[left + i];
+        L2[i] = indexes_arr[left + i];
+    }
+    for (int j = 0; j < n2; j++){
+        R1[j] = arr[mid + 1 + j];
+        R2[j] = indexes_arr[mid + 1 + j];
+    }
 
     // Merge the temp arrays back into arr[left..right]
     int i = 0; // Initial index of first subarray
     int j = 0; // Initial index of second subarray
     int k = left; // Initial index of merged subarray
     while (i < n1 && j < n2) {
-        if (L[i] <= R[j]) {
-            arr[k] = L[i];
+        if (L1[i] < R1[j]) { // changed <= on < so the smallest ids will be at highest positions
+            arr[k] = L1[i];
+            indexes_arr[k] = L2[i];
             i++;
         } else {
-            arr[k] = R[j];
+            arr[k] = R1[j];
+            indexes_arr[k] = R2[j];
             j++;
         }
         k++;
@@ -142,35 +161,39 @@ void merge(int arr[], int left, int mid, int right) {
 
     // Copy the remaining elements of L[], if there are any
     while (i < n1) {
-        arr[k] = L[i];
+        arr[k] = L1[i];
+        indexes_arr[k] = L2[i];
         i++;
         k++;
     }
 
     // Copy the remaining elements of R[], if there are any
     while (j < n2) {
-        arr[k] = R[j];
+        arr[k] = R1[j];
+        indexes_arr[k] = R2[j];
         j++;
         k++;
     }
 
     // Free the temporary arrays
-    free(L);
-    free(R);
+    free(L1);
+    free(L2);
+    free(R1);
+    free(R2);
 }
 
 // l is for left index and r is right index of the sub-array of arr to be sorted
-void mergeSort(int arr[], int left, int right) {
+void mergeSort(int arr[], int indexes_arr[], int left, int right) {
     if (left < right) {
         // Same as (left + right) / 2, but avoids overflow for large left and right
         int mid = left + (right - left) / 2;
 
         // Sort first and second halves
-        mergeSort(arr, left, mid);
-        mergeSort(arr, mid + 1, right);
+        mergeSort(arr, indexes_arr, left, mid);
+        mergeSort(arr, indexes_arr, mid + 1, right);
 
         // Merge the sorted halves
-        merge(arr, left, mid, right);
+        merge(arr, indexes_arr, left, mid, right);
     }
 }
 
@@ -310,11 +333,51 @@ void colours_greedy(std::vector<int> graph[], unsigned long long graph_size)
 }
 
 
-// void colours_LF(std::vector<int> graph[], int graph_size)
-// {
-//     printf("?\n");
-//     return;
-// }
+void colours_LF(std::vector<int> graph[], unsigned long long graph_size, int degrees_indexes[])
+{
+    int* colors = new int[graph_size]();
+    int* colors_used = new int[graph_size](); // 0 - false, 1 - true
+    int max_color_index = 1;
+
+    printf("\n");
+
+    int v;
+
+    for (unsigned long long index = graph_size; index > 0; index--) 
+    {
+        v = degrees_indexes[index - 1];
+        // printf("current index: %d\n", v);
+
+        for (unsigned long long z = 0; z < max_color_index + 1; z++) {
+            colors_used[z] = 0;
+        }
+
+        for (unsigned long long neighbour : graph[v]) 
+        {
+            if (colors[neighbour - 1] != 0) {
+                colors_used[colors[neighbour - 1]] = 1;
+                if (colors[neighbour - 1] > max_color_index) {
+                    max_color_index = colors[neighbour - 1];
+                }
+            }    
+        }
+        
+        for (unsigned long long i = 1; i < graph_size + 1; i++) {
+            if (colors_used[i] == 0) {
+                colors[v] = i;
+                break;
+            }
+        }
+    }
+
+    for (int i = 0; i < graph_size; i++) {
+        printf("%d ", colors[i]);
+    }
+
+    delete [] colors;
+    delete [] colors_used;
+    return;
+}
 
 // void colours_SLF(std::vector<int> graph[], int graph_size)
 // {
