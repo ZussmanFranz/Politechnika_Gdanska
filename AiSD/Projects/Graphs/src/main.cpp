@@ -40,7 +40,7 @@ bool choose_side(std::vector<int> graph[], int side[], int start);
 
 // void planarity(std::vector<int> graph[], int graph_size); //TODO
 
-void colours_greedy(std::vector<int> graph[], int graph_size); //TODO
+void colours_greedy(std::vector<int> graph[], unsigned long long graph_size); //TODO
 
 // void colours_LF(std::vector<int> graph[], int graph_size); //TODO
 
@@ -270,37 +270,38 @@ bool choose_side(std::vector<int> graph[], int side[], int start)
 //     return;
 // }
 
-void colours_greedy(std::vector<int> graph[], int graph_size)
+void colours_greedy(std::vector<int> graph[], unsigned long long graph_size)
 {
     int* colors = new int[graph_size]();
-    bool* colors_used = new bool[graph_size];
+    int* colors_used = new int[graph_size](); // 0 - false, 1 - true
+    int max_color_index = 1;
+
+    printf("\n");
 
 
-    for (int v = 0; v < graph_size; v++) 
+    for (unsigned long long v = 0; v < graph_size; v++) 
     {
-        for (int z = 0; z < graph_size; z++) {
-            colors_used[z] = false;
+        for (unsigned long long z = 0; z < max_color_index + 1; z++) {
+            colors_used[z] = 0;
         }
 
-        for (int neighbour : graph[v]) 
+        for (unsigned long long neighbour : graph[v]) 
         {
             if (colors[neighbour - 1] != 0) {
-                colors_used[colors[neighbour - 1]] = true;
+                colors_used[colors[neighbour - 1]] = 1;
+                if (colors[neighbour - 1] > max_color_index) {
+                    max_color_index = colors[neighbour - 1];
+                }
             }    
         }
         
-        for (int i = 1; i < graph_size + 1; i++) {
-            if (colors_used[i] == false) {
+        for (unsigned long long i = 1; i < graph_size + 1; i++) {
+            if (colors_used[i] == 0) {
                 colors[v] = i;
+                printf("%d ", colors[v]);
                 break;
             }
         }
-    }
-
-    printf("\n");
-    for (int c = 0; c < graph_size; c++) 
-    {
-        printf("%d ", colors[c]);    
     }
 
     delete [] colors;
