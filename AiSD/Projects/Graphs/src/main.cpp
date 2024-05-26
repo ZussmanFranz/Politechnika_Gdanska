@@ -33,7 +33,8 @@ void mergeSort(int arr[], int left, int right);
 void components(std::vector<int> graph[], int graph_size);
 void DFS(std::vector<int> graph[], int graph_size, int current, int* checked_count, bool checked[]);
 
-// void bipartiteness(std::vector<int> graph[], int graph_size); //TODO
+bool bipartiteness(std::vector<int> graph[], int graph_size);
+bool paint(std::vector<int> graph[], int side[], int start);
 
 // void eccentricity_sequence(std::vector<int> graph[], int graph_size); //TODO
 
@@ -63,6 +64,7 @@ int main()
 
         std::vector<int>* graph = new std::vector<int> [graph_size];
         int *degrees = new int[graph_size];
+        
 
         parse_graph(graph,degrees, graph_size, &edges_count);
 
@@ -75,8 +77,8 @@ int main()
         components(graph, graph_size);
         // printf("\n?");
 
-        // bipartiteness(graph, graph_size);
-        printf("\n?");
+        char bipart = (bipartiteness(graph, graph_size)) ? 'T' : 'F';
+        printf("\n%c", bipart);
 
         // eccentricity_sequence(graph, graph_size);
         printf("\n?");
@@ -192,7 +194,7 @@ void components(std::vector<int> graph[], int graph_size)
     }
     
 
-    printf("\n%d", components_count);
+    printf("\n%d\n", components_count);
 
     delete [] checked;
     return;
@@ -218,11 +220,43 @@ void DFS(std::vector<int> graph[], int graph_size, int current, int* checked_cou
     return;
 }
 
-// void bipartiteness(std::vector<int> graph[], int graph_size)
-// {
-//     printf("?\n");
-//     return;
-// }
+bool bipartiteness(std::vector<int> graph[], int graph_size)
+{
+    int *side = new int[graph_size]();
+    side[0] = 1;
+
+    for (int v = 0; v < graph_size; v++)
+    {
+        if (paint(graph, side, v) == false) {
+            delete [] side;
+            return false;
+        }
+    }
+
+    delete [] side;
+    return true;
+}
+
+bool paint(std::vector<int> graph[], int side[], int start)
+{
+    for (int neighbour : graph[start]) 
+    {
+        if (side[neighbour - 1] == 0) {
+            side[neighbour - 1] = (side[start] == 1) ? 2 : 1;
+            if (paint(graph, side, neighbour - 1) == false) {
+                return false;
+            }
+        }
+        else if (side[neighbour - 1] == side[start]) {
+            return false;
+        }
+        else {
+            continue;
+        }
+    }
+
+    return true;
+}
 
 // void eccentricity_sequence(std::vector<int> graph[], int graph_size)
 // {
