@@ -469,23 +469,21 @@ void colours_SLF(std::vector<int> graph[], unsigned long long graph_size, int de
             index = i;
         }
     }
-    // colors[index] = 1;
-    // saturation[index] = -1;
+    colors[index] = 1;
+    saturation[index] = -1;
     // printf("\n  current index is %lld, saturations: ", index + 1);
     // for (int i = 0; i < graph_size; i++) {
     //     printf("%d ", saturation[i]);
     // }  
-    // for (unsigned long long neighbor : graph[index]) {
-    //     if (saturation[neighbor - 1] != -1) {
-    //         saturation[neighbor - 1]++;
-    //     }
-    // } 
+    for (unsigned long long neighbor : graph[index]) {
+        saturation[neighbor - 1]++;
+    } 
 
     // printf("\n");
 
-    for (unsigned long long v = 0; v < graph_size; v++) 
+    for (unsigned long long v = 0; v < graph_size - 1; v++) 
     {
-        max_saturation = 0;
+        max_saturation = -1;
         max_degrees = 0;
 
         for (unsigned long long i = 0; i < graph_size; i++) {
@@ -500,12 +498,12 @@ void colours_SLF(std::vector<int> graph[], unsigned long long graph_size, int de
 
         // printf("\n  current index is %lld, saturations: ", index + 1);
         // for (int i = 0; i < graph_size; i++) {
-            // if (saturation[i] == -1) {
-                // printf("- ");
-            // }
-            // else {
-                // printf("%d ", saturation[i]);
-            // }
+        //     if (saturation[i] == -1) {
+        //         printf("- ");
+        //     }
+        //     else {
+        //         printf("%d ", saturation[i]);
+        //     }
         // }
 
 
@@ -527,14 +525,23 @@ void colours_SLF(std::vector<int> graph[], unsigned long long graph_size, int de
             if (colors_used[i] == 0) {
                 colors[index] = i;
                 saturation[index] = -1;
-                // printf("\n  %lld painted ", index + 1);
+                // printf("||| %lld color: %d", index + 1, colors[index]);
                 break;
             }
         }
 
         for (unsigned long long neighbor : graph[index]) {
             if (saturation[neighbor - 1] != -1) {
-                saturation[neighbor - 1]++;
+                bool new_color = true;
+                for (unsigned long long n_neighbor : graph[neighbor - 1]) {
+                    if ((colors[n_neighbor - 1] == colors[index]) && (n_neighbor - 1 != index)) {
+                        new_color = false;
+                        break;
+                    }
+                }
+                if (new_color) {
+                    saturation[neighbor - 1]++;
+                }
             }
         }
     }
