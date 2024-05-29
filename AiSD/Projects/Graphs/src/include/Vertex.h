@@ -6,19 +6,15 @@ private:
     int saturation;
     int degree;
     Vertex* next;
+    Vertex* prev;
 public:
     Vertex() : id(0), saturation(0), degree(0), next(nullptr) {}
 
-    Vertex(int id, int saturation, int degree){
-        this->id = id;
-        this->saturation = saturation;
-        this->degree = degree;
-        this->next = nullptr;
-        return;
-    }
+    Vertex(int id, int saturation, int degree)
+    : id(id), saturation(saturation), degree(degree), next(nullptr), prev(nullptr) {}
 
     Vertex(const Vertex& orig) 
-    : id(orig.id), saturation(orig.saturation), degree(orig.degree), next(nullptr) {}
+    : id(orig.id), saturation(orig.saturation), degree(orig.degree), next(nullptr), prev(nullptr) {}
 
 
     bool operator<(const Vertex& other) const {
@@ -43,12 +39,15 @@ public:
     Vertex* getNext() { return next; }
     void setNext(Vertex* new_next) { next = new_next; }
 
+    Vertex* getPrev() { return prev; }
+    void setPrev(Vertex* new_prev) { prev = new_prev; }
+
     ~Vertex()
     {
-        if (next != nullptr)
-        {
-            delete next;
-            next = nullptr;   
-        }
+        // if (next != nullptr)
+        // {
+        //     delete next;
+        //     next = nullptr;   
+        // }
     }
 };

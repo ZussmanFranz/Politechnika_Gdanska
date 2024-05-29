@@ -2,26 +2,37 @@
 
 #include "List.h"
 #include "Vertex.h"
-#include <cstddef>
 #include <cstdio>
 
 class Queue: public List
 {
 public:
+    Queue(unsigned long long size);
+
     Vertex* pop();
 
     Vertex* top();
 
-    Vertex* at(int index);
-
     Vertex* find(int id);
+
+    bool remove(int id);
 
     Vertex* getNextVertex();
 
     void push(Vertex* orig);
 
-    // ~Queue();
+    void draw();
+
+    ~Queue();
 };
+
+Queue::Queue(unsigned long long size)
+{   
+    map = new Vertex*[size];
+    root = nullptr;
+    len = 0;
+    mapSize = size;
+}
 
 Vertex* Queue::pop()
 {
@@ -41,45 +52,96 @@ Vertex* Queue::top()
     return root;
 }
 
-Vertex* Queue::at(int index)
-{
-    printf("taking element at %d, steps to make: %d\n", index, (len - index) - 1);
-    if (index > len - 1) {return nullptr;}
-
-    Vertex* target = root;
-
-    for (int i = 0; i < (len - index) - 1; i++) 
-    {
-        target = target->getNext();
-    }
-
-    return target;
-}
-
 Vertex* Queue::find(int id)
 {
-    // printf("looking for a %d element!\nneed to make %d steps from", id);
+    // // printf("looking for a %d element!\nneed to make %d steps from", id);
 
-    Vertex* target = root;
+    // Vertex* target = root;
 
-    while (target->getId() != id) {
-        if (target->getNext() == nullptr) {
-            return nullptr;
-        }
-        target = target->getNext();
+    // while (target->getId() != id) {
+    //     if (target->getNext() == nullptr) {
+    //         return nullptr;
+    //     }
+    //     target = target->getNext();
+    // }
+
+    // return target;
+    if ((id >= mapSize) || (id < 0)) {
+        printf("invalid index!\n");
+        return nullptr;
     }
 
-    return target;
+    if (root->getId() == id) {
+        // printf("it is root.");
+    }
+
+    return map[id];
+}
+
+
+bool Queue::remove(int id)
+{
+    // printf("started removing %d\n", id);
+
+    if (root == nullptr) {
+        // printf("queue is empty\n");
+        return false;
+    }
+
+    if (root->getId() == id) {
+        if (len == 1) {
+            // printf("removing last element!\n");
+            len--;
+            root = nullptr;
+            return true;
+        }
+        // printf("removing root... ");
+
+        Vertex* target = root;
+        Vertex* new_root = target->getNext();
+        if (new_root != nullptr) {
+            root = new_root;
+            root->setPrev(nullptr);
+        }
+        else {
+            // printf("there is no new root\n");
+        }
+        len--;
+        
+
+        // printf("successfully removed root!\n");
+        return true;
+    }
+
+    
+    Vertex* target = map[id];
+    Vertex* prev = target->getPrev();
+    Vertex* next = target->getNext();
+    if (prev != nullptr) {
+        prev->setNext(target->getNext());
+    }
+    if (next != nullptr) {
+        next->setPrev(target->getPrev());
+    }
+    len--;
+
+    // printf("successfully removed element!\n");
+
+    return true;
 }
 
 Vertex* Queue::getNextVertex()
 {
+    // printf("(len: %d)searching for the next element...",len);
+
     if (len == 0) {
+        // printf("there are no elements!\n");
         return nullptr;
     }
 
     if (len == 1) {
         len = 0;
+        // printf("one last element!");
         return root;
     }
 
@@ -89,7 +151,6 @@ Vertex* Queue::getNextVertex()
 
     Vertex* current = root;
 
-    // printf("started searching!\n");
 
     while (current != nullptr) {
         if ((current->getSaturation() > max_saturation) || ((current->getSaturation() == max_saturation) && (current->getDegree() > max_degree))) {
@@ -98,19 +159,19 @@ Vertex* Queue::getNextVertex()
             index = current->getId();
         }
         current = current->getNext();
-        // printf("next!\n");
     }
 
-    // printf("search was...");
 
     if (index != -1) {
-        // printf("successful!\n");
-        Vertex* found = new Vertex(*find(index));
+        // Vertex* found = new Vertex(*find(index));
+        // printf("(len: %d)searching for the %d...\n",len, index);
+        Vertex *found = find(index);
+        // printf("found %d!\n", index);
         remove(index);
         return found;
     }
 
-    // printf("bad.\n");
+    // printf("\n");
     return nullptr;
 }
 
@@ -118,22 +179,75 @@ void Queue::push(Vertex* orig)
 {
     len++;
 
+    // printf("writing %d to the map...\n", orig->getId());
+    map[orig->getId()] = orig;
+
     if (len == 1) {
         root = orig;
         last_element = root;
+        root->setPrev(nullptr);
+        root->setNext(nullptr);
+        // printf("pushing root at index %d\n", orig->getId());
         return;
     }
 
     last_element->setNext(orig);
+    orig->setPrev(last_element);
     last_element = orig;
+    last_element->setNext(nullptr);
+    // printf("pushing element at index %d\n", orig->getId());
     return;
 }
 
-// Queue::~Queue()
-// {
-//     len = 0;
+void Queue::draw()
+{
+    if (len == 0) {
+        return;
+    }
+    else {
+        Vertex* current = root;
+        Vertex* next = current->getNext();
+        Vertex* prev = current->getPrev();
 
-//     if (root != nullptr) {
-//         delete root; 
-//     }
-// }
+        if (prev != nullptr) {
+            printf("<-");
+        }
+        else {
+            printf(" |");
+        }
+        printf("R(%d)", root->getId());
+        if (next != nullptr) {
+            printf("->");
+        }
+        else {
+            printf("| ");
+        }
+
+        while (current->getNext() != nullptr) {
+            current = current->getNext();
+            next = current->getNext();
+            prev = current->getPrev();
+            if (prev != nullptr) {
+                printf("<-");
+            }
+            else {
+                printf(" |");
+            }
+            printf("(%d)", current->getId());
+            if (next != nullptr) {
+                printf("->");
+            }
+            else {
+                printf("| ");
+            }
+        }
+
+        printf("\n");
+        return;
+    }
+}
+
+Queue::~Queue()
+{
+    delete [] map;
+}

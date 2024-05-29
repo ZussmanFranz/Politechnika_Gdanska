@@ -8,9 +8,12 @@ class List
 protected:
     Vertex* root;
     Vertex* last_element;
+    Vertex** map;
     int len;
+    int mapSize;
 public:
     List();
+    List(unsigned long long size);
 
     void push(Vertex* added);
 
@@ -39,6 +42,16 @@ public:
 
 List::List()
 {
+    map = nullptr;
+    root = nullptr;
+    len = 0;
+    mapSize = 0;
+}
+
+List::List(unsigned long long mapSize)
+{
+    map = new Vertex*[mapSize];
+    this->mapSize = mapSize;
     root = nullptr;
     len = 0;
 }
@@ -50,15 +63,20 @@ void List::push(Vertex* orig)
         root = new Vertex(*orig);
         last_element = root;
         ++len;
+
+        map[last_element->getId()] = last_element;
         return;
     }
 
     Vertex* added = new Vertex(*orig);
 
-    top()->setNext(added);
+    Vertex* top_vert = top();
+    top_vert->setNext(added);
+    added->setPrev(top_vert);
     last_element = added;
     ++len;
 
+    map[last_element->getId()] = last_element;
     return;
 }
 Vertex* List::pop()
@@ -79,6 +97,7 @@ Vertex* List::pop()
     }
           
     Vertex* target = new_top->getNext();
+    target->setPrev(nullptr);
     new_top->setNext(nullptr);
     last_element = new_top;
     
@@ -171,11 +190,12 @@ bool List::remove(int id)
     }
 
     if (root->getId() == id) {
-        Vertex* to_delete = root;
+        Vertex* to_remove = root;
         root = root->getNext();
 
-        to_delete->setNext(nullptr);
-        delete to_delete;
+        to_remove->setNext(nullptr);
+        // map[to_delete->getId()] = nullptr;
+        // delete to_delete;
 
         len--;
         if (len == 0) {
@@ -195,11 +215,12 @@ bool List::remove(int id)
         return false;
     }
 
-    Vertex* to_delete = current->getNext();
-    current->setNext(to_delete->getNext());
+    Vertex* to_remove = current->getNext();
+    current->setNext(to_remove->getNext());
 
-    to_delete->setNext(nullptr);
-    delete to_delete;
+    to_remove->setNext(nullptr);
+    // map[to_delete->getId()] = nullptr;
+    // delete to_delete;
 
     len--;
     if (current->getNext() == nullptr) {
@@ -211,7 +232,8 @@ bool List::remove(int id)
 
 List::~List()
 {
-    delete root;
+    delete [] map;
+    // delete root;
     root = nullptr;
     len = 0;
 }

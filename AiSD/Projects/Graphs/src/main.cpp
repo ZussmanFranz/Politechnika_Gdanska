@@ -3,12 +3,7 @@
 #include <vector> //must be removed!
 #include <cstring>
 
-// #include "include/PriorityQueue.h"
-// #include "include/Vertex.h"
-// #include "include/Vector.h"
-// #include "include/Vertex.h"
 #include "include/Queue.h"
-#include "include/Vertex.h"
 
 void parse_graph(std::vector<int> graph[], int degrees[], int start_degrees[], unsigned long long graph_size, unsigned long long* edges_count)
 {
@@ -461,20 +456,18 @@ void colours_LF(std::vector<int> graph[], unsigned long long graph_size, int deg
 
 void colours_SLF(std::vector<int> graph[], unsigned long long graph_size, int degrees[]) {
     int* colors = new int[graph_size]();
-    int* saturation = new int[graph_size]();
-    bool* available = new bool[graph_size]();
-    int max_color_index = 1;
-    Queue *que = new Queue();
+    int* colors_used = new int[graph_size](); // 0 - false, 1 - true
+    int max_color_index = 0;
+    Queue *que = new Queue(graph_size);
 
     for (unsigned long long i = 0; i < graph_size; i++) {
-        // printf("pushing %lld element\n", i);
         que->push(new Vertex(i, 0, degrees[i]));
     }
-    // printf("queue length is %d\n", que->GetSize());
 
     for (unsigned long long i = 0; i < graph_size; i++) {
+        // que->draw();
         Vertex *v = que->getNextVertex();
-        // printf("Got %d, new length is %d\n", v->getId() + 1, que->GetSize());
+        // printf("||| next vertex (%d) recieved!\n", v->getId());
 
         // printf("\n  current index is %d, saturations: ", v->getId() + 1);
         // for (int i = 0; i < graph_size; i++) {
@@ -486,19 +479,13 @@ void colours_SLF(std::vector<int> graph[], unsigned long long graph_size, int de
         //     }
         // }
 
-        if (colors[v->getId()] != 0) {
-            continue;
-        }
-
-        memset(available, true, (graph_size) * sizeof(bool));
-        
-        for (int i = 0; i < max_color_index; i++) {
-            available[i] = true;
+        for (unsigned long long z = 0; z < max_color_index + 1; z++) {
+            colors_used[z] = 0;
         }
 
         for (unsigned long long neighbor : graph[v->getId() ]) {
             if (colors[neighbor - 1] != 0) {
-                available[colors[neighbor - 1]] = false;
+                colors_used[colors[neighbor - 1]] = 1;
                 if (colors[neighbor - 1] > max_color_index) {
                     max_color_index = colors[neighbor - 1];
                 }
@@ -507,16 +494,15 @@ void colours_SLF(std::vector<int> graph[], unsigned long long graph_size, int de
 
         int cr;
         for (cr = 1; cr <= graph_size; cr++) {
-            if (available[cr]) {
+            if (colors_used[cr] == 0) {
                 break;
             }
         }
 
         colors[v->getId()] = cr;
-        // printf(" ||| %d painted %d", v->getId() + 1, colors[v->getId()]);
-        v->setSaturation(-1);
-        saturation[v->getId()] = -1;
-        max_color_index = 1;
+        // printf(" ||| %d painted %d\n", v->getId(), colors[v->getId()]);
+        // v->setSaturation(-1);
+        // saturation[v->getId()] = -1;
 
         for (unsigned long long neighbor : graph[v->getId()]) {
             if (colors[neighbor - 1] == 0) {
@@ -528,16 +514,19 @@ void colours_SLF(std::vector<int> graph[], unsigned long long graph_size, int de
                     }
                 }
                 if (new_color) {
-                    saturation[neighbor - 1]++;
+                    // saturation[neighbor - 1]++;
+                    // printf("looking for an element %d\n", neighbor - 1);
+                    Vertex* target = que->find(neighbor - 1);
+                    // printf("succesfully found element %d\n", target->getId());
+                    // target->setSaturation(saturation[neighbor - 1]);
+                    target->setSaturation(target->getSaturation() + 1);
+                    // target->setDegree(degrees[neighbor - 1]);
+                    // printf("changed saturation of %d\n", target->getId() );
                 }
-    
-                Vertex* target = que->find(neighbor - 1);
-                target->setSaturation(saturation[neighbor - 1]);
-                target->setDegree(degrees[neighbor - 1]);
             }
         }
 
-        delete v;
+        // delete v;
     }
 
     printf("\n");
@@ -545,9 +534,11 @@ void colours_SLF(std::vector<int> graph[], unsigned long long graph_size, int de
         printf("%d ", colors[i]);
     }
 
+    // printf("\n");
+
+
     delete[] colors;
-    delete[] saturation;
-    delete[] available;
+    delete [] colors_used;
     // delete que;
 }
 
