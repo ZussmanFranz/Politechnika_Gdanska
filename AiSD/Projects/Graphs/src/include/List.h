@@ -7,12 +7,12 @@ class List
 {
 protected:
     Vertex* root;
-    Vertex* last_added;
+    Vertex* last_element;
     int len;
 public:
     List();
 
-    void push(Vertex* orig);
+    void push(Vertex* added);
 
     Vertex* pop();
 
@@ -48,7 +48,7 @@ void List::push(Vertex* orig)
 {
     if ((root == nullptr) || (len == 0)) {
         root = new Vertex(*orig);
-        last_added = root;
+        last_element = root;
         ++len;
         return;
     }
@@ -56,7 +56,7 @@ void List::push(Vertex* orig)
     Vertex* added = new Vertex(*orig);
 
     top()->setNext(added);
-    last_added = added;
+    last_element = added;
     ++len;
 
     return;
@@ -80,7 +80,7 @@ Vertex* List::pop()
           
     Vertex* target = new_top->getNext();
     new_top->setNext(nullptr);
-    last_added = new_top;
+    last_element = new_top;
     
     return target;
 }
@@ -92,7 +92,7 @@ Vertex* List::top()
         return nullptr;
     }
 
-    return last_added;
+    return last_element;
 }
 
 int List::GetSize()
@@ -179,7 +179,7 @@ bool List::remove(int id)
 
         len--;
         if (len == 0) {
-            last_added = nullptr;
+            last_element = nullptr;
         }
 
         return true;
@@ -203,7 +203,7 @@ bool List::remove(int id)
 
     len--;
     if (current->getNext() == nullptr) {
-        last_added = current;
+        last_element = current;
     }
     return true;
 }

@@ -64,6 +64,7 @@ public:
         }
         elements[size++] = vertex;
     }
+    
 
     // Remove element at the specified index
     void remove(int index) {
@@ -90,6 +91,10 @@ public:
         return elements[index];
     }
 
+    Vertex* at(int index) {
+        return &elements[index];
+    }
+
     // Get the current size of the vector
     int getSize() const {
         return size;
@@ -105,7 +110,7 @@ public:
         int index = -1;
 
         for (int i = 0; i < size; i++) {
-            if ((elements[i].getSaturation() > max_saturation) || ((elements->getSaturation() == max_saturation) && (elements[i].getDegree() > max_degree))) {
+            if ((elements[i].getSaturation() > max_saturation) || ((elements[i].getSaturation() == max_saturation) && (elements[i].getDegree() > max_degree))) {
                 max_saturation = elements[i].getSaturation();
                 max_degree = elements[i].getDegree();
                 index = i;

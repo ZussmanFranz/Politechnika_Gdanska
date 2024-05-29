@@ -9,13 +9,13 @@ public:
 
 void PriorityQueue::push(Vertex* orig)
 {
-    Vertex* new_vertex = new Vertex(orig);
+    Vertex* new_vertex = new Vertex(*orig);
 
     if (root == nullptr || *root < *new_vertex) {
         new_vertex->setNext(root);
         root = new_vertex;
         if (len == 0) {
-            last_added = root;
+            last_element = root;
         }
     } else {
         Vertex* current = root;
@@ -25,7 +25,7 @@ void PriorityQueue::push(Vertex* orig)
         new_vertex->setNext(current->getNext());
         current->setNext(new_vertex);
         if (new_vertex->getNext() == nullptr) {
-            last_added = new_vertex;
+            last_element = new_vertex;
         }
     }
     ++len;

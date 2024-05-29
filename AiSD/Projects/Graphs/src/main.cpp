@@ -3,7 +3,11 @@
 #include <vector> //must be removed!
 #include <cstring>
 
-#include "include/PriorityQueue.h"
+// #include "include/PriorityQueue.h"
+// #include "include/Vertex.h"
+// #include "include/Vector.h"
+// #include "include/Vertex.h"
+#include "include/Queue.h"
 #include "include/Vertex.h"
 
 void parse_graph(std::vector<int> graph[], int degrees[], int start_degrees[], unsigned long long graph_size, unsigned long long* edges_count)
@@ -460,15 +464,17 @@ void colours_SLF(std::vector<int> graph[], unsigned long long graph_size, int de
     int* saturation = new int[graph_size]();
     bool* available = new bool[graph_size]();
     int max_color_index = 1;
-    PriorityQueue *pq = new PriorityQueue();
+    Queue *que = new Queue();
 
     for (unsigned long long i = 0; i < graph_size; i++) {
-        pq->push(new Vertex(static_cast<int>(i), 0, degrees[i]));
+        // printf("pushing %lld element\n", i);
+        que->push(new Vertex(i, 0, degrees[i]));
     }
-    // printf("\nqueue length is %d", pq->GetSize());
+    // printf("queue length is %d\n", que->GetSize());
 
-    while (!pq->empty()) {
-        Vertex *v = pq->pop();
+    for (unsigned long long i = 0; i < graph_size; i++) {
+        Vertex *v = que->getNextVertex();
+        // printf("Got %d, new length is %d\n", v->getId() + 1, que->GetSize());
 
         // printf("\n  current index is %d, saturations: ", v->getId() + 1);
         // for (int i = 0; i < graph_size; i++) {
@@ -484,7 +490,7 @@ void colours_SLF(std::vector<int> graph[], unsigned long long graph_size, int de
             continue;
         }
 
-        memset(available, true, (graph_size + 1) * sizeof(bool));
+        memset(available, true, (graph_size) * sizeof(bool));
         
         for (int i = 0; i < max_color_index; i++) {
             available[i] = true;
@@ -525,9 +531,13 @@ void colours_SLF(std::vector<int> graph[], unsigned long long graph_size, int de
                     saturation[neighbor - 1]++;
                 }
     
-                pq->modify(new Vertex((neighbor - 1), saturation[neighbor - 1], degrees[neighbor - 1]));
+                Vertex* target = que->find(neighbor - 1);
+                target->setSaturation(saturation[neighbor - 1]);
+                target->setDegree(degrees[neighbor - 1]);
             }
         }
+
+        delete v;
     }
 
     printf("\n");
@@ -538,7 +548,7 @@ void colours_SLF(std::vector<int> graph[], unsigned long long graph_size, int de
     delete[] colors;
     delete[] saturation;
     delete[] available;
-    delete pq;
+    // delete que;
 }
 
 // void subgraphs(std::vector<int> graph[], int graph_size)
