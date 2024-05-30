@@ -47,7 +47,7 @@ void colours_greedy(int* graph[], unsigned long long graph_size, int* max_encoun
 
 void colours_LF(int* graph[], unsigned long long graph_size, int degrees[], int* max_encountered_color);
 
-void colours_SLF(int* graph[], unsigned long long graph_size, int degrees[], unsigned long long start, int* max_encountered_color); //TODO
+void colours_SLF(int* graph[], unsigned long long graph_size, int degrees[], unsigned long long start, const int* max_encountered_color); //TODO
 
 
 int main()
@@ -460,17 +460,14 @@ void colours_LF(int* graph[], unsigned long long graph_size, int degrees_indexes
     return;
 }
 
-void colours_SLF(int* graph[], unsigned long long graph_size, int degrees[], unsigned long long start, int* max_encountered_color) {
+void colours_SLF(int* graph[], unsigned long long graph_size, int degrees[], unsigned long long start, const int* max_encountered_color) {
     int* colors = new int[graph_size]();
 
-    // optimisation of neighbor colors checking
-    int** neighbor_colors = new int*[graph_size];
-    for (unsigned long long i = 0; i < graph_size; i++) {
-        neighbor_colors[i] = new int[*max_encountered_color * 2](); // 0 - false, 1 - true
-    }
+    // Optimization of neighbor colors checking
+    // Use an array of sets to track colors used by neighbors
+    int* neighbor_colors = new int[graph_size * (*max_encountered_color + 2)](); // A single array to reduce allocation time
 
     Queue *que = new Queue(graph_size);
-
 
     for (unsigned long long i = 0; i < graph_size; i++) {
         if (i == start) {
@@ -480,37 +477,30 @@ void colours_SLF(int* graph[], unsigned long long graph_size, int degrees[], uns
     }
 
     colors[start] = 1;
-    // for (unsigned long long neighbor : graph[start]) 
-    unsigned long long neighbour_index;
-    for (unsigned long long neighbor = 1; neighbor < graph[start][0] + 1; neighbor++)
-    {
-        neighbour_index = graph[start][neighbor] - 1;
-        que->find(neighbour_index)->setSaturation(1);
-        neighbor_colors[neighbour_index][1] = 1;
+    for (unsigned long long neighbor = 1; neighbor < graph[start][0] + 1; neighbor++) {
+        unsigned long long neighbor_index = graph[start][neighbor] - 1;
+        que->find(neighbor_index)->setSaturation(1);
+        neighbor_colors[neighbor_index * (*max_encountered_color + 1) + 1] = 1;
     }
 
     for (unsigned long long i = 0; i < graph_size - 1; i++) {
         Vertex *v = que->getNextVertex();
-
         int cr;
         for (cr = 1; cr <= *max_encountered_color; cr++) {
-            if (neighbor_colors[v->getId()][cr] == 0){
+            if (neighbor_colors[v->getId() * (*max_encountered_color + 1) + cr] == 0) {
                 break;
             }
         }
 
         colors[v->getId()] = cr;
 
-        // for (unsigned long long neighbor : graph[v->getId()]) 
-        unsigned long long neighbour_index;
-        for (unsigned long long neighbor = 1; neighbor < graph[v->getId()][0] + 1; neighbor++)
-        {    
-            neighbour_index = graph[v->getId()][neighbor] - 1;
-            if ((colors[neighbour_index] == 0) && (neighbor_colors[neighbour_index][colors[v->getId()]] == 0)) {
-                Vertex* target = que->find(neighbour_index);
+        for (unsigned long long neighbor = 1; neighbor < graph[v->getId()][0] + 1; neighbor++) {
+            unsigned long long neighbor_index = graph[v->getId()][neighbor] - 1;
+            if (colors[neighbor_index] == 0 && (neighbor_colors[neighbor_index * (*max_encountered_color + 1) + cr] == 0)) {
+                Vertex* target = que->find(neighbor_index);
                 target->setSaturation(target->getSaturation() + 1);
             }
-            neighbor_colors[neighbour_index][colors[v->getId()]] = 1;
+            neighbor_colors[neighbor_index * (*max_encountered_color + 1) + cr] = 1;
         }
     }
 
@@ -519,13 +509,7 @@ void colours_SLF(int* graph[], unsigned long long graph_size, int degrees[], uns
         printf("%d ", colors[i]);
     }
 
-
     delete[] colors;
-
-    for (unsigned long long i = 0; i < graph_size; i++) {
-        delete [] neighbor_colors[i];
-    }
-    delete [] neighbor_colors;
-
+    delete[] neighbor_colors;
     delete que;
 }
