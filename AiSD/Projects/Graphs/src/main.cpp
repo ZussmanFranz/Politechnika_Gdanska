@@ -32,20 +32,6 @@ void parse_graph(int* graph[], int degrees[], int start_degrees[], unsigned long
     return;
 }
 
-void draw_graph(int* graph[], unsigned long long graph_size)
-{
-    printf("%lld\n", graph_size);
-    for (unsigned long long i = 0; i < graph_size; i++) {
-        printf("neighbors of %lld:\n", i);
-        for (unsigned long long neighbor = 1; neighbor < graph[i][0] + 1; neighbor++) {
-            printf("%d ", graph[i][neighbor]);
-        }
-        printf("\n");
-    }
-
-    return;
-}
-
 void merge(int arr[], int indexes_arr[], int left, int mid, int right);
 void mergeSort(int arr[], int indexes_arr[], int left, int right);
 void merge(int arr[], int left, int mid, int right);
@@ -57,17 +43,11 @@ void DFS(int* graph[], int graph_size, int current, int* checked_count, bool che
 bool bipartiteness(int* graph[], int graph_size);
 bool choose_side(int* graph[], int side[], int start);
 
-// void eccentricity_sequence(std::vector<int> graph[], unsigned long long graph_size); //TODO
-
-// void planarity(std::vector<int> graph[], unsigned long long graph_size); //TODO
-
 void colours_greedy(int* graph[], unsigned long long graph_size, int* max_encountered_color);
 
 void colours_LF(int* graph[], unsigned long long graph_size, int degrees[], int* max_encountered_color);
 
 void colours_SLF(int* graph[], unsigned long long graph_size, int degrees[], unsigned long long start, int* max_encountered_color); //TODO
-
-// void subgraphs(std::vector<int> graph[], unsigned long long graph_size); //TODO
 
 
 int main()
@@ -94,8 +74,6 @@ int main()
         
 
         parse_graph(graph,degrees, start_degrees, graph_size, &edges_count);
-        // draw_graph(graph, graph_size);
-        // printf("---------\n");
 
         mergeSort(degrees, degrees_indexes, 0, graph_size - 1);
         int max_degree = 0;
@@ -113,6 +91,7 @@ int main()
 
         char bipart = (bipartiteness(graph, graph_size)) ? 'T' : 'F';
         printf("%c", bipart);
+        // printf("?");
 
         // eccentricity_sequence(graph, graph_size);
         printf("\n?");
@@ -122,8 +101,6 @@ int main()
 
         int max_encountered_color = 0;
         
-        // printf(".\n.\n");
-
         colours_greedy(graph, graph_size, &max_encountered_color);
         // printf("\n?");
 
@@ -146,6 +123,7 @@ int main()
         }
         delete [] graph;
         delete [] degrees;
+        delete [] degrees_indexes;
         delete [] start_degrees;
     }
     
@@ -330,8 +308,6 @@ void DFS(int* graph[], int graph_size, int current, int* checked_count, bool che
         return;
     }
 
-    // printf("checking V%d\n", current + 1);
-
     *checked_count += 1;
     checked[current] = true;
 
@@ -344,7 +320,6 @@ void DFS(int* graph[], int graph_size, int current, int* checked_count, bool che
         }
     }
 
-    // printf("checked!!!\n");
     return;
 }
 
@@ -389,18 +364,6 @@ bool choose_side(int* graph[], int side[], int start)
     return true;
 }
 
-// void eccentricity_sequence(std::vector<int> graph[], int graph_size)
-// {
-//     printf("?\n");
-//     return;
-// }
-
-// void planarity(std::vector<int> graph[], int graph_size)
-// {
-//     printf("?\n");
-//     return;
-// }
-
 void colours_greedy(int* graph[], unsigned long long graph_size, int* max_encountered_color)
 {
     int* colors = new int[graph_size]();
@@ -431,7 +394,7 @@ void colours_greedy(int* graph[], unsigned long long graph_size, int* max_encoun
             }    
         }
         
-        for (unsigned long long i = 1; i < graph_size + 1; i++) {
+        for (unsigned long long i = 1; i < max_color_index + 2; i++) {
             if (colors_used[i] == 0) {
                 colors[v] = i;
                 printf("%d ", colors[v]);
@@ -459,7 +422,6 @@ void colours_LF(int* graph[], unsigned long long graph_size, int degrees_indexes
     for (unsigned long long index = graph_size; index > 0; index--) 
     {
         v = degrees_indexes[index - 1];
-        // printf("current index: %d\n", v);
 
         for (unsigned long long z = 0; z < max_color_index + 1; z++) {
             colors_used[z] = 0;
@@ -481,7 +443,7 @@ void colours_LF(int* graph[], unsigned long long graph_size, int degrees_indexes
             }    
         }
         
-        for (unsigned long long i = 1; i < graph_size + 1; i++) {
+        for (unsigned long long i = 1; i < max_color_index + 2; i++) {
             if (colors_used[i] == 0) {
                 colors[v] = i;
                 break;
@@ -509,14 +471,12 @@ void colours_SLF(int* graph[], unsigned long long graph_size, int degrees[], uns
 
     Queue *que = new Queue(graph_size);
 
-    // printf("start is %lld (degrees: %d)\n", start, degrees[start]);
 
     for (unsigned long long i = 0; i < graph_size; i++) {
         if (i == start) {
             continue;
         }
         que->push(new Vertex(i, 0, degrees[i]));
-        // printf("pushed %d to que, new size: %d\n", graph[start][neighbor], que->GetSize());
     }
 
     colors[start] = 1;
@@ -531,8 +491,7 @@ void colours_SLF(int* graph[], unsigned long long graph_size, int degrees[], uns
 
     for (unsigned long long i = 0; i < graph_size - 1; i++) {
         Vertex *v = que->getNextVertex();
-        // printf("current index: %d\n", v->getId());
-        
+
         int cr;
         for (cr = 1; cr <= *max_encountered_color; cr++) {
             if (neighbor_colors[v->getId()][cr] == 0){
@@ -570,13 +529,3 @@ void colours_SLF(int* graph[], unsigned long long graph_size, int degrees[], uns
 
     delete que;
 }
-
-// void subgraphs(std::vector<int> graph[], int graph_size)
-// {
-//     printf("?\n");
-//     return;
-// }
-
-
-
-
