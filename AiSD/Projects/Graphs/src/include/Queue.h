@@ -25,6 +25,8 @@ public:
 
     void push(Vertex* orig);
 
+    // void clearMap();
+
     // void draw();
 
     ~Queue();
@@ -163,6 +165,13 @@ void Queue::push(Vertex* orig)
     return;
 }
 
+// void Queue::clearMap()
+// {
+//     for (unsigned long long i = 0; i < mapSize; i++) {
+//         map[i] = nullptr;
+//     }
+// }
+
 // void Queue::draw()
 // {
 //     if (len == 0) {
@@ -213,7 +222,7 @@ void Queue::push(Vertex* orig)
 
 Queue::~Queue()
 {
-    for (unsigned long long i; i < mapSize; i++) {
+    for (unsigned long long i = 0; i < mapSize; i++) {
         map[i] = nullptr;
     }
     delete [] map;

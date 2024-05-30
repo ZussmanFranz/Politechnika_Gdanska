@@ -46,11 +46,11 @@ bool choose_side(std::vector<int> graph[], int side[], int start);
 
 // void planarity(std::vector<int> graph[], unsigned long long graph_size); //TODO
 
-void colours_greedy(std::vector<int> graph[], unsigned long long graph_size);
+void colours_greedy(std::vector<int> graph[], unsigned long long graph_size, int* max_encountered_color);
 
-void colours_LF(std::vector<int> graph[], unsigned long long graph_size, int degrees[]);
+void colours_LF(std::vector<int> graph[], unsigned long long graph_size, int degrees[], int* max_encountered_color);
 
-void colours_SLF(std::vector<int> graph[], unsigned long long graph_size, int degrees[], unsigned long long start); //TODO
+void colours_SLF(std::vector<int> graph[], unsigned long long graph_size, int degrees[], unsigned long long start, int* max_encountered_color); //TODO
 
 // void subgraphs(std::vector<int> graph[], unsigned long long graph_size); //TODO
 
@@ -109,13 +109,15 @@ int main()
         // planarity(graph, graph_size);
         printf("\n?");
 
-        colours_greedy(graph, graph_size);
+        int max_encountered_color = 0;
+
+        colours_greedy(graph, graph_size, &max_encountered_color);
         // printf("\n?");
 
-        colours_LF(graph, graph_size, degrees_indexes);
+        colours_LF(graph, graph_size, degrees_indexes, &max_encountered_color);
         // printf("\n?");
 
-        colours_SLF(graph, graph_size, start_degrees, index);
+        colours_SLF(graph, graph_size, start_degrees, index, &max_encountered_color);
         // printf("\n?");
 
         // subgraphs(graph, graph_size);
@@ -374,7 +376,7 @@ bool choose_side(std::vector<int> graph[], int side[], int start)
 //     return;
 // }
 
-void colours_greedy(std::vector<int> graph[], unsigned long long graph_size)
+void colours_greedy(std::vector<int> graph[], unsigned long long graph_size, int* max_encountered_color)
 {
     int* colors = new int[graph_size]();
     int* colors_used = new int[graph_size](); // 0 - false, 1 - true
@@ -395,6 +397,9 @@ void colours_greedy(std::vector<int> graph[], unsigned long long graph_size)
                 colors_used[colors[neighbour - 1]] = 1;
                 if (colors[neighbour - 1] > max_color_index) {
                     max_color_index = colors[neighbour - 1];
+                    if (max_color_index > *max_encountered_color) {
+                        *max_encountered_color = max_color_index; 
+                    }
                 }
             }    
         }
@@ -414,7 +419,7 @@ void colours_greedy(std::vector<int> graph[], unsigned long long graph_size)
 }
 
 
-void colours_LF(std::vector<int> graph[], unsigned long long graph_size, int degrees_indexes[])
+void colours_LF(std::vector<int> graph[], unsigned long long graph_size, int degrees_indexes[], int* max_encountered_color)
 {
     int* colors = new int[graph_size]();
     int* colors_used = new int[graph_size](); // 0 - false, 1 - true
@@ -439,6 +444,9 @@ void colours_LF(std::vector<int> graph[], unsigned long long graph_size, int deg
                 colors_used[colors[neighbour - 1]] = 1;
                 if (colors[neighbour - 1] > max_color_index) {
                     max_color_index = colors[neighbour - 1];
+                    if (max_color_index > *max_encountered_color) {
+                        *max_encountered_color = max_color_index; 
+                    }
                 }
             }    
         }
@@ -460,9 +468,16 @@ void colours_LF(std::vector<int> graph[], unsigned long long graph_size, int deg
     return;
 }
 
-void colours_SLF(std::vector<int> graph[], unsigned long long graph_size, int degrees[], unsigned long long start) {
+void colours_SLF(std::vector<int> graph[], unsigned long long graph_size, int degrees[], unsigned long long start, int* max_encountered_color) {
     int* colors = new int[graph_size]();
     int* colors_used = new int[graph_size](); // 0 - false, 1 - true
+
+    // optimisation of neighbor colors checking
+    int** neighbor_colors = new int*[graph_size];
+    for (unsigned long long i = 0; i < graph_size; i++) {
+        neighbor_colors[i] = new int[*max_encountered_color * 2](); // 0 - false, 1 - true
+    }
+
     int max_color_index = 0;
     Queue *que = new Queue(graph_size);
 
@@ -478,6 +493,7 @@ void colours_SLF(std::vector<int> graph[], unsigned long long graph_size, int de
     colors[start] = 1;
     for (unsigned long long neighbor : graph[start]) {
         que->find(neighbor - 1)->setSaturation(1);
+        neighbor_colors[neighbor - 1][1] = 1;
     }
 
     for (unsigned long long i = 0; i < graph_size - 1; i++) {
@@ -518,19 +534,11 @@ void colours_SLF(std::vector<int> graph[], unsigned long long graph_size, int de
         colors[v->getId()] = cr;
 
         for (unsigned long long neighbor : graph[v->getId()]) {
-            if (colors[neighbor - 1] == 0) {
-                bool new_color = true;
-                for (unsigned long long n_neighbor : graph[neighbor - 1]) {
-                    if ((colors[n_neighbor - 1] == colors[v->getId()]) && (n_neighbor - 1 != v->getId())) {
-                        new_color = false;
-                        break;
-                    }
-                }
-                if (new_color) {
-                    Vertex* target = que->find(neighbor - 1);
-                    target->setSaturation(target->getSaturation() + 1);
-                }
+            if ((colors[neighbor - 1] == 0) && (neighbor_colors[neighbor - 1][colors[v->getId()]] == 0)) {
+                Vertex* target = que->find(neighbor - 1);
+                target->setSaturation(target->getSaturation() + 1);
             }
+            neighbor_colors[neighbor - 1][colors[v->getId()]] = 1;
         }
     }
 
@@ -542,7 +550,14 @@ void colours_SLF(std::vector<int> graph[], unsigned long long graph_size, int de
 
     delete[] colors;
     delete [] colors_used;
-    delete que;
+
+    for (unsigned long long i = 0; i < graph_size; i++) {
+        delete [] neighbor_colors[i];
+    }
+    delete [] neighbor_colors;
+
+    // que->clearMap();
+    // delete que;
 }
 
 // void subgraphs(std::vector<int> graph[], int graph_size)
