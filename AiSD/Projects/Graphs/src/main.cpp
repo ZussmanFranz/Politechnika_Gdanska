@@ -77,17 +77,10 @@ int main()
 
         parse_graph(graph,degrees, start_degrees, graph_size, &edges_count);
 
-        //testing start:
-        // for (int i = graph_size - 1; i >= 0 ; i--) {
-        //     printf("%d(%d) ", degrees[i], degrees_indexes[i]);
-        //     // printf("%d ", degrees[i]);
-        // }
-        // printf("\n");
         mergeSort(degrees, degrees_indexes, 0, graph_size - 1);
         int max_degree = 0;
         int index = 0;
         for (int i = graph_size - 1; i >= 0 ; i--) {
-            // printf("%d(%d) ", degrees[i], degrees_indexes[i]);
             if (degrees[i] > max_degree) {
                 max_degree = degrees[i];
                 index = degrees_indexes[i];
