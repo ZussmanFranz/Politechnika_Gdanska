@@ -43,11 +43,5 @@ public:
     void setPrev(Vertex* new_prev) { prev = new_prev; }
 
     ~Vertex()
-    {
-        // if (next != nullptr)
-        // {
-        //     delete next;
-        //     next = nullptr;   
-        // }
-    }
+    {}
 };
