@@ -20,14 +20,12 @@ void parse_graph(std::vector<int> graph[], int degrees[], int start_degrees[], u
             scanf("%d",&connected);
 
             if (connected > i + 1) {
-                // printf("edge: %d -- %d\n", i + 1, connected);
                 *edges_count += 1;
             }
 
             graph[i].push_back(connected);
         }
     }
-    //printf("number of edges: %d\n", *edges_count);
     return;
 }
 
@@ -470,7 +468,6 @@ void colours_LF(std::vector<int> graph[], unsigned long long graph_size, int deg
 
 void colours_SLF(std::vector<int> graph[], unsigned long long graph_size, int degrees[], unsigned long long start, int* max_encountered_color) {
     int* colors = new int[graph_size]();
-    int* colors_used = new int[graph_size](); // 0 - false, 1 - true
 
     // optimisation of neighbor colors checking
     int** neighbor_colors = new int*[graph_size];
@@ -478,7 +475,6 @@ void colours_SLF(std::vector<int> graph[], unsigned long long graph_size, int de
         neighbor_colors[i] = new int[*max_encountered_color * 2](); // 0 - false, 1 - true
     }
 
-    int max_color_index = 0;
     Queue *que = new Queue(graph_size);
 
     // printf("start is %lld (degrees: %d)\n", start, degrees[start]);
@@ -511,22 +507,23 @@ void colours_SLF(std::vector<int> graph[], unsigned long long graph_size, int de
         //     }
         // }
 
-        for (unsigned long long z = 0; z < max_color_index + 1; z++) {
-            colors_used[z] = 0;
-        }
+        // for (unsigned long long z = 0; z < max_color_index + 1; z++) {
+        //     colors_used[z] = 0;
+        // }
 
-        for (unsigned long long neighbor : graph[v->getId() ]) {
-            if (colors[neighbor - 1] != 0) {
-                colors_used[colors[neighbor - 1]] = 1;
-                if (colors[neighbor - 1] > max_color_index) {
-                    max_color_index = colors[neighbor - 1];
-                }
-            }
-        }
+        // for (unsigned long long neighbor : graph[v->getId() ]) {
+        //     if (colors[neighbor - 1] != 0) {
+        //         colors_used[colors[neighbor - 1]] = 1;
+        //         neighbor_colors[neighbor - 1][colors[neighbor - 1]] = 1;
+        //         if (colors[neighbor - 1] > max_color_index) {
+        //             max_color_index = colors[neighbor - 1];
+        //         }
+        //     }
+        // }
 
         int cr;
-        for (cr = 1; cr <= graph_size; cr++) {
-            if (colors_used[cr] == 0) {
+        for (cr = 1; cr <= *max_encountered_color; cr++) {
+            if (neighbor_colors[v->getId()][cr] == 0){
                 break;
             }
         }
@@ -549,15 +546,13 @@ void colours_SLF(std::vector<int> graph[], unsigned long long graph_size, int de
 
 
     delete[] colors;
-    delete [] colors_used;
 
     for (unsigned long long i = 0; i < graph_size; i++) {
         delete [] neighbor_colors[i];
     }
     delete [] neighbor_colors;
 
-    // que->clearMap();
-    // delete que;
+    delete que;
 }
 
 // void subgraphs(std::vector<int> graph[], int graph_size)
