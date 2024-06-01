@@ -1,10 +1,7 @@
 #include <cstdio>
 #include <cstdlib>
-// #include <vector> //must be removed!
-#include <cstring>
 
 #include "include/Queue.h"
-#include "include/Vertex.h"
 
 void parse_graph(int* graph[], int degrees[], int start_degrees[], unsigned long long graph_size, unsigned long long* edges_count)
 {
@@ -64,7 +61,6 @@ int main()
         scanf("%lld",&graph_size);
         unsigned long long max_edges = (graph_size * (graph_size - 1)) / 2;
 
-        // std::vector<int>* graph = new std::vector<int> [graph_size];
         int** graph = new int*[graph_size];
         int* degrees = new int[graph_size];
         int* start_degrees = new int[graph_size];
@@ -84,12 +80,10 @@ int main()
                 max_degree = degrees[i];
                 index = degrees_indexes[i];
             }
-            // printf("%d(%d) ", degrees[i], degrees_indexes[i]);
             printf("%d ", degrees[i]);
         }
         
         components(graph, graph_size);
-        // printf("\n?");
 
         char bipart = (bipartiteness(graph, graph_size)) ? 'T' : 'F';
         printf("%c", bipart);
@@ -104,21 +98,16 @@ int main()
         int max_encountered_color = 0;
         
         colours_greedy(graph, graph_size, &max_encountered_color);
-        // printf("\n?");
 
         colours_LF(graph, graph_size, degrees_indexes, &max_encountered_color);
-        // printf("\n?");
 
         colours_SLF(graph, graph_size, start_degrees, degrees_indexes, index,  &max_encountered_color);
-        // printf("\n?");
 
         // subgraphs(graph, graph_size);
         printf("\n?");
 
-        // printf("\n?\n");
         printf("\n%llu\n", max_edges - edges_count);
 
-        // delete [] graph;
         for (unsigned long long i = 0; i < graph_size; i++) 
         {
             delete [] graph[i];
@@ -134,19 +123,16 @@ int main()
 
 
 
-// Function to merge two halves
 void merge(int arr[], int indexes_arr[], int left, int mid, int right) {
     int n1 = mid - left + 1;
     int n2 = right - mid;
 
-    // Create temp arrays
     int* L1 = (int*)malloc(n1 * sizeof(int));
     int* L2 = (int*)malloc(n1 * sizeof(int));
     int* R1 = (int*)malloc(n2 * sizeof(int));
     int* R2 = (int*)malloc(n2 * sizeof(int));
 
 
-    // Copy data to temp arrays L[] and R[]
     for (int i = 0; i < n1; i++){
         L1[i] = arr[left + i];
         L2[i] = indexes_arr[left + i];
@@ -189,7 +175,6 @@ void merge(int arr[], int indexes_arr[], int left, int mid, int right) {
         k++;
     }
 
-    // Free the temporary arrays
     free(L1);
     free(L2);
     free(R1);
@@ -211,17 +196,15 @@ void mergeSort(int arr[], int indexes_arr[], int left, int right) {
     }
 }
 
-// Function to merge two halves
+
 void merge(int arr[], int left, int mid, int right) {
     int n1 = mid - left + 1;
     int n2 = right - mid;
 
-    // Create temp arrays
     int* L = (int*)malloc(n1 * sizeof(int));
     int* R= (int*)malloc(n2 * sizeof(int));
 
 
-    // Copy data to temp arrays L[] and R[]
     for (int i = 0; i < n1; i++){
         L[i] = arr[left + i];
     }
@@ -258,7 +241,6 @@ void merge(int arr[], int left, int mid, int right) {
         k++;
     }
 
-    // Free the temporary arrays
     free(L);
     free(R);
 }
@@ -313,7 +295,6 @@ void DFS(int* graph[], int graph_size, int current, int* checked_count, bool che
     *checked_count += 1;
     checked[current] = true;
 
-    // for (int neighbour : graph[current]) {
     unsigned long long neighbour_index;
     for (unsigned long long neighbour = 1; neighbour < graph[current][0] + 1; neighbour++) {
         neighbour_index = graph[current][neighbour] - 1;
@@ -344,7 +325,6 @@ bool bipartiteness(int* graph[], int graph_size)
 
 bool choose_side(int* graph[], int side[], int start)
 {
-    // for (int neighbour : graph[start])
     unsigned long long neighbour_index;
     for (unsigned long long neighbour = 1; neighbour < graph[start][0] + 1; neighbour++) 
     {
@@ -475,12 +455,8 @@ void colours_SLF(int* graph[], unsigned long long graph_size, int degrees[], int
         if (degrees_indexes[i - 1] == start) {
             continue;
         }
-        // printf("pushing %d(degree: %d)", degrees_indexes[i - 1], degrees[degrees_indexes[i - 1]]);
         que->push(new Vertex(degrees_indexes[i - 1], 0, degrees[degrees_indexes[i - 1]]));
-        // que->draw();
-        // printf(", new length: %d\n", que->GetSize());
     }
-    // printf("finished pushing, length: %d\n", que->GetSize());
 
     colors[start] = 1;
     for (unsigned long long neighbor = 1; neighbor < graph[start][0] + 1; neighbor++) {
@@ -491,10 +467,7 @@ void colours_SLF(int* graph[], unsigned long long graph_size, int degrees[], int
     }
 
     for (unsigned long long i = 0; i < graph_size - 1; i++) {
-        // Vertex *v = que->getNextVertex();
-        // que->draw();
         Vertex* v = que->pop();
-        // printf("handling %d-st vertex...", v->getId());
 
         int cr;
         for (cr = 1; cr <= *max_encountered_color; cr++) {
@@ -504,7 +477,6 @@ void colours_SLF(int* graph[], unsigned long long graph_size, int degrees[], int
         }
 
         colors[v->getId()] = cr;
-        // printf("painted %d\n", cr);
 
         for (unsigned long long neighbor = 1; neighbor < graph[v->getId()][0] + 1; neighbor++) {
             unsigned long long neighbor_index = graph[v->getId()][neighbor] - 1;
