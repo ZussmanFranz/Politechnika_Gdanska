@@ -4,6 +4,7 @@
 #include <cstring>
 
 #include "include/Queue.h"
+#include "include/Vertex.h"
 
 void parse_graph(int* graph[], int degrees[], int start_degrees[], unsigned long long graph_size, unsigned long long* edges_count)
 {
@@ -47,7 +48,7 @@ void colours_greedy(int* graph[], unsigned long long graph_size, int* max_encoun
 
 void colours_LF(int* graph[], unsigned long long graph_size, int degrees[], int* max_encountered_color);
 
-void colours_SLF(int* graph[], unsigned long long graph_size, int degrees[], unsigned long long start, const int* max_encountered_color); //TODO
+void colours_SLF(int* graph[], unsigned long long graph_size, int degrees[], int degrees_indexes[],unsigned long long start, const int* max_encountered_color); //TODO
 
 
 int main()
@@ -83,6 +84,7 @@ int main()
                 max_degree = degrees[i];
                 index = degrees_indexes[i];
             }
+            // printf("%d(%d) ", degrees[i], degrees_indexes[i]);
             printf("%d ", degrees[i]);
         }
         
@@ -107,7 +109,7 @@ int main()
         colours_LF(graph, graph_size, degrees_indexes, &max_encountered_color);
         // printf("\n?");
 
-        colours_SLF(graph, graph_size, start_degrees, index, &max_encountered_color);
+        colours_SLF(graph, graph_size, start_degrees, degrees_indexes, index,  &max_encountered_color);
         // printf("\n?");
 
         // subgraphs(graph, graph_size);
@@ -460,7 +462,7 @@ void colours_LF(int* graph[], unsigned long long graph_size, int degrees_indexes
     return;
 }
 
-void colours_SLF(int* graph[], unsigned long long graph_size, int degrees[], unsigned long long start, const int* max_encountered_color) {
+void colours_SLF(int* graph[], unsigned long long graph_size, int degrees[], int degrees_indexes[], unsigned long long start, const int* max_encountered_color) {
     int* colors = new int[graph_size]();
 
     // Optimization of neighbor colors checking
@@ -469,22 +471,31 @@ void colours_SLF(int* graph[], unsigned long long graph_size, int degrees[], uns
 
     Queue *que = new Queue(graph_size);
 
-    for (unsigned long long i = 0; i < graph_size; i++) {
-        if (i == start) {
+    for (unsigned long long i = graph_size; i > 0; i--) {
+        if (degrees_indexes[i - 1] == start) {
             continue;
         }
-        que->push(new Vertex(i, 0, degrees[i]));
+        // printf("pushing %d(degree: %d)", degrees_indexes[i - 1], degrees[degrees_indexes[i - 1]]);
+        que->push(new Vertex(degrees_indexes[i - 1], 0, degrees[degrees_indexes[i - 1]]));
+        // que->draw();
+        // printf(", new length: %d\n", que->GetSize());
     }
+    // printf("finished pushing, length: %d\n", que->GetSize());
 
     colors[start] = 1;
     for (unsigned long long neighbor = 1; neighbor < graph[start][0] + 1; neighbor++) {
         unsigned long long neighbor_index = graph[start][neighbor] - 1;
         que->find(neighbor_index)->setSaturation(1);
         neighbor_colors[neighbor_index * (*max_encountered_color + 1) + 1] = 1;
+        que->sort_place(que->find(neighbor_index));
     }
 
     for (unsigned long long i = 0; i < graph_size - 1; i++) {
-        Vertex *v = que->getNextVertex();
+        // Vertex *v = que->getNextVertex();
+        // que->draw();
+        Vertex* v = que->pop();
+        // printf("handling %d-st vertex...", v->getId());
+
         int cr;
         for (cr = 1; cr <= *max_encountered_color; cr++) {
             if (neighbor_colors[v->getId() * (*max_encountered_color + 1) + cr] == 0) {
@@ -493,12 +504,14 @@ void colours_SLF(int* graph[], unsigned long long graph_size, int degrees[], uns
         }
 
         colors[v->getId()] = cr;
+        // printf("painted %d\n", cr);
 
         for (unsigned long long neighbor = 1; neighbor < graph[v->getId()][0] + 1; neighbor++) {
             unsigned long long neighbor_index = graph[v->getId()][neighbor] - 1;
             if (colors[neighbor_index] == 0 && (neighbor_colors[neighbor_index * (*max_encountered_color + 1) + cr] == 0)) {
                 Vertex* target = que->find(neighbor_index);
                 target->setSaturation(target->getSaturation() + 1);
+                que->sort_place(target);
             }
             neighbor_colors[neighbor_index * (*max_encountered_color + 1) + cr] = 1;
         }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdio>
 class Vertex {
 private:
     int id;
@@ -17,14 +18,27 @@ public:
     : id(orig.id), saturation(orig.saturation), degree(orig.degree), next(nullptr), prev(nullptr) {}
 
 
-    bool operator<(const Vertex& other) const {
-        if (saturation == other.saturation) {
-            if (degree == other.degree) {
-                return id > other.id;
+    // bool operator<(const Vertex& other) const {
+    //     printf("operator is comparing vertixes\n\n");
+    //     if (saturation == other.saturation) {
+    //         if (degree == other.degree) {
+    //             return id > other.id;
+    //         }
+    //         return degree < other.degree;
+    //     }
+    //     return saturation < other.saturation;
+    // }
+
+    bool lesser_than(Vertex* other)
+    {
+        // printf("operator is comparing vertixes\n\n");
+        if (saturation == other->getSaturation()) {
+            if (degree == other->getDegree()) {
+                return id > other->getId();
             }
-            return degree < other.degree;
+            return degree < other->getDegree();
         }
-        return saturation < other.saturation;
+        return saturation < other->getSaturation();
     }
 
     int getId() { return id; }

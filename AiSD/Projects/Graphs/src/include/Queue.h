@@ -21,13 +21,17 @@ public:
 
     bool remove(int id);
 
-    Vertex* getNextVertex();
+    // Vertex* getNextVertex();
+    Vertex* pop();
+
+    // void swap(Vertex* vL, Vertex* vR);
+    void jump_over(Vertex* vL, Vertex* vR);
 
     void push(Vertex* orig);
 
-    // void clearMap();
+    void sort_place(Vertex* start);
 
-    // void draw();
+    void draw();
 
     ~Queue();
 };
@@ -105,43 +109,68 @@ bool Queue::remove(int id)
     return true;
 }
 
-Vertex* Queue::getNextVertex()
-{
+// Vertex* Queue::getNextVertex()
+// {
 
-    if (len == 0) {
+//     if (len == 0) {
+//         return nullptr;
+//     }
+
+//     if (len == 1) {
+//         len = 0;
+//         return root;
+//     }
+
+//     int max_saturation = -1;
+//     int max_degree = -1;
+//     int index = -1;
+
+//     Vertex* current = root;
+
+
+//     while (current != nullptr) {
+//         if ((current->getSaturation() > max_saturation) || ((current->getSaturation() == max_saturation) && (current->getDegree() > max_degree))) {
+//             max_saturation = current->getSaturation();
+//             max_degree = current->getDegree();
+//             index = current->getId();
+//         }
+//         current = current->getNext();
+//     }
+
+
+//     if (index != -1) {
+//         Vertex *found = find(index);
+//         remove(index);
+//         return found;
+//     }
+
+//     // printf("\n");
+//     return nullptr;
+// }
+
+Vertex* Queue::pop()
+{
+    len--;
+    // printf("new length is %d... \n\n", len);
+
+    if (len == -1) {
+        printf("there is nothing to pop\n");
         return nullptr;
     }
-
-    if (len == 1) {
-        len = 0;
-        return root;
+    else if (len == 0) {
+        // printf("popped root (%d)\n", root->getId());
+        Vertex* target = root;
+        root = nullptr;
+        return target;
     }
 
-    int max_saturation = -1;
-    int max_degree = -1;
-    int index = -1;
+    Vertex* target = root;
 
-    Vertex* current = root;
-
-
-    while (current != nullptr) {
-        if ((current->getSaturation() > max_saturation) || ((current->getSaturation() == max_saturation) && (current->getDegree() > max_degree))) {
-            max_saturation = current->getSaturation();
-            max_degree = current->getDegree();
-            index = current->getId();
-        }
-        current = current->getNext();
-    }
-
-
-    if (index != -1) {
-        Vertex *found = find(index);
-        remove(index);
-        return found;
-    }
-
-    // printf("\n");
-    return nullptr;
+    root = target->getNext();
+    root->setPrev(nullptr);
+    
+    // printf("popped element (%d)\n", target->getId());
+    return target;
 }
 
 void Queue::push(Vertex* orig)
@@ -165,60 +194,168 @@ void Queue::push(Vertex* orig)
     return;
 }
 
-// void Queue::clearMap()
+// void Queue::swap(Vertex* vL, Vertex* vR)
 // {
-//     for (unsigned long long i = 0; i < mapSize; i++) {
-//         map[i] = nullptr;
-//     }
-// }
-
-// void Queue::draw()
-// {
-//     if (len == 0) {
+//     if (vL == vR) {
 //         return;
 //     }
-//     else {
-//         Vertex* current = root;
-//         Vertex* next = current->getNext();
-//         Vertex* prev = current->getPrev();
 
-//         if (prev != nullptr) {
-//             printf("<-");
-//         }
-//         else {
-//             printf(" |");
-//         }
-//         printf("R(%d)", root->getId());
-//         if (next != nullptr) {
-//             printf("->");
-//         }
-//         else {
-//             printf("| ");
-//         }
+//     Vertex* Left = vL->getPrev(); // exists?
+//     Vertex* Right = vR->getNext(); // exists?
 
-//         while (current->getNext() != nullptr) {
-//             current = current->getNext();
-//             next = current->getNext();
-//             prev = current->getPrev();
-//             if (prev != nullptr) {
-//                 printf("<-");
-//             }
-//             else {
-//                 printf(" |");
-//             }
-//             printf("(%d)", current->getId());
-//             if (next != nullptr) {
-//                 printf("->");
-//             }
-//             else {
-//                 printf("| ");
-//             }
-//         }
+//     if (vR->getPrev() == vL || vL->getNext() == vR) { //they are neighbors        
+//         if (Left != nullptr) { Left->setNext(vR); }
+//         if (Right != nullptr) { Right->setPrev(vL); }
 
-//         printf("\n");
+//         vR->setPrev(Left);
+//         vR->setNext(vL);
+
+//         vL->setPrev(vR);
+//         vL->setNext(Right);
+
 //         return;
 //     }
+
+//     //they are not neighbors
+//     Vertex* middleLeft = vL->getNext(); // surely exists
+//     Vertex* middleRight = vR->getPrev(); // surely exists
+
+//     middleLeft->setPrev(vR);
+//     middleRight->setNext(vL);
+
+//     if (Left != nullptr) { Left->setNext(vR); }
+//     if (Right != nullptr) { Right->setPrev(vL); }
+
+//     vR->setPrev(Left);
+//     vR->setNext(middleLeft);
+
+//     vL->setPrev(middleRight);
+//     vL->setNext(Right);
+
+//     return;
 // }
+
+void Queue::jump_over(Vertex* vL, Vertex* vR)
+{
+    // printf("%d(s: %d)(d: %d) is jumping over %d(s: %d)(d: %d)\n", vR->getId(),vR->getSaturation(),vR->getDegree(), vL->getId(),vL->getSaturation(),vL->getDegree());
+    if (vL == vR) {
+        return;
+    }
+
+    if (root == vL) {
+        root = vR;
+    }
+
+    Vertex* vR_Right = vR->getNext();
+    Vertex* vR_Left = vR->getPrev();
+
+    if (vR_Left != nullptr) {
+        vR_Left->setNext(vR_Right);
+    }
+    if (vR_Right != nullptr) {
+        vR_Right->setPrev(vR_Left);
+    }
+
+    Vertex* vL_Left = vL->getPrev();
+    if (vL_Left != nullptr) {
+        vL_Left->setNext(vR);
+    }
+
+    vR->setPrev(vL_Left);
+    vR->setNext(vL);
+
+    vL->setPrev(vR);
+
+    return;
+}
+
+void Queue::sort_place(Vertex* start)
+{
+    // draw();
+    // printf("looking for a new place of %d(s: %d)(d: %d) vertex...\n", start->getId(), start->getSaturation(), start->getDegree());
+    int start_saturation = start->getSaturation();
+    int start_degree = start->getDegree();
+
+    int switch_index = start->getId();
+
+    Vertex* next_candidate = start->getPrev();
+    while (next_candidate != nullptr) {
+        // printf("comparing %d(s: %d)(d: %d) with %d(s: %d)(d: %d)", start->getId(), start->getSaturation(), start->getDegree(), next_candidate->getId(), next_candidate->getSaturation(), next_candidate->getDegree());
+
+        if (start->lesser_than(next_candidate)) {
+            // printf(" is lover\n");
+            // swap(next_candidate->getNext(), start);
+            if (switch_index == start->getId()) {
+                // printf("cannot jump over itself\n");
+                return;
+            }
+            jump_over(find(switch_index), start);
+            return;
+        }
+        else {
+            // printf(" is higher\n");
+            switch_index = next_candidate->getId();
+        }
+        next_candidate = next_candidate->getPrev();
+    }
+
+    if (switch_index == start->getId()) {
+        return;
+    }
+
+    // printf("jumping over %d\n", switch_index);
+    // swap(find(switch_index), start);
+    jump_over(find(switch_index), start);
+    return;
+}
+
+void Queue::draw()
+{
+    if (len == 0) {
+        return;
+    }
+    else {
+        Vertex* current = root;
+        Vertex* next = current->getNext();
+        Vertex* prev = current->getPrev();
+
+        if (prev != nullptr) {
+            printf("<-");
+        }
+        else {
+            printf(" |");
+        }
+        printf("R(%d)", root->getId());
+        if (next != nullptr) {
+            printf("->");
+        }
+        else {
+            printf("| ");
+        }
+
+        while (current->getNext() != nullptr) {
+            current = current->getNext();
+            next = current->getNext();
+            prev = current->getPrev();
+            if (prev != nullptr) {
+                printf("<-");
+            }
+            else {
+                printf(" |");
+            }
+            printf("(%d)", current->getId());
+            if (next != nullptr) {
+                printf("->");
+            }
+            else {
+                printf("| ");
+            }
+        }
+
+        printf("\n");
+        return;
+    }
+}
 
 Queue::~Queue()
 {
