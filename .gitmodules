@@ -1,0 +1,3 @@
+[submodule "MII/project/NiebezpiecznyObszar"]
+	path = MII/project/NiebezpiecznyObszar
+	url = git@github.com:ZussmanFranz/NiebezpiecznyObszar.git
