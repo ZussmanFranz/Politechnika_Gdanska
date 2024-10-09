@@ -1,0 +1,3 @@
+FREQUENCY=4
+BACKUPS=3
+PATH=/run/timeshift/93478/backup/timeshift/snapshots

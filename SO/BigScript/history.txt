@@ -1,0 +1,12 @@
+08-05-2024: History officially started
+08-05-2024: FREQUENCY = 4, BACKUPS = 3
+08-05-2024: FREQUENCY changed: 12
+08-05-2024: BACKUPS changed: 12
+08-05-2024: BACKUPS changed: 3
+08-05-2024: FREQUENCY changed: 4
+08-05-2024: BACKUPS changed: 2
+08-05-2024: BACKUPS changed: 3
+08-05-2024: Deleting 1 oldest folders...
+08-05-2024: Deleting 1 oldest folders...
+08-05-2024: Deleting 1 oldest folders...
+14-05-2024: Remaining folders (sorted from oldest to newest): 

@@ -1,0 +1,25 @@
+# Author           : Yauheni Pyryeu ( s201253@student.pg.edu.pl )
+# Created On       : 17.04.2024
+# Last Modified By : Yauheni Pyryeu ( s201253@student.pg.edu.pl )
+# Last Modified On : 20.05.2024
+# Version          : 0.1
+#
+# Description      : 
+#   Skrypt słyży do sterowania chat-botem, zmiany jego kontekstu i parametrów
+#
+# Features         : 
+#   1) otworzyć (i redaktować) kontekst chatu
+#   2) zobaczyć listę uczestników
+#   3) otworzyć (i redaktować) kontekst każdego uczestnika (+ status w chacie)
+#   4) zobaczyć status bota
+#   5) włączyć bota
+#   6) zobaczyć status konta projektu na openai-api (problem z parsowaniem)
+#
+#
+# Technologies     :
+#   1)dialogue
+#   2)dowolny edytor tekstowy (w moim przypadku KWrite)
+#   3)dowolna przeglądarka (w moim przypadku Floorp)
+# Licensed under GPL (see /usr/share/common-licenses/GPL for more details
+# or contact # the Free Software Foundation for a copy)
+
