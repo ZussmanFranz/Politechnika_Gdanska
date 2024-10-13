@@ -3,5 +3,7 @@
         "*.embeddedhtml": "html",
         "string": "cpp",
         "iostream": "cpp"
-    }
+    },
+    "dotnet.preferCSharpExtension": true,
+    "dotnet.defaultSolution": "AKO/exercises/AKO_cw5_gr3_2023/AKO_cw5_gr3_2023.sln"
 }
