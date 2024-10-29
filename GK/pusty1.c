@@ -2,7 +2,6 @@
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <stdlib.h>
-#include <time.h>
 #include <string.h>
 #include <math.h>
 
@@ -11,10 +10,10 @@
 
 int red, green, blue, yellow;
 unsigned long foreground, background;
-XPoint start = {200,200};
-XPoint points[] = {{100,100}, {100 + 50,100 - 100}, {100 + 125,100 - 100}, {100 + 175,100},
- {100 + 125,100}, {100 + 100,100 - 25}, {100 + 75,100 - 25}, {100 + 50,100}, {100,100}};
-
+int bottomY = 200;
+_Bool isDragging = FALSE;
+//                                                     bottom                                               |
+XPoint points[10] = {{100,100}, {200,100}, {200,120}, {120,200}, {200,200}, {200,220}, {100,220}, {100,200}, {180,120}, {100,120}};
 
 //*************************************************************************************************************************
 //funkcja przydzielania kolorow
@@ -30,34 +29,6 @@ int AllocNamedColor(char *name, Display* display, Colormap colormap)
 //*************************************************************************************************************************
 // inicjalizacja zmiennych globalnych okreslajacych kolory
 
-void draw(Display* display, Window window, GC gc){
-  points[0].x = (start.x);
-  points[0].y = (start.y);
-  points[1].x = (start.x + 50);
-  points[1].y = (start.y - 100);
-  points[2].x = (start.x + 125);
-  points[2].y = (start.y - 100);
-  points[3].x = (start.x + 175);
-  points[3].y = (start.y);
-  points[4].x = (start.x + 125);
-  points[4].y = (start.y);
-  points[5].x = (start.x + 100);
-  points[5].y = (start.y - 25);
-  points[6].x = (start.x + 75);
-  points[6].y = (start.y - 25);
-  points[7].x = (start.x + 50);
-  points[7].y = (start.y);
-  points[8].x = (start.x);
-  points[8].y = (start.y);
-  
-  // polygon A
-  // XSetForeground(display, gc, blue);
-  XFillPolygon(display, window, gc, points, 10, Nonconvex, CoordModeOrigin);
-  // half of circle 
-  XSetForeground(display, gc, green);
-  XFillArc(display, window, gc, (start.x + 75) , (start.y - 75) , 25 , 25 , 0, 180*64);
-}
-
 int init_colors(Display* display, int screen_no, Colormap colormap)
 {
   background = WhitePixel(display, screen_no);  //niech tlo bedzie biale
@@ -71,10 +42,22 @@ int init_colors(Display* display, int screen_no, Colormap colormap)
 //*************************************************************************************************************************
 // Glowna funkcja zawierajaca petle obslugujaca zdarzenia */
 
+void draw(Display* display, Window window, GC gc){
+  points[3].y = bottomY;
+  points[4].y = bottomY;
+  points[5].y = bottomY+20;
+  points[6].y = bottomY+20;
+  points[7].y = bottomY;
+  // polygon Z
+  XSetForeground(display, gc, red);
+  XFillPolygon(display, window, gc, points, 10, Convex, CoordModeOrigin);
+  // half of circle 
+  XSetForeground(display, gc, green);
+  XFillArc(display, window, gc, 150, 100, 100, bottomY - 80, 270*64, 180*64);
+}
+
 int main(int argc, char *argv[])
 {
-  srand(time(NULL));
-
   char            icon_name[] = "Grafika";
   char            title[]     = "Grafika komputerowa";
   Display*        display;    //gdzie bedziemy wysylac dane (do jakiego X servera)
@@ -98,8 +81,8 @@ int main(int argc, char *argv[])
   //okresl rozmiar i polozenie okna
   info.x = 100;
   info.y = 150;
-  info.width = 1800;
-  info.height = 1000;
+  info.width = 500;
+  info.height = 300;
   info.flags = PPosition | PSize;
 
   //majac wyswietlacz, stworz okno - domyslny uchwyt okna
@@ -139,12 +122,20 @@ int main(int argc, char *argv[])
       case ButtonPress:
         if (event.xbutton.button == Button1)  // sprawdzenie czy wcisnieto lewy przycisk		
         {
-          GC gc1 = XCreateGC(display, window, 0, 0);
-          start.x = event.xbutton.x;       
-          start.y = event.xbutton.y;
-
-          XSetForeground(display, gc, rand());       
-          
+          // check if it is in the bottom part
+          if (event.xbutton.y > bottomY && event.xbutton.y < bottomY+20 && event.xbutton.x > 100 && event.xbutton.x < 200)
+            isDragging = TRUE;
+          else
+            isDragging = FALSE;
+        }
+        break;
+      case MotionNotify:
+        if (isDragging)
+        {
+          bottomY = event.xmotion.y;
+          if (bottomY < 120)
+            bottomY = 120;
+          XClearWindow(display, window);
           draw(display, window, gc);
         }
         break;
