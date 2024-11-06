@@ -1,0 +1,2 @@
+[[Architektura pamięci fizycznej]]
+[[Endian]]

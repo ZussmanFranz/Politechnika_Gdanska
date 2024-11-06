@@ -1,0 +1,18 @@
+{
+	"nodes":[
+		{"id":"e78c4bce417e29e0","type":"group","x":-360,"y":40,"width":1140,"height":580,"color":"4","label":"MODEL"},
+		{"id":"5d13d49ce1c0b8be","type":"group","x":340,"y":240,"width":390,"height":330,"color":"4","label":"Procesor"},
+		{"id":"1c95c6e1042cbac1","type":"group","x":-320,"y":220,"width":290,"height":157,"color":"4","label":"Pamięć operacyjna"},
+		{"id":"efc0acff0c5b2d5a","type":"text","text":"[[Instrukcja|Instrukcje]]","x":-300,"y":240,"width":250,"height":60,"color":"4"},
+		{"id":"fdff5358b018fd0b","type":"text","text":"Dane","x":-300,"y":300,"width":250,"height":60,"color":"4"},
+		{"id":"ad9595726e5375dd","type":"text","text":"Urządzenia I/O","x":340,"y":80,"width":250,"height":60,"color":"4"},
+		{"id":"4ccca7dfdf38358b","type":"text","text":"Jednostka sterująca (CPU)","x":380,"y":270,"width":250,"height":140,"color":"4"},
+		{"id":"589c2571be70dd95","type":"text","text":"Jednostka arytmetyczno-logiczna (ALU) (Arytmometr)","x":460,"y":460,"width":250,"height":100,"color":"4"}
+	],
+	"edges":[
+		{"id":"b4edfd5febd943de","fromNode":"efc0acff0c5b2d5a","fromSide":"right","toNode":"4ccca7dfdf38358b","toSide":"left"},
+		{"id":"954a4b6e4cb553d3","fromNode":"ad9595726e5375dd","fromSide":"bottom","toNode":"5d13d49ce1c0b8be","toSide":"top","fromEnd":"arrow"},
+		{"id":"b37bd642150b2f5a","fromNode":"fdff5358b018fd0b","fromSide":"right","toNode":"5d13d49ce1c0b8be","toSide":"left","fromEnd":"arrow","label":"magistrala danych"},
+		{"id":"756f5d5106134c2e","fromNode":"4ccca7dfdf38358b","fromSide":"bottom","toNode":"1c95c6e1042cbac1","toSide":"bottom","label":"magistrala adresowa"}
+	]
+}

@@ -1,0 +1,5 @@
+---
+aliases:
+  - Zakres widzialności
+  - Kontekst
+---
