@@ -63,33 +63,10 @@ initialize: bok
 	
 
 Wielokat subclass: #Hexagon
-    instanceVariableNames: ''
-    classVariableNames: 'wspolczynnik my_bok'
+    instanceVariableNames: 'wspolczynnik my_bok'
+    classVariableNames: ''
     poolDictionaries: ''
     category: 'JezykiProgramowania'!
-
-!Hexagon methodsFor: 'initialize-release'!
-
-initialize: bok
-	"tworz sześciokąt foremny o podanym boku"
-	wspolczynnik := (3 * sqrt(3) / 2).
-	my_bok := bok.
-
-    super initialize: 6 name: 'Hexagon'.
-    | angle radianAngle x y |
-    
-    angle := 60.  "Each internal angle in a regular hexagon is 60 degrees"
-    radianAngle := (angle * Float pi / 180).  "Convert angle to radians"
-    
-    x := bok * (radianAngle cos).
-    y := bok * (radianAngle sin).
-
-	"Set up each vertex based on the side length and angles, placing them in a regular hexagon pattern"
-    wierzcholki at: 2 put: x@y.
-    wierzcholki at: 3 put: (x + bok)@y.
-    wierzcholki at: 4 put: (x + x + bok)@0.
-    wierzcholki at: 5 put: (x + bok)@(-y).
-    wierzcholki at: 6 put: x@(-y).! !
 
 !Hexagon methodsFor: 'arithmetic'!
 
@@ -107,7 +84,31 @@ initialize: bok
 pole
     "Licz pole sześciokątu"
 
-    ^wspolczynnik * my_bok * my_bok! !
+    ^(wspolczynnik * my_bok * my_bok)! !
+
+!Hexagon methodsFor: 'initialize-release'!
+
+initialize: bok
+	"tworz sześciokąt foremny o podanym boku"
+    super initialize: 6 name: 'Hexagon'.
+	
+	wspolczynnik := (3 * sqrt(3) / 2).
+	my_bok := bok.
+
+    | angle radianAngle x y |
+    
+    angle := 60.  "Each internal angle in a regular hexagon is 60 degrees"
+    radianAngle := (angle * Float pi / 180).  "Convert angle to radians"
+    
+    x := bok * (radianAngle cos).
+    y := bok * (radianAngle sin).
+
+	"Set up each vertex based on the side length and angles, placing them in a regular hexagon pattern"
+    wierzcholki at: 2 put: x@y.
+    wierzcholki at: 3 put: (x + bok)@y.
+    wierzcholki at: 4 put: (x + x + bok)@0.
+    wierzcholki at: 5 put: (x + bok)@(-y).
+    wierzcholki at: 6 put: x@(-y).! !
 
 
 
