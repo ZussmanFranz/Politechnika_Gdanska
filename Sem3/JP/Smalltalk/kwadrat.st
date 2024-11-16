@@ -145,12 +145,64 @@ Wielokat subclass: #Hexagon
 !
 
 
-" Object subclass: #Circle
+Object subclass: #Circle
 	instanceVariableNames: 'center radius '
 	classVariableNames: ''
 	poolDictionaries: ''
 	category: 'JezykiProgramowania'
-! "
+!
+
+!Circle methodsFor: 'initialize-release'!
+    initialize: newRadius
+        "konstruktor obiektu - wielokata"
+
+		radius := newRadius.
+        center := radius@radius.
+    !
+!
+
+!Circle methodsFor: 'accessing'!
+    radius
+        "gives radius of the circle"
+
+        ^radius
+    !
+
+    radius: new_radius
+        "sets a new radius of the circle"
+
+        radius:=new_radius
+    !
+
+	center
+        "gives center of the circle"
+
+        ^center
+    !
+
+    center: new_center
+        "sets a new center of the circle"
+
+        center:=new_center
+    !
+!
+
+!Circle methodsFor: 'actions'!
+    print
+        "prints circle data"
+
+        Transcript cr; show: 'Figure: Circle'; cr.
+		Transcript show: 'Center : ( ', center x asString, ' , ',  center y asString, ' )'; cr
+		Transcript show: 'Radius : ', radius asString;cr
+        Transcript show: 'Field: ', self pole asString; cr.
+    !
+
+	pole
+        "calculate Circle's field"
+
+        ^ (radius squared)*(Math pi)
+    !
+!
 
 
 rect := (Kwadrat new) initialize: 2.
@@ -173,3 +225,6 @@ hex3 := hex rescale: 2.
 hex3 print.
 rect3 := rect rescale: 0.5.
 rect3 print.
+
+circ := (Circle new) initialize: 2.
+circ print.
