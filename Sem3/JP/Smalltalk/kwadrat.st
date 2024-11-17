@@ -1,6 +1,6 @@
 "Autorzy: Yauheni Pyryeu 201253
           Matsvei Kasparovich 201627
-		  Настя"
+		  Anastazja Kniażewska 196629"
 
 Object subclass: #Wielokat
 	instanceVariableNames: 'wierzcholki nazwa '
@@ -39,7 +39,7 @@ Object subclass: #Wielokat
 
         Transcript cr; show: 'Figure: ', nazwa; cr.
         wierzcholki keysAndValuesDo: [ :index :wierzcholek |
-            Transcript show: 'Vertex ', index asString , ': (', Character tab asString, wierzcholek x asString, ' , ', wierzcholek y asString, ' )'; cr
+            Transcript show: 'Vertex ', index asString , ': (', wierzcholek x asString, ' , ', wierzcholek y asString, ' )'; cr
         ].
         Transcript show: 'Field: ', self pole asString; cr.
     !
@@ -153,11 +153,13 @@ Object subclass: #Circle
 !
 
 !Circle methodsFor: 'initialize-release'!
-    initialize: newRadius
-        "konstruktor obiektu - wielokata"
+    initialize: aRadius center: aPoint
+        "Initialize a Circle with a given radius and center point.
+        - aRadius: Integer representing the radius.
+        - aPoint: Point representing the center of the circle."
 
-		radius := newRadius.
-        center := radius@radius.
+        radius := aRadius.
+        center := aPoint.
     !
 !
 
@@ -165,25 +167,25 @@ Object subclass: #Circle
     radius
         "gives radius of the circle"
 
-        ^radius
+        ^radius.
     !
 
     radius: new_radius
         "sets a new radius of the circle"
 
-        radius:=new_radius
+        radius:=new_radius.
     !
 
 	center
         "gives center of the circle"
 
-        ^center
+        ^center.
     !
 
     center: new_center
         "sets a new center of the circle"
 
-        center:=new_center
+        center:=new_center.
     !
 !
 
@@ -192,15 +194,14 @@ Object subclass: #Circle
         "prints circle data"
 
         Transcript cr; show: 'Figure: Circle'; cr.
-		Transcript show: 'Center : ( ', center x asString, ' , ',  center y asString, ' )'; cr
-		Transcript show: 'Radius : ', radius asString;cr
-        Transcript show: 'Field: ', self pole asString; cr.
+		Transcript show: 'Center : ( ', center x asString, ' , ',  center y asString, ' )'; cr.
+		Transcript show: 'Radius : ', radius asString; cr.
+        Transcript show: 'Field: ', self area asString; cr.
     !
 
-	pole
-        "calculate Circle's field"
-
-        ^ (radius squared)*(Math pi)
+	area
+        "Calculate and return the area of the circle."
+        ^Float pi * (radius squared).
     !
 !
 
@@ -226,5 +227,5 @@ hex3 print.
 rect3 := rect rescale: 0.5.
 rect3 print.
 
-circ := (Circle new) initialize: 2.
+circ := (Circle new) initialize: 2 center: 0@0.
 circ print.
