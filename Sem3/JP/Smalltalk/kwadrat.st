@@ -39,9 +39,9 @@ Object subclass: #Wielokat
 
         Transcript cr; show: 'Figure: ', nazwa; cr.
         wierzcholki keysAndValuesDo: [ :index :wierzcholek |
-            Transcript show: 'Vertex ', index asString , ': (', wierzcholek x asString, ' , ', wierzcholek y asString, ' )'; cr
+            Transcript show: 'Vertex ', index asString , ': ( ', wierzcholek x asString, ' , ', wierzcholek y asString, ' )'; cr
         ].
-        Transcript show: 'Field: ', self pole asString; cr.
+        Transcript show: 'Field: ', self area asString; cr.
     !
 !
 
@@ -59,16 +59,27 @@ Wielokat subclass: #Kwadrat
 
         | p |
 
-        p := self pole + figura pole.
+        p := self area + figura area.
         ^(Kwadrat new) initialize: p sqrt
     !
 !
 
 !Kwadrat methodsFor: 'actions'!
-    pole
-        "licz pole kwadratu"
+    area
+        "calculate the area of rectangle"
 
         ^(wierzcholki at: 2) x squared
+    !
+
+    circumscribe
+        "circumscribe a circle around a Rectangle"
+
+        | cent rad |
+
+        cent := (wierzcholki at: 2) x / 2.
+        rad := ((wierzcholki at: 2) x / 2) * 2 sqrt.
+        Transcript cr; show: 'Circumscribe a figure: ', nazwa, ' by Circle '; cr.
+        ^(Circle new) initialize: rad center: cent@cent
     !
 !
 
@@ -108,16 +119,27 @@ Wielokat subclass: #Hexagon
 
         | p |
 
-        p := self pole + figura pole.
+        p := self area + figura area.
         ^(Hexagon new) initialize: (4*p/((3 sqrt)*6)) sqrt
     !
 !
 
 !Hexagon methodsFor: 'actions'!
-    pole
-        "calculate Hexagon's field"
+    area
+        "calculate Hexagon's area"
 
         ^ 6 * ((wierzcholki at: 6) y squared)*(3 sqrt)/4
+    !
+
+    circumscribe
+        "circumscribe a circle around the Hexagon"
+
+        | cent rad |
+
+        cent := ((wierzcholki at: 2) x)@ ((wierzcholki at: 2) y * -1).
+        rad := (wierzcholki at: 6) y.
+        Transcript cr; show: 'Circumscribe a figure: ', nazwa, ' by Circle '; cr.
+        ^(Circle new) initialize: rad center: cent
     !
 !
 
@@ -136,7 +158,7 @@ Wielokat subclass: #Hexagon
     initialize: bok
         "create regular Hexagon with given side length"
         super initialize: 6 name: 'Hexagon'.
-        wierzcholki at: 2 put: ((3 sqrt) / 2 * bok)@(bok / 2).
+        wierzcholki at: 2 put: ((3 sqrt) / 2 * bok)@(-1 * bok / 2).
         wierzcholki at: 3 put: ((3 sqrt) * bok)@0.
         wierzcholki at: 4 put: ((3 sqrt) * bok)@bok.
         wierzcholki at: 5 put: ((3 sqrt) / 2 * bok)@(bok * 1.5).
@@ -194,9 +216,9 @@ Object subclass: #Circle
         "prints circle data"
 
         Transcript cr; show: 'Figure: Circle'; cr.
-		Transcript show: 'Center : ( ', center x asString, ' , ',  center y asString, ' )'; cr.
-		Transcript show: 'Radius : ', radius asString; cr.
-        Transcript show: 'Field: ', self area asString; cr.
+		Transcript show: 'Center: ( ', center x asString, ' , ',  center y asString, ' )'; cr.
+		Transcript show: 'Radius: ', radius asString; cr.
+        Transcript show: 'Area: ', self area asString; cr.
     !
 
 	area
@@ -204,6 +226,8 @@ Object subclass: #Circle
         ^Float pi * (radius squared).
     !
 !
+
+"Testy:"
 
 
 rect := (Kwadrat new) initialize: 2.
@@ -213,19 +237,34 @@ Transcript show: 'Given Figures:'; cr.
 hex print.
 rect print.
 
-Transcript cr; show: 'hex + rect'.
-hex1 := hex + rect.
+Transcript cr; show: 'Circumscribe figures:'; cr.
+
+new_circ_rect := rect circumscribe.
+new_circ_rect print.
+
+new_circ_hex := hex circumscribe.
+new_circ_hex print.
+
+rect1 := rect rescale: 0.5.
+rect1 print.
+new_circ_rect := rect1 circumscribe.
+new_circ_rect print.
+
+hex1 := hex rescale: 2.
 hex1 print.
+new_circ_hex := hex1 circumscribe.
+new_circ_hex print.
+
+
+Transcript cr; show: 'hex + rect'.
+hex2 := hex + rect.
+hex2 print.
 
 Transcript cr; show: 'rect + hex'.
-rect1 := rect + hex.
-rect1 print.
+rect2 := rect + hex.
+rect2 print.
 
-
-hex3 := hex rescale: 2.
-hex3 print.
-rect3 := rect rescale: 0.5.
-rect3 print.
-
+Transcript show: 'Circle initialization:'; cr.
 circ := (Circle new) initialize: 2 center: 0@0.
 circ print.
+
