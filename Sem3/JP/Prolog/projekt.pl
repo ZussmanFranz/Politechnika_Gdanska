@@ -1,23 +1,21 @@
-% Sortowanie szybkie (Quick Sort)
+% Autorzy: 201253 196629 201627
+% 3. sortowanie przez wybieranie (selection Sort)
 
-podziel_szybkie(_, [], [], []).
-podziel_szybkie(Pivot, [H | T], Mniejsze, [H | WiekszeRowne]) :-
-    H > Pivot,
-    podziel_szybkie(Pivot, T, Mniejsze, WiekszeRowne).
-podziel_szybkie(Pivot, [H | T], [H | Mniejsze], WiekszeRowne) :-
-    H =< Pivot,
-    podziel_szybkie(Pivot, T, Mniejsze, WiekszeRowne).
+usun_max([X], X, []).
+usun_max([H | T], M, [H | R]) :-
+    usun_max(T, M1, R),
+    H =< M1,
+    M is M1.
+usun_max([H | T], M, [M1 | R]) :-
+    usun_max(T, M1, R),
+    H > M1,
+    M is H.
 
-sortuj_szybkie([], []).
-sortuj_szybkie([H | T], S) :-
-    podziel_szybkie(H, T, Mniejsze, WiekszeRowne),
-    sortuj_szybkie(Mniejsze, SMniejsze),
-    sortuj_szybkie(WiekszeRowne, SWiekszeRowne),
-    polacz(SWiekszeRowne, [H | SMniejsze], S).
-
-polacz([],L,L).
-polacz([H|T],L2,[H|Res]):- polacz(T,L2,Res).
+sortuj_wybieranie([], []).
+sortuj_wybieranie(L, [M | S]) :-
+    usun_max(L, M, R),
+    sortuj_wybieranie(R, S).
 
 % Predykat główny sortuj/2
 sortuj(L, S) :-
-    sortuj_szybkie(L, S).
+    sortuj_wybieranie(L, S).
