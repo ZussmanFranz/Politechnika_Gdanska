@@ -16,7 +16,7 @@ qlist(pqueue *head, void (*print_data)(void *)) {
 
 void
 qinsert(pqueue **phead, void *data, int k) {
-	pqueue *new_node = malloc(sizeof(pqueue));
+	pqueue *new_node = (pqueue*)malloc(sizeof(pqueue));
 
     if (new_node == NULL) {
         fprintf(stderr, "Memory allocation error\n");
