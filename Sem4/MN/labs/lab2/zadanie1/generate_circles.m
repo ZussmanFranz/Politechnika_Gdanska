@@ -1,11 +1,9 @@
 function [circles, a, b, r_max] = generate_circles(n_max)
     % GENERATE_CIRCLES losuje n_max okręgów wpisanych w prostokąt
-    %
-    % [circles, a, b, r_max] = generate_circles(n_max)
-    %
+    
     % wejście:
     %   n_max - liczba okręgów do wylosowania
-    %
+    
     % wyjście:
     %   circles - macierz [n x 3], gdzie każdy wiersz to [X, Y, R] określający środek i promień okręgu
     %   a, b  - wymiary prostokąta (wierzchołki: (0,0), (a,0), (a,b), (0,b))
@@ -33,8 +31,8 @@ function [circles, a, b, r_max] = generate_circles(n_max)
         end
         
         % Losowanie środka okręgu, aby okrąg mieścił się całkowicie w prostokącie
-        X = R + (a - 2*R)*rand;
-        Y = R + (b - 2*R)*rand;
+        X = R + (a - 2*R)*rand; % X ∈ [R, a - R]
+        Y = R + (b - 2*R)*rand; % Y ∈ [R, b - R]
         
         % Sprawdzamy, czy nowy okrąg nie przecina żadnego już zaakceptowanego
         valid = true;
