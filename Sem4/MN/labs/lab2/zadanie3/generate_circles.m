@@ -18,9 +18,13 @@ function [circles, a, b, r_max] = generate_circles(n_max)
     
     circles = zeros(n_max, 3); % inicjalizacja macierzy wynikowej
     count = 0;                % licznik zaakceptowanych okręgów
-    
+    attempts = 0;
+    rand_counts = zeros(1,n_max);
+    counts_mean = zeros(1,n_max);
+
     while count < n_max
-        
+        attempts = attempts + 1;
+
         % Losowanie promienia z zakresu (0, r_max]
         R = r_max * rand;
         if R == 0
@@ -47,7 +51,22 @@ function [circles, a, b, r_max] = generate_circles(n_max)
         if valid
             count = count + 1;
             circles(count, :) = [X, Y, R];
+            rand_counts(1,count) = attempts;
+            counts_mean(1,count) = sum(rand_counts) / count;
+            attempts = 0;
         end
     end
+
+    subplot(2,1,1)
+    plot(rand_counts)
+    title("Number of attempts for each circle")
+    xlabel("Number of circle")
+    ylabel("Number of attempts")
+
+    subplot(2,1,2)
+    plot(counts_mean)
+    title("Mean number of attempts for each number of circles")
+    xlabel("Number of circles")
+    ylabel("Mean number of attempts")
 end
     
