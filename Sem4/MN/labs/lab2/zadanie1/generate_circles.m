@@ -18,11 +18,8 @@ function [circles, a, b, r_max] = generate_circles(n_max)
     
     circles = zeros(n_max, 3); % inicjalizacja macierzy wynikowej
     count = 0;                % licznik zaakceptowanych okręgów
-    max_attempts = 10000;     % maksymalna liczba prób (aby uniknąć nieskończonej pętli)
-    attempts = 0;
     
-    while count < n_max && attempts < max_attempts
-        attempts = attempts + 1;
+    while count < n_max
         
         % Losowanie promienia z zakresu (0, r_max]
         R = r_max * rand;
@@ -51,11 +48,6 @@ function [circles, a, b, r_max] = generate_circles(n_max)
             count = count + 1;
             circles(count, :) = [X, Y, R];
         end
-    end
-    
-    if count < n_max
-        warning('Umieszczono tylko %d okręgów spośród żądanych %d.', count, n_max);
-        circles = circles(1:count, :);
     end
 end
     
