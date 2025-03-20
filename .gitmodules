@@ -4,3 +4,6 @@
 [submodule "Sem3/MII/NiebezpiecznyObszar"]
 	path = Sem3/MII/NiebezpiecznyObszar
 	url = git@github.com:ZussmanFranz/NiebezpiecznyObszar.git
+[submodule "Sem4/PT"]
+	path = Sem4/PT
+	url = git@git.pg.edu.pl:p1501108/pt_d3_gb_j_lavrinov_pyryeu_wolinski.git
