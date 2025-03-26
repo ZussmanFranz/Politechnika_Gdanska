@@ -1,0 +1,181 @@
+{
+  "main": {
+    "id": "62ba7f48d7e586bb",
+    "type": "split",
+    "children": [
+      {
+        "id": "b45dd45deecca697",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "30462226d509b069",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Sprawozdanie.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Sprawozdanie"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "5a815962cbd8c9a9",
+    "type": "split",
+    "children": [
+      {
+        "id": "f0341d84534ed90d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6c5a97ecd626e30f",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "959bceb8ae3dd5ff",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "1b544d671b1115e8",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "45f327af6f729882",
+    "type": "split",
+    "children": [
+      {
+        "id": "4d55e8cad4043b7f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "b38fac0f671de872",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Sprawozdanie.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Sprawozdanie"
+            }
+          },
+          {
+            "id": "3d0f13c79f1c3b4d",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Sprawozdanie.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Sprawozdanie"
+            }
+          },
+          {
+            "id": "cce85ade270ba2ff",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "6dbab9b3f867a0c6",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Sprawozdanie.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Sprawozdanie"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "30462226d509b069",
+  "lastOpenFiles": [
+    "MACDminusSIGNAL_example.png",
+    "MACDandSIGNAL_example.png",
+    "BUY_SELL_example.png",
+    "USD_capital_history.png",
+    "summary_plot.png",
+    "BUY_SELL_signals.png",
+    "Sprawozdanie.md"
+  ]
+}
