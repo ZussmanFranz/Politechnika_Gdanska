@@ -26,5 +26,16 @@ function [A,b,x,vec_time_direct] = benchmark_solve_direct(vN)
     
         vec_time_direct(i) = toc;
     end
+
+    % Wykres zależności czasu od rozmiaru macierzy
+    figure;
+    plot(vN, vec_time_direct, '-o', 'LineWidth', 2);
+    xlabel('Rozmiar macierzy N');
+    ylabel('Czas obliczeń (s)');
+    title('Czas rozwiązania metodą LU w zależności od rozmiaru macierzy');
+    grid on;
+
+    % Zapis wykresu do pliku
+    print('zadanie2.png', '-dpng');
     
-    end
+end
