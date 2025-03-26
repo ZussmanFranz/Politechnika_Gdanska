@@ -5,6 +5,7 @@ from math import inf
 
 def basic_static_eval(connect4, player="o"):
     # TODO
+    opponent = "x" if player == "o" else "o"
 
     # If wygrana przegrana remis: +infinity -infinity 0
     over = connect4._check_game_over()
@@ -17,8 +18,23 @@ def basic_static_eval(connect4, player="o"):
             return -inf # przegrana
 
     # Else: Nczwórek (mój token) z trzema moimi znakami - Nczwórek (oponent) z trzema znakami (funkcja iter_fours)
+    N3player = 0
+    N3opponent = 0
+    
+    fours = connect4.iter_fours()
+    
+    for four in fours:
+        player_count = four.count(player)
+        opponent_count = four.count(opponent)
+        empty_count = 4 - (player_count + opponent_count)
 
-    return 0  # return score for player
+        if player_count == 3 and empty_count == 1:
+            N3player += 1
+        elif opponent_count == 3 and empty_count == 1:
+            N3opponent += 1
+
+
+    return (N3player - N3opponent)  # return score for player
 
 
 def advanced_static_eval(connect4, player="o"):
@@ -40,9 +56,27 @@ class MinMaxAgent:
 
     def minmax(self, connect4, depth=4, maximizing=True):
         # TODO
-
-        # Używamy basic static eval
-
+        if depth == 0 or connect4._check_game_over():
+            return None, self.heuristic_func(connect4, self.my_token)
+        
         best_move = None
         best_score = 0
+
+        # Używamy basic static eval
+        score = self.heuristic_func(connect4, self.my_token)
+
+        if maximizing:
+            best_score = -inf
+        else:
+            best_score = inf
+
+        for move in connect4.possible_drops():
+            new_board = copy.deepcopy(connect4)
+            new_board.drop_token(move)
+
+            _, score = self.minmax(new_board, depth - 1, not maximizing)
+            if score > best_score:
+                best_score = score
+                best_move = move
+
         return best_move, best_score
