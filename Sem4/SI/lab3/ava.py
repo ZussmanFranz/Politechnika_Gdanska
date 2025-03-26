@@ -1,28 +1,28 @@
 from exceptions import GameplayException
 from connect4 import Connect4
 from randomagent import RandomAgent
-from minmaxagent import MinMaxAgent
-# from alphabetaagent import AlphaBetaAgent
-
-def play(connect4, agent1, agent2):
-    while not connect4.game_over:
-        connect4.draw()
-        try:
-            if connect4.who_moves == agent1.my_token:
-                n_column = agent1.decide(connect4)
-            else:
-                n_column = agent2.decide(connect4)
-            connect4.drop_token(n_column)
-        except (ValueError, GameplayException):
-            print('invalid move')
-
-    connect4.draw()
+from minmaxagent import MinMaxAgent, advanced_static_eval
+from alphabetaagent import AlphaBetaAgent
+from tournament import tournament
 
 connect4 = Connect4(width=7, height=6)
-agent1 = MinMaxAgent('x')
+# agent1 = AlphaBetaAgent('x')
+agent1 = MinMaxAgent('x', heuristic_func=advanced_static_eval)
 agent2 = RandomAgent('o')
-# agent2 = AlphaBetaAgent('x')
 
-play(connect4, agent1, agent2)
+print("\t\tMinMax tournament:\n")
+# tournament(connect4, agent1, agent2, 5, 2)
 
-# Napisać metodę, żeby było 5 razy O 5 razy X u naszego minmaxa
+agent1 = AlphaBetaAgent('x')
+agent2 = RandomAgent('o')
+
+print("\t\tAlphaBeta tournament:\n")
+tournament(connect4, agent1, agent2, 5, 2)
+
+agent1 = MinMaxAgent('x')
+# agent1 = AlphaBetaAgent('x', heuristic_func=advanced_static_eval)
+agent2 = AlphaBetaAgent('o')
+# agent2 = RandomAgent('o')
+
+print("\t\tAlphaBeta advanced vs basic")
+tournament(connect4, agent1, agent2, 5, 2)
