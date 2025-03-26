@@ -10,18 +10,40 @@ function [A,b,L,U,P,y,x,r_norm,t_factorization,t_substitution,t_direct] = solve_
 % t_substitution - czas wyznaczenia rozwiązań równań z macierzami trójkątnymi L i U
 % t_direct - czas wyznaczenia rozwiąznia równania macierzowego metodą LU
 
-N = 10;
-[A,b] = generate_matrix(N);
+% Określenie rozmiaru macierzy N w zakresie 5000-9000
+N = randi([5000, 9000]);  
+    
+% Generowanie macierzy A i wektora b
+[A, b] = generate_matrix(N);
 
 
-x = [];
-y = [];
-L = [];
-U = [];
-P = [];
-r_norm = [];
-t_factorization = [];
-t_substitution = [];
-t_direct = [];
+% Pomiar czasu faktoryzacji LU
+tic;
+[L, U, P] = lu(A);
+t_factorization = toc;
+
+% Pomiar czasu podstawień w przód i wstecz
+tic;
+y = L \ (P * b); % Forward substitution
+x = U \ y;       % Back substitution
+t_substitution = toc;
+
+% Całkowity czas rozwiązania
+t_direct = t_factorization + t_substitution;
+
+% Obliczenie normy residuum
+r_norm = norm(A * x - b);
+
+% Wykres czasu obliczeń
+figure;
+r = [t_direct, t_factorization, t_substitution];
+bar(r);
+xlabel('Etap obliczeń');
+ylabel('Czas (s)');
+title('Czas obliczeń metodą LU');
+set(gca, 'XTickLabel', {'Całkowity', 'Faktoryzacja', 'Podstawienia'});
+
+% Zapis wykresu do pliku
+print('zadanie1.png', '-dpng');
 
 end
