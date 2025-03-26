@@ -25,15 +25,15 @@ function [A,b,M,w,x,r_norm,iteration_count] = solve_Jacobi()
     
     M = -D \ (L + U);
     w = D \ b;
-    x = ones(N,1);
+    x = ones(N, 1);
     
     
-    inorm = norm(A*x-b);
+    inorm = norm(A * x - b);
     r_norm = inorm;
     while(inorm>1e-12 && iteration_count<1000)
         x = M*x + w; % Aktualizacja rozwiązania
-        inorm = norm(A*x-b);
-        iteration_count = iteration_count+1;
+        inorm = norm(A * x - b);
+        iteration_count = iteration_count + 1;
         r_norm = [ r_norm, inorm ];
     end
     
