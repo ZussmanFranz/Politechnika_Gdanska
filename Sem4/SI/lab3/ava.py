@@ -5,8 +5,9 @@ from minmaxagent import MinMaxAgent
 from alphabetaagent import AlphaBetaAgent
 
 connect4 = Connect4(width=7, height=6)
-agent1 = RandomAgent('o')
-agent2 = AlphaBetaAgent('x')
+agent1 = MinMaxAgent('x')
+agent2 = RandomAgent('o')
+# agent2 = AlphaBetaAgent('x')
 while not connect4.game_over:
     connect4.draw()
     try:
@@ -19,3 +20,5 @@ while not connect4.game_over:
         print('invalid move')
 
 connect4.draw()
+
+# Napisać metodę, żeby było 5 razy O 5 razy X u naszego minmaxa
