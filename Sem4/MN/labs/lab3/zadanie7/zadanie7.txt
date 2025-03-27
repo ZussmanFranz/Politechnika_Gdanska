@@ -1,3 +1,15 @@
-Utwórz plik zadanie7.txt i skomentuj w nim osiągnięte rezultaty obliczeń, 
-w tym przede wszystkim wskaż, czy metody iteracyjne są zbieżne dla badanego problemu 
-oraz oceń wartości trzech wyznaczonych norm residuów.
+Wyniki działania funkcji są następujące:
+
+    residuum_norm_direct = 7.086626e-13;
+    residuum_norm_Jacobi = NaN;
+    residuum_norm_Gauss_Seidel = 6.436735e+10;
+
+Możemy zauważyć, że metody iteracyjne są rozbierzne dla badanego problemu. 
+Natomiast metoda bezpośrednia wykazuje w miare dobre rozwiązanie (metody iteracyjne najczęściej kończą swoje
+działanie przy osiągnięciu wartości <= 1.0e-12, więc można powiedzieć, że nie jest gorsze od rozwiązań 
+oczekiwanych od metod iteracyjnych). 
+
+Rozbierzność wynika z tego, że macierz rzadka niekoniecznie spełnia warunki zbieżności metod Jacobi oras Gauss-Seidel.
+
+Na przykład warunkiem zbieżności metody Gauss-Seidla jest to, że macierz A ma być przekątnie dominująca.
+

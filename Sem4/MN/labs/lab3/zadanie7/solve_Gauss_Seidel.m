@@ -1,4 +1,4 @@
-function [A,b,U,T,w,x,r_norm,iteration_count] = solve_Gauss_Seidel()
+function [x,r_norm] = solve_Gauss_Seidel(A, b)
     % A - macierz z równania macierzowego A * x = b
     % b - wektor prawej strony równania macierzowego A * x = b
     % U - macierz trójkątna górna, która zawiera wszystkie elementy macierzy A powyżej głównej diagonalnej,
@@ -10,11 +10,11 @@ function [A,b,U,T,w,x,r_norm,iteration_count] = solve_Gauss_Seidel()
     % iteration_count - liczba iteracji wymagana do wyznaczenia rozwiązania
     %       metodą Gaussa-Seidla
     
-    N = randi([5000, 9000]);
+    N = length(A);
+
     tol = 1e-12; % Tolerancja dla normy residuum
     max_iter = 1000; % Maksymalna liczba iteracji
 
-    [A,b] = generate_matrix(N);
     
     % Podział macierzy A na składowe
     D = diag(diag(A)); % Macierz diagonalna
@@ -38,15 +38,15 @@ function [A,b,U,T,w,x,r_norm,iteration_count] = solve_Gauss_Seidel()
         r_norm = [r_norm, inorm];
     end
     
-    % Wykres normy residuum w skali logarytmicznej
-    figure;
-    semilogy(0:iteration_count, r_norm, '-o', 'LineWidth', 2);
-    xlabel('Liczba iteracji');
-    ylabel('Norma residuum ||Ax - b||');
-    title('Zbieżność metody Gaussa Seidla');
-    grid on;
+    % % Wykres normy residuum w skali logarytmicznej
+    % figure;
+    % semilogy(0:iteration_count, r_norm, '-o', 'LineWidth', 2);
+    % xlabel('Liczba iteracji');
+    % ylabel('Norma residuum ||Ax - b||');
+    % title('Zbieżność metody Gaussa Seidla');
+    % grid on;
 
-    % Zapis wykresu do pliku
-    print('zadanie5.png', '-dpng');
+    % % Zapis wykresu do pliku
+    % print('Gauss_Seidel.png', '-dpng');
 
 end
