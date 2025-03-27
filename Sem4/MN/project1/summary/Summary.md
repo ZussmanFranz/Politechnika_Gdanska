@@ -72,7 +72,8 @@ Na poniższym wykresie przedstawione pierwsze 10 punktów oryginalnego wykresu "
 ![[MACDandSIGNAL_example.png]]
 
 ---
-<div style="page-break-after: always;"></div> 
+<div style="page-break-after: always;"></div>
+
 ### 3.3 Histogram MACD
 
 Histogram MACD ukazuje dynamikę trendu, obrazując siłę ruchów cenowych.
@@ -87,6 +88,7 @@ Na poniższym wykresie przedstawione pierwsze 10 punktów oryginalnego wykresu "
 ---
 
 <div style="page-break-after: always;"></div>
+
 ## 4. Sygnały transakcyjne
 
 Na wykresie poniżej zaznaczono punkty kupna i sprzedaży dla całego okresu analizy.
@@ -102,7 +104,6 @@ Można zauważyć, że MACD generował zarówno zyskowne, jak i stratne sygnały
 
 ---
 
-<div style="page-break-after: always;"></div>
 ## 5. Symulacja strategii inwestycyjnej na podstawie MACD
 
 ### 5.1 Wyniki pojedynczych transakcji
@@ -115,6 +116,7 @@ Po prawej stronie widać wykres, obliczający sumaryczną proporcję zyskanych i
 
 ---
 <div style="page-break-after: always;"></div>
+
 ### 5.2 Krzywa kapitału
 
 ![[USD_capital_history.png]]
