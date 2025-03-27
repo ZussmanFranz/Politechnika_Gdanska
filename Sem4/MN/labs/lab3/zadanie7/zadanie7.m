@@ -1,1 +1,0 @@
-% open("filtr_dielektryczny") ??

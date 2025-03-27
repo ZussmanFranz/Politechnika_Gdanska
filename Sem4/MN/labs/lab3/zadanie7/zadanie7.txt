@@ -1,0 +1,3 @@
+Utwórz plik zadanie7.txt i skomentuj w nim osiągnięte rezultaty obliczeń, 
+w tym przede wszystkim wskaż, czy metody iteracyjne są zbieżne dla badanego problemu 
+oraz oceń wartości trzech wyznaczonych norm residuów.
