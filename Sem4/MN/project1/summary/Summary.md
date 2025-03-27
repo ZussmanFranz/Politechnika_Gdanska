@@ -23,7 +23,7 @@ SIGNAL(i) = EMA_{9}(MACD(i))
 $$
 - **Histogram MACD**: różnica między linią MACD a linią sygnału.
 
-Sygnały transakcyjne generowane są poprzez przecięcia linii MACD oraz sygnału. Przecięcie linii MACD od dołu przez linię sygnału sugeruje sygnał kupna, a przecięcie od góry – sygnał sprzedaży.
+Sygnały transakcyjne generowane są poprzez przecięcia linii MACD oraz sygnału. Przecięcie linii MACD od dołu przez linię sygnału sugeruje sygnał kupna, a przecięcie od góry – sygnał sprzedaży. Przecięcie odbywa się przy zmianie znaku kolejnych słupków histogramu odnośnie poprzednich słupków.
 
 ### 1.3 Wykładnicza średnia krocząca (EMA)
 
@@ -65,6 +65,8 @@ Analizę przeprowadzono na podstawie dziennych cen zamknięcia kryptowaluty Sola
 ### 3.1 Wykres cenowy kryptowaluty SOL
 
 W analizowanym okresie ceny SOL doświadczyły dwóch dużych cykli wzrostowych oraz spadkowych. Maksymalna cena przekroczyła 250 USD w 2021 roku, po czym nastąpiła korekta i ponowny wzrost cen w 2024.
+
+Na osi X można zauważyć tak zwane **record indexes**, czyli indeksy notowań, co w praktyce oznacza numer dnia od początku notowania danej kryptowaluty.
 
 ![[SOL_full_price_history.png]]
 ![[SOL_price_history.png]]
@@ -115,64 +117,68 @@ Poniższe wykresy przedstawiają szczegółowe wyniki symulacji transakcji wykon
 
 ![[profits.png]]
 
-Na wykresie widoczne są poszczególne transakcje wraz z osiągniętym zyskiem lub stratą wyrażoną w dolarach. Widoczne są zarówno transakcje wyjątkowo zyskowne, jak i stratne, co podkreśla zmienność strategii MACD na rynku kryptowalut.
+Na wykresie widoczne są poszczególne transakcje wraz z osiągniętym zyskiem lub stratą wyrażoną w procencie kapitału przed transakcją. Widoczne są zarówno transakcje wyjątkowo zyskowne, jak i stratne, co podkreśla zmienność strategii MACD na rynku kryptowalut.
 
-Na wykresie widać rozkład procentowy zysków i strat z poszczególnych transakcji. Większość strat oscyluje w okolicach –20%, choć niektóre sięgają nawet –60%. Po stronie zysków można zauważyć grupę transakcji o dodatnich wynikach w zakresie od kilku do kilkudziesięciu procent, przy czym najwyższa zaobserwowana wartość to około +80%. Nie widać tu jednak żadnych ekstremalnie wysokich zysków, co oznacza, że ogólny wynik strategii nie jest zdominowany przez pojedynczą, wyjątkowo dochodową transakcję.
+Większość strat oscyluje w okolicach –20%. Po stronie zysków można zauważyć grupę transakcji o dodatnich wynikach w zakresie od kilku do kilkudziesięciu procent, przy czym najwyższa zaobserwowana wartość to około +22%. Nie widać tu jednak żadnych ekstremalnie wysokich zysków, co oznacza, że ogólny wynik strategii nie jest zdominowany przez pojedynczą, wyjątkowo dochodową transakcję.
 
+Po prawej stronie widać wykres, obliczający sumaryczną proporcję zyskanych i straconych dolarów. Jak widać, różnica zyskanej i straconej sumy wynosi około 5%. To jest spowodowane tym faktem, że historia cen na badanym odcinku demonstruje jak globalne podniesienie, tak i globalny spadek.  
 ### 5.2 Krzywa kapitału w czasie
 
 ![[USD_capital_history.png]]
 
-Poniższy wykres przedstawia zmiany kapitału początkowego (1000 USD) w całym okresie analizy (2021–2024). Wykres ten obrazuje ogólną efektywność strategii inwestycyjnej opartej na wskaźniku MACD, pokazując zarówno okresy znaczących zysków, jak i dużych spadków kapitału.
-
-Z wykresu Equity Curve można wyciągnąć następujące wnioski:
-
-- **2021 rok:** Wyraźny i szybki wzrost kapitału do około 15 000 USD, związany z dynamicznym wzrostem ceny SOL.
-- **2022 rok:** Bardzo silne obsunięcie kapitału (drawdown przekraczający 80%), co ukazuje wysokie ryzyko inwestowania w kryptowaluty.
-- **2023 rok:** Początek powrotu do zysków, z powolnym, ale wyraźnym odrabianiem wcześniejszych strat.
-- **2024 rok:** Dalszy umiarkowany wzrost kapitału, co sugeruje stabilizację strategii.
+Powyższy wykres przedstawia zmiany kapitału początkowego (`1000 USD`) w całym okresie analizy (200 dni, `2021-07-20` - `2022-02-04`) w porównaniu do tak zwanego "Lazy trading" (czyli notowania wartości początkowego kapitału SOL w każdym odpowiednim punkcie, co pozwala ocenić efektywność algorytmu MACD nie uwzględniając wahanie ceny za jednostkę SOL). Wykres ten obrazuje ogólną efektywność strategii inwestycyjnej opartej na wskaźniku MACD, pokazując zarówno okresy znaczących zysków, jak i dużych spadków kapitału.
 
 Przeprowadzono symulację strategii opartej na następujących założeniach:
 
 - Kapitał początkowy: **1000 USD**
-- Koszty transakcyjne: **0,1%**
-- Poślizg cenowy: **0,1%**
-
-Wyniki symulacji:
-
-- **Kapitał końcowy:** **35 323,45 USD**
-- **Całkowita stopa zwrotu:** **3432,35%**
-- **Maksymalny drawdown:** **-82,86%**
-- **Ilość transakcji:** **49**
+- Kapitał końcowy: **12665 USD**
+- Całkowita stopa zwrotu: **1166%**
+- "Leniwy" kapitał końcowy: **4798 USD**
+- Przewaga MACD nad "Leniwym" algorytmem: **7867 USD** 
+- Ilość transakcji: **60**
 
 Tabela przykładowych transakcji wraz z wynikami (Profit/Loss %):
 
-| Data zakupu | Cena zakupu | Data sprzedaży | Cena sprzedaży | Zysk/Strata (%) |
-| ----------- | ----------- | -------------- | -------------- | --------------- |
-| 2021-01-03  | 2.187       | 2021-01-21     | 2.994          | +26.87 %        |
-| 2021-01-30  | 4.222       | 2021-02-17     | 8.222          | +48.6 %         |
-| 2021-07-24  | 28.679      | 2021-09-14     | 158.761        | +81.92%         |
-| 2022-05-21  | 50.30       | 2022-06-14     | 29.480         | -70.79 %        |
-| 2023-01-02  | 11.291      | 2023-01-28     | 23.986         | +52.88 %        |
-| 2024-02-28  | 119.09      | 2024-03-23     | 172.547        | +30.91 %        |
+| #   | Buy Date   | Buy Price | Sell Date  | Sell Price | Profit (USD) | Profit (%) |
+| --- | ---------- | --------- | ---------- | ---------- | ------------ | ---------- |
+| 1   | 2021-07-20 | 23.46     | 2021-07-23 | 28.51      | 5.05         | 21.53%     |
+| 2   | 2021-07-24 | 28.65     | 2021-07-26 | 28.22      | -0.43        | -1.50%     |
+| 3   | 2021-07-27 | 28.14     | 2021-07-29 | 31.28      | 3.14         | 11.16%     |
+| 4   | 2021-08-01 | 34.20     | 2021-08-03 | 34.11      | -0.09        | -0.26%     |
+| 5   | 2021-08-05 | 37.37     | 2021-08-06 | 39.52      | 2.15         | 5.75%      |
+| 6   | 2021-08-07 | 39.48     | 2021-08-09 | 38.69      | -0.79        | -2.00%     |
+| 7   | 2021-08-11 | 41.66     | 2021-08-12 | 41.09      | -0.57        | -1.37%     |
+| 8   | 2021-08-15 | 53.53     | 2021-08-16 | 62.15      | 8.62         | 16.10%     |
+| 9   | 2021-08-18 | 72.79     | 2021-08-20 | 78.68      | 5.89         | 8.09%      |
+| 10  | 2021-08-21 | 73.89     | 2021-08-22 | 72.75      | -1.14        | -1.54%     |
 
 ---
 
 ## 6. Szczegółowa analiza
 
 Poniższe wykresy przedstawiają szczegółową analizę wyników strategii inwestycyjnej opartej na MACD:
+## 6.1 Okres badany
 
 ![[summary_plot.png]]
+
+## 6.2 Przykłady innych okresów
+### 2021-01-01 : 2021-11-17
+![[0_320.png]]
+### 2021-01-01 : 2022-05-16
+![[0_500.png]]
+### 2022-05-16 : 2023-09-28
+![[500_1000.png]]
+### 2023-09-28 : 2024-09-29
+![[1000_end.png]]
 
 ---
 ## 7. Podsumowanie i wnioski końcowe
 
 Przeprowadzona analiza skuteczności strategii opartej na wskaźniku MACD dla kryptowaluty Solana (SOL) pozwala na wyciągnięcie następujących wniosków:
 
-- **Wskaźnik MACD** okazał się szczególnie efektywny w warunkach silnych trendów wzrostowych, co było widoczne podczas dynamicznych wzrostów w 2021 roku. W takich okresach strategia generowała wysokie zyski, osiągając roczną stopę zwrotu na poziomie aż **1403,34%**.
-- Strategia wykazuje jednak znaczne słabości w okresach silnych spadków i zwiększonej zmienności cenowej, co pokazał rok 2022, kiedy maksymalny drawdown wyniósł aż **–82,86%**, a roczna stopa zwrotu spadła do **–77,78%**.
-- W latach 2023–2024 nastąpiła stopniowa stabilizacja wyników, charakteryzująca się umiarkowanymi, lecz konsekwentnymi wzrostami. Świadczy to o możliwości częściowego odzyskiwania strat po dużych obsunięciach kapitału, jednak podkreśla również potrzebę lepszego zarządzania ryzykiem.
-- Pomimo ostatecznie wysokiego wyniku końcowego (**3432,35%** za cały analizowany okres), strategia cechowała się dużą zmiennością i znacznym ryzykiem, wynikającym głównie z dużych strat w pojedynczych transakcjach.
+- **Wskaźnik MACD** okazał się szczególnie efektywny w warunkach silnych trendów wzrostowych, co było widoczne podczas dynamicznych wzrostów w 2021 roku. W takich okresach strategia generowała wysokie zyski.
+- Strategia wykazuje jednak znaczne słabości w okresach silnych spadków i zwiększonej zmienności cenowej, co pokazała między innymi druga połowa okresu badanego.
+- Pomimo ostatecznie wysokiego wyniku końcowego (**1166%** za cały analizowany okres), strategia cechowała się dużą zmiennością i znacznym ryzykiem, wynikającym głównie z dużych strat w pojedynczych transakcjach.
 
 W celu poprawienia stabilności oraz efektywności strategii inwestycyjnej opartej na MACD zalecane jest:
 

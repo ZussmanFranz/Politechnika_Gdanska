@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Sprawozdanie.md",
+                "file": "Summary.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Sprawozdanie"
+              "title": "Summary"
             }
           }
         ]
@@ -170,12 +170,16 @@
   },
   "active": "30462226d509b069",
   "lastOpenFiles": [
+    "1000_end.png",
+    "500_1000.png",
+    "0_500.png",
+    "0_320.png",
     "MACDminusSIGNAL_example.png",
     "MACDandSIGNAL_example.png",
     "BUY_SELL_example.png",
     "USD_capital_history.png",
     "summary_plot.png",
     "BUY_SELL_signals.png",
-    "Sprawozdanie.md"
+    "Summary.md"
   ]
 }
