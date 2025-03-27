@@ -3,11 +3,15 @@
 **Autor:** Yauheni Pyryeu  
 **Data:** 26.03.2025 r.
 
+
+
 ## 1. Wprowadzenie
 
 ### 1.1 Cel analizy
 
 Niniejsza analiza koncentruje się na wskaźniku MACD (**Moving Average Convergence Divergence**) w kontekście kryptowaluty Solana (SOL). Celem badania było zrozumienie działania wskaźnika, jego implementacja, wizualizacja wyników, a także ocena skuteczności strategii inwestycyjnej opartej na sygnałach MACD.
+
+
 
 ### 1.2 Charakterystyka wskaźnika MACD
 
@@ -19,18 +23,23 @@ Wskaźnik MACD składa się z trzech kluczowych elementów:
 
 Sygnały transakcyjne są generowane w momencie przecięcia się linii MACD i sygnałowej. Gdy MACD przecina linię sygnałową od dołu, oznacza to sygnał kupna, natomiast przecięcie od góry sugeruje sygnał sprzedaży.
 
+<div style="page-break-after: always;"></div>
+
+
 ### 1.3 Wykładnicza średnia krocząca (EMA)
 
 Wartość EMA w danym dniu $i$ obliczana jest na podstawie następującego wzoru:
+
 $$ EMA_N(i) = \alpha*x_i + (1-\alpha)\times EMA_N(i-1) $$
 
 Gdzie: 
 - $x_i$​ – cena zamknięcia w bieżącym dniu (lub okresie) $i$, 
 - $EMA_N(i-1)$ – wartość EMA z dnia poprzedniego $i-1$, 
 - $N$ – liczba okresów branych pod uwagę przy obliczeniach EMA, 
-- $\alpha$ – współczynnik wygładzający, obliczany według wzoru: $$\alpha = \frac{2}{N + 1}$$
-EMA może być również przedstawiona w formie rozwiniętej jako średnia ważona wszystkich wcześniejszych cen zamknięcia: $$ EMA_N(i) = \frac{x_i + (1-\alpha)x_{i-1} + (1-\alpha)^2x_{i-2} + ...+(1-\alpha)^ix_0}{1+(1-\alpha)+(1-\alpha)^2+...+(1-\alpha)^i} $$
-Gdzie wyraźnie widać, że współczynnik wagowy cen maleje wykładniczo w miarę oddalania się w czasie od bieżącego okresu. Im krótszy okres $N$, tym większą wagę EMA przykłada do najnowszych danych cenowych, co zwiększa czułość wskaźnika na krótkoterminowe zmiany cenowe.
+- $\alpha$ – współczynnik wygładzający, obliczany według wzoru:$$\alpha = \frac{2}{N + 1}$$
+EMA może być również przedstawiona w formie rozwiniętej jako średnia ważona wszystkich wcześniejszych cen zamknięcia:
+$$ EMA_N(i) = \frac{x_i + (1-\alpha)x_{i-1} + (1-\alpha)^2x_{i-2} + ...+(1-\alpha)^ix_0}{1+(1-\alpha)+(1-\alpha)^2+...+(1-\alpha)^i} $$
+Współczynnik wagowy cen maleje wykładniczo w miarę oddalania się w czasie od bieżącego okresu. Im krótszy okres $N$, tym większą wagę EMA przykłada do najnowszych danych cenowych, co zwiększa czułość wskaźnika na krótkoterminowe zmiany cenowe.
 
 ---
 
@@ -39,7 +48,7 @@ Gdzie wyraźnie widać, że współczynnik wagowy cen maleje wykładniczo w miar
 Analiza obejmuje dane o cenach zamknięcia Solany (SOL) od początku 2021 r. do trzeciego kwartału 2024 r., pozyskane ze źródła [Kaggle](https://www.kaggle.com/datasets/gokberkkozak/solana-price-history-sol-usd) w formacie CSV.
 
 ---
-
+<div style="page-break-after: always;"></div>
 ## 3. Analiza wykresów cenowych i wskaźnika MACD
 
 ### 3.1 Wykres cen SOL
@@ -47,6 +56,9 @@ Analiza obejmuje dane o cenach zamknięcia Solany (SOL) od początku 2021 r. do 
 Na całym okresie Solana przeszła przez dwa główne cykle wzrostów i spadków. Maksimum przekroczyło 250 USD w 2021 roku, po czym nastąpiła korekta i kolejne odbicie w 2024.
 
 ![[SOL_full_price_history.png]] ![[SOL_price_history.png]]
+
+---
+<div style="page-break-after: always;"></div>
 
 ### 3.2 Wskaźnik MACD i linia sygnałowa
 
@@ -58,6 +70,9 @@ Poniższy wykres przedstawia linie MACD oraz Signal, wskazujące kluczowe moment
 Na poniższym wykresie przedstawione pierwsze 10 punktów oryginalnego wykresu "MACD and Signal".
 
 ![[MACDandSIGNAL_example.png]]
+
+---
+<div style="page-break-after: always;"></div> 
 ### 3.3 Histogram MACD
 
 Histogram MACD ukazuje dynamikę trendu, obrazując siłę ruchów cenowych.
@@ -71,6 +86,7 @@ Na poniższym wykresie przedstawione pierwsze 10 punktów oryginalnego wykresu "
 
 ---
 
+<div style="page-break-after: always;"></div>
 ## 4. Sygnały transakcyjne
 
 Na wykresie poniżej zaznaczono punkty kupna i sprzedaży dla całego okresu analizy.
@@ -86,6 +102,7 @@ Można zauważyć, że MACD generował zarówno zyskowne, jak i stratne sygnały
 
 ---
 
+<div style="page-break-after: always;"></div>
 ## 5. Symulacja strategii inwestycyjnej na podstawie MACD
 
 ### 5.1 Wyniki pojedynczych transakcji
@@ -96,11 +113,13 @@ Wyniki pokazują dużą zmienność strategii – niektóre transakcje przynosi�
 
 Po prawej stronie widać wykres, obliczający sumaryczną proporcję zyskanych i straconych dolarów. Jak widać, różnica zyskanej i straconej sumy wynosi około 5%. To jest spowodowane tym faktem, że historia cen na badanym odcinku demonstruje jak globalne podniesienie, tak i globalny spadek.
 
+---
+<div style="page-break-after: always;"></div>
 ### 5.2 Krzywa kapitału
 
 ![[USD_capital_history.png]]
 
-- Okres analizy: `2021-07-20` - `2022-02-04`
+- Okres analizy: **2021-07-20** - **2022-02-04**
 - Kapitał początkowy: **1000 USD**
 - Kapitał końcowy: **12665 USD**
 - Całkowita stopa zwrotu: **1166%**
@@ -125,6 +144,7 @@ Tabela przykładowych transakcji:
 
 ---
 
+<div style="page-break-after: always;"></div>
 ## 6. Analiza szczegółowa
 
 Poniższe wykresy przedstawiają szczegółową analizę wyników strategii inwestycyjnej opartej na MACD:
@@ -135,22 +155,33 @@ Poniższe wykresy przedstawiają szczegółową analizę wyników strategii inwe
 
 ![[summary_plot.png]]
 
+---
+<div style="page-break-after: always;"></div>
+
 ## 6.2 Przykłady innych okresów
 
 ### 2021-01-01 : 2021-11-17
 
 ![[0_320.png]]
+<div style="page-break-after: always;"></div>
+
 ### 2021-01-01 : 2022-05-16
 
 ![[0_500.png]]
+<div style="page-break-after: always;"></div>
+
 ### 2022-05-16 : 2023-09-28
 
 ![[500_1000.png]]
+<div style="page-break-after: always;"></div>
+
 ### 2023-09-28 : 2024-09-29
 
 ![[1000_end.png]]
 
 ---
+
+<div style="page-break-after: always;"></div>
 
 ## 7. Wnioski
 
@@ -162,7 +193,7 @@ Analiza wskaźnika MACD dla kryptowaluty Solana (SOL) pozwoliła na sformułowan
 
 Aby zwiększyć stabilność i skuteczność podejścia opartego na MACD, warto rozważyć:
 
-- Stosowanie dodatkowych filtrów weryfikujących sygnały generowane przez MACD.
+- Stosowanie dodatkowych filtrów weryfikujących sygnały generowane przez MACD (Na przykład $EMA_{90}$ dla wyznaczenia trendu globalnego).
 - Wdrożenie bardziej zaawansowanych metod zarządzania kapitałem, takich jak Stop-Loss czy Take-Profit, aby ograniczyć ryzyko większych strat.
 - Uwzględnienie czynników fundamentalnych oraz ogólnej sytuacji rynkowej, co mogłoby pomóc w redukcji liczby fałszywych sygnałów w niestabilnych warunkach rynkowych.
 
