@@ -1,143 +1,114 @@
 # Sprawozdanie: Analiza wskaźnika MACD dla kryptowaluty Solana (SOL)
 
-**Autor:** Yauheni Pyryeu
-**Data:** 26.03.2026 r.
+**Autor:** Yauheni Pyryeu  
+**Data:** 26.03.2025 r.
 
-## 1. Wstęp
+## 1. Wprowadzenie
 
-### 1.1 Cel projektu
+### 1.1 Cel analizy
 
-Celem projektu było przeprowadzenie szczegółowej analizy wskaźnika MACD (**Moving Average Convergence Divergence**) na przykładzie kryptowaluty Solana (SOL). Analiza obejmowała implementację wskaźnika, wizualizację wyników, generowanie sygnałów transakcyjnych oraz symulację strategii inwestycyjnej opartej na MACD.
+Niniejsza analiza koncentruje się na wskaźniku MACD (**Moving Average Convergence Divergence**) w kontekście kryptowaluty Solana (SOL). Celem badania było zrozumienie działania wskaźnika, jego implementacja, wizualizacja wyników, a także ocena skuteczności strategii inwestycyjnej opartej na sygnałach MACD.
 
-### 1.2 Opis wskaźnika MACD
+### 1.2 Charakterystyka wskaźnika MACD
 
-Wskaźnik MACD składa się z trzech podstawowych elementów:
+Wskaźnik MACD składa się z trzech kluczowych elementów:
 
-- **Linia MACD**: różnica między 12-dniową a 26-dniową wykładniczą średnią kroczącą (EMA).
-$$
-MACD(i) = EMA_{12}(i) - EMA_{26}(i)
-$$
-- **Linia sygnału (Signal Line)**: 9-dniowa wykładnicza średnia krocząca wartości MACD.
-$$
-SIGNAL(i) = EMA_{9}(MACD(i))
-$$
+- **Linia MACD**: różnica między 12-dniową a 26-dniową wykładniczą średnią kroczącą (EMA). $$ MACD(i) = EMA_{12}(i) - EMA_{26}(i) $$
+- **Linia sygnału (Signal Line)**: 9-dniowa wykładnicza średnia krocząca wartości MACD. $$ SIGNAL(i) = EMA_{9}(MACD(i)) $$
 - **Histogram MACD**: różnica między linią MACD a linią sygnału.
 
-Sygnały transakcyjne generowane są poprzez przecięcia linii MACD oraz sygnału. Przecięcie linii MACD od dołu przez linię sygnału sugeruje sygnał kupna, a przecięcie od góry – sygnał sprzedaży. Przecięcie odbywa się przy zmianie znaku kolejnych słupków histogramu odnośnie poprzednich słupków.
+Sygnały transakcyjne są generowane w momencie przecięcia się linii MACD i sygnałowej. Gdy MACD przecina linię sygnałową od dołu, oznacza to sygnał kupna, natomiast przecięcie od góry sugeruje sygnał sprzedaży.
 
 ### 1.3 Wykładnicza średnia krocząca (EMA)
 
-Podstawą do obliczania wskaźnika MACD są wykładnicze średnie kroczące (EMA – Exponential Moving Average). EMA jest typem średniej, która nadaje większą wagę najnowszym danym cenowym, co pozwala na szybszą reakcję na bieżące zmiany cen w porównaniu do zwykłej średniej ruchomej (SMA).
-
 Wartość EMA w danym dniu $i$ obliczana jest na podstawie następującego wzoru:
+$$ EMA_N(i) = \alpha*x_i + (1-\alpha)\times EMA_N(i-1) $$
 
-$$
-EMA_N(i) = \alpha*x_i + (1-\alpha)\times EMA_N(i-1)
-$$
-
-gdzie:
-
-- $x_i$​ – cena zamknięcia w bieżącym dniu (lub okresie) $i$,
-- $EMA_N(i-1)$ – wartość EMA z dnia poprzedniego $i-1$,
-- $N$ – liczba okresów branych pod uwagę przy obliczeniach EMA,
-- $\alpha$ – współczynnik wygładzający, obliczany według wzoru:
-$$\alpha = \frac{2}{N + 1}$$
-
-EMA może być również przedstawiona w formie rozwiniętej jako średnia ważona wszystkich wcześniejszych cen zamknięcia:
-$$
-EMA_N(i) = \frac{x_i + (1-\alpha)x_{i-1} + (1-\alpha)^2x_{i-2} + ...+(1-\alpha)^ix_0}{1+(1-\alpha)+(1-\alpha)^2+...+(1-\alpha)^i}
-$$
-
-gdzie wyraźnie widać, że współczynnik wagowy cen maleje wykładniczo w miarę oddalania się w czasie od bieżącego okresu.
-
-Im krótszy okres $N$, tym większą wagę EMA przykłada do najnowszych danych cenowych, co zwiększa czułość wskaźnika na krótkoterminowe zmiany cenowe.
+Gdzie: 
+- $x_i$​ – cena zamknięcia w bieżącym dniu (lub okresie) $i$, 
+- $EMA_N(i-1)$ – wartość EMA z dnia poprzedniego $i-1$, 
+- $N$ – liczba okresów branych pod uwagę przy obliczeniach EMA, 
+- $\alpha$ – współczynnik wygładzający, obliczany według wzoru: $$\alpha = \frac{2}{N + 1}$$
+EMA może być również przedstawiona w formie rozwiniętej jako średnia ważona wszystkich wcześniejszych cen zamknięcia: $$ EMA_N(i) = \frac{x_i + (1-\alpha)x_{i-1} + (1-\alpha)^2x_{i-2} + ...+(1-\alpha)^ix_0}{1+(1-\alpha)+(1-\alpha)^2+...+(1-\alpha)^i} $$
+Gdzie wyraźnie widać, że współczynnik wagowy cen maleje wykładniczo w miarę oddalania się w czasie od bieżącego okresu. Im krótszy okres $N$, tym większą wagę EMA przykłada do najnowszych danych cenowych, co zwiększa czułość wskaźnika na krótkoterminowe zmiany cenowe.
 
 ---
 
 ## 2. Dane
 
-Analizę przeprowadzono na podstawie dziennych cen zamknięcia kryptowaluty Solana (SOL) w okresie od początku 2021 do pierwszego kwartału 2024 roku. Dane zostały pobrane ze [źródła](https://www.kaggle.com/datasets/gokberkkozak/solana-price-history-sol-usd) w formacie CSV.
+Analiza obejmuje dane o cenach zamknięcia Solany (SOL) od początku 2021 r. do trzeciego kwartału 2024 r., pozyskane ze źródła [Kaggle](https://www.kaggle.com/datasets/gokberkkozak/solana-price-history-sol-usd) w formacie CSV.
 
 ---
 
 ## 3. Analiza wykresów cenowych i wskaźnika MACD
 
-### 3.1 Wykres cenowy kryptowaluty SOL
+### 3.1 Wykres cen SOL
 
-W analizowanym okresie ceny SOL doświadczyły dwóch dużych cykli wzrostowych oraz spadkowych. Maksymalna cena przekroczyła 250 USD w 2021 roku, po czym nastąpiła korekta i ponowny wzrost cen w 2024.
+Na całym okresie Solana przeszła przez dwa główne cykle wzrostów i spadków. Maksimum przekroczyło 250 USD w 2021 roku, po czym nastąpiła korekta i kolejne odbicie w 2024.
 
-Na osi X można zauważyć tak zwane **record indexes**, czyli indeksy notowań, co w praktyce oznacza numer dnia od początku notowania danej kryptowaluty.
+![[SOL_full_price_history.png]] ![[SOL_price_history.png]]
 
-![[SOL_full_price_history.png]]
-![[SOL_price_history.png]]
-### 3.2 Wykres MACD oraz linii sygnału
+### 3.2 Wskaźnik MACD i linia sygnałowa
 
-Na poniższym wykresie widoczne są linie MACD oraz sygnału, które wskazują na sygnały kupna i sprzedaży w kluczowych momentach cenowych.
+Poniższy wykres przedstawia linie MACD oraz Signal, wskazujące kluczowe momenty kupna i sprzedaży.
 
 ![[MACDandSIGNAL.png]]
-
 ## Przykładowy fragment
+
 Na poniższym wykresie przedstawione pierwsze 10 punktów oryginalnego wykresu "MACD and Signal".
 
 ![[MACDandSIGNAL_example.png]]
+### 3.3 Histogram MACD
 
-### 3.3 Wykres histogramu MACD
-
-Histogram MACD wskazuje siłę ruchów cenowych, obrazując dynamiczne zmiany trendu.
+Histogram MACD ukazuje dynamikę trendu, obrazując siłę ruchów cenowych.
 
 ![[MACDminusSIGNAL.png]]
-
 ## Przykładowy fragment
+
 Na poniższym wykresie przedstawione pierwsze 10 punktów oryginalnego wykresu "MACD - Signal".
 
 ![[MACDminusSIGNAL_example.png]]
 
 ---
 
-## 4. Analiza sygnałów transakcyjnych
+## 4. Sygnały transakcyjne
 
-Na poniższym wykresie przedstawiono wygenerowane sygnały kupna i sprzedaży dla całego analizowanego okresu.
+Na wykresie poniżej zaznaczono punkty kupna i sprzedaży dla całego okresu analizy.
 
 ![[BUY_SELL_signals.png]]
-
 ## Przykładowy fragment
+
 Na poniższym wykresie przedstawione pierwsze 10 punktów oryginalnego wykresu "SOL Price History".
 
 ![[BUY_SELL_example.png]]
 
-Można zauważyć, że wskaźnik MACD generował zarówno zyskowne jak i stratne sygnały transakcyjne, co wynikało z charakterystycznego opóźnienia wskaźnika w stosunku do realnych ruchów cenowych.
+Można zauważyć, że MACD generował zarówno zyskowne, jak i stratne sygnały, wynikające z jego opóźnionej reakcji na zmiany cen.
 
 ---
 
 ## 5. Symulacja strategii inwestycyjnej na podstawie MACD
 
-Poniższe wykresy przedstawiają szczegółowe wyniki symulacji transakcji wykonanych na podstawie sygnałów MACD dla kryptowaluty Solana:
-
-### 5.1 Zysk/Strata na pojedynczą transakcję
+### 5.1 Wyniki pojedynczych transakcji
 
 ![[profits.png]]
 
-Na wykresie widoczne są poszczególne transakcje wraz z osiągniętym zyskiem lub stratą wyrażoną w procencie kapitału przed transakcją. Widoczne są zarówno transakcje wyjątkowo zyskowne, jak i stratne, co podkreśla zmienność strategii MACD na rynku kryptowalut.
+Wyniki pokazują dużą zmienność strategii – niektóre transakcje przynosiły duże zyski, inne straty. Maksymalny zaobserwowany zysk to ok. +22%, a większość strat oscylowała wokół -20%. Nie widać tu jednak żadnych ekstremalnie wysokich zysków, co oznacza, że ogólny wynik strategii nie jest zdominowany przez pojedynczą, wyjątkowo dochodową transakcję.
 
-Większość strat oscyluje w okolicach –20%. Po stronie zysków można zauważyć grupę transakcji o dodatnich wynikach w zakresie od kilku do kilkudziesięciu procent, przy czym najwyższa zaobserwowana wartość to około +22%. Nie widać tu jednak żadnych ekstremalnie wysokich zysków, co oznacza, że ogólny wynik strategii nie jest zdominowany przez pojedynczą, wyjątkowo dochodową transakcję.
+Po prawej stronie widać wykres, obliczający sumaryczną proporcję zyskanych i straconych dolarów. Jak widać, różnica zyskanej i straconej sumy wynosi około 5%. To jest spowodowane tym faktem, że historia cen na badanym odcinku demonstruje jak globalne podniesienie, tak i globalny spadek.
 
-Po prawej stronie widać wykres, obliczający sumaryczną proporcję zyskanych i straconych dolarów. Jak widać, różnica zyskanej i straconej sumy wynosi około 5%. To jest spowodowane tym faktem, że historia cen na badanym odcinku demonstruje jak globalne podniesienie, tak i globalny spadek.  
-### 5.2 Krzywa kapitału w czasie
+### 5.2 Krzywa kapitału
 
 ![[USD_capital_history.png]]
 
-Powyższy wykres przedstawia zmiany kapitału początkowego (`1000 USD`) w całym okresie analizy (200 dni, `2021-07-20` - `2022-02-04`) w porównaniu do tak zwanego "Lazy trading" (czyli notowania wartości początkowego kapitału SOL w każdym odpowiednim punkcie, co pozwala ocenić efektywność algorytmu MACD nie uwzględniając wahanie ceny za jednostkę SOL). Wykres ten obrazuje ogólną efektywność strategii inwestycyjnej opartej na wskaźniku MACD, pokazując zarówno okresy znaczących zysków, jak i dużych spadków kapitału.
-
-Przeprowadzono symulację strategii opartej na następujących założeniach:
-
+- Okres analizy: `2021-07-20` - `2022-02-04`
 - Kapitał początkowy: **1000 USD**
 - Kapitał końcowy: **12665 USD**
 - Całkowita stopa zwrotu: **1166%**
 - "Leniwy" kapitał końcowy: **4798 USD**
-- Przewaga MACD nad "Leniwym" algorytmem: **7867 USD** 
+- Przewaga MACD nad "Leniwym" algorytmem: **7867 USD**
 - Ilość transakcji: **60**
 
-Tabela przykładowych transakcji wraz z wynikami (Profit/Loss %):
+Tabela przykładowych transakcji:
 
 | #   | Buy Date   | Buy Price | Sell Date  | Sell Price | Profit (USD) | Profit (%) |
 | --- | ---------- | --------- | ---------- | ---------- | ------------ | ---------- |
@@ -154,36 +125,45 @@ Tabela przykładowych transakcji wraz z wynikami (Profit/Loss %):
 
 ---
 
-## 6. Szczegółowa analiza
+## 6. Analiza szczegółowa
 
 Poniższe wykresy przedstawiają szczegółową analizę wyników strategii inwestycyjnej opartej na MACD:
+
 ## 6.1 Okres badany
+
+## **2021-07-20** - **2022-02-04**
 
 ![[summary_plot.png]]
 
 ## 6.2 Przykłady innych okresów
+
 ### 2021-01-01 : 2021-11-17
+
 ![[0_320.png]]
 ### 2021-01-01 : 2022-05-16
+
 ![[0_500.png]]
 ### 2022-05-16 : 2023-09-28
+
 ![[500_1000.png]]
 ### 2023-09-28 : 2024-09-29
+
 ![[1000_end.png]]
 
 ---
-## 7. Podsumowanie i wnioski końcowe
 
-Przeprowadzona analiza skuteczności strategii opartej na wskaźniku MACD dla kryptowaluty Solana (SOL) pozwala na wyciągnięcie następujących wniosków:
+## 7. Wnioski
 
-- **Wskaźnik MACD** okazał się szczególnie efektywny w warunkach silnych trendów wzrostowych, co było widoczne podczas dynamicznych wzrostów w 2021 roku. W takich okresach strategia generowała wysokie zyski.
-- Strategia wykazuje jednak znaczne słabości w okresach silnych spadków i zwiększonej zmienności cenowej, co pokazała między innymi druga połowa okresu badanego.
-- Pomimo ostatecznie wysokiego wyniku końcowego (**1166%** za cały analizowany okres), strategia cechowała się dużą zmiennością i znacznym ryzykiem, wynikającym głównie z dużych strat w pojedynczych transakcjach.
+Analiza wskaźnika MACD dla kryptowaluty Solana (SOL) pozwoliła na sformułowanie następujących wniosków:
 
-W celu poprawienia stabilności oraz efektywności strategii inwestycyjnej opartej na MACD zalecane jest:
+- **Wskaźnik MACD** sprawdzał się szczególnie dobrze w okresach silnych trendów wzrostowych, co było widoczne zwłaszcza podczas dynamicznych zwyżek cen w 2021 roku. W takich momentach strategia przynosiła znaczące zyski.
+- Wskaźnik wykazywał jednak istotne słabości w okresach gwałtownych spadków i podwyższonej zmienności rynkowej, co było zauważalne szczególnie w drugiej połowie badanego okresu.
+- Mimo że końcowy wynik analizy był wysoki (**1166%** za cały analizowany okres), strategia charakteryzowała się dużą zmiennością oraz wysokim ryzykiem, głównie ze względu na istotne straty w pojedynczych transakcjach.
 
-- Zastosowanie dodatkowych filtrów potwierdzających sygnały MACD.
-- Wprowadzenie bardziej zaawansowanego zarządzania kapitałem (np. Stop-Loss, Take-Profit), co może ograniczyć ryzyko znaczących strat.
-- Uwzględnienie czynników fundamentalnych i rynkowych, które mogłyby zmniejszyć liczbę fałszywych sygnałów w okresach niestabilności rynku.
+Aby zwiększyć stabilność i skuteczność podejścia opartego na MACD, warto rozważyć:
 
-Podsumowując, MACD jest wartościowym narzędziem wspierającym decyzje inwestycyjne, jednak jego efektywność znacząco rośnie, gdy stosowany jest jako element szerszego, bardziej kompleksowego podejścia do analizy rynku kryptowalut.
+- Stosowanie dodatkowych filtrów weryfikujących sygnały generowane przez MACD.
+- Wdrożenie bardziej zaawansowanych metod zarządzania kapitałem, takich jak Stop-Loss czy Take-Profit, aby ograniczyć ryzyko większych strat.
+- Uwzględnienie czynników fundamentalnych oraz ogólnej sytuacji rynkowej, co mogłoby pomóc w redukcji liczby fałszywych sygnałów w niestabilnych warunkach rynkowych.
+
+Podsumowując, MACD to przydatne narzędzie wspierające decyzje inwestycyjne, jednak jego efektywność znacząco wzrasta, gdy stanowi część bardziej kompleksowej analizy rynku kryptowalut.
