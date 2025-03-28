@@ -1,14 +1,27 @@
+import Foundation
+
 class Game {
-    var word: String
+    var word: String = "default"
     var word_len: Int
+    
     var guessed_word: Array<Character>
     var guessed_letters: Int = 0
+    
     var Ntries: Int
+    
     var categories: Array<String> = ["Default"]
     var categories_count: Int = 1
+    var categories_values: Array<Array<String>> = [["default", "none", "nil", "error"]]
+    
+    var category_selected: Int = 1
 
-    init(word: String, Ntries: Int, categories: Array<String>){
-        self.word = word
+    var difficulties: Array<String> = ["Easy", "Medium", "Hard"]
+    var diff_values: Array<Int> = [6, 4, 2]
+    var diff_count: Int = 3
+
+    var difficulty_selected: Int = 1
+
+    init(Ntries: Int, categories: Array<String>, categories_values: Array<Array<String>>){
         word_len = word.count
         self.Ntries = Ntries
         self.guessed_word = Array(repeating: "_", count: word_len)
@@ -16,6 +29,7 @@ class Game {
         if categories.count != 0{
             self.categories = categories
             categories_count = categories.count
+            self.categories_values = categories_values
         }
     }
 
@@ -46,7 +60,6 @@ class Game {
                 if char == guessed_char { //&& guessed_word.firstIndex(of: char == nil) {
                     guessed_word[index] = char
                     guessed = true 
-                    guessed_letters += 1
                 }
             }
 
@@ -60,11 +73,7 @@ class Game {
     }
 
     func is_over() -> Bool{
-        if Ntries <= 0 || guessed_letters >= word_len{
-            return true
-        } else {
-            return false
-        }
+        return (Ntries <= 0 || guessed_word.filter{ $0 == "_" }.count == 0)
     }
 
     func end_screen(){
@@ -81,34 +90,67 @@ class Game {
         }
     }
 
-    func print_categories(selected: Int){
-        for (index, category) in categories.enumerated(){
+    func print_options(selected: Int, options: Array<String>){
+        for (index, option) in options.enumerated(){
             if index == selected{
-                print("\u{1B}[7m\(index): \(category)\u{1B}[0m") // Inverted colors
+                print("\u{1B}[7m\(index + 1): \(option)\u{1B}[0m") // Inverted colors
             } else {
-                print("\(index): \(category)")
+                print("\(index + 1): \(option)")
             }
         }
+    }
+
+    func select(options: Array<String>, options_count: Int, subject_name: String) -> Int{
+        var selected = -1
+
+        print("Choose \(subject_name): ")
+        print_options(selected: selected, options: options)
+        print("Enter \(subject_name) number:")
+
+        while selected < 0 || selected >= options_count{
+            if let input = readLine(), let first_char: Character = input.first{
+                selected = (first_char.wholeNumberValue ?? 0) - 1 // I need to get integer out of char digit
+            } else {
+                print("Invalid option!")
+            }
+        }
+
+        print("Chosen \(subject_name): ")
+        print_options(selected: selected, options: options)
+
+        return selected
     }
 
     func start_screen(){
         print("\u{1B}[2J") // Clear screen
         print("\u{1B}[H")  // Move cursor to top
 
-        var selected = -1
+        category_selected = select(options: categories, options_count: categories_count, subject_name: "category")
 
-        print("Choose category: ")
-        print_categories(selected: selected)
-
-        while selected == -1{
-            if let input = readLine(){
-                // selected = Int(input.first?.wholeNumberValue) ?
-            }
+        if let random_word = categories_values[category_selected].randomElement() {
+            word = random_word
+            word_len = word.count
+            guessed_word = Array(repeating: "_", count: word_len)
+        } else {
+            print("Error: No words available in this category.")
         }
+    }
+
+    func difficulty_screen(){
+        difficulty_selected = select(options: difficulties, options_count: diff_count, subject_name: "difficulty")
+
+        if difficulty_selected >= 0 && difficulty_selected < diff_count{
+            Ntries = diff_values[difficulty_selected]
+        } else {
+            print("Error: No tries number defined for this difficulty.")
+        }
+
+        sleep(1)
     }
 
     func play(){
         start_screen()
+        difficulty_screen()
 
         while(!is_over()){
             print("\u{1B}[2J") // Clear screen
@@ -121,7 +163,8 @@ class Game {
     }
 }
 
-var test_game: Game = Game(word: "hello", Ntries: 5, categories: ["movies", "medieval", "Ireland"]) 
+var test_game: Game = Game(Ntries: 5, categories: ["movies", "medieval", "Ireland"], 
+    categories_values: [["guard", "bruges", "billboards"], ["holy", "peasant", "chivalry"], ["catholic", "freedom", "guiness"]]) 
 
 test_game.play()
 
