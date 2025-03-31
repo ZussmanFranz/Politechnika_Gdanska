@@ -7,7 +7,6 @@ LiquidCrystal LCD(12, 11, 5, 4, 3, 2);
 BMP280 bmp280;
 
 void update_measurements() {
-
     bmp280.awaitMeasurements();
 
     float pressure;
@@ -31,12 +30,10 @@ void update_measurements() {
 }
 
 void setup() {
-
     bmp280.initialize();
-    LCD.begin(16, 2);
+    LCD.begin(16, 2);               // cols, rows
     LCD.clear();
     LCD.setCursor(0, 0);
-
 }
 
 void loop() {
