@@ -22,6 +22,9 @@ int fork_child(int start, int end) {
         exit(EXIT_FAILURE);
     } else if (pid == 0) {
         // Child process: count Fibonacci primes and exit with result
+
+        printf("\t\tLeaf process (PID: %d) (PPID: %d) started.\n", getpid(), getppid());
+
         int result = count_fibonacci_primes(start, end);
         exit(result);
     } else {
@@ -45,6 +48,7 @@ int main() {
 
     pid_t child_1 = fork();
     if (child_1 == 0) {
+        printf("\tChild process (PID: %d) (PPID: %d) started.\n", getpid(), getppid());
         // Child 1 spawns leaf_1_1 and leaf_1_2
         int leaf_1_1_count = fork_child(RANGE_START, RANGE_START + range_size - 1);
         int leaf_1_2_count = fork_child(RANGE_START + range_size, RANGE_START + 2 * range_size - 1);
@@ -58,6 +62,7 @@ int main() {
 
     pid_t child_2 = fork();
     if (child_2 == 0) {
+        printf("\tChild process (PID: %d) (PPID: %d) started.\n", getpid(), getppid());
         // Child 2 spawns leaf_2_1 and leaf_2_2
         int leaf_2_1_count = fork_child(RANGE_START + 4 * range_size, RANGE_START + 5 * range_size - 1);
         int leaf_2_2_count = fork_child(RANGE_START + 5 * range_size, RANGE_START + 6 * range_size - 1);
