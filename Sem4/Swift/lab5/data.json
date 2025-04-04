@@ -1,0 +1,26 @@
+[
+    {
+        "username": "Hideo Kojima",
+        "profileImageURL": "https://x.com/HIDEO_KOJIMA_EN/photo",
+        "mediaType": "Photo",
+        "content": "With Troy Baker. Actor for Ocelot. He sold me some weed. Hard to get in Japan.",
+        "timestamp": "2013-06-13",
+        "likes": 1620890
+    },
+    {
+        "username": "Dean Norris",
+        "profileImageURL": "https://x.com/deanjnorris/photo",
+        "mediaType": "Text",
+        "content": "Minecraft seems to have as much influence on my kids as porn had on me",
+        "timestamp": "2013-11-19",
+        "likes": 13650
+    },
+    {
+        "username": "elon musk",
+        "profileImageURL": "https://x.com/elonmusk/photo",
+        "mediaType": "Video",
+        "content": "Next I’m buying Coca-Cola to put the cocaine back in",
+        "timestamp": "2022-04-28",
+        "likes": 35
+    }
+]
