@@ -36,7 +36,7 @@ $ gcc -Wall -fPIC -c functions.c
 $ gcc functions.o -shared -o lib_functions.so
 
 // link app to lib
-$ gcc main.o -L. -l_functions.so -o program_dynamic
+$ gcc main.o -L. lib_functions.so -o program_dynamic
 
 // test what the app links to
 $ ldd ./program_dynamic
