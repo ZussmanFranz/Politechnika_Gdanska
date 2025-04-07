@@ -1,12 +1,11 @@
 from collections import defaultdict
 import numpy as np
-from node_solution import Node
+from node import Node
 
 class DecisionTree:
     def __init__(self, params):
         self.root_node = Node()
         self.params = defaultdict(lambda: None, params)
-
 
     def train(self, X, y):
         self.root_node.train(X, y, self.params)
