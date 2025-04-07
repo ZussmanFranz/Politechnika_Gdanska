@@ -5,7 +5,7 @@
 #include <opt_invsqrt.h>
 
 #define benchmark_number 12345678
-#define benchmark_count 1000000
+#define benchmark_count 1000000000
 
 int main(){
     clock_t start_time = clock();
