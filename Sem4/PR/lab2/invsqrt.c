@@ -1,7 +1,7 @@
 #include <math.h>
 #include <stdio.h>
 
-float normal_invsqrt(double number){
+float normal_invsqrt(int number){
     return (1 / sqrt(number));
 }
 

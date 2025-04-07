@@ -2,7 +2,6 @@ import copy
 
 import numpy as np
 
-
 class Node:
     def __init__(self):
         self.left_child = None
