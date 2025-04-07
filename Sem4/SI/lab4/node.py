@@ -10,17 +10,17 @@ class Node:
         self.feature_value = None
         self.node_prediction = None
 
-    def gini(y_subset):
-        classes, counts = np.unique(y_subset, return_counts=True)
-        probs = counts / counts.sum()
-        return 1.0 - np.sum(probs ** 2)
-
     def gini_best_score(self, y, possible_splits):
         best_gain = -np.inf
         best_idx = 0
 
         # DONE find position of best data split
         total_samples = len(y)
+
+        def gini(y_subset):
+            classes, counts = np.unique(y_subset, return_counts=True)
+            probs = counts / counts.sum()
+            return 1.0 - np.sum(probs ** 2)
 
         for split in possible_splits:
             left_y = y[:split+1]
@@ -60,8 +60,9 @@ class Node:
         best_split = None
 
         # DONE implement feature selection
-        features = feature_subset if feature_subset else range(X.shape[1])
-        for d in features:
+        # features = feature_subset if feature_subset else range(X.shape[1])
+        # for d in features:
+        for d in range(X.shape[1]):
             order = np.argsort(X[:, d])
             y_sorted = y[order]
             possible_splits = self.find_possible_splits(X[order, d])
