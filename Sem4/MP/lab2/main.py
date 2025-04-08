@@ -1,15 +1,6 @@
 import numpy as np
 # import matplotlib.pyplot as plt 
 
-# Zadanie 1: Xn+1 = (a * Xn + c) mod M
-
-Xo = 15
-a = 69069
-c = 1
-M = 2**31
-
-n = 1000000
-N_counters = 10
 
 def generateX(Xprev):
     global a, c, M
@@ -78,8 +69,20 @@ def generateBinaryNumbers(start_bits, count):
     
     return binary_numbers
 
+
+# Zadanie 1: Xn+1 = (a * Xn + c) mod M
+
+Xo = 15
+a = 69069
+c = 1
+M = 2**31
+
+n = 1000000
+N_counters = 10
+
 # Generujemy n liczb, potem badamy rownomiernosc przez podzial zakresu (0:M-1) na N_licznikow i liczymy, do ktorego przedzialu nalezy liczba 
 
+print('First method:')
 numbers = generateN(generateX, n, Xo)
 countersX = evaluateRandom(numbers, N_counters, M)
 print(countersX)
@@ -91,6 +94,7 @@ p = 7
 q = 3
 size = 31
 
+print('Second method:')
 numbers = generateN(generateBitsNumber, n, start_bits)
 countersB = evaluateRandom(numbers, N_counters, 2**size)
 # print(numbers)
