@@ -100,32 +100,36 @@ task1(N, M)
 
 # Funkcje task2
 
-def printVariationsRepeat(N, M, current_variation, possible_indexes, variations_counter_reference):
-    if len(current_variation) == M:
-        variations_counter_reference.Count()
-        print(variations_counter_reference.count, ": ", current_variation)
+def printCombinationsWithRepetition(N, M, current_combination, start_index, counter):
+    """
+    Recursive function to generate and print unique combinations with repetitions.
+    """
+    if len(current_combination) == M:
+        counter.Count()
+        print(counter.count, ": ", current_combination)
         return
-    
-    for index in possible_indexes:
-        new_variation = current_variation[:]
-        new_variation.append(index)
 
-        printVariationsRepeat(N, M, new_variation, possible_indexes, variations_counter_reference)
+    for index in range(start_index, N + 1):
+        new_combination = current_combination[:]
+        new_combination.append(index)
+        printCombinationsWithRepetition(N, M, new_combination, index, counter)
 
 def task2(N=None, M=None):
-    if N == None:
+    """
+    Task 2: Generate and print unique combinations with repetitions.
+    """
+    if N is None:
         N = int(input("N = "))
-    if M == None:
+    if M is None:
         M = int(input("M = "))
 
-    n_variations_repeat = nVariation(N, M, repeat=True)
-    print("\nTheoretical number of variations (with repeat): ", n_variations_repeat)
-    possible_indexes = list(range(1, N + 1))
+    n_combinations_repeat = nCombination(N + M - 1, M)  # Theoretical number of combinations with repetition
+    print("\nTheoretical number of combinations (with repetition): ", n_combinations_repeat)
 
-    variations_repeat_counter = Counter()
-    variations_repeat_counter.Restart()
+    counter = Counter()
+    counter.Restart()
 
-    printVariationsRepeat(N, M, [], possible_indexes, variations_repeat_counter)
+    printCombinationsWithRepetition(N, M, [], 1, counter)
 
 # Zadanie 2: 
 # Dla podanych liczb N i M wygeneruj (w porządku leksykograficznym) ponumerowane
@@ -218,21 +222,35 @@ print("Number of cities loaded: ", n_cities)
 task1_u(cities, 5)
 
 def task2_u(cities, M):
+    """
+    Task 2_u: Generate and print unique combinations of cities with repetitions.
+    """
     total_population = sum(city.population for city in cities)
 
     lower_bound = 0.4 * total_population
     upper_bound = 0.6 * total_population
 
-    possible_indexes = list(range(len(cities)))
+    def calculateCityCombinationsWithRepetition(current_combination, start_index, counter):
+        if len(current_combination) == M:
+            current_combination = set(current_combination) # get read of repeating elements
+            subset_population = sum(cities[i].population for i in current_combination)
+            counter[1] += 1
+            if lower_bound <= subset_population <= upper_bound:
+                counter[0] += 1
+            print(counter[1], ":", [cities[i].town for i in current_combination])
+            return
 
-    counter = [0, 0] # [0] = valid_subsets, [1] = variations_count
+        for index in range(start_index, len(cities)):
+            new_combination = current_combination[:]
+            new_combination.append(index)
+            calculateCityCombinationsWithRepetition(new_combination, index, counter)
 
-    validVariations(len(cities), M, [], possible_indexes, cities, counter, lower_bound, upper_bound)
-    
+    counter = [0, 0]  # [0] = valid_subsets, [1] = total_combinations
+    calculateCityCombinationsWithRepetition([], 0, counter)
+
     probability = counter[0] / counter[1] if counter[1] > 0 else 0
-
     print(f"Probability that the sum of the population of a random subset of {M} cities falls within 40%-60% of the total population: {probability:.4f}")
 
-task2_u(cities, 5)
+task2_u(cities, 3)
 
 
