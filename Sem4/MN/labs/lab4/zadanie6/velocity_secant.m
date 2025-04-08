@@ -28,13 +28,19 @@ function [xvec,xdif,xsolution,ysolution,iterations] = velocity_secant()
     for ii = 1:max_iterations
         % Obliczenie kolejnego przybliżenia x2 metodą siecznych
         x2 = x1 - f1 * (x1 - x0) / (f1 - f0);
-        xvec(ii) = x2; % Zapisanie przybliżenia
         f2 = velocity_difference(x2); % Obliczenie wartości funkcji w x2
+
+        xvec(end+1,1) = x2;
+
+        % Obliczenie różnicy między kolejnymi przybliżeniami
+        if ii > 1
+            xdif(ii - 1, 1) = abs(xvec(ii) - xvec(ii - 1)); % Ensure xdif uses valid indices
+        end
 
         % Sprawdzenie warunku zakończenia
         if abs(f2) < ytolerance
-            xsolution = x2;
-            ysolution = f2;
+            xsolution = xvec(end);
+            ysolution = velocity_difference(xsolution);
             iterations = ii;
             break;
         end
@@ -44,11 +50,6 @@ function [xvec,xdif,xsolution,ysolution,iterations] = velocity_secant()
         f0 = f1;
         x1 = x2;
         f1 = f2;
-
-        % Obliczenie różnicy między kolejnymi przybliżeniami
-        if ii > 1
-            xdif(ii - 1) = abs(xvec(ii) - xvec(ii - 1));
-        end
     end
 
     % Rysowanie wykresów
@@ -65,6 +66,7 @@ function [xvec,xdif,xsolution,ysolution,iterations] = velocity_secant()
     xlabel('Iteracje');
     ylabel('Różnica (logarytmiczna)');
 
+    saveas(gcf, 'zadanie6.png');
 end
     
 function velocity_delta = velocity_difference(t)
