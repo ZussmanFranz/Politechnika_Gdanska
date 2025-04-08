@@ -1,7 +1,7 @@
 function velocity_delta = velocity_difference(t)
-% Wyznacza prędkość rakiety po czasie t od startu pomniejszoną o wartość M.
-% t - [s] czas od startu rakiety
-% velocity_delta [m/s]
+    % Wyznacza prędkość rakiety po czasie t od startu pomniejszoną o wartość M.
+    % t - [s] czas od startu rakiety
+    % velocity_delta [m/s]
 
     % Parametry
     g = 1.622;      % [m/s^2] przyspieszenie grawitacyjne na Księżycu
