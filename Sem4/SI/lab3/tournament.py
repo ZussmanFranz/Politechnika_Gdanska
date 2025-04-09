@@ -27,7 +27,7 @@ def get_opposite_token(token):
     else:
         raise Exception("There is no such token")
 
-def tournament(connect4, agent1, agent2, n_games, n_changes):
+def tournament(connect4, agent1, agent2, n_games, n_changes, draw_in_process=False):
     print(f"\t{type(agent1)}[{agent1.my_token}] VS {type(agent2)}[{agent2.my_token}]")
 
     for swap in range(0, n_changes):
@@ -40,7 +40,7 @@ def tournament(connect4, agent1, agent2, n_games, n_changes):
 
         for game in range(1, n_games + 1):
             print("\n\tGame", game, ": ")
-            play(connect4, agent1, agent2, draw_in_process=False)
+            play(connect4, agent1, agent2, draw_in_process=draw_in_process)
             connect4 = Connect4(width=connect4.width, height=connect4.height)
 
         

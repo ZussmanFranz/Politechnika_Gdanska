@@ -17,12 +17,12 @@ agent1 = AlphaBetaAgent('x')
 agent2 = RandomAgent('o')
 
 print("\t\tAlphaBeta tournament:\n")
-tournament(connect4, agent1, agent2, 5, 2)
+# tournament(connect4, agent1, agent2, 5, 2)
 
-agent1 = MinMaxAgent('x')
-# agent1 = AlphaBetaAgent('x', heuristic_func=advanced_static_eval)
+# agent1 = MinMaxAgent('x')
+agent1 = AlphaBetaAgent('x', heuristic_func=advanced_static_eval)
 agent2 = AlphaBetaAgent('o')
 # agent2 = RandomAgent('o')
 
 print("\t\tAlphaBeta advanced vs basic")
-tournament(connect4, agent1, agent2, 5, 2)
+tournament(connect4, agent1, agent2, 5, 2, draw_in_process=False)

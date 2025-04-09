@@ -19,6 +19,7 @@ class Connect4:
         if self.game_over:
             raise GameplayException('game over')
         if n_column not in self.possible_drops():
+            print(n_column)
             raise GameplayException('invalid move')
 
         n_row = 0

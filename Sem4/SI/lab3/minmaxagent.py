@@ -37,7 +37,7 @@ def basic_static_eval(connect4, player="o"):
     return (N3player - N3opponent)  # return score for player
 
 
-def advanced_static_eval(connect4, player="o", bigScore=10, smallScore=1):
+def advanced_static_eval(connect4, player="o", fourScore=10000, threeScore=100, centerScale=100):
     # TODO
     opponent = "x" if player == "o" else "o"
 
@@ -63,17 +63,21 @@ def advanced_static_eval(connect4, player="o", bigScore=10, smallScore=1):
         empty_count = 4 - (player_count + opponent_count)
 
         if player_count == 3 and empty_count == 1:
-            scorePlayer += bigScore
+            scorePlayer += fourScore
         elif player_count == 2 and empty_count == 2:
-            scorePlayer += smallScore
+            scorePlayer += threeScore
 
         if opponent_count == 3 and empty_count == 1:
-            scoreOpponent += bigScore
+            scoreOpponent += fourScore
         elif opponent_count == 2 and empty_count == 2:
-            scoreOpponent += smallScore
+            scoreOpponent += threeScore
 
+    center = connect4.center_column()
 
-    return (scorePlayer - scoreOpponent)  # return score for player
+    center_player = center.count(player)
+    center_opponent = center.count(opponent)
+
+    return centerScale * max((center_player - center_opponent), 1) * (scorePlayer - scoreOpponent)  # return score for player
 
 
 class MinMaxAgent:
