@@ -27,3 +27,30 @@ def load_titanic():
     X_test = data_test.drop("Survived", axis=1).to_numpy()
     y_test = data_test["Survived"].to_numpy()
     return (X_train, y_train), (X_test, y_test)
+    
+    
+def load_example_data():
+    # dane do porowania poprawności liczenia Gini Index ze strony
+    # https://blog.quantinsti.com/gini-index/
+    data = pd.DataFrame(
+        [
+            ["Positive", "Low", "High", "Up"],
+            ["Negative", "High", "Low", "Down"],
+            ["Positive", "Low", "High", "Up"],
+            ["Negative", "Low", "High", "Down"],
+            ["Negative", "High", "High", "Down"],
+            ["Positive", "High", "High", "Up"],
+            ["Positive", "Low", "Low", "Down"],
+            ["Negative", "Low", "High", "Down"],
+            ["Positive", "Low", "Low", "Down"],
+            ["Positive", "High", "High", "Up"],
+        ],
+        columns=["Trend", "Interest", "Volume", "Return"],
+    )
+    data["Trend"] = [1 if t == "Positive" else 0 for t in data["Trend"]]
+    data["Interest"] = [1 if t == "High" else 0 for t in data["Interest"]]
+    data["Volume"] = [1 if t == "High" else 0 for t in data["Volume"]]
+    data["Return"] = [1 if t == "Up" else 0 for t in data["Return"]]
+    X_train = data.drop("Return", axis=1).to_numpy()
+    y_train = data["Return"].to_numpy()
+    return (X_train, y_train), (X_train.copy(), y_train.copy())
