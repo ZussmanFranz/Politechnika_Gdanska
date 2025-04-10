@@ -12,7 +12,15 @@
 
 Celem projektu jest stworzenie prototypu gry strategicznej czasu rzeczywistego (RTS) online dla dwóch graczy. Gra osadzona jest w perspektywie top-down 2D na niewielkiej arenie. Każdy gracz bezpośrednio kontroluje jedną jednostkę-bohatera oraz pośrednio zarządza grupą podległych mu jednostek (tak zwanych "minionów"). Jednostki (bohaterowie i miniony) mogą pełnić funkcje Łucznika lub Miecznika. Kluczowym założeniem technicznym jest wykorzystanie protokołu **UDP** do komunikacji sieciowej oraz zbadanie implementacji w architekturach **Klient-Serwer** oraz **Peer-to-Peer (P2P)**.
 
+### 1.1 Przykładowy widok gry
+
+![[widok.png]]
+
 ***
+
+
+<div style="page-break-after: always;"></div>
+
 
 ## 2. Architektura Sieciowa
 
@@ -48,6 +56,9 @@ Projekt ma na celu **zbadanie obu podejść**, aby porównać ich złożoność 
 
 ***
 
+<div style="page-break-after: always;"></div>
+
+
 ## 3. Model Komunikacji
 
 ### 3.1. Protokół
@@ -59,30 +70,43 @@ Wybrano **UDP** ze względu na priorytet niskich opóźnień. Własne mechanizmy
 Preferowany jest **zwarty format binarny** nad tekstowym (np. JSON) dla minimalizacji narzutu pakietów UDP. Każdy pakiet rozpoczyna się 1-bajtowym `PacketID`.
 
 **Podstawowe Struktury Danych (Przykłady C++):**
-%% TODO: REFACTOR %%
 ```cpp
 struct Vector2D { float x, y; };
-enum UnitType : uint8_t { SWORDSMAN = 0, ARCHER = 1 };
-enum PlayerID : uint8_t { PLAYER_1 = 0, PLAYER_2 = 1 };
 
+// Enum określający typ *zachowania* ataku, a nie typ jednostki jako całości
+enum AttackBehaviourType : uint8_t { SWORDSMAN_ATTACK = 0, ARCHER_ATTACK = 1 };
+// Enum określający typ *zachowania* kontroli
+enum ControlBehaviourType : uint8_t { PLAYER_CONTROL = 0, MINION_CONTROL = 1 };
+
+enum PlayerID : uint8_t { PLAYER_1 = 0, PLAYER_2 = 1 }; // Lub dynamiczne ID
+
+// Stan pojedynczej jednostki przesyłany przez sieć
 struct UnitState {
-  uint16_t unitID;       // Unikalne ID jednostki
+  uint16_t unitID;              // Unikalne ID jednostki
   PlayerID owner;
-  UnitType type;
+  AttackBehaviourType attackType; // Jaki typ ataku ma ta jednostka
+  ControlBehaviourType controlType; // Jaki typ kontroli ma ta jednostka
   Vector2D position;
   float health;
-  // uint8_t stateFlags; // Np. isAttacking, isMoving
-  // uint16_t targetID; // ID celu ataku/ruchu
+  // uint8_t stateFlags;        // Np. isAttacking, isMoving, cooldown flags
+  // uint16_t targetID;        // ID celu ataku/ruchu
+  // Vector2D velocity;        // Prędkość do interpolacji/predykcji
 };
 
-struct PlayerInputData { // Dane specyficzne dla akcji gracza
-    uint8_t inputType;     // 0: HeroMove, 1: HeroAttackUnit, 2: MinionGroupCommand, etc.
-    Vector2D targetPosition;
-    uint16_t targetUnitID;
-    uint8_t numMinions;
-    uint16_t minionIDs[]; // Flexible array member or handled via packet length
+// Struktura danych dla akcji gracza
+struct PlayerInputData {
+    uint8_t inputType;     // Np. 0:GoToPosition, 1:AttackUnit
+    Vector2D targetPosition; // Cel ruchu lub ataku pozycyjnego
+    uint16_t targetUnitID;   // Cel ataku jednostki
+    uint8_t numSelectedUnits; // Liczba jednostek, których dotyczy komenda
+    uint16_t selectedUnitIDs[]; // ID jednostek (jeśli numSelectedUnits > 0) - wymaga dynamicznej obsługi rozmiaru pakietu
 };
 ```
+
+***
+
+<div style="page-break-after: always;"></div>
+
 
 ### 3.3. Kluczowe Komunikaty (Format Binarny - Pola Przykładowe)
 
@@ -107,8 +131,6 @@ struct PlayerInputData { // Dane specyficzne dla akcji gracza
     *   `uint32_t initialGameTick;`
     *   `// Info o mapie, początkowe jednostki`
 
-	%% TODO: LobbyCreate, LobbyConnect %%
-
 *   `PacketID = 0x05`: **Ping** (Klient -> Serwer)
     *   `uint64_t clientTimestamp;` // Czas wysłania przez klienta
 
@@ -121,18 +143,20 @@ struct PlayerInputData { // Dane specyficzne dla akcji gracza
 
 ***
 
+<div style="page-break-after: always;"></div>
+
+
 ## 4. Działanie Aplikacji
 
 ### 4.1. Z Punktu Widzenia Użytkownika
 
 1.  Uruchomienie gry.
 2.  Wybór trybu (Klient-Serwer / P2P).
-3.  TODO: Lobby
-4.  Połączenie / Oczekiwanie na gracza.
-5.  Rozpoczęcie rozgrywki.
-6.  Kontrola bohatera (np. WASD/mysz).
-7.  Wydawanie komend minionom (zaznaczenie miniona, zaznaczenie celu).
-8.  Zakończenie gry, wyniki.
+3.  Połączenie / Oczekiwanie na gracza.
+4.  Rozpoczęcie rozgrywki.
+5.  Kontrola bohatera (np. WASD/mysz).
+6.  Wydawanie komend minionom (zaznaczenie miniona, zaznaczenie celu).
+7.  Zakończenie gry, wyniki.
 
 ### 4.2. Z Punktu Widzenia Systemu (Klient-Serwer)
 
@@ -167,6 +191,9 @@ struct PlayerInputData { // Dane specyficzne dla akcji gracza
     *   Okresowa wymiana PING/PONG do pomiaru RTT.
 
 ***
+
+<div style="page-break-after: always;"></div>
+
 
 ## 5. Potencjalne Problemy i Rozwiązania (UDP)
 
@@ -215,6 +242,8 @@ Gra działa w oparciu o stały krok czasowy (Fixed Timestep), np. 30-60 ticków/
 
 ***
 
+<div style="page-break-after: always;"></div>
+
 ## 8. Diagramy Sekwencji
 
 ### 8.1. P2P Lockstep Tick
@@ -248,6 +277,8 @@ sequenceDiagram
         Klient B->>Klient B: Renderuj stan po Tick N
     end
 ```
+
+<div style="page-break-after: always;"></div>
 
 ### 8.2. Klient-Serwer Game Loop Tick
 
@@ -297,49 +328,82 @@ sequenceDiagram
 
 ```mermaid
 classDiagram
+    direction TB
+
     class GameManager {
         +GameState currentGameState
         +NetworkManager networkManager
         +InputManager inputManager
         +Renderer renderer
-        +Player localPlayer
-        +Player remotePlayer
         +runGameLoop()
-        +update(float deltaTime)
-        +render()
     }
 
     class GameState {
         +int currentTick
         +List~Unit~ units
         +MapDefinition map
-        +float player1Score
-        +float player2Score
         +applyInputs(List~PlayerInputData~ inputs)
     }
 
     class Unit {
         +uint16_t unitID
         +PlayerID owner
-        +UnitType type
         +Vector2D position
         +float health
-        +updateAI(GameState state)
+        #IAttackBehaviour attackBehaviour
+        #IControlBehaviour controlBehaviour
+        +update(GameState state, float deltaTime)
         +takeDamage(float amount)
+        +getUnitState() UnitState
     }
-    Unit <|-- Hero
-    Unit <|-- Minion
+
+    class IAttackBehaviour {
+        +updateAttack(Unit self, GameState state)
+        +executeAttack(Unit self, GameState state)
+        +getAttackType() AttackBehaviourType
+    }
+    IAttackBehaviour <|.. SwordsmanAttack
+    IAttackBehaviour <|.. ArcherAttack
+
+    class SwordsmanAttack {
+        +updateAttack(Unit self, GameState state)
+        +executeAttack(Unit self, GameState state) // Logika ataku mieczem
+        +getAttackType() AttackBehaviourType
+    }
+    class ArcherAttack {
+        +updateAttack(Unit self, GameState state)
+        +executeAttack(Unit self, GameState state) // Logika strzelania z łuku
+        +getAttackType() AttackBehaviourType
+    }
+
+    class IControlBehaviour {
+        +updateControl(Unit self, GameState state)
+        +processInput(Unit self, PlayerInputData input)
+        +getControlType() ControlBehaviourType
+    }
+    IControlBehaviour <|.. PlayerControl
+    IControlBehaviour <|.. MinionControl
+
+    class PlayerControl {
+        +updateControl(Unit self, GameState state) // Reaguje głównie na input
+        +processInput(Unit self, PlayerInputData input) // Przetwarza bezpośrednie komendy gracza
+        +getControlType() ControlBehaviourType
+    }
+    class MinionControl {
+        +updateControl(Unit self, GameState state) // Implementuje AI miniona (ruch, atak celu)
+        +processInput(Unit self, PlayerInputData input) // Przetwarza komendy grupowe/atak od gracza
+        +getControlType() ControlBehaviourType
+    }
 
     class Player {
         +PlayerID id
         +string name
+        +uint32_t lastInputSeq
     }
 
     class NetworkManager {
-        -UDPSocket socket
         +sendPacket(Packet packet, Address recipient)
         +List~Packet~ receivePackets()
-        +initialize(bool isServerOrPeerRole)
     }
 
     class InputManager {
@@ -350,22 +414,29 @@ classDiagram
         +drawGameState(GameState state)
     }
 
+	GameManager o-- Player
     GameManager o-- GameState
     GameManager o-- NetworkManager
     GameManager o-- InputManager
     GameManager o-- Renderer
-    GameManager o-- Player : "2"
-    GameState "1" *-- "many" Unit
-    Renderer ..> GameState : uses
-    NetworkManager ..> PlayerInputData : sends/receives
-    NetworkManager ..> GameStateUpdate : sends/receives
+    GameState *-- Unit : contains units
+    Unit o-- IAttackBehaviour : has attack
+    Unit o-- IControlBehaviour : has control
+    Renderer ..> GameState : renders
+    NetworkManager ..> PlayerInputData : handles
     InputManager --> PlayerInputData : creates
+
 ```
+
+
+<div style="page-break-after: always;"></div>
 
 ### 9.2. Diagram Klas - Strona Serwera (Architektura Klient-Serwer)
 
 ```mermaid
 classDiagram
+    direction TB
+
     class ServerApp {
         +main()
     }
@@ -374,80 +445,117 @@ classDiagram
 
     class NetworkServer {
         -ServerSocket listenerSocket
-        -List~ClientConnection~ clientConnections
+        -Map~Address, ClientConnection~ clientConnections
         -Thread listenerThread
         +startListening(port)
-        +acceptConnections() // W pętli wątku
+        +runAcceptLoop()
         +broadcast(Packet packet)
-        +removeClient(ClientConnection client)
+        +removeClient(Address clientAddr)
     }
-    NetworkServer "1" *-- "many" ClientConnection : manages >
+    NetworkServer  *--  ClientConnection : manages 
 
     class ClientConnection {
         -ClientSocket clientSocket
+        -Address clientAddress
         -PlayerID playerID
         -Thread receiveThread
-        -InputQueue inputQueue // Ref do współdzielonej kolejki
-        -NetworkServer networkServer // Ref do serwera nadrzędnego
-        +startReceiving() // Uruchamia wątek
-        +receiveLoop() // Pętla wątku: odbiera dane, deserializuje, wrzuca do InputQueue
+        -InputQueue inputQueue // Ref
+        -NetworkServer networkServer // Ref
+        +startReceiving()
+        +runReceiveLoop()
         +sendPacket(Packet packet)
         +getPlayerID() PlayerID
         +disconnect()
     }
-    ClientConnection ..> InputQueue : writes to >
-    ClientConnection ..> NetworkServer : notifies on disconnect <
+    ClientConnection ..> InputQueue : writes to 
+    ClientConnection ..> NetworkServer : notifies 
 
     class ServerGameManager {
         -GameState authoritativeState
-        -InputQueue inputQueue // Ref do współdzielonej kolejki
+        -InputQueue inputQueue // Ref
         -SimulationEngine simulationEngine
-        -NetworkServer networkServer // Ref do serwera (do broadcastu)
+        -NetworkServer networkServer // Ref
         -bool isRunning
         +runGameLoop()
-        +processTick() // Wywoływane co stały interwał
+        +processTick()
     }
     ServerGameManager o-- GameState : owns / manages
     ServerGameManager o-- SimulationEngine
-    ServerGameManager ..> InputQueue : reads from <
-    ServerGameManager ..> NetworkServer : uses for broadcast <
+    ServerGameManager ..> InputQueue : reads from 
+    ServerGameManager ..> NetworkServer : uses 
 
     class GameState {
          +int currentTick
          +List~Unit~ units
          +MapDefinition map
          +applyInput(PlayerInputData input, PlayerID playerID)
-         +getSnapshot() GameStateUpdate // Tworzy pakiet do wysłania
+         +getSnapshot() GameStateUpdate
     }
-    GameState "1" *-- "many" Unit
+    GameState *--  Unit : contains 
+
+    class Unit {
+        +uint16_t unitID
+        +PlayerID owner
+        +Vector2D position
+        +float health
+        #IAttackBehaviour attackBehaviour
+        #IControlBehaviour controlBehaviour
+        +update(GameState state, float deltaTime)
+    }
+    Unit o-- IAttackBehaviour
+    Unit o-- IControlBehaviour
+
+    IAttackBehaviour <|.. SwordsmanAttack
+    IAttackBehaviour <|.. ArcherAttack
+    class SwordsmanAttack { }
+    class ArcherAttack { }
+
+    IControlBehaviour <|.. PlayerControl
+    IControlBehaviour <|.. MinionControl
+    class PlayerControl { }
+    class MinionControl { }
+
 
     class SimulationEngine {
-         +simulateTick(GameState state, List~PlayerInputData~ inputs) // Aktualizuje stan gry
+         +simulateTick(GameState state, List~Tuple~PlayerInputData, PlayerID~~ inputs)
     }
+    SimulationEngine ..> GameState : modifies
+    SimulationEngine ..> Unit : calls update
 
     class InputQueue {
-        +enqueue(PlayerInputData input, PlayerID playerID) // Thread-safe
-        +dequeueAll() List~Tuple~PlayerInputData, PlayerID~~ // Thread-safe
+        +enqueue(PlayerInputData input, PlayerID playerID, Address sender) // Thread-safe
+        +dequeueAll() List~Tuple~PlayerInputData, PlayerID, Address~~ // Thread-safe
     }
 
 ```
 
 ***
 
+<div style="page-break-after: always;"></div>
+
+
 ## 10. Opis Klas
 
-*   **GameManager:** (Klient/P2P) Główna klasa zarządzająca pętlą gry po stronie klienta lub w trybie P2P.
-*   **ServerApp:** (Serwer) Punkt startowy aplikacji serwera, tworzy główne komponenty serwera.
-*   **NetworkServer:** (Serwer) Zarządza nasłuchiwaniem na połączenia, tworzeniem i zarządzaniem obiektami `ClientConnection`.
-*   **ClientConnection:** (Serwer) Reprezentuje pojedyncze połączenie z klientem na serwerze. Zazwyczaj działa we własnym wątku, odbiera dane od klienta, umieszcza je w `InputQueue` i wysyła `GameStateUpdate` do klienta.
-*   **ServerGameManager:** (Serwer) Główna klasa logiki serwera, uruchamia pętlę gry, pobiera inputy z kolejki, zleca symulację i rozgłasza stan gry.
-*   **GameState:** Kontener na stan gry (jednostki, mapa, tick, wyniki). W C/S jest to *autorytatywny* stan na serwerze. W P2P każdy peer ma swoją kopię.
-*   **SimulationEngine:** (Serwer/P2P) Odpowiada za wykonanie jednego kroku symulacji gry, modyfikując `GameState` na podstawie inputów. Musi być deterministyczny dla P2P.
-*   **InputQueue:** (Serwer) Bezpieczna wątkowo kolejka do przekazywania `PlayerInput` z wątków sieciowych (`ClientConnection`) do głównego wątku serwera (`ServerGameManager`).
-*   **Unit, Hero, Minion:** Klasy reprezentujące jednostki w grze.
-*   **Player:** Reprezentuje gracza.
-*   **NetworkManager:** (Klient/P2P) Klasa obsługująca sieć po stronie klienta lub w trybie P2P.
+*   **GameManager:** (Klient/P2P) Główna klasa aplikacji po stronie klienta lub w trybie P2P. Zarządza pętlą gry, inputem, siecią i renderowaniem.
+*   **ServerApp:** (Serwer) Punkt wejścia aplikacji serwera. Inicjalizuje `NetworkServer` i `ServerGameManager`.
+*   **NetworkServer:** (Serwer) Zarządza gniazdem nasłuchującym, akceptuje nowe połączenia i tworzy obiekty `ClientConnection` dla każdego klienta. Przechowuje listę aktywnych połączeń.
+*   **ClientConnection:** (Serwer) Reprezentuje połączenie z jednym klientem. Posiada własny wątek do odbierania danych (`PlayerInput`) przez UDP, które następnie umieszcza w współdzielonej `InputQueue`. Odpowiada za wysyłanie danych (`GameStateUpdate`) do konkretnego klienta.
+*   **ServerGameManager:** (Serwer) Centralny komponent logiki serwera. Uruchamia główną pętlę gry (stały tick rate), pobiera zgromadzone `PlayerInput` z `InputQueue`, zleca `SimulationEngine` wykonanie kroku symulacji na `GameState` i inicjuje rozgłaszanie zaktualizowanego stanu przez `NetworkServer`.
+*   **GameState:** Kontener przechowujący **autorytatywny** stan gry na serwerze (lub zsynchronizowaną kopię w P2P). Zawiera listę wszystkich `Unit`, informacje o mapie, aktualny `gameTick`, wyniki itp.
+*   **SimulationEngine:** (Serwer/P2P) Moduł odpowiedzialny za wykonanie logiki jednego kroku symulacji. Pobiera `GameState` i listę inputów graczy dla danego ticka, a następnie aktualizuje stan wszystkich `Unit` (wywołując metody ich komponentów `IAttackBehaviour` i `IControlBehaviour`), przetwarza ruch, kolizje, walkę itp. *Musi być deterministyczny dla P2P.*
+*   **InputQueue:** (Serwer) Bezpieczna wątkowo struktura danych (kolejka) służąca jako bufor dla `PlayerInput` przychodzących z różnych wątków `ClientConnection` przed przetworzeniem ich przez główny wątek `ServerGameManager`.
+*   **Unit:** Podstawowa klasa reprezentująca jednostkę w grze. Nie definiuje już sama w sobie, czy jest bohaterem/minionem czy łucznikiem/miecznikiem. Posiada podstawowe dane (ID, właściciel, pozycja, HP) oraz **komponenty** definiujące jej zachowanie:
+    *   `IAttackBehaviour`: Interfejs/Klasa bazowa definiująca zachowanie ataku.
+    *   `IControlBehaviour`: Interfejs/Klasa bazowa definiująca sposób kontroli jednostki.
+*   **IAttackBehaviour:** Interfejs (lub abstrakcyjna klasa bazowa) dla logiki ataku.
+    *   **SwordsmanAttack:** Konkretna implementacja `IAttackBehaviour` dla ataku mieczem (np. w łuku 45 stopni).
+    *   **ArcherAttack:** Konkretna implementacja `IAttackBehaviour` dla ataku łukiem (np. strzała na dystans).
+*   **IControlBehaviour:** Interfejs (lub abstrakcyjna klasa bazowa) dla logiki kontroli.
+    *   **PlayerControl:** Konkretna implementacja `IControlBehaviour` dla jednostki bezpośrednio kontrolowanej przez gracza. Reaguje na `PlayerInput`.
+    *   **MinionControl:** Konkretna implementacja `IControlBehaviour` dla jednostki sterowanej pośrednio (miniona). Implementuje AI, reaguje na komendy gracza przekazane przez `PlayerInput`.
+*   **Player:** Reprezentuje gracza (nie jednostkę, lecz uczestnika gry), przechowuje ID, nazwę, ewentualnie ostatni przetworzony numer sekwencyjny inputu.
+*   **NetworkManager:** (Klient/P2P) Odpowiednik `NetworkServer`/`ClientConnection` po stronie klienta lub w P2P.
 *   **InputManager:** (Klient/P2P) Zbiera input od lokalnego gracza.
-*   **Renderer:** (Klient/P2P) Rysuje stan gry.
+*   **Renderer:** (Klient/P2P) Rysuje `GameState` na ekranie.
 
 ***
