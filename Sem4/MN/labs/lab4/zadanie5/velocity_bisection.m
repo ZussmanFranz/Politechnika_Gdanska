@@ -65,6 +65,8 @@ function [xvec,xdif,xsolution,ysolution,iterations] = velocity_bisection()
     xlabel('Iteracje');
     ylabel('Różnica (logarytmiczna)');
 
+    saveas(gcf, 'zadanie5.png');
+
 end
 
 function velocity_delta = velocity_difference (t)

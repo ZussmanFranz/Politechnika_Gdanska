@@ -39,7 +39,7 @@ function [xvec,xdif,xsolution,ysolution,iterations] = impedance_bisection()
         % Wybór nowego przedziału
         if fa * fc < 0
             b = c;
-            % fb = fc;
+            fb = fc;
         else
             a = c;
             fa = fc;

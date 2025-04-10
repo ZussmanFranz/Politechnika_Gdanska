@@ -1,0 +1,104 @@
+Search for an interval around 4.5 containing a sign change:
+ Func-count    a          f(a)             b          f(b)        Procedure
+    1             4.5       4.63733           4.5       4.63733   initial interval
+    3         4.37272       2.82995       4.62728       11.7212   search
+    5            4.32       2.41633          4.68       30.8639   search
+    7         4.24544       1.98361       4.75456      -23.6998   search
+ 
+Search for a zero in the interval [4.24544, 4.75456]:
+ Func-count    x          f(x)             Procedure
+    7         4.24544       1.98361        initial
+    8         4.28476       2.19418        interpolation
+    9         4.51966       5.12424        bisection
+   10         4.63711       13.2587        bisection
+   11         4.75456      -23.6998        bisection
+   12         4.73801      -39.0229        interpolation
+   13         4.69583        60.399        bisection
+   14         4.70037       83.1719        interpolation
+   15         4.71692       -220.62        bisection
+   16         4.70864       267.019        interpolation
+   17         4.70943       338.132        interpolation
+   18          4.7113       921.746        bisection
+   19         4.71318      -1269.65        bisection
+   20         4.71303      -1564.99        interpolation
+   21         4.71263      -4078.77        bisection
+   22         4.71224       6727.73        bisection
+   23         4.71229       9962.96        interpolation
+   24         4.71244      -20718.2        bisection
+   25         4.71236       38383.9        interpolation
+   26         4.71241      -45016.5        interpolation
+   27         4.71241      -54419.9        interpolation
+   28          4.7124       -137579        bisection
+   29         4.71239        260520        bisection
+   30         4.71239        470937        interpolation
+   31         4.71239       -583074        bisection
+   32         4.71239       -661876        interpolation
+   33         4.71239  -1.53061e+06        bisection
+   34         4.71239  -4.45291e+06        bisection
+   35         4.71239    4.8974e+06        bisection
+   36         4.71239   5.15468e+06        interpolation
+   37         4.71239    1.0881e+07        bisection
+   38         4.71239    2.4476e+07        bisection
+   39         4.71239   6.52207e+07        bisection
+   40         4.71239  -9.81241e+07        bisection
+   41         4.71239  -1.31225e+08        interpolation
+   42         4.71239   3.89001e+08        bisection
+   43         4.71239  -3.96054e+08        interpolation
+   44         4.71239  -4.03368e+08        interpolation
+   45         4.71239  -8.21912e+08        bisection
+   46         4.71239  -1.70809e+09        bisection
+   47         4.71239  -3.70597e+09        bisection
+   48         4.71239  -8.92638e+09        bisection
+   49         4.71239   2.18442e+10        bisection
+   50         4.71239  -3.01892e+10        interpolation
+   51         4.71239  -4.88507e+10        interpolation
+   52         4.71239    7.9026e+10        bisection
+   53         4.71239   1.14337e+11        interpolation
+   54         4.71239  -2.55898e+11        bisection
+   55         4.71239   4.13295e+11        interpolation
+   56         4.71239  -6.71861e+11        interpolation
+   57         4.71239   1.07412e+12        interpolation
+   58         4.71239  -1.79342e+12        interpolation
+   59         4.71239   2.67939e+12        interpolation
+   60         4.71239   5.30567e+12        interpolation
+   61         4.71239  -5.41837e+12        bisection
+   62         4.71239  -5.47103e+12        interpolation
+   63         4.71239  -1.10607e+13        bisection
+   64         4.71239  -2.26115e+13        bisection
+   65         4.71239  -4.73203e+13        bisection
+   66         4.71239  -1.04316e+14        bisection
+   67         4.71239  -2.96823e+14        bisection
+   68         4.71239    5.1019e+14        bisection
+ 
+Current point x may be near a singular point. The interval [4.24544, 4.75456] 
+reduced to the requested tolerance and the function changes sign in the interval,
+but f(x) increased in magnitude as the interval reduced.
+ 
+Search for an interval around 6 containing a sign change:
+ Func-count    a          f(a)             b          f(b)        Procedure
+    1               6     -0.291006             6     -0.291006   initial interval
+    3         5.83029     -0.486626       6.16971     -0.113969   search
+    5            5.76     -0.576799          6.24    -0.0432122   search
+    7         5.66059     -0.717836       6.33941     0.0562853   search
+ 
+Search for a zero in the interval [5.66059, 6.33941]:
+ Func-count    x          f(x)             Procedure
+    7         6.33941     0.0562853        initial
+    8         6.29006    0.00686984        interpolation
+    9         6.28326   7.31689e-05        interpolation
+   10         6.28319   9.31674e-08        interpolation
+   11         6.28319   1.26008e-12        interpolation
+   12         6.28319  -2.44929e-16        interpolation
+   13         6.28319  -2.44929e-16        interpolation
+ 
+Zero found in the interval [5.66059, 6.33941]
+
+
+Funcja fzero najpierw rozszerza przedział, na którym ma wystąpić zmiana znaku, 
+a po wykryciu tej zmiany zaczyna szukać zera iterując się na tym przedziale. 
+
+W przypadku okolic 4.5 te wyszukiwanie zajeło dużo czasu przede wszystkim przez to, że 0 występuje na asymptocie.
+
+Właśnie przez to bisekcja nie radzi sobie przez długi czas, bo znaki po lewej i prawej stronie dramatycznie się różnią.
+
+Natomiast w przypadku okolic 6.0 miejsce zerowe zostało znalezione dosyć szybko, ponieważ funkcja maleje bardzo "łagodnie"
