@@ -4,6 +4,9 @@ public class Warehouse {
     private final int capacity;
     private final List<Product> storage = new ArrayList<>();
 
+    // ANSII codes
+    public static final String ANSI_GREEN = "\u001B[32m";
+
     public Warehouse(int capacity) {
         this.capacity = capacity;
     }
@@ -37,6 +40,6 @@ public class Warehouse {
     }
 
     public synchronized void printStatus() {
-        System.out.println("Current warehouse: " + storage);
+        System.out.println("\nCurrent warehouse: " + storage + "\n");
     }
 }

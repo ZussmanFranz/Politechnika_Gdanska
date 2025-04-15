@@ -8,9 +8,7 @@ public class Main {
         int numConsumers = 3;
         int capacity = 10;
 
-        final int print_interval = 3000;
-        long from_last_print = System.currentTimeMillis(); // gets start time
-        
+        final int print_interval = 2000;
 
         Warehouse warehouse = new Warehouse(capacity);
         Controller controller = new Controller();
@@ -24,14 +22,22 @@ public class Main {
             pool.submit(new Consumer(warehouse, controller));
         }
 
-        if (System.currentTimeMillis() - from_last_print >= print_interval) {
-            warehouse.printStatus();
-            from_last_print = System.currentTimeMillis();
-        }
+        // Thread that prints warehouse status periodically
+        Thread statusPrinter = new Thread(() -> {
+            while (!controller.stopRequested) {
+                warehouse.printStatus();
+                try {
+                    Thread.sleep(print_interval);
+                } catch (InterruptedException ignored) {}
+            }
+        });
+        statusPrinter.start();
 
-
+        // Wait for user to press ENTER
         System.out.println("Press ENTER to stop...");
-        new Scanner(System.in).nextLine();
+        try (Scanner scanner = new Scanner(System.in)) {
+            scanner.nextLine();
+        }
 
         controller.stopRequested = true;
         pool.shutdown();
