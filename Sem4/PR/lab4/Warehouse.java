@@ -6,15 +6,23 @@ public class Warehouse {
 
     // ANSII codes
     public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_RESET = "\u001B[0m";
 
     public Warehouse(int capacity) {
         this.capacity = capacity;
     }
 
     public synchronized boolean addProduct(Product p) {
-        if (storage.size() >= capacity) return false;
+        if (storage.size() >= capacity) {
+            System.out.println(ANSI_RED + "Failed to accept: " + p.type + " (" + p.quantity + ")" + ANSI_RESET);
+            
+            return false;
+        } 
         storage.add(p);
-        System.out.println("Produced: " + p);
+        System.out.println(ANSI_GREEN + "Produced: " + p + ANSI_RESET);
         return true;
     }
 
@@ -31,15 +39,15 @@ public class Warehouse {
         }
 
         if (total >= quantity) {
-            System.out.println("Consumed: " + type + " (" + quantity + ")");
+            System.out.println(ANSI_YELLOW + "Consumed: " + type + " (" + quantity + ")" + ANSI_RESET);
             return true;
         } else {
-            System.out.println("Failed to consume: " + type + " (" + quantity + ")");
+            System.out.println(ANSI_RED + "Failed to consume: " + type + " (" + quantity + ")" + ANSI_RESET);
             return false;
         }
     }
 
     public synchronized void printStatus() {
-        System.out.println("\nCurrent warehouse: " + storage + "\n");
+        System.out.println(ANSI_PURPLE + "\nCurrent warehouse: " + storage + "\n" + ANSI_RESET);
     }
 }

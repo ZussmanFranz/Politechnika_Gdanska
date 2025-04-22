@@ -8,7 +8,7 @@ public class Main {
         int numConsumers = 3;
         int capacity = 10;
 
-        final int print_interval = 2000;
+        final int print_interval = 1000;
 
         Warehouse warehouse = new Warehouse(capacity);
         Controller controller = new Controller();
