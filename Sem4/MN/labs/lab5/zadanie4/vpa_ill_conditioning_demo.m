@@ -1,18 +1,17 @@
 function [matrix_sizes, condition_numbers, interpolation_error_exact, interpolation_error_perturbed] = ...
     vpa_ill_conditioning_demo()
-% Określa wpływ współczynnika uwarunkowania macierzy Vandermonde'a na dokładność interpolacji.
-% Generuje trzy wykresy ilustrujące uwarunkowanie macierzy i błędy interpolacji.
-% W obliczeniach stosuje arytmetykę zmiennoprzecinkową o wyższej precyzji.
-%
-% matrix_sizes - rozmiar testowych macierzy Vandermonde'a
-% condition_numbers - współczynniki uwarunkowania testowych macierzy Vandermonde'a
-% interpolation_error_exact - maksymalna różnica między referencyjnymi
-%       a obliczonymi współczynnikami wielomianu, gdy b zawiera
-%       wartości funkcji kwadratowej 
-% interpolation_error_perturbed - maksymalna różnica między referencyjnymi
-%       a obliczonymi współczynnikami wielomianu, gdy b zawiera
-%       zaburzone wartości funkcji kwadratowej 
-
+    % Określa wpływ współczynnika uwarunkowania macierzy Vandermonde'a na dokładność interpolacji.
+    % Generuje trzy wykresy ilustrujące uwarunkowanie macierzy i błędy interpolacji.
+    % W obliczeniach stosuje arytmetykę zmiennoprzecinkową o wyższej precyzji.
+    %
+    % matrix_sizes - rozmiar testowych macierzy Vandermonde'a
+    % condition_numbers - współczynniki uwarunkowania testowych macierzy Vandermonde'a
+    % interpolation_error_exact - maksymalna różnica między referencyjnymi
+    %       a obliczonymi współczynnikami wielomianu, gdy b zawiera
+    %       wartości funkcji kwadratowej 
+    % interpolation_error_perturbed - maksymalna różnica między referencyjnymi
+    %       a obliczonymi współczynnikami wielomianu, gdy b zawiera
+    %       zaburzone wartości funkcji kwadratowej 
 
     a = vpa(-1);
     b = vpa(1);
@@ -67,7 +66,6 @@ function [matrix_sizes, condition_numbers, interpolation_error_exact, interpolat
     %===========================================================================
     for index = 1:num_points
         size_n = matrix_sizes(index);
-
         indices = vpa(0:size_n-1)';
         interpolation_nodes = a + indices * (b - a) / vpa(size_n - 1);
 
@@ -88,7 +86,7 @@ function [matrix_sizes, condition_numbers, interpolation_error_exact, interpolat
 
     % Wykres 2
     nexttile;
-    plot(matrix_sizes, interpolation_error_exact, '-o');
+    plot(matrix_sizes, interpolation_error_exact, 'r-o');
     title('Błąd interpolacji (dokładne dane)');
     xlabel('Rozmiar macierzy Vandermonde’a');
     ylabel('Błąd interpolacji');
@@ -107,8 +105,17 @@ function [matrix_sizes, condition_numbers, interpolation_error_exact, interpolat
         noise = vpa(rand(size_n, 1) * 1e-9);
         b_perturbed = a2 * interpolation_nodes.^vpa(2) + noise;
 
+        reference_coefficients = [vpa(0); vpa(0); a2; vpa(zeros(size_n-3, 1))];
+
+        % disp(size(computed_coefficients))
+        % disp(size(reference_coefficients))
+
         % Obliczanie współczynników interpolacyjnych
         computed_coefficients = V \ b_perturbed;
+
+        % Przydzielenie tego samego kształtu
+        % computed_coefficients = computed_coefficients(:);
+        % reference_coefficients = reference_coefficients(:);
 
         % Błąd interpolacji dla zaburzonych danych
         interpolation_error_perturbed(index) = double(max(abs(computed_coefficients - reference_coefficients)));
