@@ -91,8 +91,6 @@ function y = polyval_vpa(coefficients, x)
 end
 
 function V = get_vandermonde_matrix(x)
-% Buduje macierz Vandermonde’a na podstawie wektora węzłów interpolacji x.
-% Wykonuje obliczeniach w podwójnej precyzji
     n = length(x);
     V = zeros(n);
     for i = 1:n
@@ -101,8 +99,6 @@ function V = get_vandermonde_matrix(x)
 end
 
 function V = get_vandermonde_matrix_vpa(x)
-% Buduje macierz Vandermonde’a na podstawie wektora węzłów interpolacji x.
-% Wykonuje obliczeniach na zmiennych vpa
     n = length(x);
     V = vpa(zeros(n));
     for i = 1:n

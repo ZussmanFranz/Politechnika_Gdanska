@@ -107,15 +107,8 @@ function [matrix_sizes, condition_numbers, interpolation_error_exact, interpolat
 
         reference_coefficients = [vpa(0); vpa(0); a2; vpa(zeros(size_n-3, 1))];
 
-        % disp(size(computed_coefficients))
-        % disp(size(reference_coefficients))
-
         % Obliczanie współczynników interpolacyjnych
         computed_coefficients = V \ b_perturbed;
-
-        % Przydzielenie tego samego kształtu
-        % computed_coefficients = computed_coefficients(:);
-        % reference_coefficients = reference_coefficients(:);
 
         % Błąd interpolacji dla zaburzonych danych
         interpolation_error_perturbed(index) = double(max(abs(computed_coefficients - reference_coefficients)));
@@ -133,7 +126,6 @@ function [matrix_sizes, condition_numbers, interpolation_error_exact, interpolat
 end
 
 function V = get_vandermonde_matrix(x)
-    % Buduje macierz Vandermonde’a na podstawie wektora węzłów interpolacji x.
     N = length(x);
     V = vpa(zeros(N, N));  % Inicjalizacja jako macierz zmiennych vpa
     for i = 1:N

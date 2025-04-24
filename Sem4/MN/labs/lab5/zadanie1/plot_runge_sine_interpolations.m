@@ -57,7 +57,6 @@ function [node_counts, exact_runge, exact_sine, V, interpolated_runge, interpola
         plot(x_fine, interpolated_sine{i}, 'DisplayName', sprintf('%d węzłów', N));
     end
 
-    % Opisy wykresów i legenda
     subplot(2,1,1);
     title('Interpolacja funkcji Rungego');
     xlabel('x'); ylabel('f(x)');

@@ -108,7 +108,6 @@ function [matrix_sizes, condition_numbers, interpolation_error_exact, interpolat
 end
 
 function V = get_vandermonde_matrix(x)
-% Buduje macierz Vandermonde’a dla węzłów x
     N = length(x);
     V = zeros(N, N);
     for i = 1:N
