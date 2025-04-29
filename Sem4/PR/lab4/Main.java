@@ -4,22 +4,25 @@ import java.util.concurrent.Executors;
 
 public class Main {
     public static void main(String[] args) {
-        int numProducers = 3;
-        int numConsumers = 3;
-        int capacity = 10;
+        // Parameters
+        final int numProducers = 3;
+        final int numConsumers = 3;
+        
+        final int capacity = 10;
+        final int sleepTime = 300;
 
-        final int print_interval = 1000;
+        final int print_interval = 500;
 
         Warehouse warehouse = new Warehouse(capacity);
         Controller controller = new Controller();
         ExecutorService pool = Executors.newFixedThreadPool(numProducers + numConsumers);
 
-        for (int i = 0; i < numProducers; i++) {
-            pool.submit(new Producer(warehouse, controller));
+        for (int i = 0; i < numProducers; ++i) {
+            pool.submit(new Producer(warehouse, controller, capacity/2, sleepTime));
         }
 
-        for (int i = 0; i < numConsumers; i++) {
-            pool.submit(new Consumer(warehouse, controller));
+        for (int i = 0; i < numConsumers; ++i) {
+            pool.submit(new Consumer(warehouse, controller, capacity/2, sleepTime));
         }
 
         // Thread that prints warehouse status periodically
