@@ -22,8 +22,7 @@ def initialize_centroids_kmeans_pp(data, k):
     k = min(k, n_samples)
 
     # Initialize centroids
-    centroids = list(range(0, k))
-    centroids[:] = np.zeros(sample_len)
+    centroids = np.zeros((k, sample_len)).tolist()
 
     # First centroid is initialized randomly
     centroids[0] = data[np.random.choice(n_samples)]

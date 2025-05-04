@@ -1,4 +1,4 @@
-from k_means import k_means
+from k_means import k_means, initialize_centroids_kmeans_pp
 import pandas as pd
 import numpy as np
 
@@ -49,6 +49,10 @@ if __name__=="__main__":
     distance = np.sqrt(np.sum((example_point - centroids[0])**2))
 
     print(f'Distance between {example_point} and {centroids[0]}: {distance}')
+
+    centroids = initialize_centroids_kmeans_pp(features, 3)
+
+    print(f'Centroids k++:\n{centroids}')
 
     # clustering(kmeans_pp = True)
     # clustering(kmeans_pp = False)
