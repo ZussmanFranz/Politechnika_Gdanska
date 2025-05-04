@@ -15,12 +15,45 @@ def initialize_centroids_forgy(data, k):
 
 def initialize_centroids_kmeans_pp(data, k):
     # TODO implement kmeans++ initizalization
+    n_samples = data.shape[0]
+    sample_len = data.shape[1]
 
-    # 1: select centroids[0]
+    # Ensure that the k <= n_samples
+    k = min(k, n_samples)
+
+    # Initialize centroids
+    centroids = list(range(0, k))
+    centroids[:] = np.zeros(sample_len)
+
+    # First centroid is initialized randomly
+    centroids[0] = data[np.random.choice(n_samples)]
 
     # 2: for i in 1...k select centroid, which is farest from all the others
 
-    return None
+    # Determine the farest location from centroids chosen before
+    for i in range(1, k):
+        centroids[i] = data[find_farest_point(data, centroids[:i])]
+
+    return centroids
+
+def find_farest_point(data, centroids):
+    max_distance = 0
+    choosen_index = 0
+
+    for index, element in enumerate(data):
+        distance = 0
+        
+        for centroid in centroids:
+            distance += calculate_distance(element, centroid)
+        
+        if distance > max_distance:
+            max_distance = distance
+            choosen_index = index
+
+    return choosen_index
+
+def calculate_distance(from_element, to_element):
+    return np.sqrt(np.sum((to_element - from_element)**2))
 
 def assign_to_cluster(data, centroid):
     # TODO find the closest cluster for each data point

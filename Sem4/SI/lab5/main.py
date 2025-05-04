@@ -31,8 +31,24 @@ if __name__=="__main__":
     data = load_iris()
     features, classes = data
     print(f'Features:\n{features}\n')
+
     n_samples = features.shape[0]
     centroids = features[np.random.choice(n_samples, 3, replace=False)]
-    print(f'Centroids:\n{centroids}')
+    print(f'Random Centroids:\n{centroids}')
+
+    # Initialize centroids
+    centroids[range(0, 3)] = np.zeros(features.shape[1])
+
+    # centroids[0] = features[np.random.choice(n_samples)]
+    centroids[0] = features[np.random.choice(n_samples)]
+
+    example_point = [1.1, 2.2, 3.3, 4.4]
+
+    print(f'K++ Centroids: {centroids}\nExample point: {example_point}')
+
+    distance = np.sqrt(np.sum((example_point - centroids[0])**2))
+
+    print(f'Distance between {example_point} and {centroids[0]}: {distance}')
+
     # clustering(kmeans_pp = True)
     # clustering(kmeans_pp = False)
