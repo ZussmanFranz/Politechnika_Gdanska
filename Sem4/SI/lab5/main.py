@@ -6,27 +6,27 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-def visualize_initial_kpp(features, centroids):
-    fig = plt.figure(figsize=(10, 7))
+def visualize_initial_kpp(features, kpp_centroids, random_centroids):
+    fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
 
-    # Plot all data points in gray
-    ax.scatter(
-        features[:, 0], features[:, 1], features[:, 2],
-        color='lightgray', s=40, label='Data Points', edgecolor='k'
-    )
+    # Plot all data points (light gray)
+    ax.scatter(features[:, 0], features[:, 1], features[:, 2], c='lightgray', label='Data Points')
 
-    # Plot initial centroids in red
-    ax.scatter(
-        centroids[:, 0], centroids[:, 1], centroids[:, 2],
-        color='red', s=200, marker='X', label='Initial Centroids'
-    )
+    # Plot K-Means++ centroids (red)
+    ax.scatter(kpp_centroids[:, 0], kpp_centroids[:, 1], kpp_centroids[:, 2],
+               c='red', marker='X', s=100, label='K-Means++ Centroids')
+
+    # Plot Random centroids (blue)
+    ax.scatter(random_centroids[:, 0], random_centroids[:, 1], random_centroids[:, 2],
+               c='blue', marker='D', s=100, label='Random Centroids')
 
     ax.set_xlabel('Sepal Length')
     ax.set_ylabel('Sepal Width')
     ax.set_zlabel('Petal Length')
-    ax.set_title('Initial K-Means++ Centroids')
     ax.legend()
+    ax.set_title("Initial Centroids: K-Means++ vs Random")
+
     plt.show()
 
 
@@ -61,28 +61,14 @@ if __name__=="__main__":
     print(f'Features:\n{features}\n')
 
     n_samples = features.shape[0]
-    centroids = features[np.random.choice(n_samples, 3, replace=False)]
-    print(f'Random Centroids:\n{centroids}')
-
-    # Initialize centroids
-    centroids[range(0, 3)] = np.zeros(features.shape[1])
-
-    # centroids[0] = features[np.random.choice(n_samples)]
-    centroids[0] = features[np.random.choice(n_samples)]
-
-    example_point = [1.1, 2.2, 3.3, 4.4]
-
-    print(f'K++ Centroids: {centroids}\nExample point: {example_point}')
-
-    distance = np.sqrt(np.sum((example_point - centroids[0])**2))
-
-    print(f'Distance between {example_point} and {centroids[0]}: {distance}')
+    random_centroids = features[np.random.choice(n_samples, 3, replace=False)]
+    print(f'Random Centroids:\n{random_centroids}')
 
     centroids = np.array(initialize_centroids_kmeans_pp(features, 3))
 
     print(f'Centroids k++:\n{centroids}')
 
-    visualize_initial_kpp(features[:, :3], centroids[:, :3])
+    visualize_initial_kpp(features[:, :3], centroids[:, :3], random_centroids[:, :3])
 
     # clustering(kmeans_pp = True)
     # clustering(kmeans_pp = False)
