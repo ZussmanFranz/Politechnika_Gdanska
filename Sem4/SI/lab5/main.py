@@ -28,5 +28,11 @@ def clustering(kmeans_pp):
     print(f"Mean intra-class variance: {np.mean(intra_class_variance)}")
 
 if __name__=="__main__":
-    clustering(kmeans_pp = True)
+    data = load_iris()
+    features, classes = data
+    print(f'Features:\n{features}\n')
+    n_samples = features.shape[0]
+    centroids = features[np.random.choice(n_samples, 3, replace=False)]
+    print(f'Centroids:\n{centroids}')
+    # clustering(kmeans_pp = True)
     # clustering(kmeans_pp = False)

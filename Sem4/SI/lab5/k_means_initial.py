@@ -2,24 +2,10 @@ import numpy as np
 
 def initialize_centroids_forgy(data, k):
     # TODO implement random initialization
-    n_samples = data.shape[0]
-
-    # Ensure that the k <= n_samples
-    k = min(k, n_samples)
-    
-    random_indices = np.random.choice(n_samples, k, replace=False)
-
-    centroids = data[random_indices]
-
-    return centroids
+    return None
 
 def initialize_centroids_kmeans_pp(data, k):
     # TODO implement kmeans++ initizalization
-
-    # 1: select centroids[0]
-
-    # 2: for i in 1...k select centroid, which is farest from all the others
-
     return None
 
 def assign_to_cluster(data, centroid):
@@ -28,7 +14,6 @@ def assign_to_cluster(data, centroid):
 
 def update_centroids(data, assignments):
     # TODO find new centroids based on the assignments
-    # HINT: calculate the mean value of every observation, which belongs to your centroid
     return None
 
 def mean_intra_distance(data, assignments, centroids):
