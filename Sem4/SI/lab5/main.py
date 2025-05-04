@@ -57,6 +57,24 @@ def visualize_assignments(features, assignments, centroids):
     ax.legend()
     plt.show()
 
+def visualized_test_program():
+    data = load_iris()
+    features, classes = data
+    print(f'Features:\n{features}\n')
+
+    n_samples = features.shape[0]
+    random_centroids = features[np.random.choice(n_samples, 3, replace=False)]
+    print(f'Random Centroids:\n{random_centroids}')
+
+    centroids = np.array(initialize_centroids_kmeans_pp(features, 3))
+
+    print(f'Centroids k++:\n{centroids}')
+
+    assignments = assign_to_cluster(features, centroids)
+
+    visualize_initial_kpp(features[:, :3], centroids[:, :3], random_centroids[:, :3])
+    visualize_assignments(features[:, :3], assignments, centroids[:, :3])
+
 # --- Visualization is over
 
 
@@ -86,23 +104,8 @@ def clustering(kmeans_pp):
     print(f"Mean intra-class variance: {np.mean(intra_class_variance)}")
 
 if __name__=="__main__":
-    data = load_iris()
-    features, classes = data
-    print(f'Features:\n{features}\n')
+    # Demonstarion of clustering and assignment in 3-d plot.
+    # visualized_test_program()
 
-    n_samples = features.shape[0]
-    random_centroids = features[np.random.choice(n_samples, 3, replace=False)]
-    print(f'Random Centroids:\n{random_centroids}')
-
-    centroids = np.array(initialize_centroids_kmeans_pp(features, 3))
-
-    print(f'Centroids k++:\n{centroids}')
-
-    assignments = assign_to_cluster(features, centroids)
-
-    visualize_initial_kpp(features[:, :3], centroids[:, :3], random_centroids[:, :3])
-    visualize_assignments(features[:, :3], assignments, centroids[:, :3])
-
-
-    # clustering(kmeans_pp = True)
+    clustering(kmeans_pp = True)
     # clustering(kmeans_pp = False)

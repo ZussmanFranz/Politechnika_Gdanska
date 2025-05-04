@@ -77,10 +77,26 @@ def assign_to_cluster(data, centroids):
 def update_centroids(data, assignments):
     # TODO find new centroids based on the assignments
     # HINT: calculate the mean value of every observation, which belongs to your centroid
-    return None
+    n_centroids = max(assignments) + 1
+
+    centroids = np.zeros(n_centroids).tolist()
+
+    for index, _ in enumerate(centroids):
+        centroids[index] = mean_cluster_value(data, assignments, index)
+
+    return centroids
+
+def mean_cluster_value(data, assignments, cluster_chosen):
+    cluster_data = [data[i] for i, cluster_id in enumerate(assignments) if cluster_id == cluster_chosen]
+
+    val = np.mean(np.array(cluster_data), axis=0)
+
+    return val
 
 def mean_intra_distance(data, assignments, centroids):
-    return np.sqrt(np.sum((data - centroids[assignments, :])**2))
+    centroids = np.array(centroids)  # Ensure it's a NumPy array
+    assignments = np.array(assignments)  # Also convert assignments to array if needed
+    return np.sqrt(np.sum((data - centroids[assignments])**2))
 
 def k_means(data, num_centroids, kmeansplusplus= False):
     # centroids initizalization
