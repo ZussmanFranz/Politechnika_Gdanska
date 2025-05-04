@@ -2,6 +2,34 @@ from k_means import k_means, initialize_centroids_kmeans_pp
 import pandas as pd
 import numpy as np
 
+# Visualization:
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+
+def visualize_initial_kpp(features, centroids):
+    fig = plt.figure(figsize=(10, 7))
+    ax = fig.add_subplot(111, projection='3d')
+
+    # Plot all data points in gray
+    ax.scatter(
+        features[:, 0], features[:, 1], features[:, 2],
+        color='lightgray', s=40, label='Data Points', edgecolor='k'
+    )
+
+    # Plot initial centroids in red
+    ax.scatter(
+        centroids[:, 0], centroids[:, 1], centroids[:, 2],
+        color='red', s=200, marker='X', label='Initial Centroids'
+    )
+
+    ax.set_xlabel('Sepal Length')
+    ax.set_ylabel('Sepal Width')
+    ax.set_zlabel('Petal Length')
+    ax.set_title('Initial K-Means++ Centroids')
+    ax.legend()
+    plt.show()
+
+
 def load_iris():
     data = pd.read_csv("data/iris.data", names=["sepal_length", "sepal_width", "petal_length", "petal_width", "class"])
     print(data)
@@ -50,9 +78,11 @@ if __name__=="__main__":
 
     print(f'Distance between {example_point} and {centroids[0]}: {distance}')
 
-    centroids = initialize_centroids_kmeans_pp(features, 3)
+    centroids = np.array(initialize_centroids_kmeans_pp(features, 3))
 
     print(f'Centroids k++:\n{centroids}')
+
+    visualize_initial_kpp(features[:, :3], centroids[:, :3])
 
     # clustering(kmeans_pp = True)
     # clustering(kmeans_pp = False)
