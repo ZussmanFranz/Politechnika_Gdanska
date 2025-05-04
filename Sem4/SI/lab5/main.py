@@ -1,4 +1,4 @@
-from k_means import k_means, initialize_centroids_kmeans_pp
+from k_means import k_means, initialize_centroids_kmeans_pp, assign_to_cluster
 import pandas as pd
 import numpy as np
 
@@ -28,6 +28,36 @@ def visualize_initial_kpp(features, kpp_centroids, random_centroids):
     ax.set_title("Initial Centroids: K-Means++ vs Random")
 
     plt.show()
+
+def visualize_assignments(features, assignments, centroids):
+    from matplotlib import cm
+
+    fig = plt.figure()
+    ax = fig.add_subplot(111, projection='3d')
+
+    # Define distinct colors for up to 10 clusters using colormap
+    colors = cm.get_cmap('tab10', np.max(assignments)+1)
+
+    for cluster_idx in np.unique(assignments):
+        cluster_points = features[np.array(assignments) == cluster_idx]
+        centroid = centroids[cluster_idx]
+
+        # Plot all points in this cluster
+        ax.scatter(cluster_points[:, 0], cluster_points[:, 1], cluster_points[:, 2],
+                   color=colors(cluster_idx), label=f"Cluster {cluster_idx}", alpha=0.6)
+
+        # Plot centroid for this cluster
+        ax.scatter(centroid[0], centroid[1], centroid[2],
+                   color=colors(cluster_idx), marker='X', s=150, edgecolor='black')
+
+    ax.set_xlabel('Sepal Length')
+    ax.set_ylabel('Sepal Width')
+    ax.set_zlabel('Petal Length')
+    ax.set_title("Data Points Clustered and Centroids")
+    ax.legend()
+    plt.show()
+
+# --- Visualization is over
 
 
 def load_iris():
@@ -68,7 +98,11 @@ if __name__=="__main__":
 
     print(f'Centroids k++:\n{centroids}')
 
+    assignments = assign_to_cluster(features, centroids)
+
     visualize_initial_kpp(features[:, :3], centroids[:, :3], random_centroids[:, :3])
+    visualize_assignments(features[:, :3], assignments, centroids[:, :3])
+
 
     # clustering(kmeans_pp = True)
     # clustering(kmeans_pp = False)

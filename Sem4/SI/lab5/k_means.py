@@ -54,9 +54,25 @@ def find_farest_point(data, centroids):
 def calculate_distance(from_element, to_element):
     return np.sqrt(np.sum((to_element - from_element)**2))
 
-def assign_to_cluster(data, centroid):
+def assign_to_cluster(data, centroids):
     # TODO find the closest cluster for each data point
-    return None
+    n_samples = data.shape[0]
+
+    assignments = np.zeros(n_samples).tolist()
+
+    for index, element in enumerate(data):
+        closest_centroid = 0 
+        closest_distance = np.inf
+
+        for i, centroid in enumerate(centroids):
+            distance = calculate_distance(element, centroid)
+            if distance < closest_distance:
+                closest_centroid = i
+                closest_distance = distance
+
+        assignments[index] = closest_centroid
+
+    return assignments
 
 def update_centroids(data, assignments):
     # TODO find new centroids based on the assignments
