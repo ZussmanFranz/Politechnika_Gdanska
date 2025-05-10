@@ -43,7 +43,24 @@ def zad1_single_neuron(student_id):
             :return: wyjście neuronu: np.array o rozmiarze [n_samples, 1]
             """
             # TODO (0.5 point)
-            raise NotImplementedError()
+
+            neuron_exit = np.empty((n_samples, 1))
+
+            for sample_id in range(n_samples):
+                # Here we are calculating an output for each input
+                exit = sum(
+                    feature * self.W[i] for i, feature in enumerate(x_data[sample_id])
+                )
+                exit += self.b
+
+                neuron_exit[sample_id] = self.f_act(exit)
+
+            # print(neuron_exit.shape)
+            # print(neuron_exit)
+
+            # raise NotImplementedError()
+
+            return neuron_exit
 
     # neuron zainicjowany losowymi wagami
     model = SingleNeuron(n_in=n_features, f_act=hardlim)
@@ -110,9 +127,9 @@ def zad2_two_layer_net(student_id):
 
 
 if __name__ == '__main__':
-    # visualize_activation_function(relu)
+    visualize_activation_function(relu)
 
-    student_id = None         # Twój numer indeksu, np. 102247
+    student_id = 201253         # Twój numer indeksu, np. 102247
 
     zad1_single_neuron(student_id)
     # zad2_two_layer_net(student_id)
