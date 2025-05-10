@@ -27,8 +27,8 @@ def zad1_single_neuron(student_id):
     n_samples, n_features = x.shape
 
     # zakomentuj, jak juz nie potrzebujesz
-    inspect_data(x, y)
-    plot_data(x, y, plot_xy_range=[-1, 2])
+    # inspect_data(x, y)
+    # plot_data(x, y, plot_xy_range=[-1, 2])
 
     # model pojedynczego neuronu
     class SingleNeuron:
@@ -44,6 +44,7 @@ def zad1_single_neuron(student_id):
             """
             # TODO (0.5 point)
 
+            n_samples = x_data.shape[0]
             neuron_exit = np.empty((n_samples, 1))
 
             for sample_id in range(n_samples):
