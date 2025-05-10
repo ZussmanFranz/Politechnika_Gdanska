@@ -14,8 +14,8 @@ def sigmoid(logits):
     # return np.exp(-np.logaddexp(0, -logits))     # to samo co wyżej, ale stabilne numerycznie
 
 def hardlim(logits):
-    return (logits > 0).astype(np.float32)
-    # return np.round(sigmoid(logits))             # to samo co wyżej, bez wykorzystywania porównań i rzutowań
+    # return (logits > 0).astype(np.float32)
+    return np.round(sigmoid(logits))             # to samo co wyżej, bez wykorzystywania porównań i rzutowań
 
 def linear(logits):
     return logits
@@ -44,20 +44,10 @@ def zad1_single_neuron(student_id):
             """
             # TODO (0.5 point)
 
-            n_samples = x_data.shape[0]
-            neuron_exit = np.empty((n_samples, 1))
+            print(f'Weights: {self.W}')
 
-            for sample_id in range(n_samples):
-                # Here we are calculating an output for each input
-                exit = sum(
-                    feature * self.W[i] for i, feature in enumerate(x_data[sample_id])
-                )
-                exit += self.b
-
-                neuron_exit[sample_id] = self.f_act(exit)
-
-            # raise NotImplementedError()
-            return neuron_exit
+            logits = np.dot(x_data, self.W) + self.b  # shape: [n_samples, 1]
+            return self.f_act(logits)
 
     # neuron zainicjowany losowymi wagami
     model = SingleNeuron(n_in=n_features, f_act=hardlim)
