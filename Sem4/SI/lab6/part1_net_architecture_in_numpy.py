@@ -52,9 +52,9 @@ def zad1_single_neuron(student_id):
     # neuron zainicjowany losowymi wagami
     model = SingleNeuron(n_in=n_features, f_act=hardlim)
 
-    # TODO: ustawienie właściwych wag (0.5 point)
-    # model.W[:, 0] = [w1, w2]
-    # model.b[:] = [b1]
+    # TODO: ustawienie właściwych wag (0.5 point) (ręcznie????????)
+    model.W[:, 0] = [-1, -0.5]
+    model.b[:] = [0.2]
 
     # działanie i ocena modelu
     y_pred = model.forward(x)
@@ -114,7 +114,7 @@ def zad2_two_layer_net(student_id):
 
 
 if __name__ == '__main__':
-    visualize_activation_function(relu)
+    # visualize_activation_function(relu)
 
     student_id = 201253         # Twój numer indeksu, np. 102247
 
