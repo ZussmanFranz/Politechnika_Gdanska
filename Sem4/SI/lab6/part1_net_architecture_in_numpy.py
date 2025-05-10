@@ -55,11 +55,7 @@ def zad1_single_neuron(student_id):
 
                 neuron_exit[sample_id] = self.f_act(exit)
 
-            # print(neuron_exit.shape)
-            # print(neuron_exit)
-
             # raise NotImplementedError()
-
             return neuron_exit
 
     # neuron zainicjowany losowymi wagami
