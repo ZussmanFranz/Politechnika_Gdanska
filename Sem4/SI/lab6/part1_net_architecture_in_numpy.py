@@ -119,7 +119,7 @@ def zad2_two_layer_net(student_id):
 
 
 if __name__ == '__main__':
-    # visualize_activation_function(relu)
+    visualize_activation_function(hardlim)
 
     student_id = 201253         # Twój numer indeksu, np. 102247
 
