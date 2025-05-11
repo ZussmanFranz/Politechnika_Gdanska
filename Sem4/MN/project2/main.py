@@ -204,7 +204,7 @@ def lu_solve(L, U, b):
     return x
 
 # --- Plotting Function ---
-def plot_residuals(residuals_jacobi, residuals_gs, title_suffix=""):
+def plot_residuals(residuals_jacobi, residuals_gs, title_suffix="", filename_prefix="residuals_plot"): 
     plt.figure(figsize=(10, 6))
     plt.plot(residuals_jacobi, label="Jacobi Residual Norm", marker='o', linestyle='-', markersize=4)
     plt.plot(residuals_gs, label="Gauss-Seidel Residual Norm", marker='x', linestyle='--', markersize=4)
@@ -214,9 +214,13 @@ def plot_residuals(residuals_jacobi, residuals_gs, title_suffix=""):
     plt.title(f"Convergence of Iterative Methods {title_suffix}")
     plt.legend()
     plt.grid(True, which="both", ls="-")
+    
+    filename = f'{filename_prefix}.png'
+    plt.savefig(filename) # Save the plot
+    print(f"Zapisano wykres residuów jako: {filename}")
     plt.show()
 
-def plot_performance(N_values, times_jacobi, times_gs, times_lu, y_scale='linear'):
+def plot_performance(N_values, times_jacobi, times_gs, times_lu, y_scale='linear', filename_prefix="performance_plot"): 
     plt.figure(figsize=(10, 6))
     plt.plot(N_values, times_jacobi, label="Jacobi Time", marker='o')
     plt.plot(N_values, times_gs, label="Gauss-Seidel Time", marker='x')
@@ -229,6 +233,10 @@ def plot_performance(N_values, times_jacobi, times_gs, times_lu, y_scale='linear
         plt.yscale('log')
     plt.legend()
     plt.grid(True, which="both", ls="-")
+    
+    filename = f"{filename_prefix}_{y_scale}_scale.png"
+    plt.savefig(filename) # Save the plot
+    print(f"Zapisano wykres wydajności jako: {filename}")
     plt.show()
 
 # --- Main Execution ---
@@ -262,14 +270,14 @@ if __name__ == "__main__":
             print(f"Macierz A (Zad. A) nie jest ściśle diagonalnie dominująca w wierszu {i}.")
             break
     if diag_dominant_A:
-        print("Macierz A (Zad. A) jest ściśle diagonalnie dominująca wierszowo - metody iteracyjne powinny zbiegać.")
+        print("Macierz A (Zad. A) jest ściśle diagonalnie dominująca wierszowo - metody iteracyjne powinny się zbiegać.")
     else:
         print("Macierz A (Zad. A) NIE jest ściśle diagonalnie dominująca wierszowo - zbieżność metod iteracyjnych nie jest zagwarantowana przez ten warunek.")
 
 
     print("\n--- Zadanie B: Metody iteracyjne (Jacobi, Gauss-Seidl) dla układu z Zadania A ---")
     tol_B = 1e-9
-    max_iter_B = 500 # Potentially increase if convergence is slow but occurring
+    max_iter_B = 200 
 
     print(f"Warunek stopu: norma residuum < {tol_B}")
 
@@ -286,7 +294,9 @@ if __name__ == "__main__":
     print(f"Gauss-Seidel (Zad. B): {iters_gs_B} iteracji, czas: {time_gs_B:.4f} s, końcowa norma residuum: {residuals_gs_B[-1] if residuals_gs_B else 'N/A'}")
     
     if residuals_jacobi_B and residuals_gs_B:
-        plot_residuals(residuals_jacobi_B, residuals_gs_B, title_suffix="(Zadanie B)")
+        plot_residuals(residuals_jacobi_B, residuals_gs_B, 
+                       title_suffix="(Zadanie B)",
+                       filename_prefix="residuals_plot_B")
     else:
         print("Nie udało się wygenerować historii residuów dla Zadania B.")
 
@@ -313,25 +323,35 @@ if __name__ == "__main__":
     if diag_dominant_C:
         print("Macierz A (Zad. C) jest ściśle diagonalnie dominująca wierszowo.")
     else:
-        print("Macierz A (Zad. C) NIE jest ściśle diagonalnie dominująca wierszowo. Metody iteracyjne MOGĄ NIE ZBIEGAĆ.")
+        print("Macierz A (Zad. C) NIE jest ściśle diagonalnie dominująca wierszowo. Metody iteracyjne MOGĄ SIĘ NIE ZBIEGAĆ.")
 
-    # Użyjmy większej liczby iteracji, bo może nie zbiegać szybko lub wcale
-    max_iter_C = 500 # Start with a moderate number, can increase if it's slow but converging
+    # Użyjmy większej liczby iteracji, bo może się nie zbiegać szybko lub wcale
+    max_iter_C = 200 # Start with a moderate number, can increase if it's slow but converging
 
     start_time_jacobi_C = time.perf_counter()
     x_jacobi_C, iters_jacobi_C, residuals_jacobi_C = jacobi_method(A_task_C, b_task_C, tol=tol_B, max_iter=max_iter_C)
     end_time_jacobi_C = time.perf_counter()
     time_jacobi_C = end_time_jacobi_C - start_time_jacobi_C
-    print(f"Jacobi (Zad. C): {iters_jacobi_C} iteracji, czas: {time_jacobi_C:.4f} s, końcowa norma residuum: {residuals_jacobi_C[-1] if residuals_jacobi_C else 'N/A'}")
+    
+    print(f'''
+            Jacobi (Zad. C): {iters_jacobi_C} iteracji, 
+            czas: {time_jacobi_C:.4f} s, 
+            końcowa norma residuum: {residuals_jacobi_C[-1] if residuals_jacobi_C else 'N/A'}''')
 
     start_time_gs_C = time.perf_counter()
     x_gs_C, iters_gs_C, residuals_gs_C = gauss_seidel_method(A_task_C, b_task_C, tol=tol_B, max_iter=max_iter_C)
     end_time_gs_C = time.perf_counter()
     time_gs_C = end_time_gs_C - start_time_gs_C
-    print(f"Gauss-Seidel (Zad. C): {iters_gs_C} iteracji, czas: {time_gs_C:.4f} s, końcowa norma residuum: {residuals_gs_C[-1] if residuals_gs_C else 'N/A'}")
+
+    print(f'''
+            Gauss-Seidel (Zad. C): {iters_gs_C} iteracji, 
+            czas: {time_gs_C:.4f} s, 
+            końcowa norma residuum: {residuals_gs_C[-1] if residuals_gs_C else 'N/A'}''')
 
     if residuals_jacobi_C and residuals_gs_C:
-        plot_residuals(residuals_jacobi_C, residuals_gs_C, title_suffix="(Zadanie C)")
+        plot_residuals(residuals_jacobi_C, residuals_gs_C, 
+                       title_suffix="(Zadanie C)", 
+                       filename_prefix="residuals_plot_C")
     else:
         print("Nie udało się wygenerować historii residuów dla Zadania C.")
     
@@ -362,21 +382,21 @@ if __name__ == "__main__":
     print("\n--- Zadanie E: Porównanie czasów wykonania dla różnych N ---")
     N_values_E = [100, 200, 300, 400, 500] # Initial small values for quick testing
     # N_values_E = [100, 500, 1000, 1500, 2000] # Larger values for actual analysis
-    # For very large N, Jacobi/GS might be too slow or run into max_iter without converging
-    # Let's use a smaller max_iter for timing purposes in Task E for iterative methods,
-    # as the focus is on time per N, not necessarily full convergence if it's very slow.
     max_iter_E = 200 # Reduced for performance testing of iterative methods
 
     times_jacobi_E = []
     times_gs_E = []
-    times_lu_E = [] # LU decomposition + solve
-
+    times_lu_E = [] 
+    
     # Parameters for A matrix from Zadanie A
     a1_E = 5 + e_digit 
     a2_E = -1
     a3_E = -1
 
-    print(f"Testowane N: {N_values_E}. Parametry macierzy A jak w Zad. A (a1={a1_E}). Max iteracji dla iteracyjnych: {max_iter_E}")
+    print(f'''
+            Testowane N: {N_values_E}.
+            Parametry macierzy A jak w Zad. A (a1={a1_E}). 
+            Max iteracji dla iteracyjnych: {max_iter_E}''')
 
     for N_curr in N_values_E:
         print(f"  Obliczenia dla N = {N_curr}...")
@@ -410,5 +430,7 @@ if __name__ == "__main__":
         print(f"    LU N={N_curr}: {times_lu_E[-1]:.4f}s (decomp: {t_lu_decomp:.4f}s, solve: {t_lu_solve:.4f}s), resid: {res_lu_E:.2e}")
 
 
-    plot_performance(N_values_E, times_jacobi_E, times_gs_E, times_lu_E, y_scale='linear')
-    plot_performance(N_values_E, times_jacobi_E, times_gs_E, times_lu_E, y_scale='log')
+    plot_performance(N_values_E, times_jacobi_E, times_gs_E, times_lu_E, 
+                        y_scale='linear')
+    plot_performance(N_values_E, times_jacobi_E, times_gs_E, times_lu_E, 
+                        y_scale='log') 
