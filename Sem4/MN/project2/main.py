@@ -78,8 +78,6 @@ def jacobi_method(A, b, tol=1e-9, max_iter=2000, x0=None):
     D = np.diag(A)
     if np.any(D == 0):
         print("Jacobi: Zero on diagonal, method might fail.")
-        # For this specific problem structure, a1 is likely non-zero.
-        # If a1 could be zero, more robust handling would be needed.
 
     for k in range(max_iter):
         for i in range(N):
@@ -87,10 +85,7 @@ def jacobi_method(A, b, tol=1e-9, max_iter=2000, x0=None):
             for j in range(N):
                 if i != j:
                     sigma += A[i, j] * x[j]
-            if D[i] == 0: # Should not happen with problem definition if a1 != 0
-                 x_new[i] = x[i] # Or handle error appropriately
-            else:
-                x_new[i] = (b[i] - sigma) / D[i]
+            x_new[i] = (b[i] - sigma) / D[i]
         
         x = np.copy(x_new)
         current_residual_norm = calculate_residual_norm(A, x, b)
@@ -100,7 +95,7 @@ def jacobi_method(A, b, tol=1e-9, max_iter=2000, x0=None):
             return x, k + 1, residuals_history
             
     print(f"Jacobi: Did not converge within {max_iter} iterations. Residual norm: {current_residual_norm}")
-    return x, max_iter, residuals_history # Return current state if not converged
+    return x, max_iter, residuals_history
 
 def gauss_seidel_method(A, b, tol=1e-9, max_iter=2000, x0=None):
     """
@@ -114,10 +109,6 @@ def gauss_seidel_method(A, b, tol=1e-9, max_iter=2000, x0=None):
         x = np.copy(x0)
         
     residuals_history = []
-    
-    D_val = np.diag(A) # For checking zero diagonal, not directly used in standard GS formula structure
-    if np.any(D_val == 0):
-        print("Gauss-Seidel: Zero on diagonal, method might fail.")
 
     for k in range(max_iter):
         x_old_iter = np.copy(x) # For residual calculation using x from start of iteration
@@ -128,12 +119,9 @@ def gauss_seidel_method(A, b, tol=1e-9, max_iter=2000, x0=None):
             
             sigma2 = 0
             for j in range(i + 1, N): # Elements from previous iteration
-                sigma2 += A[i, j] * x_old_iter[j] # Use x_old_iter here for strict GS formula
+                sigma2 += A[i, j] * x_old_iter[j]
             
-            if A[i,i] == 0: # Should not happen with problem definition if a1 != 0
-                x[i] = x[i] # Or handle error
-            else:
-                x[i] = (b[i] - sigma1 - sigma2) / A[i, i]
+            x[i] = (b[i] - sigma1 - sigma2) / A[i, i]
         
         current_residual_norm = calculate_residual_norm(A, x, b)
         residuals_history.append(current_residual_norm)
@@ -142,38 +130,23 @@ def gauss_seidel_method(A, b, tol=1e-9, max_iter=2000, x0=None):
             return x, k + 1, residuals_history
             
     print(f"Gauss-Seidel: Did not converge within {max_iter} iterations. Residual norm: {current_residual_norm}")
-    return x, max_iter, residuals_history # Return current state if not converged
+    return x, max_iter, residuals_history
 
 # --- Direct Method (LU Factorization) ---
 
 def lu_decomposition(A):
     """
-    Performs LU decomposition of matrix A (Doolittle's method: L has 1s on diagonal).
+    Performs LU decomposition of matrix A.
     Returns L and U matrices.
-    Does not use pivoting, as per typical basic implementations unless specified.
     """
     N = A.shape[0]
     L = np.eye(N)  # Lower triangular matrix with 1s on diagonal
     U = np.zeros((N, N)) # Upper triangular matrix
 
     for k in range(N):
-        if A[k,k] == 0 and k < N-1 : # Check required for general matrices, but for our problem a1 should be non-zero
-             # Attempt to find a row to swap with if pivoting was implemented.
-             # For this project, if A[k,k] (which is a1 or modified a1) becomes 0 due to subtractions
-             # and no pivoting, it will fail. The problem matrices are structured to likely avoid this.
-             # Or if U[k,k] becomes zero before division.
-             pass
-
         U[k, k:] = A[k, k:] - L[k, :k] @ U[:k, k:]
         if k + 1 < N:
-            if U[k, k] == 0:
-                print("LU Decomposition: Zero pivot encountered. Decomposition might fail or be inaccurate.")
-                # This means the matrix might be singular or require pivoting.
-                # For the project's matrices, this might indicate an issue if a1 becomes effectively zero.
-                # We'll let it proceed, potential division by zero will raise an error or result in NaNs/infs.
-                L[k+1:, k] = (A[k+1:, k] - L[k+1:, :k] @ U[:k, k]) / 1e-18 # Avoid division by zero, but this is a hack
-            else:
-                L[k+1:, k] = (A[k+1:, k] - L[k+1:, :k] @ U[:k, k]) / U[k, k]
+            L[k+1:, k] = (A[k+1:, k] - L[k+1:, :k] @ U[:k, k]) / U[k, k]
     return L, U
 
 def lu_solve(L, U, b):
@@ -189,16 +162,9 @@ def lu_solve(L, U, b):
     # Forward substitution: Ly = b
     for i in range(N):
         y[i] = b[i] - np.dot(L[i, :i], y[:i])
-        # L[i,i] is 1 for Doolittle, so no division by L[i,i] needed here
 
     # Backward substitution: Ux = y
     for i in range(N - 1, -1, -1):
-        if U[i,i] == 0:
-            print(f"LU Solve: U[{i},{i}] is zero during backward substitution. Solution may be singular or non-unique.")
-            # Handle as appropriate - could indicate issues if matrix is singular.
-            # For well-posed problems from the project, this should ideally not happen with non-zero a1.
-            x[i] = 0 # Or some other placeholder / error flag
-            continue
         x[i] = (y[i] - np.dot(U[i, i+1:], x[i+1:])) / U[i, i]
         
     return x
