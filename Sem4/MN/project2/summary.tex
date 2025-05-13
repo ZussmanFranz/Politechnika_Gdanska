@@ -159,44 +159,29 @@ Brak dominacji diagonalnej spowodował rozbieżność obu metod iteracyjnych. Pr
     \label{fig:task_c_convergence}
 \end{figure}
 
-TODO
-
-\section{Metody bezpośrednie ($a_1 = 3$)}
+\section{Metoda bezpośrednia}
 Ponieważ metody iteracyjne zawiodły dla $a_1=3$, do rozwiązania układu $Ax=b$ z tą macierzą zastosowano metody bezpośrednie.
 
-\subsection{Zasady Działania Metod Bezpośrednich}
+\subsection{Zasady Działania Metody Bezpośredniej LU}
 
-\textbf{Faktoryzacja LU (Doolittle):} Metoda polega na rozkładzie macierzy $A$ na iloczyn macierzy dolnotrójkątnej $L$ (z jedynkami na głównej przekątnej) i macierzy górnotrójkątnej $U$, tzn. $A = LU$. Rozwiązanie układu $Ax=b$ sprowadza się do rozwiązania dwóch układów trójkątnych:
+\textbf{Faktoryzacja LU:} Metoda polega na rozkładzie macierzy $A$ na iloczyn macierzy dolnotrójkątnej $L$ (z jedynkami na głównej przekątnej) i macierzy górnotrójkątnej $U$, tzn. $A = LU$. Rozwiązanie układu $Ax=b$ sprowadza się do rozwiązania dwóch układów trójkątnych:
 \begin{enumerate}
     \item $Ly = b$ (rozwiązywane metodą podstawiania w przód - forward substitution)
     \item $Ux = y$ (rozwiązywane metodą podstawiania wstecz - backward substitution)
 \end{enumerate}
-W implementacji nie użyto pivotingu.
 
-\textbf{Eliminacja Gaussa z częściowym wyborem elementu głównego:} Metoda polega na przekształceniu układu $Ax=b$ do równoważnego układu $Ux=y$, gdzie $U$ jest macierzą górnotrójkątną, za pomocą operacji elementarnych na wierszach. Proces składa się z dwóch etapów:
-\begin{enumerate}
-    \item \textbf{Eliminacja w przód (Forward Elimination):} Zerowanie elementów pod główną przekątną. W każdym kroku $k$, dla $i > k$, od wiersza $i$-tego odejmuje się wiersz $k$-ty pomnożony przez współczynnik $m_{ik} = a_{ik}^{(k)} / a_{kk}^{(k)}$. Aby zwiększyć stabilność numeryczną, stosuje się \textit{częściowy wybór elementu głównego}: przed eliminacją w kolumnie $k$, znajduje się wiersz $p \ge k$ taki, że $|a_{pk}^{(k)}|$ jest maksymalne, a następnie zamienia się wiersze $k$ i $p$. Te same operacje stosuje się do wektora $b$.
-    \item \textbf{Podstawianie wstecz (Backward Substitution):} Rozwiązanie układu $Ux=y$ (gdzie $y$ to zmodyfikowany wektor $b$) tak samo jak w metodzie LU.
-\end{enumerate}
+\subsection{Wyniki dla $a_1=3$, $N=1253$}
 
-\subsection{Wyniki dla $a_1=3$}
-Uzyskane wyniki dla macierzy z $N=1253$ i $a_1=3$:
+\textbf{Metoda Rozkładu LU:}
 \begin{itemize}
-    \item \textbf{Metoda Rozkładu LU (Doolittle):}
-    \begin{itemize}
-        \item Czas wykonania: \num{3.1408} s
-        \item Końcowa norma residuum: \num{6.24e-13}
-    \end{itemize}
-    \item \textbf{Metoda Eliminacji Gaussa:}
-    \begin{itemize}
-        \item Czas wykonania: \num{3.1625} s
-        \item Końcowa norma residuum: \num{3.06e-15}
-    \end{itemize}
+    \item Czas wykonania: \num{3.1408} s
+    \item Końcowa norma residuum: \num{6.24e-13}
 \end{itemize}
-Obie metody bezpośrednie znalazły poprawne rozwiązanie, uzyskując normę residuum bliską precyzji maszynowej. Eliminacja Gaussa z pivotingiem dała nieco mniejsze residuum, co sugeruje lepszą stabilność numeryczną, kosztem minimalnie dłuższego czasu wykonania w porównaniu do LU bez pivotingu. Czasy wykonania są znacznie dłuższe niż dla zbieżnych metod iteracyjnych.
+
+Metoda bezpośrednia uzyskała dosyć precyzyjny wynik, jednak warto zauważyć, że czas wykonania jest znacznie dłuższy niż dla zbieżnych metod iteracyjnych.
 
 \section{Analiza wydajności w zależności od $N$}
-Przeprowadzono testy czasowe dla wszystkich czterech metod, zmieniając rozmiar macierzy $N$. Użyto macierzy z $a_1=11$, dla której metody iteracyjne są zbieżne. Testowane wartości $N={100, 300, 500, 700, 1000}$. Wyniki czasowe przedstawiono w Tabeli \ref{tab:task_e_times} oraz na wykresach \ref{fig:task_e_linear} i \ref{fig:task_e_log}.
+Przeprowadzono testy czasowe dla wszystkich trzech metod, zmieniając rozmiar macierzy $N$. Użyto macierzy z $a_1=7$, dla której metody iteracyjne są zbieżne. Testowane wartości $N={100, 300, 500, 700, 1000}$. Wyniki czasowe przedstawiono w Tabeli \ref{tab:task_e_times} oraz na wykresach \ref{fig:task_e_linear} i \ref{fig:task_e_log}.
 
 \begin{table}[H]
     \centering
@@ -204,34 +189,34 @@ Przeprowadzono testy czasowe dla wszystkich czterech metod, zmieniając rozmiar 
     \label{tab:task_e_times}
     \begin{tabular}{r S[table-format=1.4] S[table-format=1.4] S[table-format=1.4] S[table-format=1.4]}
         \toprule
-        {$N$} & {Jacobi} & {Gauss--Seidla} & {LU (Doolittle)} & {Elim. Gaussa} \\
+        {$N$} & {Jacobi} & {Gauss--Seidel} & {LU} \\
         \midrule
-        100  & 0.0032 & 0.0033 & 0.0235 & 0.0208 \\
-        300  & 0.0098 & 0.0095 & 0.1603 & 0.1495 \\
-        500  & 0.0100 & 0.0103 & 0.4534 & 0.4254 \\
-        700  & 0.0257 & 0.0247 & 0.9204 & 0.8652 \\
-        1000 & 0.0362 & 0.0353 & 1.9488 & 1.9146 \\
+        100  & 0.1651 & 0.1120 & 0.0019\\
+        300  & 0.8135 & 0.5228 & 0.0095\\
+        500  & 1.9045 & 1.2929 & 0.2160\\
+        700  & 3.7554 & 2.4841 & 0.0352\\
+        1000 & 8.6270 & 5.3311 & 0.0724\\
         \bottomrule
     \end{tabular}
 \end{table}
 
 \begin{figure}[H]
     \centering
-    % \includegraphics[width=0.8\textwidth]{task_e_performance_all_linear.png}
+    \includegraphics[width=0.8\textwidth]{performance_plot_linear_scale}
     \caption{Czas wykonania w zależności od $N$ dla wszystkich metod (skala liniowa osi Y).}
     \label{fig:task_e_linear}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    % \includegraphics[width=0.8\textwidth]{task_e_performance_all_log.png}
+    \includegraphics[width=0.8\textwidth]{performance_plot_log_scale}
     \caption{Czas wykonania w zależności od $N$ dla wszystkich metod (skala logarytmiczna osi Y).}
     \label{fig:task_e_log}
 \end{figure}
 
-Z wykresów widać wyraźnie, że czas wykonania metod iteracyjnych (Jacobi, Gauss-Seidel), zoptymalizowanych dla macierzy pasmowej, rośnie znacznie wolniej wraz ze wzrostem $N$ niż czas metod bezpośrednich (LU, Eliminacja Gaussa). Teoretyczna złożoność obliczeniowa jednej iteracji metod Jacobiego/Gaussa-Seidla dla macierzy pasmowej o stałej szerokości pasma jest proporcjonalna do $N$ ($O(N)$). Całkowity czas zależy od liczby iteracji, która tutaj była niewielka i stała. Złożoność metod bezpośrednich (LU, Gauss) dla macierzy gęstych wynosi $O(N^3)$. Nawet jeśli implementacje NumPy wykorzystują optymalizacje, wzrost czasu jest wyraźnie szybszy niż liniowy. Już dla $N=100$ metody iteracyjne były znacząco szybsze.
+TODO: czemy iteracyjne tak wolne?
 
-\section{Wnioski}
+\section{Wnioski TODO}
 Na podstawie przeprowadzonych badań można sformułować następujące wnioski:
 \begin{enumerate}
     \item \textbf{Zbieżność metod iteracyjnych:} Metody Jacobiego i Gaussa--Seidla są skuteczne (zbiegają się) tylko wtedy, gdy spełnione są odpowiednie warunki, np. macierz jest diagonalnie dominująca (jak w przypadku $a_1=11$). Dla macierzy, która nie spełnia tego warunku ($a_1=3$), metody te okazały się rozbieżne. W przypadku zbieżności, metoda Gaussa--Seidla zazwyczaj wymaga mniej iteracji niż metoda Jacobiego.

@@ -755,7 +755,14 @@ INPUT ./residuals_plot_C.png
 INPUT residuals_plot_C.png
 INPUT ./residuals_plot_C.png
 INPUT ./residuals_plot_C.png
-INPUT /usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecti1095.tfm
+INPUT ./performance_plot_linear_scale.png
+INPUT performance_plot_linear_scale.png
+INPUT ./performance_plot_linear_scale.png
+INPUT ./performance_plot_linear_scale.png
+INPUT ./performance_plot_log_scale.png
+INPUT performance_plot_log_scale.png
+INPUT ./performance_plot_log_scale.png
+INPUT ./performance_plot_log_scale.png
 INPUT summary.aux
 INPUT ./summary.out
 INPUT ./summary.out
@@ -774,5 +781,4 @@ INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb
-INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sfti1095.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sftt1095.pfb
