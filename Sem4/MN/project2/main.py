@@ -2,30 +2,20 @@ import numpy as np
 import matplotlib.pyplot as plt
 import time
 
-# --- Student Index Configuration ---
+# --- Configuration ---
 STUDENT_INDEX = "201253"
+c = int(STUDENT_INDEX[-2])  # Przedostatnia cyfra
+d = int(STUDENT_INDEX[-1])  # Ostatnia cyfra
+e = int(STUDENT_INDEX[3])   # Czwarta cyfra
+f = int(STUDENT_INDEX[2])   # Trzecia cyfra
 
-# --- Helper Functions ---
-def parse_index(index_str):
-    if len(index_str) < 4:
-        raise ValueError("Index string is too short. Must be at least 4 digits.")
-    
-    c = int(index_str[-2])  # Przedostatnia cyfra
-    d = int(index_str[-1])  # Ostatnia cyfra
-    e = int(index_str[3])   # Czwarta cyfra
-    f = int(index_str[2])   # Trzecia cyfra
-    
-    N_val = 1200 + 10 * c + d
-    
-    return N_val, e, f
+MAX_ITERATIONS = 200
+TOLERANCE = 1e-9
+
+def calculate_N(c_val, d_val):
+    return 1200 + 10 * c_val + d_val
 
 def generate_A(N, a1, a2, a3):
-    """
-    Generates the N x N banded matrix A.
-    a1: main diagonal
-    a2: adjacent diagonals
-    a3: outer diagonals (2 positions away)
-    """
     A = np.zeros((N, N))
     for i in range(N):
         A[i, i] = a1  # Main diagonal
@@ -39,21 +29,13 @@ def generate_A(N, a1, a2, a3):
             A[i, i + 2] = a3  # Upper outer
     return A
 
-def generate_b(N, f_digit):
-    """
-    Generates the vector b of length N.
-    b_n = sin(n * (f + 1)), where n is 1-indexed for the formula.
-    """
+def generate_b(N, f):
     b = np.zeros(N)
-    for n_idx in range(N):  # 0-indexed loop for vector b
-        n_formula = n_idx + 1  # 1-indexed for the sin formula
-        b[n_idx] = np.sin(n_formula * (f_digit + 1))
+    for n in range(1, N + 1):
+        b[n - 1] = np.sin(n * (f + 1))
     return b
 
 def calculate_residual_norm(A, x, b):
-    """
-    Calculates the Euclidean norm of the residual vector r = Ax - b.
-    """
     if x is None: # If a method failed to converge / produce x
         return float('inf')
     r = np.dot(A, x) - b
@@ -61,7 +43,7 @@ def calculate_residual_norm(A, x, b):
 
 # --- Iterative Methods ---
 
-def jacobi_method(A, b, tol=1e-9, max_iter=2000, x0=None):
+def jacobi_method(A, b, tol=TOLERANCE, max_iter=MAX_ITERATIONS, x0=None):
     """
     Solves Ax = b using the Jacobi method.
     Returns solution x, number of iterations, and history of residual norms.
@@ -76,8 +58,6 @@ def jacobi_method(A, b, tol=1e-9, max_iter=2000, x0=None):
     residuals_history = []
     
     D = np.diag(A)
-    if np.any(D == 0):
-        print("Jacobi: Zero on diagonal, method might fail.")
 
     for k in range(max_iter):
         for i in range(N):
@@ -97,7 +77,7 @@ def jacobi_method(A, b, tol=1e-9, max_iter=2000, x0=None):
     print(f"Jacobi: Did not converge within {max_iter} iterations. Residual norm: {current_residual_norm}")
     return x, max_iter, residuals_history
 
-def gauss_seidel_method(A, b, tol=1e-9, max_iter=2000, x0=None):
+def gauss_seidel_method(A, b, tol=TOLERANCE, max_iter=MAX_ITERATIONS, x0=None):
     """
     Solves Ax = b using the Gauss-Seidel method.
     Returns solution x, number of iterations, and history of residual norms.
@@ -135,10 +115,6 @@ def gauss_seidel_method(A, b, tol=1e-9, max_iter=2000, x0=None):
 # --- Direct Method (LU Factorization) ---
 
 def lu_decomposition(A):
-    """
-    Performs LU decomposition of matrix A.
-    Returns L and U matrices.
-    """
     N = A.shape[0]
     L = np.eye(N)  # Lower triangular matrix with 1s on diagonal
     U = np.zeros((N, N)) # Upper triangular matrix
@@ -205,45 +181,50 @@ def plot_performance(N_values, times_jacobi, times_gs, times_lu, y_scale='linear
     print(f"Zapisano wykres wydajności jako: {filename}")
     plt.show()
 
+def check_diag_dominance(A, N, matrix_name, task_name):
+    # Sprawdzenie warunku zbieżności (dominacja diagonalna) dla macierzy z zadania A
+    # Wystarczający, ale nie konieczny warunek. |a_ii| > sum_j!=i |a_ij|
+    diag_dominant_A = True
+    for i in range(N):
+        row_sum_off_diag = np.sum(np.abs(A[i, :])) - np.abs(A[i,i])
+        if np.abs(A[i,i]) <= row_sum_off_diag: # Using <= for strict dominance check
+            diag_dominant_A = False
+            print(f"{matrix_name} (Zad. {task_name}) nie jest ściśle diagonalnie dominująca w wierszu {i}.")
+            break
+    if diag_dominant_A:
+        print(f"{matrix_name} (Zad. {task_name}) jest ściśle diagonalnie dominująca wierszowo - metody iteracyjne powinny się zbiegać.")
+    else:
+        print(f"{matrix_name} (Zad. {task_name}) NIE jest ściśle diagonalnie dominująca wierszowo - zbieżność metod iteracyjnych nie jest zagwarantowana przez ten warunek.")
+
 # --- Main Execution ---
 if __name__ == "__main__":
-    N_main, e_digit, f_digit = parse_index(STUDENT_INDEX)
-    
+    print(f"Student Index: {STUDENT_INDEX}")
+
+    N_main = calculate_N(c, d)
+
     print("\n--- Zadanie A: Stwórz układ równań ---")
-    a1_A = 5 + e_digit
+    a1_A = 5 + e
     a2_A = -1
     a3_A = -1
     print(f"Parametry macierzy A dla Zadania A: a1 = {a1_A}, a2 = {a2_A}, a3 = {a3_A}")
     
     A_task_A = generate_A(N_main, a1_A, a2_A, a3_A)
-    b_task_A = generate_b(N_main, f_digit)
+    b_task_A = generate_b(N_main, f)
     
     print(f"Macierz A (kształt): {A_task_A.shape}")
     print(f"Wektor b (kształt): {b_task_A.shape}")
+
     # Opis równania macierzowego:
     print("Rozwiązywane równanie macierzowe: Ax = b, gdzie A jest macierzą pasmową (pentadiagonalną)")
     print(f"o wymiarach {N_main}x{N_main} z elementami na diagonalach a1={a1_A}, a2={a2_A}, a3={a3_A}.")
-    print(f"Wektor b ma długość {N_main}, a jego n-ty element (1-indeksowany) to sin(n * ({f_digit}+1)).")
+    print(f"Wektor b ma długość {N_main}, a jego n-ty element (1-indeksowany) to sin(n * ({f}+1)).")
     print("Szukamy wektora x.")
 
-    # Sprawdzenie warunku zbieżności (dominacja diagonalna) dla macierzy z zadania A
-    # Wystarczający, ale nie konieczny warunek. |a_ii| > sum_j!=i |a_ij|
-    diag_dominant_A = True
-    for i in range(N_main):
-        row_sum_off_diag = np.sum(np.abs(A_task_A[i, :])) - np.abs(A_task_A[i,i])
-        if np.abs(A_task_A[i,i]) <= row_sum_off_diag: # Using <= for strict dominance check
-            diag_dominant_A = False
-            print(f"Macierz A (Zad. A) nie jest ściśle diagonalnie dominująca w wierszu {i}.")
-            break
-    if diag_dominant_A:
-        print("Macierz A (Zad. A) jest ściśle diagonalnie dominująca wierszowo - metody iteracyjne powinny się zbiegać.")
-    else:
-        print("Macierz A (Zad. A) NIE jest ściśle diagonalnie dominująca wierszowo - zbieżność metod iteracyjnych nie jest zagwarantowana przez ten warunek.")
-
+    check_diag_dominance(A_task_A, N_main, "Macierz A", "A")
 
     print("\n--- Zadanie B: Metody iteracyjne (Jacobi, Gauss-Seidl) dla układu z Zadania A ---")
-    tol_B = 1e-9
-    max_iter_B = 200 
+    tol_B = TOLERANCE
+    max_iter_B = MAX_ITERATIONS
 
     print(f"Warunek stopu: norma residuum < {tol_B}")
 
@@ -274,25 +255,11 @@ if __name__ == "__main__":
     print(f"Parametry macierzy A dla Zadania C: a1 = {a1_C}, a2 = {a2_C}, a3 = {a3_C}")
     
     A_task_C = generate_A(N_main, a1_C, a2_C, a3_C)
-    # Wektor b pozostaje taki sam jak w Zadaniu A (N_main, f_digit)
     b_task_C = b_task_A 
     
-    # Sprawdzenie warunku zbieżności dla macierzy z zadania C
-    diag_dominant_C = True
-    for i in range(N_main):
-        row_sum_off_diag = np.sum(np.abs(A_task_C[i, :])) - np.abs(A_task_C[i,i])
-        if np.abs(A_task_C[i,i]) <= row_sum_off_diag:
-            diag_dominant_C = False
-            print(f"Macierz A (Zad. C) nie jest ściśle diagonalnie dominująca w wierszu {i}.")
-            print(f"  |A[{i},{i}]| = {np.abs(A_task_C[i,i])}, suma off-diag = {row_sum_off_diag}")
-            break
-    if diag_dominant_C:
-        print("Macierz A (Zad. C) jest ściśle diagonalnie dominująca wierszowo.")
-    else:
-        print("Macierz A (Zad. C) NIE jest ściśle diagonalnie dominująca wierszowo. Metody iteracyjne MOGĄ SIĘ NIE ZBIEGAĆ.")
+    check_diag_dominance(A_task_C, N_main, "Macierz A", "C")
 
-    # Użyjmy większej liczby iteracji, bo może się nie zbiegać szybko lub wcale
-    max_iter_C = 200 # Start with a moderate number, can increase if it's slow but converging
+    max_iter_C = MAX_ITERATIONS
 
     start_time_jacobi_C = time.perf_counter()
     x_jacobi_C, iters_jacobi_C, residuals_jacobi_C = jacobi_method(A_task_C, b_task_C, tol=tol_B, max_iter=max_iter_C)
@@ -346,18 +313,16 @@ if __name__ == "__main__":
 
 
     print("\n--- Zadanie E: Porównanie czasów wykonania dla różnych N ---")
-    N_values_E = [100, 200, 300, 400, 500] # Initial small values for quick testing
-    # N_values_E = [100, 500, 1000, 1500, 2000] # Larger values for actual analysis
-    max_iter_E = 200 # Reduced for performance testing of iterative methods
+    N_values_E = [100, 300, 500, 700, 1000]
+    max_iter_E = MAX_ITERATIONS
 
     times_jacobi_E = []
     times_gs_E = []
     times_lu_E = [] 
     
-    # Parameters for A matrix from Zadanie A
-    a1_E = 5 + e_digit 
-    a2_E = -1
-    a3_E = -1
+    a1_E = a1_A 
+    a2_E = a2_A
+    a3_E = a3_A
 
     print(f'''
             Testowane N: {N_values_E}.
@@ -367,7 +332,7 @@ if __name__ == "__main__":
     for N_curr in N_values_E:
         print(f"  Obliczenia dla N = {N_curr}...")
         A_E = generate_A(N_curr, a1_E, a2_E, a3_E)
-        b_E = generate_b(N_curr, f_digit)
+        b_E = generate_b(N_curr, f)
 
         # Jacobi
         start_t = time.perf_counter()
