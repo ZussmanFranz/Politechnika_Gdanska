@@ -27,13 +27,25 @@ def initialize_centroids_kmeans_pp(data, k):
     # First centroid is initialized randomly
     centroids[0] = data[np.random.choice(n_samples)]
 
-    # 2: for i in 1...k select centroid, which is farest from all the others
-
     # Determine the farest location from centroids chosen before
     for i in range(1, k):
         centroids[i] = data[find_farest_point(data, centroids[:i])]
 
     return centroids
+
+def find_closest_centroid(element, centroids):
+    closest_centroid = None
+    closest_distance = np.inf
+    
+    for centroid in centroids:
+        new_distance = calculate_distance(element, centroid)
+
+        if new_distance < closest_distance:
+            closest_distance = new_distance
+            closest_centroid = centroid
+
+    return closest_centroid
+        
 
 def find_farest_point(data, centroids):
     max_distance = 0
@@ -42,8 +54,9 @@ def find_farest_point(data, centroids):
     for index, element in enumerate(data):
         distance = 0
         
-        for centroid in centroids:
-            distance += calculate_distance(element, centroid)
+        closest_centroid = find_closest_centroid(element, centroids)
+
+        distance += calculate_distance(element, closest_centroid)
         
         if distance > max_distance:
             max_distance = distance
