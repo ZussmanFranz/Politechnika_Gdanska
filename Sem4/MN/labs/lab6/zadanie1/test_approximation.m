@@ -10,8 +10,8 @@ function [dates, y, M, c, ya] = test_approximation()
 
     load energy_2025
 
-    country = 'Poland'; % Zastąp 'C' nazwą kraju, np. 'Poland', 'Germany', 'EU'
-    source = 'Coal';    % Zastąp 'S' nazwą źródła, np. 'Coal', 'Wind', 'Solar', 'Total'
+    country = 'Poland';
+    source = 'Coal';
     
     % Sprawdzenie, czy wybrane dane istnieją w strukturze
     if isfield(energy_2025, country) && isfield(energy_2025.(country), source)
