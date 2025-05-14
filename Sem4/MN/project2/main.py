@@ -9,7 +9,7 @@ d = int(STUDENT_INDEX[-1])  # Ostatnia cyfra
 e = int(STUDENT_INDEX[3])   # Czwarta cyfra
 f = int(STUDENT_INDEX[2])   # Trzecia cyfra
 
-MAX_ITERATIONS = 200
+MAX_ITERATIONS = 2000
 TOLERANCE = 1e-9
 
 def calculate_N(c_val, d_val):
@@ -45,7 +45,7 @@ def calculate_residual_norm(A, x, b):
 
 def jacobi_method(A, b, tol=TOLERANCE, max_iter=MAX_ITERATIONS, x0=None):
     """
-    Solves Ax = b using the Jacobi method.
+    Solves Ax = b using the Jacobi method (optimized with NumPy vectorization).
     Returns solution x, number of iterations, and history of residual norms.
     """
     N = len(b)
@@ -54,32 +54,24 @@ def jacobi_method(A, b, tol=TOLERANCE, max_iter=MAX_ITERATIONS, x0=None):
     else:
         x = np.copy(x0)
     
-    x_new = np.zeros(N)
     residuals_history = []
-    
     D = np.diag(A)
+    R = A - np.diagflat(D)
 
     for k in range(max_iter):
-        for i in range(N):
-            sigma = 0
-            for j in range(N):
-                if i != j:
-                    sigma += A[i, j] * x[j]
-            x_new[i] = (b[i] - sigma) / D[i]
-        
-        x = np.copy(x_new)
-        current_residual_norm = calculate_residual_norm(A, x, b)
+        x_new = (b - np.dot(R, x)) / D
+        current_residual_norm = calculate_residual_norm(A, x_new, b)
         residuals_history.append(current_residual_norm)
-        
         if current_residual_norm < tol:
-            return x, k + 1, residuals_history
-            
+            return x_new, k + 1, residuals_history
+        x = x_new
     print(f"Jacobi: Did not converge within {max_iter} iterations. Residual norm: {current_residual_norm}")
     return x, max_iter, residuals_history
 
+
 def gauss_seidel_method(A, b, tol=TOLERANCE, max_iter=MAX_ITERATIONS, x0=None):
     """
-    Solves Ax = b using the Gauss-Seidel method.
+    Solves Ax = b using the Gauss-Seidel method (optimized for pentadiagonal matrix).
     Returns solution x, number of iterations, and history of residual norms.
     """
     N = len(b)
@@ -87,28 +79,23 @@ def gauss_seidel_method(A, b, tol=TOLERANCE, max_iter=MAX_ITERATIONS, x0=None):
         x = np.zeros(N)
     else:
         x = np.copy(x0)
-        
     residuals_history = []
-
     for k in range(max_iter):
-        x_old_iter = np.copy(x) # For residual calculation using x from start of iteration
         for i in range(N):
-            sigma1 = 0
-            for j in range(i): # Elements already updated in this iteration
-                sigma1 += A[i, j] * x[j]
-            
-            sigma2 = 0
-            for j in range(i + 1, N): # Elements from previous iteration
-                sigma2 += A[i, j] * x_old_iter[j]
-            
-            x[i] = (b[i] - sigma1 - sigma2) / A[i, i]
-        
+            s = 0.0
+            if i > 1:
+                s += A[i, i-2] * x[i-2]
+            if i > 0:
+                s += A[i, i-1] * x[i-1]
+            if i < N-1:
+                s += A[i, i+1] * x[i+1]
+            if i < N-2:
+                s += A[i, i+2] * x[i+2]
+            x[i] = (b[i] - s) / A[i, i]
         current_residual_norm = calculate_residual_norm(A, x, b)
         residuals_history.append(current_residual_norm)
-        
         if current_residual_norm < tol:
             return x, k + 1, residuals_history
-            
     print(f"Gauss-Seidel: Did not converge within {max_iter} iterations. Residual norm: {current_residual_norm}")
     return x, max_iter, residuals_history
 
@@ -313,7 +300,7 @@ if __name__ == "__main__":
 
 
     print("\n--- Zadanie E: Porównanie czasów wykonania dla różnych N ---")
-    N_values_E = [100, 300, 500, 700, 1000]
+    N_values_E = [100, 300, 900, 1200, 2000]
     max_iter_E = MAX_ITERATIONS
 
     times_jacobi_E = []
@@ -364,4 +351,4 @@ if __name__ == "__main__":
     plot_performance(N_values_E, times_jacobi_E, times_gs_E, times_lu_E, 
                         y_scale='linear')
     plot_performance(N_values_E, times_jacobi_E, times_gs_E, times_lu_E, 
-                        y_scale='log') 
+                        y_scale='log')
