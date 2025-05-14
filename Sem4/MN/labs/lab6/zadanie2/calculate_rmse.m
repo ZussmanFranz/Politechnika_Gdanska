@@ -107,6 +107,7 @@ function [dates, y, rmse_values, M, c, ya] = calculate_rmse()
     legend('show', 'Location', 'best');
     grid on;
     
+    saveas(gcf,'zadanie2.png')
 end
 
 function c = polyfit_qr(x, y, M)
