@@ -47,14 +47,17 @@ def training(model, x, y):
 
     # pętla uczenia gradientowego
     for _ in range(n_steps):
-
         # TODO losowa paczka (mini-batch) danych o rozmiarze minibatch_size
         #  (użyj torch.randint do wylosowania indeksów przykładów
-        x_batch = None
-        y_batch = None
+        indices = torch.randint(low=0, high=x.shape[0], size=(minibatch_size,))
+
+        x_batch = x[indices]
+        y_batch = y[indices]
 
         # TODO forward pass modelu + policzenie wartości funkcji kosztu (użyj loss_fn zdefiniowanego wyżej)
-        loss = None
+        new_y_batch = model.forward(x_batch)
+
+        loss = loss_fn(new_y_batch, y_batch)
 
         # backward pass
         for p in model.parameters():
@@ -63,6 +66,8 @@ def training(model, x, y):
                          # z parametrów, który wpływa na wartość loss
 
         # TODO update params
+        for p in model.parameters():
+            p.data = p.data - learning_rate * p.grad
 
         # track stats
         history.append(loss.log10().item())
@@ -153,7 +158,7 @@ def classify_spirals(student_id, do_data_inspection=True, do_model_inpection=Tru
 
 if __name__ == '__main__':
 
-    student_id = None         # Twój numer indeksu, np. 102247
+    student_id = 201253         # Twój numer indeksu, np. 102247
     torch.manual_seed(student_id)
 
     classify_spirals(student_id,
