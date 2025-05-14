@@ -11,101 +11,68 @@ function [dates, y, rmse_values, M, c_vpa, ya] = calculate_rmse_vpa()
 % dates - wektor energy_2025.C.S.Dates (daty pomiaru produkcji energii)
 % y - wektor energy_2025.C.S.EnergyProduction (poziomy miesięcznych produkcji energii)
 % rmse_values(i,1) - RMSE wyznaczony dla wektora y i wielomianu stopnia degrees(i)
-%     Rozmiar kolumnowego wektora wynosi length(y)-1.
 % M - stopień wielomianu aproksymacyjnego przedstawionego na wykresie
 % c_vpa - współczynniki wielomianu aproksymacyjnego przedstawionego na wykresie:
 %       c = [c_M; ...; c_1; c_0] (typu vpa)
 % ya - wartości wielomianu aproksymacyjnego wyznaczone dla punktów danych
-%       (rozmiar wektora ya powinien być taki sam jak rozmiar wektora y) (typu double)
+%       (typu double)
 
-    digits(120); % określa liczbę cyfr dziesiętnych w zmiennych vpa
+    digits(120); 
 
-    % --- Parametry ---
     M = 99; 
 
-    % --- Wczytanie danych ---
-    load ../energy_2025
+    load energy_2025
 
     country_name = 'Poland'; 
     source_name = 'Coal';   
     % country_name = 'EU'; source_name = 'Total';
 
-    % Odczyt danych z wybranej struktury
-    if isfield(energy_2025, country_name) && isfield(energy_2025.(country_name), source_name)
-        data_struct = energy_2025.(country_name).(source_name);
-        if isfield(data_struct, 'Dates') && isfield(data_struct, 'EnergyProduction')
-            dates = data_struct.Dates; % dates pozostaje typu double/datetime
-            y = data_struct.EnergyProduction; % y początkowo jest typu double
-        else
-            error(['Wybrana struktura danych dla kraju: ' country_name ' i źródła: ' source_name ...
-                   ' nie zawiera wymaganych pól ''Dates'' lub ''EnergyProduction''.']);
-        end
-    else
-        error(['Wybrane dane dla kraju: ' country_name ' i źródła: ' source_name ...
-               ' nie istnieją w pliku energy_2025.mat. Sprawdź dostępne opcje.']);
-    end
+    data_struct = energy_2025.(country_name).(source_name);
+    dates = data_struct.Dates; 
+    y = data_struct.EnergyProduction; 
 
-    % Upewnienie się, że wektory 'dates' i 'y' są wektorami kolumnowymi
     dates = dates(:);
-    y = y(:); % y jest typu double
+    y = y(:); 
     
-    % --- Walidacja danych i parametrów ---
-    N = numel(y); % Liczba punktów danych
+    N = numel(y); 
     
-
     degrees = [N-10, N-1];
 
-    % Konwersja danych wejściowych do vpa
-    x_vpa = linspace(vpa(0),vpa(1),N)'; % Znormalizowana dziedzina [0,1] jako vpa
-    y_vpa = vpa(y); % Wektor y jako vpa
+    x_vpa = linspace(vpa(0),vpa(1),N)'; 
+    y_vpa = vpa(y); 
 
-    rmse_values = zeros(numel(degrees),1); % Wynikowy RMSE będzie typu double
+    rmse_values = zeros(numel(degrees),1); 
 
-    fprintf('Rozpoczynanie obliczeń RMSE (VPA) dla wybranych stopni...\n');
-    % Oblicz RMSE dla każdego stopnia w 'degrees'
+    % fprintf('Rozpoczynanie obliczeń RMSE (VPA) dla wybranych stopni...\n');
     id = 1;
     for current_degree_m_vpa = degrees
-        fprintf('Obliczanie RMSE dla stopnia M = %d (VPA)...\n', current_degree_m_vpa);
+        % fprintf('Obliczanie RMSE dla stopnia M = %d (VPA)...\n', current_degree_m_vpa);
         
-        % Wyznaczenie współczynników wielomianu stopnia current_degree_m_vpa (vpa)
         coeffs_m_vpa = polyfit_qr_vpa(x_vpa, y_vpa, current_degree_m_vpa);
-        
-        % Odwrócenie kolejności współczynników dla funkcji polyval_vpa
-        coeffs_m_for_polyval_vpa = coeffs_m_vpa(end:-1:1); % vpa
-        
-        % Wyznaczenie wartości wielomianu aproksymacyjnego (vpa)
-        y_approx_m_vpa = polyval_vpa(coeffs_m_for_polyval_vpa, x_vpa); % vpa
+        coeffs_m_for_polyval_vpa = coeffs_m_vpa(end:-1:1); 
+        y_approx_m_vpa = polyval_vpa(coeffs_m_for_polyval_vpa, x_vpa); 
         
         N_vpa = vpa(N);
-        sum_squared_errors_vpa = sum((y_approx_m_vpa - y_vpa).^2); % vpa
-        mean_squared_error_vpa = sum_squared_errors_vpa / N_vpa;   % vpa
-        rmse_vpa = sqrt(mean_squared_error_vpa);                   % vpa
+        sum_squared_errors_vpa = sum((y_approx_m_vpa - y_vpa).^2); 
+        mean_squared_error_vpa = sum_squared_errors_vpa / N_vpa;   
+        rmse_vpa = sqrt(mean_squared_error_vpa);                   
         
-        rmse_values(id) = double(rmse_vpa); % Konwersja wyniku RMSE do double
-        fprintf('Stopień M = %d, RMSE (VPA) = %e\n', current_degree_m_vpa, rmse_values(id));
+        rmse_values(id) = double(rmse_vpa); 
+        % fprintf('Stopień M = %d, RMSE (VPA) = %e\n', current_degree_m_vpa, rmse_values(id));
         id = id+1;
     end
-    fprintf('Zakończono obliczenia RMSE (VPA).\n');
+    % fprintf('Zakończono obliczenia RMSE (VPA).\n');
 
-    % Aproksymacja wielomianu wysokiego stopnia M (dla dolnego wykresu) z VPA
-    fprintf('Obliczanie aproksymacji dla M = %d (VPA) na potrzeby wykresu...\n', M);
-    % polyfit_qr_vpa zwraca [c0_vpa; c1_vpa; ...; cM_vpa]
-    c_vpa_temp = polyfit_qr_vpa(x_vpa, y_vpa, M); % vpa
-    
-    % Odwrócenie kolejności współczynników dla polyval_vpa i dla wyjściowego c_vpa
-    % c_vpa = [cM_vpa; ...; c1_vpa; c0_vpa] (typ vpa)
+    % fprintf('Obliczanie aproksymacji dla M = %d (VPA) na potrzeby wykresu...\n', M);
+    c_vpa_temp = polyfit_qr_vpa(x_vpa, y_vpa, M); 
     c_vpa = c_vpa_temp(end:-1:1); 
     
-    % Wyznaczenie wartości wielomianu aproksymacyjnego dla stopnia M (vpa)
-    ya_vpa = polyval_vpa(c_vpa, x_vpa); % vpa
-    ya = double(ya_vpa); % Konwersja do double na potrzeby wykresu i zwracanej wartości
+    ya_vpa = polyval_vpa(c_vpa, x_vpa); 
+    ya = double(ya_vpa); 
 
-
-    % --- Generowanie wykresów ---
     fig_handle = figure('Name', sprintf('Analiza RMSE (VPA) i Aproksymacja dla %s - %s', country_name, source_name), ...
                         'NumberTitle', 'off');
 
-    % Górny wykres: RMSE vs stopień wielomianu (VPA)
     subplot(2,1,1);
     plot(degrees, rmse_values, 'm-s', 'MarkerFaceColor', 'm', 'MarkerSize', 5, 'LineWidth', 1.5);
     title('RMSE (obliczenia VPA) w zależności od stopnia wielomianu');
@@ -115,14 +82,18 @@ function [dates, y, rmse_values, M, c_vpa, ya] = calculate_rmse_vpa()
     if ~isempty(degrees)
       xlim_min = min(degrees);
       xlim_max = max(degrees);
-      if xlim_min == xlim_max % handle case with single degree
+      if xlim_min == xlim_max 
           xlim_min = xlim_min - 1;
           xlim_max = xlim_max + 1;
+          if xlim_min < 0 && xlim_max > 0 % Avoid xlim_min being negative if original degree was 0 or 1
+              xlim_min = 0;
+          elseif xlim_min < 0
+              xlim_min = 0; xlim_max = 2; % Default for single small degree
+          end
       end
       xlim([xlim_min, xlim_max]);
     end
 
-    % Dolny wykres: Dane oryginalne i aproksymacja wysokiego stopnia M (z VPA)
     subplot(2,1,2);
     plot(dates, y, 'k.', 'MarkerSize', 6, 'DisplayName', 'Dane oryginalne (double)');
     hold on;
@@ -137,10 +108,9 @@ function [dates, y, rmse_values, M, c_vpa, ya] = calculate_rmse_vpa()
     legend('show', 'Location', 'best');
     grid on;
 
-    saveas(gcf,'zadanie3.png') 
+    saveas(gcf,'zadanie3.png')
 end
 
-% --- Lokalna funkcja polyval_vpa ---
 function y_val_vpa = polyval_vpa(coefficients_vpa, x_points_vpa)
     num_coeffs = length(coefficients_vpa);
     y_val_vpa = vpa(zeros(size(x_points_vpa)));  
@@ -150,17 +120,36 @@ function y_val_vpa = polyval_vpa(coefficients_vpa, x_points_vpa)
     end
 end
 
-% --- Lokalna funkcja polyfit_qr_vpa ---
 function c_coeffs_vpa = polyfit_qr_vpa(x_vpa_in, y_vpa_in, M_degree_vpa)
     x_col_vpa = x_vpa_in(:); 
     y_col_vpa = y_vpa_in(:); 
     
     N_pts_vpa = numel(x_col_vpa);
 
+    if M_degree_vpa + 1 > N_pts_vpa
+        % This check is important for polyfit to be well-defined
+        error('polyfit_qr_vpa: Degree M=%d is too large for N_pts=%d data points. M+1 must be <= N_pts.', M_degree_vpa, N_pts_vpa);
+    end
+
     A_vpa = vpa(zeros(N_pts_vpa, M_degree_vpa+1)); 
     for k_vpa = 0:M_degree_vpa 
         A_vpa(:, k_vpa+1) = x_col_vpa.^k_vpa;
     end
 
-    c_coeffs_vpa = R1_vpa \ (Q1_vpa_econ.' * y_col_vpa); % vpa
+    try
+        % For sym objects (which vpa creates), qr(A) returns full Q and R.
+        [Q_full_vpa, R_full_vpa] = qr(A_vpa);
+        
+        % Extract the parts corresponding to an economy QR decomposition
+        num_cols_A = M_degree_vpa + 1;
+        Q1_vpa_econ = Q_full_vpa(:, 1:num_cols_A);
+        R1_vpa = R_full_vpa(1:num_cols_A, 1:num_cols_A);
+
+    catch ME_qr_vpa
+        % Fallback if qr fails for some reason with VPA matrices
+        c_coeffs_vpa = A_vpa \ y_col_vpa;
+        return;
+    end
+    
+    c_coeffs_vpa = R1_vpa \ (Q1_vpa_econ.' * y_col_vpa);
 end
