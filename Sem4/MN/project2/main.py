@@ -65,7 +65,7 @@ def jacobi_method(A, b, tol=TOLERANCE, max_iter=MAX_ITERATIONS, x0=None):
         if current_residual_norm < tol:
             return x_new, k + 1, residuals_history
         x = x_new
-    print(f"Jacobi: Did not converge within {max_iter} iterations. Residual norm: {current_residual_norm}")
+    print(f"Jacobi: Nie zbiegła w ramach {max_iter} iteracji. Norma residuum: {current_residual_norm}")
     return x, max_iter, residuals_history
 
 
@@ -96,7 +96,7 @@ def gauss_seidel_method(A, b, tol=TOLERANCE, max_iter=MAX_ITERATIONS, x0=None):
         residuals_history.append(current_residual_norm)
         if current_residual_norm < tol:
             return x, k + 1, residuals_history
-    print(f"Gauss-Seidel: Did not converge within {max_iter} iterations. Residual norm: {current_residual_norm}")
+    print(f"Gauss-Seidel: Nie zbiegła w ramach {max_iter} iteracji. Norma residuum: {current_residual_norm}")
     return x, max_iter, residuals_history
 
 # --- Direct Method (LU Factorization) ---
@@ -145,7 +145,7 @@ def plot_residuals(residuals_jacobi, residuals_gs, title_suffix="", filename_pre
     plt.grid(True, which="both", ls="-")
     
     filename = f'{filename_prefix}.png'
-    plt.savefig(filename) # Save the plot
+    plt.savefig(filename)
     print(f"Zapisano wykres residuów jako: {filename}")
     plt.show()
 
@@ -164,7 +164,7 @@ def plot_performance(N_values, times_jacobi, times_gs, times_lu, y_scale='linear
     plt.grid(True, which="both", ls="-")
     
     filename = f"{filename_prefix}_{y_scale}_scale.png"
-    plt.savefig(filename) # Save the plot
+    plt.savefig(filename)
     print(f"Zapisano wykres wydajności jako: {filename}")
     plt.show()
 

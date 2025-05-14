@@ -55,10 +55,10 @@ round-precision=4          % Liczba miejsc po przecinku dla czasów
 \maketitle
 
 \section{Wstęp}
-Celem projektu była implementacja oraz analiza porównawcza czterech metod rozwiązywania układów równań liniowych $Ax = b$: dwóch metod iteracyjnych (metoda Jacobiego i metoda Gaussa–Seidla) zoptymalizowanych pod kątem struktury pasmowej macierzy oraz dwóch metod bezpośrednich (faktoryzacja LU w wariancie Doolittle'a bez pivotingu oraz eliminacja Gaussa z częściowym wyborem elementu głównego). Analizę przeprowadzono w środowisku Python z wykorzystaniem biblioteki NumPy oraz Matplotlib.
+Celem projektu była implementacja oraz analiza porównawcza czterech metod rozwiązywania układów równań liniowych $Ax = b$: dwóch metod iteracyjnych (metoda Jacobiego i metoda Gaussa–Seidla) zoptymalizowanych pod kątem struktury pasmowej macierzy oraz metody bezpośredniej (faktoryzacja LU). Analizę przeprowadzono w środowisku Python z wykorzystaniem biblioteki NumPy oraz Matplotlib.
 
 \section{Konstrukcja układu równań}
-Na potrzeby projektu przyjęto następujące parametry na podstawie numeru indeksu \textbf{201627}:
+Na potrzeby projektu przyjęto następujące parametry na podstawie numeru indeksu \textbf{201253}:
 \begin{itemize}
     \item Przedostatnia cyfra indeksu: $c = 5$
     \item Ostatnia cyfra indeksu: $d = 3$
@@ -81,21 +81,19 @@ Rozwiązywanym problemem jest znalezienie wektora $x$ spełniającego równanie 
 Wszystkie algorytmy zostały zaimplementowane w języku Python 3 przy użyciu biblioteki NumPy do operacji numerycznych (tworzenie macierzy, wektorów, operacje wektorowe, obliczanie normy) oraz Matplotlib do generowania wykresów. Pomiary czasu wykonania realizowano za pomocą funkcji \texttt{time.perf\_counter()}.
 
 \subsection{Metody Iteracyjne (Jacobi, Gauss-Seidel)}
-Implementacja metod iteracyjnych została wykonana \textbf{ręcznie}, z uwzględnieniem \textbf{pasmowej struktury macierzy A}. Zamiast przechowywać całą macierz $N \times N$ (co byłoby nieefektywne dla dużych $N$), operacje wykonywano bezpośrednio na podstawie znanych wartości $a_1, a_2, a_3$. W każdej iteracji, przy obliczaniu nowej wartości $x_i^{(k+1)}$, odwoływano się tylko do maksymalnie czterech sąsiednich elementów wektora $x$ z poprzedniej iteracji (lub bieżącej w przypadku Gaussa-Seidla), co znacząco redukuje koszt obliczeniowy pojedynczej iteracji w porównaniu do operacji na pełnej macierzy. Kryterium zatrzymania algorytmu to osiągnięcie normy residuum $\norm{Ax^{(k)} - b}_2 < 10^{-9}$ lub przekroczenie maksymalnej liczby iteracji (2000).
+Implementacja metod iteracyjnych została wykonana \textbf{ręcznie}, z uwzględnieniem \textbf{pasmowej struktury macierzy A}. Zamiast przechowywać całą macierz $N \times N$ (co byłoby nieefektywne dla dużych $N$), operacje wykonywano bezpośrednio na podstawie znanych wartości $a_1, a_2, a_3$. W każdej iteracji, przy obliczaniu nowej wartości $x_i^{(k+1)}$, odwoływano się tylko do maksymalnie czterech sąsiednich elementów wektora $x$ z poprzedniej iteracji (lub bieżącej w przypadku Gaussa-Seidla), co znacząco redukuje koszt obliczeniowy pojedynczej iteracji w porównaniu do operacji na pełnej macierzy. Kryterium zatrzymania algorytmu to osiągnięcie normy residuum $r < 10^{-9}$ lub przekroczenie maksymalnej liczby iteracji (2000).
 
-\subsection{Metody Bezpośrednie (LU, Eliminacja Gaussa)}
+\subsection{Metoda Bezpośrednia (Faktoryzacja LU)}
 Metody bezpośrednie zostały zaimplementowane przy użyciu standardowych (gęstych) macierzy NumPy.
-\begin{itemize}
-    \item \textbf{Faktoryzacja LU:} Zaimplementowano funkcję rozkładającą macierz $A$ na macierz dolnotrójkątną $L$ (z jedynkami na diagonali) i górnotrójkątną $U$ ($A = LU$). Następnie zaimplementowano funkcje rozwiązujące układy trójkątne metodą podstawiania w przód ($Ly=b$) i podstawiania wstecz ($Ux=y$).
-    \item \textbf{Eliminacja Gaussa:} Zaimplementowano algorytm eliminacji Gaussa... (opisz tu.)
-\end{itemize}
+
+\textbf{Faktoryzacja LU:} Zaimplementowano funkcję rozkładającą macierz $A$ na macierz dolnotrójkątną $L$ (z jedynkami na diagonali) i górnotrójkątną $U$ ($A = LU$). Następnie zaimplementowano funkcje rozwiązujące układy trójkątne metodą podstawiania w przód ($Ly=b$) i podstawiania wstecz ($Ux=y$).
 
 \section{Metody iteracyjne Jacobiego i Gaussa–Seidla}
 
 \subsection{Formuły Metod Iteracyjnych}
 Rozważmy układ równań $Ax=b$. Metody iteracyjne startują od początkowego przybliżenia $x^{(0)}$ i generują ciąg przybliżeń $x^{(k)}$ zbieżny do rozwiązania $x$.
 
-\textbf{Metoda Jacobiego:} W $(k+1)$-szej iteracji, $i$-tą składową wektora $x$ oblicza się na podstawie wszystkich składowych wektora $x^{(k)}$ z poprzedniej iteracji:
+\textbf{Metoda Jacobiego:} W $(k+1)$-tej iteracji, $i$-tą składową wektora $x$ oblicza się na podstawie wszystkich składowych wektora $x^{(k)}$ z poprzedniej iteracji:
 \begin{equation}
 x_i^{(k+1)} = \frac{1}{a_{ii}} \left( b_i - \sum_{j=1, j \neq i}^{N} a_{ij} x_j^{(k)} \right)
 \end{equation}
@@ -105,7 +103,7 @@ x_i^{(k+1)} = \frac{1}{a_1} \left( b_i - a_3 x_{i-2}^{(k)} - a_2 x_{i-1}^{(k)} -
 \label{eq:jacobi_sparse}
 \end{equation}
 
-\textbf{Metoda Gaussa–Seidla:} W $(k+1)$-szej iteracji, przy obliczaniu $x_i^{(k+1)}$, wykorzystuje się już obliczone w tej samej iteracji składowe $x_j^{(k+1)}$ dla $j < i$ oraz składowe $x_j^{(k)}$ z poprzedniej iteracji dla $j > i$:
+\textbf{Metoda Gaussa–Seidla:} W $(k+1)$-tej iteracji, przy obliczaniu $x_i^{(k+1)}$, wykorzystuje się już obliczone w tej samej iteracji składowe $x_j^{(k+1)}$ dla $j < i$ oraz składowe $x_j^{(k)}$ z poprzedniej iteracji dla $j > i$:
 \begin{equation}
 x_i^{(k+1)} = \frac{1}{a_{ii}} \left( b_i - \sum_{j=1}^{i-1} a_{ij} x_j^{(k+1)} - \sum_{j=i+1}^{N} a_{ij} x_j^{(k)} \right)
 \end{equation}
@@ -116,21 +114,21 @@ x_i^{(k+1)} = \frac{1}{a_1} \left( b_i - a_3 x_{i-2}^{(k+1)} - a_2 x_{i-1}^{(k+1
 \end{equation}
 
 \subsection{Wyniki dla $a_1=7$}
-Kryterium zakończenia przyjęto jako osiągnięcie normy residuum $\norm{Ax^{(k)} - b}_2 < 10^{-9}$ lub przekroczenie 200 iteracji.
+Kryterium zakończenia przyjęto jako osiągnięcie normy residuum $r < 10^{-9}$ lub przekroczenie 2000 iteracji.
 
 Uzyskane wyniki dla $N=1253$ i $a_1=7$ ($a_2=a_3=-1$):
 \begin{itemize}
     \item \textbf{Metoda Jacobiego:}
     \begin{itemize}
         \item Liczba iteracji: 30
-        \item Czas wykonania: \num{12.2520} s
-        \item Końcowa norma residuum: \num{6.026178614500812e-10}
+        \item Czas wykonania: \num{0.0128} s
+        \item Końcowa norma residuum: \num{6.026178341430422e-10}
     \end{itemize}
     \item \textbf{Metoda Gaussa–Seidla:}
     \begin{itemize}
         \item Liczba iteracji: 20
-        \item Czas wykonania: \num{7.6306} s
-        \item Końcowa norma residuum: \num{6.974854387012843e-10}
+        \item Czas wykonania: \num{0.0517} s
+        \item Końcowa norma residuum: \num{6.974854848483507e-10}
     \end{itemize}
 \end{itemize}
 Macierz dla $a_1=7$ jest silnie diagonalnie dominująca, co gwarantuje zbieżność obu metod. Metoda Gaussa–Seidla zbiegła szybciej (mniejsza liczba iteracji), co jest typowym zachowaniem. Przebieg zbieżności przedstawiono na Rysunku \ref{fig:task_b_convergence}.
@@ -143,14 +141,14 @@ Macierz dla $a_1=7$ jest silnie diagonalnie dominująca, co gwarantuje zbieżno�
 \end{figure}
 
 \section{Analiza zbieżności dla $a_1 = 3$}
-Dla $a_1=3, a_2=a_3=-1$ macierz nie jest diagonalnie dominująca, ponieważ $|a_{ii}| = 3 < \sum_{j\neq i} |a_{ij}| = 4$. Sprawdzono zachowanie metod iteracyjnych w tym przypadku (maksymalnie 200 iteracji).
+Dla $a_1=3, a_2=a_3=-1$ macierz nie jest diagonalnie dominująca, ponieważ $|a_{ii}| = 3 < \sum_{j\neq i} |a_{ij}| = 4$. Sprawdzono zachowanie metod iteracyjnych w tym przypadku (maksymalnie 2000 iteracji).
 
 Wyniki:
 \begin{itemize}
-    \item \textbf{Metoda Jacobiego:} nie zbiegła (osiągnięto limit 200 iteracji), czas \num{81.6940} s, norma residuum osiągnęłą $\num{2.766537909891771e+22}$.
-    \item \textbf{Metoda Gaussa–Seidla:} nie zbiegła (osiągnięto limit 200 iteracji), czas \num{81.5799} s, norma residuum osiągnęła $\num{1.0769286535573007e+58}$.
+    \item \textbf{Metoda Jacobiego:} nie zbiegła (osiągnięto limit 2000 iteracji), czas \num{4.4741} s, norma residuum osiągnęłą wartość $\inf$.
+    \item \textbf{Metoda Gaussa–Seidla:} nie zbiegła (osiągnięto limit 2000 iteracji), czas \num{5.6585} s, norma residuum osiągnęła warość NaN, co świadczy o niesabilności numerycznej tej metody.
 \end{itemize}
-Brak dominacji diagonalnej spowodował rozbieżność obu metod iteracyjnych. Przebieg normy residuum pokazano na Rysunku \ref{fig:task_c_convergence}.
+Brak dominacji diagonalnej spowodował rozbieżność obu metod iteracyjnych. Przebieg normy residuum pokazano na Rysunku~\ref{fig:task_c_convergence}.
 
 \begin{figure}[H]
     \centering
@@ -185,17 +183,17 @@ Przeprowadzono testy czasowe dla wszystkich trzech metod, zmieniając rozmiar ma
 
 \begin{table}[H]
     \centering
-    \caption{Czasy wykonania [s] dla różnych wartości $N$ ($a_1=11$).}
+    \caption{Czasy wykonania [s] dla różnych wartości $N$ ($a_1=7$).}
     \label{tab:task_e_times}
     \begin{tabular}{r S[table-format=1.4] S[table-format=1.4] S[table-format=1.4] S[table-format=1.4]}
         \toprule
         {$N$} & {Jacobi} & {Gauss--Seidel} & {LU} \\
         \midrule
-        100  & 0.1651 & 0.1120 & 0.0019\\
-        300  & 0.8135 & 0.5228 & 0.0095\\
-        500  & 1.9045 & 1.2929 & 0.2160\\
-        700  & 3.7554 & 2.4841 & 0.0352\\
-        1000 & 8.6270 & 5.3311 & 0.0724\\
+        100  & 0.0005 & 0.0046 & 0.0014\\
+        300  & 0.0007 & 0.0118 & 0.0062\\
+        900  & 0.0093 & 0.0386 & 0.0635\\
+        1200 & 0.0137 & 0.0544 & 0.1037\\
+        2000 & 0.0486 & 0.0775 & 0.2923\\
         \bottomrule
     \end{tabular}
 \end{table}
@@ -214,16 +212,14 @@ Przeprowadzono testy czasowe dla wszystkich trzech metod, zmieniając rozmiar ma
     \label{fig:task_e_log}
 \end{figure}
 
-TODO: czemy iteracyjne tak wolne?
-
-\section{Wnioski TODO}
+\section{Wnioski}
 Na podstawie przeprowadzonych badań można sformułować następujące wnioski:
 \begin{enumerate}
-    \item \textbf{Zbieżność metod iteracyjnych:} Metody Jacobiego i Gaussa--Seidla są skuteczne (zbiegają się) tylko wtedy, gdy spełnione są odpowiednie warunki, np. macierz jest diagonalnie dominująca (jak w przypadku $a_1=11$). Dla macierzy, która nie spełnia tego warunku ($a_1=3$), metody te okazały się rozbieżne. W przypadku zbieżności, metoda Gaussa--Seidla zazwyczaj wymaga mniej iteracji niż metoda Jacobiego.
-    \item \textbf{Niezawodność metod bezpośrednich:} Metody bezpośrednie (rozkład LU, eliminacja Gaussa) pozwalają na znalezienie rozwiązania niezależnie od własności zbieżnościowych macierzy (o ile macierz jest nieosobliwa). Eliminacja Gaussa z częściowym wyborem elementu głównego jest generalnie bardziej odporna na błędy numeryczne niż rozkład LU bez pivotingu, co potwierdziło nieco niższe residuum, przy minimalnie wyższym koszcie czasowym.
+    \item \textbf{Zbieżność metod iteracyjnych:} Metody Jacobiego i Gaussa--Seidla są skuteczne (zbiegają się) tylko wtedy, gdy spełnione są odpowiednie warunki, np. macierz jest diagonalnie dominująca (jak w przypadku $a_1=7$). Dla macierzy, która nie spełnia tego warunku ($a_1=3$), metody te okazały się rozbieżne. W przypadku zbieżności, metoda Gaussa--Seidla zazwyczaj wymaga mniej iteracji niż metoda Jacobiego (a jednak jest wolniejsza).
+    \item \textbf{Niezawodność metody bezpośredniej:} Metoda rozkładu LU pozwala na znalezienie rozwiązania niezależnie od własności zbieżnościowych macierzy.
     \item \textbf{Wydajność a struktura macierzy:} Dla macierzy dużych rozmiarów i o strukturze pasmowej, zoptymalizowane metody iteracyjne (jeśli są zbieżne) są \textbf{znacznie wydajniejsze} niż metody bezpośrednie operujące na macierzach gęstych. Złożoność obliczeniowa metod iteracyjnych (z uwzględnieniem pasmowości) skaluje się znacznie lepiej (bliżej $O(N)$ na iterację) w porównaniu do złożoności $O(N^3)$ metod bezpośrednich. Przewaga czasowa metod iteracyjnych jest widoczna nawet dla stosunkowo niewielkich $N$ i rośnie wraz ze wzrostem rozmiaru problemu.
     \item \textbf{Dokładność i kryterium stopu:} Norma residuum jest użytecznym kryterium oceny dokładności rozwiązania oraz warunkiem zatrzymania dla metod iteracyjnych. Metody iteracyjne kończą działanie po osiągnięciu zadanej tolerancji, podczas gdy metody bezpośrednie dążą do uzyskania dokładności ograniczonej przez precyzję arytmetyki zmiennoprzecinkowej.
 \end{enumerate}
-Wybór odpowiedniej metody zależy od specyfiki problemu: dla macierzy spełniających warunki zbieżności i o specjalnej strukturze (np. pasmowej, rzadkiej), metody iteracyjne są preferowane ze względu na wydajność. W ogólnym przypadku, lub gdy zbieżność metod iteracyjnych nie jest gwarantowana, metody bezpośrednie (szczególnie te ze stabilizacją numeryczną jak pivoting) są bardziej niezawodnym wyborem, choć obliczeniowo droższym.
+Wybór odpowiedniej metody zależy od specyfiki problemu: dla macierzy spełniających warunki zbieżności i o specjalnej strukturze (np. pasmowej, rzadkiej), metody iteracyjne są preferowane ze względu na wydajność. W ogólnym przypadku, lub gdy zbieżność metod iteracyjnych nie jest gwarantowana, metody bezpośrednie są bardziej niezawodnym wyborem, choć obliczeniowo droższym.
 
 \end{document}
