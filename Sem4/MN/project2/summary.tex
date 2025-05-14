@@ -55,68 +55,70 @@ round-precision=4          % Liczba miejsc po przecinku dla czasów
 \maketitle
 
 \section{Wstęp}
-Celem projektu była implementacja oraz analiza porównawcza czterech metod rozwiązywania układów równań liniowych $Ax = b$: dwóch metod iteracyjnych (metoda Jacobiego i metoda Gaussa–Seidla) zoptymalizowanych pod kątem struktury pasmowej macierzy oraz metody bezpośredniej (faktoryzacja LU). Analizę przeprowadzono w środowisku Python z wykorzystaniem biblioteki NumPy oraz Matplotlib.
+Projekt niniejszy koncentruje się na implementacji i analizie porównawczej metod rozwiązywania układów równań liniowych postaci $Ax = b$. Rozważono dwie kategorie metod: iteracyjne, obejmujące metodę Jacobiego oraz Gaussa–Seidla, a także metodę bezpośrednią opartą na faktoryzacji LU. Szczególną uwagę zwrócono na potencjalne optymalizacje wynikające z pasmowej struktury macierzy $A$. Badania przeprowadzono w środowisku Python, wykorzystując biblioteki NumPy do obliczeń numerycznych oraz Matplotlib do wizualizacji wyników.
 
 \section{Konstrukcja układu równań}
-Na potrzeby projektu przyjęto następujące parametry na podstawie numeru indeksu \textbf{201253}:
+Parametry definiujące układ równań zostały ustalone na podstawie numeru indeksu studenta: \textbf{201253}. Poszczególne cyfry indeksu wykorzystano w następujący sposób:
 \begin{itemize}
     \item Przedostatnia cyfra indeksu: $c = 5$
     \item Ostatnia cyfra indeksu: $d = 3$
     \item Czwarta cyfra indeksu: $e = 2$
     \item Trzecia cyfra indeksu: $f = 1$
 \end{itemize}
-Rozmiar macierzy $N$ obliczono jako $N = 1200 + 10c + d = 1200 + 10 \cdot 5 + 3 = 1253$.
+Rozmiar macierzy kwadratowej $A$, oznaczony jako $N$, obliczono zgodnie ze wzorem: $N = 1200 + 10c + d = 1200 + 10 \cdot 5 + 3 = 1253$.
 
-Wartości na przekątnych macierzy $A$ zależą od zadania:
+Macierz $A$ jest macierzą pięcioprzekątniową, a wartości na jej przekątnych są zdefiniowane następująco:
 \begin{itemize}
-    \item Główna przekątna: $a_{ii} = a_1$. Dla zadań B i E przyjęto $a_1 = 5 + e = 5 + 2 = 7$. Dla zadań C i D przyjęto $a_1 = 3$.
-    \item Pierwsza pod- i nad-przekątna: $a_{i, i-1} = a_{i, i+1} = a_2 = -1$.
-    \item Druga pod- i nad-przekątna: $a_{i, i-2} = a_{i, i+2} = a_3 = -1$.
+    \item Główna przekątna ($a_{ii}$): wartość $a_1$. W zadaniach B (analiza zbieżności metod iteracyjnych) oraz E (analiza wydajności) przyjęto $a_1 = 5 + e = 5 + 2 = 7$. Natomiast w zadaniach C (badanie zbieżności dla innej macierzy) i D (metoda LU) $a_1 = 3$.
+    \item Pierwsza podprzekątna ($a_{i, i-1}$) i nadprzekątna ($a_{i, i+1}$): $a_2 = -1$.
+    \item Druga podprzekątna ($a_{i, i-2}$) i nadprzekątna ($a_{i, i+2}$): $a_3 = -1$.
 \end{itemize}
-Macierz $A$ jest więc macierzą pięcioprzekątniową (pasmową). Elementy wektora prawej strony $b$ dane są wzorem $b_n = \sin(n(f+1)) = \sin(2n)$ dla $n = 1, 2, \dots, N$.
+Elementy wektora prawej strony $b$ (o długości $N$) są generowane za pomocą funkcji trygonometrycznej: $b_n = \sin(n(f+1)) = \sin(2n)$, gdzie $n = 1, 2, \dots, N$.
 
-Rozwiązywanym problemem jest znalezienie wektora $x$ spełniającego równanie macierzowe $Ax = b$.
+Celem jest wyznaczenie wektora $x$, który jest rozwiązaniem równania macierzowego $Ax = b$.
 
 \section{Implementacja Algorytmów}
-Wszystkie algorytmy zostały zaimplementowane w języku Python 3 przy użyciu biblioteki NumPy do operacji numerycznych (tworzenie macierzy, wektorów, operacje wektorowe, obliczanie normy) oraz Matplotlib do generowania wykresów. Pomiary czasu wykonania realizowano za pomocą funkcji \texttt{time.perf\_counter()}.
+Wszystkie algorytmy zaimplementowano w języku Python 3. Do operacji na macierzach i wektorach, takich jak ich tworzenie, mnożenie czy obliczanie normy, wykorzystano bibliotekę NumPy. Wykresy ilustrujące wyniki zostały wygenerowane przy użyciu biblioteki Matplotlib. Pomiary czasu wykonania poszczególnych metod realizowano za pomocą funkcji \texttt{time.perf\_counter()}.
 
 \subsection{Metody Iteracyjne (Jacobi, Gauss-Seidel)}
-Implementacja metod iteracyjnych została wykonana \textbf{ręcznie}, z uwzględnieniem \textbf{pasmowej struktury macierzy A}. Zamiast przechowywać całą macierz $N \times N$ (co byłoby nieefektywne dla dużych $N$), operacje wykonywano bezpośrednio na podstawie znanych wartości $a_1, a_2, a_3$. W każdej iteracji, przy obliczaniu nowej wartości $x_i^{(k+1)}$, odwoływano się tylko do maksymalnie czterech sąsiednich elementów wektora $x$ z poprzedniej iteracji (lub bieżącej w przypadku Gaussa-Seidla), co znacząco redukuje koszt obliczeniowy pojedynczej iteracji w porównaniu do operacji na pełnej macierzy. Kryterium zatrzymania algorytmu to osiągnięcie normy residuum $r < 10^{-9}$ lub przekroczenie maksymalnej liczby iteracji (2000).
+Implementacja metod iteracyjnych została przeprowadzona ręcznie. Macierz $A$ była generowana i przechowywana jako standardowa, gęsta macierz NumPy, mimo jej pasmowej natury.
+W przypadku \textbf{metody Jacobiego}, implementacja wykorzystuje operacje na macierzach NumPy. Macierz $R = A - D$ (gdzie $D$ to macierz diagonalna $A$) jest tworzona jawnie, a następnie używana w operacji mnożenia macierzy przez wektor $R \cdot x^{(k)}$. Chociaż macierz $R$ jest również pasmowa, standardowe operacje NumPy niekoniecznie wykorzystują tę strukturę w sposób maksymalnie efektywny pod kątem unikania obliczeń na elementach zerowych.
+Natomiast \textbf{metoda Gaussa–Seidla} została zaimplementowana z wykorzystaniem pętli, które iterują po elementach macierzy $A$ i wektora $x$. W każdej iteracji, przy obliczaniu nowej wartości $x_i^{(k+1)}$, odwołania do elementów macierzy $A$ ograniczają się jedynie do tych znajdujących się na niezerowych pasmach. Stanowi to optymalizację na poziomie operacyjnym, dostosowaną do pięcioprzekątniowej struktury macierzy.
+
+Kryterium zakończenia iteracji dla obu metod było dwojakie: osiągnięcie normy residuum $r = \norm{Ax - b}$ mniejszej niż $10^{-9}$ lub przekroczenie maksymalnej liczby 2000 iteracji.
 
 \subsection{Metoda Bezpośrednia (Faktoryzacja LU)}
-Metody bezpośrednie zostały zaimplementowane przy użyciu standardowych (gęstych) macierzy NumPy.
-
-\textbf{Faktoryzacja LU:} Zaimplementowano funkcję rozkładającą macierz $A$ na macierz dolnotrójkątną $L$ (z jedynkami na diagonali) i górnotrójkątną $U$ ($A = LU$). Następnie zaimplementowano funkcje rozwiązujące układy trójkątne metodą podstawiania w przód ($Ly=b$) i podstawiania wstecz ($Ux=y$).
+Metoda bezpośrednia, oparta na dekompozycji LU, została zaimplementowana przy użyciu standardowych, gęstych macierzy NumPy.
+\textbf{Faktoryzacja LU:} Zaimplementowano funkcję dokonującą rozkładu macierzy $A$ na iloczyn macierzy dolnotrójkątnej $L$ (z elementami jednostkowymi na głównej przekątnej) oraz macierzy górnotrójkątnej $U$, czyli $A = LU$.
+Po uzyskaniu macierzy $L$ i $U$, rozwiązanie układu $Ax=b$ sprowadza się do rozwiązania dwóch prostszych układów równań z macierzami trójkątnymi: najpierw $Ly=b$ metodą podstawiania w przód, a następnie $Ux=y$ metodą podstawiania wstecz.
 
 \section{Metody iteracyjne Jacobiego i Gaussa–Seidla}
 
 \subsection{Formuły Metod Iteracyjnych}
-Rozważmy układ równań $Ax=b$. Metody iteracyjne startują od początkowego przybliżenia $x^{(0)}$ i generują ciąg przybliżeń $x^{(k)}$ zbieżny do rozwiązania $x$.
+Rozważmy układ równań $Ax=b$. Metody iteracyjne rozpoczynają obliczenia od pewnego początkowego przybliżenia rozwiązania $x^{(0)}$ i w kolejnych krokach generują ciąg przybliżeń $x^{(k)}$, który w założeniu ma zbiegać do faktycznego rozwiązania $x$.
 
-\textbf{Metoda Jacobiego:} W $(k+1)$-tej iteracji, $i$-tą składową wektora $x$ oblicza się na podstawie wszystkich składowych wektora $x^{(k)}$ z poprzedniej iteracji:
+\textbf{Metoda Jacobiego:} W $(k+1)$-tej iteracji, $i$-ta składowa wektora $x$ jest obliczana na podstawie wartości wszystkich składowych wektora $x^{(k)}$ pochodzących z poprzedniej, $k$-tej iteracji:
 \begin{equation}
 x_i^{(k+1)} = \frac{1}{a_{ii}} \left( b_i - \sum_{j=1, j \neq i}^{N} a_{ij} x_j^{(k)} \right)
 \end{equation}
-Dla naszej macierzy pięcioprzekątniowej ($a_{ii}=a_1$, $a_{i,i\pm 1}=a_2$, $a_{i,i\pm 2}=a_3$), wzór upraszcza się do (z pominięciem wyrazów spoza macierzy):
+Dla analizowanej macierzy pięcioprzekątniowej (gdzie $a_{ii}=a_1$, $a_{i,i\pm 1}=a_2$, $a_{i,i\pm 2}=a_3$), przy uwzględnieniu jedynie niezerowych pasm, wzór ten przyjmuje postać (pomijając wyrazy spoza macierzy dla skrajnych indeksów $i$):
 \begin{equation}
 x_i^{(k+1)} = \frac{1}{a_1} \left( b_i - a_3 x_{i-2}^{(k)} - a_2 x_{i-1}^{(k)} - a_2 x_{i+1}^{(k)} - a_3 x_{i+2}^{(k)} \right)
 \label{eq:jacobi_sparse}
 \end{equation}
 
-\textbf{Metoda Gaussa–Seidla:} W $(k+1)$-tej iteracji, przy obliczaniu $x_i^{(k+1)}$, wykorzystuje się już obliczone w tej samej iteracji składowe $x_j^{(k+1)}$ dla $j < i$ oraz składowe $x_j^{(k)}$ z poprzedniej iteracji dla $j > i$:
+\textbf{Metoda Gaussa–Seidla:} W tej metodzie, podczas obliczania $i$-tej składowej $x_i^{(k+1)}$ w $(k+1)$-tej iteracji, wykorzystywane są już nowo obliczone w tej samej iteracji składowe $x_j^{(k+1)}$ dla $j < i$, oraz składowe $x_j^{(k)}$ z poprzedniej iteracji dla $j > i$:
 \begin{equation}
 x_i^{(k+1)} = \frac{1}{a_{ii}} \left( b_i - \sum_{j=1}^{i-1} a_{ij} x_j^{(k+1)} - \sum_{j=i+1}^{N} a_{ij} x_j^{(k)} \right)
 \end{equation}
-Dla naszej macierzy pięcioprzekątniowej:
+Dla badanej macierzy pięcioprzekątniowej wzór ten, po uwzględnieniu jej struktury, wygląda następująco:
 \begin{equation}
 x_i^{(k+1)} = \frac{1}{a_1} \left( b_i - a_3 x_{i-2}^{(k+1)} - a_2 x_{i-1}^{(k+1)} - a_2 x_{i+1}^{(k)} - a_3 x_{i+2}^{(k)} \right)
 \label{eq:gauss_seidel_sparse}
 \end{equation}
 
 \subsection{Wyniki dla $a_1=7$}
-Kryterium zakończenia przyjęto jako osiągnięcie normy residuum $r < 10^{-9}$ lub przekroczenie 2000 iteracji.
-
-Uzyskane wyniki dla $N=1253$ i $a_1=7$ ($a_2=a_3=-1$):
+Dla układu równań z $N=1253$ oraz wartością $a_1=7$ na głównej przekątnej (przy $a_2=a_3=-1$), uzyskano następujące wyniki. Kryterium stopu było osiągnięcie normy residuum $r < 10^{-9}$ lub wykonanie 2000 iteracji.
 \begin{itemize}
     \item \textbf{Metoda Jacobiego:}
     \begin{itemize}
@@ -131,7 +133,7 @@ Uzyskane wyniki dla $N=1253$ i $a_1=7$ ($a_2=a_3=-1$):
         \item Końcowa norma residuum: \num{6.974854848483507e-10}
     \end{itemize}
 \end{itemize}
-Macierz dla $a_1=7$ jest silnie diagonalnie dominująca, co gwarantuje zbieżność obu metod. Metoda Gaussa–Seidla zbiegła szybciej (mniejsza liczba iteracji), co jest typowym zachowaniem. Przebieg zbieżności przedstawiono na Rysunku \ref{fig:task_b_convergence}.
+Macierz dla $a_1=7$ jest silnie diagonalnie dominująca wierszowo ($|7| > |-1|+|-1|+|-1|+|-1|$), co jest warunkiem wystarczającym dla zbieżności obu metod iteracyjnych. Zgodnie z oczekiwaniami, metoda Gaussa–Seidla wymagała mniejszej liczby iteracji do osiągnięcia zadanej tolerancji niż metoda Jacobiego. Interesujące jest jednak, że całkowity czas wykonania metody Gaussa–Seidla był dłuższy. Może to wynikać z faktu, iż jej implementacja opierała się na pętlach Pythona, podczas gdy metoda Jacobiego, mimo potencjalnie większej liczby operacji arytmetycznych na skutek operowania na pełniejszej macierzy $R$, korzystała w większym stopniu ze zoptymalizowanych operacji wektorowych NumPy. Przebieg zbieżności obu metod zilustrowano na Rysunku \ref{fig:task_b_convergence}.
 
 \begin{figure}[H]
     \centering
@@ -141,14 +143,14 @@ Macierz dla $a_1=7$ jest silnie diagonalnie dominująca, co gwarantuje zbieżno�
 \end{figure}
 
 \section{Analiza zbieżności dla $a_1 = 3$}
-Dla $a_1=3, a_2=a_3=-1$ macierz nie jest diagonalnie dominująca, ponieważ $|a_{ii}| = 3 < \sum_{j\neq i} |a_{ij}| = 4$. Sprawdzono zachowanie metod iteracyjnych w tym przypadku (maksymalnie 2000 iteracji).
+Zmiana wartości na głównej przekątnej na $a_1=3$ (przy $a_2=a_3=-1$) prowadzi do sytuacji, w której macierz $A$ przestaje być diagonalnie dominująca. Dla $i$-tego wiersza mamy bowiem $|a_{ii}| = |3| = 3$, podczas gdy suma modułów pozostałych elementów w tym wierszu (dla wierszy wewnętrznych) wynosi $|-1|+|-1|+|-1|+|-1| = 4$. Ponieważ $3 < 4$, warunek dominacji diagonalnej nie jest spełniony. Zbadano zachowanie metod iteracyjnych dla tak zmodyfikowanej macierzy, utrzymując limit 2000 iteracji.
 
-Wyniki:
+Uzyskane rezultaty:
 \begin{itemize}
-    \item \textbf{Metoda Jacobiego:} nie zbiegła (osiągnięto limit 2000 iteracji), czas \num{4.4741} s, norma residuum osiągnęłą wartość $\inf$.
-    \item \textbf{Metoda Gaussa–Seidla:} nie zbiegła (osiągnięto limit 2000 iteracji), czas \num{5.6585} s, norma residuum osiągnęła warość NaN, co świadczy o niesabilności numerycznej tej metody.
+    \item \textbf{Metoda Jacobiego:} nie osiągnęła zbieżności w ramach 2000 iteracji. Czas wykonania wyniósł \num{4.4741} s, a końcowa norma residuum osiągnęła wartość $\inf$, wskazując na dywergencję.
+    \item \textbf{Metoda Gaussa–Seidla:} również nie zbiegła po 2000 iteracjach. Czas obliczeń to \num{5.6585} s. Końcowa norma residuum osiągnęła wartość NaN (Not a Number), co świadczy o niestabilności numerycznej i rozbieżności tej metody dla badanego przypadku.
 \end{itemize}
-Brak dominacji diagonalnej spowodował rozbieżność obu metod iteracyjnych. Przebieg normy residuum pokazano na Rysunku~\ref{fig:task_c_convergence}.
+Brak dominacji diagonalnej macierzy $A$ (dla $a_1=3$) skutkował rozbieżnością obu zastosowanych metod iteracyjnych. Przebieg zmian normy residuum w funkcji liczby iteracji dla tego przypadku przedstawiono na Rysunku~\ref{fig:task_c_convergence}.
 
 \begin{figure}[H]
     \centering
@@ -158,28 +160,25 @@ Brak dominacji diagonalnej spowodował rozbieżność obu metod iteracyjnych. Pr
 \end{figure}
 
 \section{Metoda bezpośrednia}
-Ponieważ metody iteracyjne zawiodły dla $a_1=3$, do rozwiązania układu $Ax=b$ z tą macierzą zastosowano metody bezpośrednie.
+Wobec niepowodzenia metod iteracyjnych w rozwiązaniu układu równań z macierzą $A$ dla $a_1=3$, zastosowano metodę bezpośrednią opartą na dekompozycji LU.
 
 \subsection{Zasady Działania Metody Bezpośredniej LU}
-
-\textbf{Faktoryzacja LU:} Metoda polega na rozkładzie macierzy $A$ na iloczyn macierzy dolnotrójkątnej $L$ (z jedynkami na głównej przekątnej) i macierzy górnotrójkątnej $U$, tzn. $A = LU$. Rozwiązanie układu $Ax=b$ sprowadza się do rozwiązania dwóch układów trójkątnych:
+Metoda ta polega na przedstawieniu macierzy $A$ jako iloczynu dwóch macierzy trójkątnych: dolnotrójkątnej $L$ (z jedynkami na głównej przekątnej) i górnotrójkątnej $U$. Po dokonaniu rozkładu $A = LU$, pierwotny układ równań $Ax=b$ można przekształcić w $LUx=b$. Rozwiązanie tego problemu sprowadza się do rozwiązania dwóch prostszych układów:
 \begin{enumerate}
-    \item $Ly = b$ (rozwiązywane metodą podstawiania w przód - forward substitution)
-    \item $Ux = y$ (rozwiązywane metodą podstawiania wstecz - backward substitution)
+    \item $Ly = b$: rozwiązywany metodą podstawiania w przód (forward substitution) w celu wyznaczenia wektora pomocniczego $y$.
+    \item $Ux = y$: rozwiązywany metodą podstawiania wstecz (backward substitution) w celu wyznaczenia ostatecznego rozwiązania $x$.
 \end{enumerate}
 
 \subsection{Wyniki dla $a_1=3$, $N=1253$}
-
-\textbf{Metoda Rozkładu LU:}
+Dla układu z macierzą, która nie była diagonalnie dominująca ($a_1=3$), zastosowanie metody rozkładu LU pozwoliło uzyskać następujące wyniki:
 \begin{itemize}
-    \item Czas wykonania: \num{3.1408} s
+    \item Łączny czas wykonania (dekompozycja LU + rozwiązanie układów trójkątnych): \num{3.1408} s
     \item Końcowa norma residuum: \num{6.24e-13}
 \end{itemize}
-
-Metoda bezpośrednia uzyskała dosyć precyzyjny wynik, jednak warto zauważyć, że czas wykonania jest znacznie dłuższy niż dla zbieżnych metod iteracyjnych.
+Metoda bezpośrednia umożliwiła uzyskanie rozwiązania o wysokiej dokładności (mała norma residuum). Warto jednak zauważyć, że czas jej wykonania był znacząco dłuższy w porównaniu do czasów zbieżnych metod iteracyjnych (prezentowanych w sekcji 4.2 dla $a_1=7$).
 
 \section{Analiza wydajności w zależności od $N$}
-Przeprowadzono testy czasowe dla wszystkich trzech metod, zmieniając rozmiar macierzy $N$. Użyto macierzy z $a_1=7$, dla której metody iteracyjne są zbieżne. Testowane wartości $N={100, 300, 500, 700, 1000}$. Wyniki czasowe przedstawiono w Tabeli \ref{tab:task_e_times} oraz na wykresach \ref{fig:task_e_linear} i \ref{fig:task_e_log}.
+W celu zbadania wpływu rozmiaru macierzy $N$ na czas wykonania, przeprowadzono serię testów dla wszystkich trzech zaimplementowanych metod (Jacobi, Gauss-Seidel, LU). W tej analizie wykorzystano macierz $A$ z parametrem $a_1=7$, dla której metody iteracyjne wykazywały zbieżność. Testy wykonano dla następujących wartości $N$: $\{100, 300, 900, 1200, 2000\}$. Wyniki czasowe zebrano w Tabeli \ref{tab:task_e_times} oraz przedstawiono graficznie na Rysunkach \ref{fig:task_e_linear} (skala liniowa osi Y) i \ref{fig:task_e_log} (skala logarytmiczna osi Y).
 
 \begin{table}[H]
     \centering
@@ -213,13 +212,13 @@ Przeprowadzono testy czasowe dla wszystkich trzech metod, zmieniając rozmiar ma
 \end{figure}
 
 \section{Wnioski}
-Na podstawie przeprowadzonych badań można sformułować następujące wnioski:
+Przeprowadzone eksperymenty i analiza wyników pozwalają sformułować następujące wnioski:
 \begin{enumerate}
-    \item \textbf{Zbieżność metod iteracyjnych:} Metody Jacobiego i Gaussa--Seidla są skuteczne (zbiegają się) tylko wtedy, gdy spełnione są odpowiednie warunki, np. macierz jest diagonalnie dominująca (jak w przypadku $a_1=7$). Dla macierzy, która nie spełnia tego warunku ($a_1=3$), metody te okazały się rozbieżne. W przypadku zbieżności, metoda Gaussa--Seidla zazwyczaj wymaga mniej iteracji niż metoda Jacobiego (a jednak jest wolniejsza).
-    \item \textbf{Niezawodność metody bezpośredniej:} Metoda rozkładu LU pozwala na znalezienie rozwiązania niezależnie od własności zbieżnościowych macierzy.
-    \item \textbf{Wydajność a struktura macierzy:} Dla macierzy dużych rozmiarów i o strukturze pasmowej, zoptymalizowane metody iteracyjne (jeśli są zbieżne) są \textbf{znacznie wydajniejsze} niż metody bezpośrednie operujące na macierzach gęstych. Złożoność obliczeniowa metod iteracyjnych (z uwzględnieniem pasmowości) skaluje się znacznie lepiej (bliżej $O(N)$ na iterację) w porównaniu do złożoności $O(N^3)$ metod bezpośrednich. Przewaga czasowa metod iteracyjnych jest widoczna nawet dla stosunkowo niewielkich $N$ i rośnie wraz ze wzrostem rozmiaru problemu.
-    \item \textbf{Dokładność i kryterium stopu:} Norma residuum jest użytecznym kryterium oceny dokładności rozwiązania oraz warunkiem zatrzymania dla metod iteracyjnych. Metody iteracyjne kończą działanie po osiągnięciu zadanej tolerancji, podczas gdy metody bezpośrednie dążą do uzyskania dokładności ograniczonej przez precyzję arytmetyki zmiennoprzecinkowej.
+    \item \textbf{Zbieżność metod iteracyjnych:} Metody Jacobiego oraz Gaussa–Seidla wykazały zbieżność dla macierzy silnie diagonalnie dominującej (przypadek $a_1=7$). W sytuacji, gdy warunek ten nie był spełniony (przypadek $a_1=3$), obie metody okazały się rozbieżne. W przypadku zbieżności, metoda Gaussa–Seidla wymagała mniejszej liczby iteracji niż metoda Jacobiego. Niemniej jednak, dla $a_1=7$, całkowity czas obliczeń dla metody Gaussa-Seidla był dłuższy, co może być efektem różnic w implementacji – pętlowa struktura w Gaussie-Seidlu versus bardziej zwektoryzowane operacje NumPy w metodzie Jacobiego, nawet jeśli ta druga nie była w pełni zoptymalizowana pod kątem pasmowości.
+    \item \textbf{Niezawodność metody bezpośredniej:} Metoda rozkładu LU pozwoliła na znalezienie rozwiązania niezależnie od tego, czy macierz $A$ była diagonalnie dominująca, czy nie. Charakteryzuje się ona większą niezawodnością w kontekście gwarancji uzyskania wyniku (o ile macierz jest nieosobliwa).
+    \item \textbf{Wydajność a struktura macierzy i rozmiar problemu:} Dla macierzy o strukturze pasmowej i odpowiednio dużych rozmiarach $N$, metody iteracyjne (pod warunkiem ich zbieżności) mogą oferować znaczącą przewagę wydajnościową nad metodami bezpośrednimi operującymi na macierzach traktowanych jako gęste. Zaimplementowana metoda Gaussa-Seidla, dzięki jawnemu wykorzystaniu struktury pasmowej w pętlach, wykazała skalowanie kosztu pojedynczej iteracji bliskie $O(N)$. Metoda Jacobiego w przedstawionej implementacji, operująca na macierzy $R$, wykazała nieco gorsze empiryczne skalowanie czasu na iterację. Mimo to, dla większych wartości $N$ (np. $N \ge 900$), obie metody iteracyjne okazały się szybsze od zaimplementowanej metody LU. Dla małych $N$ (np. $N=100$), narzuty związane z implementacją (np. pętle Pythona w G-S) mogą wpływać na czasy tak, że np. metoda LU (lub nawet Jacobi) może być konkurencyjna lub szybsza od G-S. Teoretyczna złożoność obliczeniowa standardowej faktoryzacji LU dla macierzy gęstych to $O(N^3)$, podczas gdy koszt iteracji dla metod iteracyjnych na macierzach pasmowych jest znacznie niższy.
+    \item \textbf{Dokładność i kryterium stopu:} Norma residuum stanowi użyteczne narzędzie do oceny dokładności uzyskanego rozwiązania oraz jako kryterium zakończenia obliczeń dla metod iteracyjnych. Metody te kończą działanie po osiągnięciu predefiniowanej tolerancji. Metody bezpośrednie, z założenia, dążą do uzyskania rozwiązania z dokładnością ograniczoną przez precyzję arytmetyki zmiennoprzecinkowej używanej w obliczeniach.
 \end{enumerate}
-Wybór odpowiedniej metody zależy od specyfiki problemu: dla macierzy spełniających warunki zbieżności i o specjalnej strukturze (np. pasmowej, rzadkiej), metody iteracyjne są preferowane ze względu na wydajność. W ogólnym przypadku, lub gdy zbieżność metod iteracyjnych nie jest gwarantowana, metody bezpośrednie są bardziej niezawodnym wyborem, choć obliczeniowo droższym.
+Podsumowując, wybór optymalnej metody rozwiązania układu równań liniowych jest zależny od charakterystyki problemu. Dla dużych, pasmowych (lub ogólnie rzadkich) macierzy spełniających warunki zbieżności, metody iteracyjne są często preferowane ze względu na ich efektywność obliczeniową. W przypadkach ogólnych, lub gdy zbieżność metod iteracyjnych nie jest zapewniona, metody bezpośrednie stanowią bardziej niezawodny, choć potencjalnie bardziej kosztowny obliczeniowo, wybór.
 
 \end{document}

@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1747225003.87538 "/home/zussman/Repositories/Politechnika_Gdanska/Sem4/MN/project2/summary.tex" "summary.pdf" "summary" 1747225004.50059 0
-  "/home/zussman/Repositories/Politechnika_Gdanska/Sem4/MN/project2/summary.tex" 1747225003.68659 13792 4c7f9730184d0e6246060605176da73c ""
+["pdflatex"] 1747226037.29173 "/home/zussman/Repositories/Politechnika_Gdanska/Sem4/MN/project2/summary.tex" "summary.pdf" "summary" 1747226037.92292 0
+  "/home/zussman/Repositories/Politechnika_Gdanska/Sem4/MN/project2/summary.tex" 1747226036.46668 18432 9caee21822376effb9eedd69986ad824 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -128,9 +128,9 @@
   "performance_plot_log_scale.png" 1747217461.89028 61325 57757eeb5155f125978a619ba0efdd3b ""
   "residuals_plot_B.png" 1747217442.98752 52634 b6b11a3dc2fee56b94f402e2cb912293 ""
   "residuals_plot_C.png" 1747217455.4743 46482 d23f222ff3413ee636d2a5356118a2ae ""
-  "summary.aux" 1747225004.42854 4298 57132aefccf8ad39bf8246e2aebb6161 "pdflatex"
-  "summary.out" 1747225004.42954 2701 961ea242fb0b89c74c89bac7efaa540d "pdflatex"
-  "summary.tex" 1747225003.68659 13792 4c7f9730184d0e6246060605176da73c ""
+  "summary.aux" 1747226037.85068 4298 cce733f550dbb0e97f41ea49a7403024 "pdflatex"
+  "summary.out" 1747226037.85168 2701 961ea242fb0b89c74c89bac7efaa540d "pdflatex"
+  "summary.tex" 1747226036.46668 18432 9caee21822376effb9eedd69986ad824 ""
   (generated)
   "summary.aux"
   "summary.log"
