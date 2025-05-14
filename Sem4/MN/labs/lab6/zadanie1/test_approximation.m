@@ -10,31 +10,95 @@ function [dates, y, M, c, ya] = test_approximation()
 
     load energy_2025
 
-    dates = []; % dates = energy_2025.C.S.Dates; % TODO
-    y = []; % y = energy_2025.C.S.EnergyProduction; % TODO
+    country = 'Poland'; % Zastąp 'C' nazwą kraju, np. 'Poland', 'Germany', 'EU'
+    source = 'Coal';    % Zastąp 'S' nazwą źródła, np. 'Coal', 'Wind', 'Solar', 'Total'
+    
+    % Sprawdzenie, czy wybrane dane istnieją w strukturze
+    if isfield(energy_2025, country) && isfield(energy_2025.(country), source)
+        data_struct = energy_2025.(country).(source);
+        % Sprawdzenie, czy istnieją wymagane pola 'Dates' i 'EnergyProduction'
+        if isfield(data_struct, 'Dates') && isfield(data_struct, 'EnergyProduction')
+            dates = data_struct.Dates;
+            y = data_struct.EnergyProduction;
+        else
+            error(['Wybrana struktura danych dla kraju: ' country ' i źródła: ' source ...
+                   ' nie zawiera wymaganych pól ''Dates'' lub ''EnergyProduction''.']);
+        end
+    else
+        error(['Wybrane dane dla kraju: ' country ' i źródła: ' source ...
+               ' nie istnieją w pliku energy_2025.mat. Sprawdź dostępne opcje (np. używając print_energy.m).']);
+    end
 
-    M = 12; % stopień wielomianu aproksymacyjnego
+    % Upewnienie się, że wektory 'dates' i 'y' są wektorami kolumnowymi
+    dates = dates(:);
+    y = y(:);
+    
+    % --- Walidacja danych i parametrów ---
+    N_data_points = numel(y); % Liczba punktów danych
+    
+    % Wymaganie: co najmniej 100 elementów danych
+    if N_data_points < 100
+        error_msg_N = sprintf(['Wybrany zbiór danych (%s, %s) zawiera %d elementów. ' ...
+                               'Wymagane jest co najmniej 100 elementów. Proszę wybrać inny zbiór danych.'], ...
+                               country, source, N_data_points);
+        error(error_msg_N);
+    end
+    
+    % Jeśli zbiór danych jest pusty (choć powyższy warunek powinien to wyłapać)
+    if N_data_points == 0
+         error(['Wybrany zbiór danych (%s, %s) jest pusty. Proszę wybrać inny.'], country, source);
+    end
+    
+    M = 12; % Stopień wielomianu aproksymacyjnego, M \in [1,12]
+    
+    % Sprawdzenie poprawności stopnia wielomianu M
+    if M < 1 || M > 12
+        error('Stopień wielomianu M musi być w przedziale [1,12].');
+    end
+    
 
-    N = numel(y); % liczba danych
-    x = linspace(0,1,N)'; % znormalizowana dziedzina aproksymowanych danych
+    % --- Aproksymacja wielomianowa ---
+    N = N_data_points; % liczba danych (zgodnie z oryginalnym kodem szkieletowym)
+    % Znormalizowana dziedzina x \in [0,1] dla stabilności numerycznej obliczeń
+    x_normalized = linspace(0,1,N)'; 
 
-    c = polyfit_qr(x,y,M); % wsp. wielomianu 
+    c_polyfit = polyfit_qr(x_normalized, y, M); 
 
-    c = c(end:-1:1); % odwrócenie kolejności elementów wektora c; dostosowanie do polyval
+    c = c_polyfit(end:-1:1); 
 
-    ya = polyval(c,x); % wyznaczenie wartości wielomianu aproksymacyjnego
+    ya = polyval(c, x_normalized); 
 
-    % TODO:
-    % wykres
+    % --- Generowanie wykresu ---
+    figure;
+    plot(dates, y, 'o', 'MarkerSize', 5, 'DisplayName', 'Dane oryginalne');
+    hold on;
+    plot(dates, ya, '-', 'LineWidth', 2, 'DisplayName', ['Aproksymacja wielomianowa (M=' num2str(M) ')']);
+    hold off;
+    
+    % Tytuł i etykiety osi (uwzględnienie polskich znaków i formatowania)
+    title_str = sprintf('Produkcja energii w %s ze źródła %s', strrep(country,'_',' '), strrep(source,'_',' '));
+    title(title_str, 'Interpreter', 'none'); % 'none' interpreter for underscore if not using strrep
+    xlabel('Data');
+    ylabel('Produkcja energii (TWh)');
+    legend('show', 'Location', 'best');
+    grid on;    
+
+    saveas(gcf,'zadanie1.png')
 end
 
 function c = polyfit_qr(x, y, M)
-    % Wyznacza współczynniki wielomianu aproksymacyjnego stopnia M
-    % z zastosowaniem rozkładu QR.
-    % c - kolumnowy wektor wsp. wielomianu c = [c_0; ...; c_M]
+    x_col = x(:); % Upewnienie się, że x jest wektorem kolumnowym
+    y_col = y(:); % Upewnienie się, że y jest wektorem kolumnowym
+    
+    N_pts = numel(x_col); % Liczba punktów danych
 
-    A = zeros(numel(x),M+1); % macierz Vandermonde o rozmiarze [n,M+1]
-    % TODO:
-    c = [];
+    A = zeros(N_pts, M+1); % Prealokacja macierzy
+    for k = 0:M % k jest potęgą x, od 0 do M
+        A(:, k+1) = x_col.^k;
+    end
+    
 
+    [Q1, R1] = qr(A, 0); 
+    
+    c = R1 \ (Q1.' * y_col);
 end
