@@ -55,10 +55,10 @@ round-precision=4          % Liczba miejsc po przecinku dla czasów
 \maketitle
 
 \section{Wstęp}
-Projekt niniejszy koncentruje się na implementacji i analizie porównawczej metod rozwiązywania układów równań liniowych postaci $Ax = b$. Rozważono dwie kategorie metod: iteracyjne, obejmujące metodę Jacobiego oraz Gaussa–Seidla, a także metodę bezpośrednią opartą na faktoryzacji LU. Szczególną uwagę zwrócono na potencjalne optymalizacje wynikające z pasmowej struktury macierzy $A$. Badania przeprowadzono w środowisku Python, wykorzystując biblioteki NumPy do obliczeń numerycznych oraz Matplotlib do wizualizacji wyników.
+Projekt polega na implementacji i analizie porównawczej metod rozwiązywania układów równań liniowych postaci $Ax = b$. Rozważono dwie kategorie metod: iteracyjne, obejmujące metodę Jacobiego oraz Gaussa–Seidla, a także metodę bezpośrednią opartą na faktoryzacji LU. Szczególną uwagę zwrócono na potencjalne optymalizacje wynikające z pasmowej struktury macierzy $A$. Badania przeprowadzono w środowisku Python, wykorzystując biblioteki NumPy do obliczeń numerycznych oraz Matplotlib do wizualizacji wyników.
 
 \section{Konstrukcja układu równań}
-Parametry definiujące układ równań zostały ustalone na podstawie numeru indeksu studenta: \textbf{201253}. Poszczególne cyfry indeksu wykorzystano w następujący sposób:
+Parametry definiujące układ równań zostały ustalone na podstawie numeru indeksu: \textbf{201253}. Poszczególne cyfry indeksu wykorzystano w następujący sposób:
 \begin{itemize}
     \item Przedostatnia cyfra indeksu: $c = 5$
     \item Ostatnia cyfra indeksu: $d = 3$
@@ -67,7 +67,7 @@ Parametry definiujące układ równań zostały ustalone na podstawie numeru ind
 \end{itemize}
 Rozmiar macierzy kwadratowej $A$, oznaczony jako $N$, obliczono zgodnie ze wzorem: $N = 1200 + 10c + d = 1200 + 10 \cdot 5 + 3 = 1253$.
 
-Macierz $A$ jest macierzą pięcioprzekątniową, a wartości na jej przekątnych są zdefiniowane następująco:
+Macierz $A$ jest macierzą pasmową (pięcioprzekątniową), a wartości na jej przekątnych są zdefiniowane następująco:
 \begin{itemize}
     \item Główna przekątna ($a_{ii}$): wartość $a_1$. W zadaniach B (analiza zbieżności metod iteracyjnych) oraz E (analiza wydajności) przyjęto $a_1 = 5 + e = 5 + 2 = 7$. Natomiast w zadaniach C (badanie zbieżności dla innej macierzy) i D (metoda LU) $a_1 = 3$.
     \item Pierwsza podprzekątna ($a_{i, i-1}$) i nadprzekątna ($a_{i, i+1}$): $a_2 = -1$.
@@ -78,14 +78,14 @@ Elementy wektora prawej strony $b$ (o długości $N$) są generowane za pomocą 
 Celem jest wyznaczenie wektora $x$, który jest rozwiązaniem równania macierzowego $Ax = b$.
 
 \section{Implementacja Algorytmów}
-Wszystkie algorytmy zaimplementowano w języku Python 3. Do operacji na macierzach i wektorach, takich jak ich tworzenie, mnożenie czy obliczanie normy, wykorzystano bibliotekę NumPy. Wykresy ilustrujące wyniki zostały wygenerowane przy użyciu biblioteki Matplotlib. Pomiary czasu wykonania poszczególnych metod realizowano za pomocą funkcji \texttt{time.perf\_counter()}.
+Wszystkie algorytmy zaimplementowano w języku Python. Do operacji na macierzach i wektorach, takich jak ich tworzenie, mnożenie czy obliczanie normy, wykorzystano bibliotekę NumPy. Wykresy ilustrujące wyniki zostały wygenerowane przy użyciu biblioteki Matplotlib. Pomiary czasu wykonania poszczególnych metod realizowano za pomocą funkcji \texttt{time.perf\_counter()}.
 
 \subsection{Metody Iteracyjne (Jacobi, Gauss-Seidel)}
 Implementacja metod iteracyjnych została przeprowadzona ręcznie. Macierz $A$ była generowana i przechowywana jako standardowa, gęsta macierz NumPy, mimo jej pasmowej natury.
 W przypadku \textbf{metody Jacobiego}, implementacja wykorzystuje operacje na macierzach NumPy. Macierz $R = A - D$ (gdzie $D$ to macierz diagonalna $A$) jest tworzona jawnie, a następnie używana w operacji mnożenia macierzy przez wektor $R \cdot x^{(k)}$. Chociaż macierz $R$ jest również pasmowa, standardowe operacje NumPy niekoniecznie wykorzystują tę strukturę w sposób maksymalnie efektywny pod kątem unikania obliczeń na elementach zerowych.
 Natomiast \textbf{metoda Gaussa–Seidla} została zaimplementowana z wykorzystaniem pętli, które iterują po elementach macierzy $A$ i wektora $x$. W każdej iteracji, przy obliczaniu nowej wartości $x_i^{(k+1)}$, odwołania do elementów macierzy $A$ ograniczają się jedynie do tych znajdujących się na niezerowych pasmach. Stanowi to optymalizację na poziomie operacyjnym, dostosowaną do pięcioprzekątniowej struktury macierzy.
 
-Kryterium zakończenia iteracji dla obu metod było dwojakie: osiągnięcie normy residuum $r = \norm{Ax - b}$ mniejszej niż $10^{-9}$ lub przekroczenie maksymalnej liczby 2000 iteracji.
+Kryterium zakończenia iteracji dla obu metod było dwojakie: osiągnięcie normy residuum $r = \norm{Ax - b}$ mniejszej niż $10^{-9}$ lub przekroczenie maksymalnej liczby iteracji (2000).
 
 \subsection{Metoda Bezpośrednia (Faktoryzacja LU)}
 Metoda bezpośrednia, oparta na dekompozycji LU, została zaimplementowana przy użyciu standardowych, gęstych macierzy NumPy.
