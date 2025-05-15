@@ -8,7 +8,7 @@ function [dates, y, M, c, ya] = test_approximation()
 % ya - wartości wielomianu aproksymacyjnego wyznaczone dla punktów danych
 %       (rozmiar wektora ya powinien być taki sam jak rozmiar wektora y)
 
-    load energy_2025
+    load ../energy_2025
 
     country = 'Poland';
     source = 'Coal';

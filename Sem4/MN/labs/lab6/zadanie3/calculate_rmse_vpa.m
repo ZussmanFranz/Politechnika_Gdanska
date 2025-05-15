@@ -21,7 +21,7 @@ function [dates, y, rmse_values, M, c_vpa, ya] = calculate_rmse_vpa()
 
     M_plot = 99; 
 
-    load energy_2025
+    load ../energy_2025
 
     country_name = 'Poland'; 
     source_name = 'Coal';   
@@ -43,11 +43,9 @@ function [dates, y, rmse_values, M, c_vpa, ya] = calculate_rmse_vpa()
     
     N = numel(y); 
     
-    % Define degrees for RMSE calculation
     degrees = 1:N-1; % For full report graph
     % degrees_candidate = [N-10, N-1];
 
-    % Filter degrees to ensure they are valid (non-negative and feasible for N)
     % degrees = degrees_candidate(degrees_candidate >= 0 & (degrees_candidate + 1) <= N);
     if isempty(degrees) && N > 0 % If N is too small, e.g. N=5, N-10 is negative
         if N-1 >=0
