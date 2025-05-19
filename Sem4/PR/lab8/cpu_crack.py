@@ -12,22 +12,28 @@ CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*(
 # Number of async tasks
 NUM_WORKERS = 8
 
-# Calculates SHA256 hash for given password
+pool = ThreadPoolExecutor()
+
+# Hash function
 def hash_password(password: str) -> str:
     return hashlib.sha256(password.encode()).hexdigest()
 
-# Password search in a prefix scope
-async def crack_worker(target_hash: str, length: int, prefixes: list[str], loop):
-    with ThreadPoolExecutor() as pool:
-        for prefix in prefixes:
-            # Combinations for full password length
-            for combo in itertools.product(CHARS, repeat=length - len(prefix)):
-                candidate = prefix + ''.join(combo)
-                # function in additional thread
-                result = await loop.run_in_executor(pool, hash_password, candidate)
-                if result == target_hash:
-                    print(f"[✓] Hasło znalezione: {candidate}")
-                    return candidate
+# Cracking
+async def crack_worker(target_hash: str, length: int, prefixes: list[str], loop, found_flag: asyncio.Event):
+    for prefix in prefixes:
+        if found_flag.is_set():
+            return None  # Stop looking for a password
+        for combo in itertools.product(CHARS, repeat=length - len(prefix)):
+            candidate = prefix + ''.join(combo)
+
+            if found_flag.is_set():
+                return None
+
+            result = await loop.run_in_executor(pool, hash_password, candidate)
+            if result == target_hash:
+                print(f"[✓] Hasło znalezione: {candidate}")
+                found_flag.set()
+                return candidate
     return None
 
 # Prefix division between async workers
@@ -53,22 +59,33 @@ async def main():
     # Timer start
     start_time = time.time()
 
-    # Work division: prefixes of length 1 for 8 workers
     prefix_groups = divide_work(CHARS, 1, NUM_WORKERS)
     loop = asyncio.get_event_loop()
+    found_flag = asyncio.Event()
 
-    # Tasks start
-    tasks = [crack_worker(target_hash, password_length, group, loop) for group in prefix_groups]
-    results = await asyncio.gather(*tasks)
+    # Tasks creation
+    tasks = [asyncio.create_task(crack_worker(target_hash, password_length, group, loop, found_flag))
+             for group in prefix_groups]
 
+    # Wait for not-None value from tasks
+    done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+
+    # Stop other tasks
+    for task in pending:
+        task.cancel()
+
+    result = None
+    for d in done:
+        result = d.result()
+        if result:
+            break
+
+    
     # Timer stop
     end_time = time.time()
 
-    # Result
-    for res in results:
-        if res:
-            print(f"[✓] Złamane hasło: {res}")
-            break
+    if result:
+        print(f"[✓] Złamane hasło: {result}")
     else:
         print("[x] Nie udało się znaleźć hasła.")
 
