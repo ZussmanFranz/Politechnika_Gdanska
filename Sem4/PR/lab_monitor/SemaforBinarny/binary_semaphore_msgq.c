@@ -137,7 +137,7 @@ int main() {
 
     if (pid == 0) { // Child process
         critical_section_user(1, 1, 2); // wait: 1s, work: 2s
-        exit(EXIT_SUCCESS);
+        _exit(EXIT_SUCCESS);
     } else { // Parent process
         critical_section_user(0, 0, 3); // wait: 0s, work: 3s
 
