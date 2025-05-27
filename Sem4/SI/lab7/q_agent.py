@@ -11,11 +11,11 @@ class QAgent(Agent):
 
         # hyperparams
         # TODO ustaw te parametry na sensowne wartości
-        self.lr = 0                # współczynnik uczenia (learning rate)
-        self.gamma = 0             # współczynnik dyskontowania
-        self.epsilon = 0           # epsilon (p-wo akcji losowej)
-        self.eps_decrement = 0     # wartość, o którą zmniejsza się epsilon po każdym kroku
-        self.eps_min = 0           # końcowa wartość epsilon, poniżej którego już nie jest zmniejszane
+        self.lr = 0.05              # współczynnik uczenia (learning rate)
+        self.gamma = 0.9            # współczynnik dyskontowania
+        self.epsilon = np.exp(-3)           # epsilon (p-wo akcji losowej)
+        self.eps_decrement = np.exp(-5)     # wartość, o którą zmniejsza się epsilon po każdym kroku
+        self.eps_min = np.exp(-5)           # końcowa wartość epsilon, poniżej którego już nie jest zmniejszane
 
         self.action_space = [i for i in range(n_actions)]
         self.n_states = n_states
@@ -23,12 +23,12 @@ class QAgent(Agent):
 
     def init_q_table(self, initial_q_value=0.):
         # TODO - utwórz tablicę wartości Q o rozmiarze [n_states, n_actions] wypełnioną początkowo wartościami initial_q_value
-        q_table = None
+        q_table = np.full((self.n_states, len(self.action_space)), initial_q_value)
         return q_table
 
     def update_action_policy(self) -> None:
         # TODO - zaktualizuj wartość epsilon
-        self.epsilon = self.epsilon
+        self.epsilon = max(self.epsilon - self.eps_decrement, self.eps_min)
 
     def choose_action(self, state: State) -> Action:
 
@@ -36,6 +36,16 @@ class QAgent(Agent):
             f"Bad state_idx. Has to be int between 0 and {self.n_states}"
 
         # TODO - zaimplementuj strategię eps-zachłanną
+
+        r = np.random.rand()
+
+        if (r > self.epsilon):
+            # greed choice
+            pass
+        else:
+            # random choice
+            return Action(np.random.choice(self.action_space))
+
         return Action(0)  # na razie agent zawsze wybiera akcję "idź do góry"
 
     def learn(self, state: State, action: Action, reward: float, new_state: State, done: bool) -> None:
