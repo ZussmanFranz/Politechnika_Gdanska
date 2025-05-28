@@ -40,17 +40,21 @@ class QAgent(Agent):
         r = np.random.rand()
 
         if (r > self.epsilon):
-            # greed choice
-            pass
+            # greed choice (exploitation)
+            return np.argmax(self.q_table[state])
         else:
-            # random choice
-            return Action(np.random.choice(self.action_space))
+            # random choice (exploration)
+            return np.random.choice(self.action_space)
 
         return Action(0)  # na razie agent zawsze wybiera akcję "idź do góry"
 
+
     def learn(self, state: State, action: Action, reward: float, new_state: State, done: bool) -> None:
         # TODO - zaktualizuj q_table
-        pass
+        best_next_Q = np.max(self.q_table[new_state])
+        theta = reward + self.gamma * best_next_Q - self.q_table[state, action]
+        self.q_table[state, action] += self.lr * theta
+
 
     def save(self, path):
         os.makedirs(os.path.dirname(path), exist_ok=True)
