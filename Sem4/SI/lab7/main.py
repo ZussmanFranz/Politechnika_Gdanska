@@ -12,8 +12,9 @@ if __name__ == '__main__':
     # agent = 'manual'            # 'q_learning' or 'manual'
     agent = 'q_learning'            # 'q_learning' or 'manual'
 
-    render = True
-    mode = 'train'                  # 'train' or 'test'
+    render = False
+    # mode = 'train'                  # 'train' or 'test'
+    mode = 'test'                  # 'train' or 'test'
 
     env = FrozenLake()
 
