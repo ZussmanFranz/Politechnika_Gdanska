@@ -10,9 +10,15 @@ function [x, y, z, zmin, lake_volume] = compute_lake_volume_monte_carlo()
     x = 100*rand(1,N); % [m]
     y = 100*rand(1,N); % [m]
     
-    zmin = [];
-    z = [];
+    zmin = -100;
 
-    lake_volume = [];
+    z = zmin + (-zmin) * rand(1, N); 
 
+    V_bounding_box = 100 * 100 * (-zmin); % [m^3]
+
+    lake_depths_at_xy = get_lake_depth(x, y);
+    
+    N1_points_above_bottom = sum(z > lake_depths_at_xy);
+
+    lake_volume = (N1_points_above_bottom / N) * V_bounding_box;
 end
