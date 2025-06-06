@@ -22,8 +22,8 @@ DATASETS = {
     "Chelm": DATA_DIR / "chelm.txt",
     "ChallengerDeep": DATA_DIR / "GlebiaChallengera.csv",
 }
-BASIC_ROUTES = ["GdanskPromenade", "MountEverest"]
-CHEBYSHEV_ROUTE = "VariousHills"
+BASIC_ROUTES = ["GdanskPromenade", "Chelm"]
+CHEBYSHEV_ROUTE = "ChallengerDeep"
 
 # --- DATA LOADING ---
 def load_profile(filepath):
