@@ -207,7 +207,7 @@ def plot_interpolations(plot_data, title, filename, cols=2):
     for j in range(i + 1, len(axes)):
         fig.delaxes(axes[j])
     fig.suptitle(title, fontsize=16)
-    plt.tight_layout(rect=(0, 0, 1, 0.96))
+    plt.tight_layout(rect=(0, 0, 1, 0.96), h_pad=4.0)  
     plt.savefig(filename)
     print(f"Saved plot: {filename}")
     if SHOW_PLOTS:
