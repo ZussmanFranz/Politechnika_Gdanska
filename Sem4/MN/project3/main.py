@@ -21,8 +21,9 @@ DATASETS = {
     "VariousHills": DATA_DIR / "rozne_wniesienia.txt",
     "Chelm": DATA_DIR / "chelm.txt",
     "ChallengerDeep": DATA_DIR / "GlebiaChallengera.csv",
+    "Hel": DATA_DIR / "Hel_yeah.csv"
 }
-BASIC_ROUTES = ["GdanskPromenade", "Chelm"]
+BASIC_ROUTES = ["GdanskPromenade", "Hel"]
 CHEBYSHEV_ROUTE = "ChallengerDeep"
 
 # --- DATA LOADING ---
@@ -215,7 +216,7 @@ def plot_interpolations(plot_data, title, filename, cols=2):
 
 # --- MAIN ANALYSIS ---
 def main():
-    print("--- ANALYSIS STARTED (custom implementations, subplots) ---")
+    print("--- ANALYSIS STARTED ---")
     print("\n--- BASIC ANALYSIS ---")
     for route in BASIC_ROUTES:
         if route not in DATASETS:
@@ -248,7 +249,7 @@ def main():
         if lagrange_plots:
             plot_interpolations(
                 lagrange_plots,
-                f"Lagrange Interpolation (custom) for: {route}",
+                f"Lagrange Interpolation for: {route}",
                 PLOTS_DIR / f"{route}_Lagrange_basic.png"
             )
         # Spline
@@ -271,7 +272,7 @@ def main():
         if spline_plots:
             plot_interpolations(
                 spline_plots,
-                f"Natural Spline Interpolation (custom) for: {route}",
+                f"Natural Spline Interpolation for: {route}",
                 PLOTS_DIR / f"{route}_Spline_basic.png"
             )
     print("\n--- CHEBYSHEV NODE ANALYSIS ---")
