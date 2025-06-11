@@ -42,7 +42,6 @@ Do analizy wykorzystano rzeczywiste profile wysokościowe kilku tras o zróżnic
 \begin{itemize}
     \item GdanskPromenade -- trasa prawie płaska,
     \item Hel -- trasa nadmorska,
-    \item MountEverest -- trasa górska,
     \item VariousHills -- trasa o wielu wzniesieniach,
     \item ChallengerDeep -- trasa z dużą różnicą wysokości.
 \end{itemize}
@@ -59,12 +58,12 @@ Wpływ liczby węzłów na jakość interpolacji Lagrange'a przedstawiono na rys
 \end{figure}
 \textbf{Interpretacja (Rysunek \ref{fig:promenade_lagrange}):} 
 \begin{itemize}
-    \item \textbf{5 węzły:}
-    \item \textbf{10 węzłów:}
-    \item \textbf{20 węzłów:}
-    \item \textbf{40 węzły:} 
-    \item \textbf{80 węzły:} 
-    \item \textbf{160 węzłów:} 
+    \item \textbf{5 węzły:} Interpolacja przebiega gładko, dobrze odwzorowując profil.
+    \item \textbf{10 węzłów:} Profil pozostaje gładki, bez widocznych oscylacji.
+    \item \textbf{20 węzłów:} Pojawiają się niewielkie oscylacje na końcach przedziału.
+    \item \textbf{40 węzły:} Oscylacje na krańcach są wyraźniejsze, dokładność w środku dobra.
+    \item \textbf{80 węzły:} Silne oscylacje na końcach, pogorszenie jakości interpolacji.
+    \item \textbf{160 węzłów:} Bardzo duże oscylacje na krańcach, interpolacja niestabilna.
 \end{itemize}
 
 \subsection{Trasa: Hel}
@@ -76,12 +75,12 @@ Wpływ liczby węzłów na jakość interpolacji Lagrange'a przedstawiono na rys
 \end{figure}
 \textbf{Interpretacja (Rysunek \ref{fig:hel_lagrange}):} 
 \begin{itemize}
-    \item \textbf{5 węzły:} 
-    \item \textbf{10 węzłów:} 
-    \item \textbf{20 węzłów:} 
-    \item \textbf{40 węzły:} 
-    \item \textbf{80 węzły:} 
-    \item \textbf{160 węzłów:} 
+    \item \textbf{5 węzły:} Profil odwzorowany poprawnie, bez zakłóceń.
+    \item \textbf{10 węzłów:} Nadal brak istotnych oscylacji, dobra zgodność z danymi.
+    \item \textbf{20 węzły:} Pojawiają się lekkie oscylacje na końcach.
+    \item \textbf{40 węzły:} Oscylacje na krańcach są już widoczne.
+    \item \textbf{80 węzły:} Oscylacje wyraźnie zaburzają przebieg na końcach.
+    \item \textbf{160 węzły:} Bardzo silne oscylacje, interpolacja traci sens fizyczny.
 \end{itemize}
 
 \section{Analiza podstawowa interpolacji funkcjami sklejanymi}
@@ -94,12 +93,12 @@ Wpływ liczby węzłów na jakość interpolacji Lagrange'a przedstawiono na rys
 \end{figure}
 \textbf{Interpretacja (Rysunek \ref{fig:promenade_splajny}):} 
 \begin{itemize}
-    \item \textbf{5 węzły:}
-    \item \textbf{10 węzłów:}
-    \item \textbf{20 węzłów:}
-    \item \textbf{40 węzły:} 
-    \item \textbf{80 węzły:} 
-    \item \textbf{160 węzłów:} 
+    \item \textbf{5 węzły:} Profil gładki, dobrze aproksymowany.
+    \item \textbf{10 węzłów:} Bardzo dobra zgodność z danymi, brak oscylacji.
+    \item \textbf{20 węzły:} Dokładność rośnie, przebieg pozostaje gładki.
+    \item \textbf{40 węzły:} Wysoka jakość aproksymacji, brak artefaktów.
+    \item \textbf{80 węzły:} Profil bardzo dobrze odwzorowany, bez zakłóceń.
+    \item \textbf{160 węzłów:} Idealne dopasowanie, brak niepożądanych efektów.
 \end{itemize}
 
 \subsection{Trasa: Hel}
@@ -111,12 +110,12 @@ Wpływ liczby węzłów na jakość interpolacji Lagrange'a przedstawiono na rys
 \end{figure}
 \textbf{Interpretacja (Rysunek \ref{fig:hej_splajny}):} 
 \begin{itemize}
-    \item \textbf{5 węzły:}
-    \item \textbf{10 węzłów:}
-    \item \textbf{20 węzłów:}
-    \item \textbf{40 węzły:} 
-    \item \textbf{80 węzły:} 
-    \item \textbf{160 węzłów:} 
+    \item \textbf{5 węzły:} Profil odwzorowany gładko, bez zakłóceń.
+    \item \textbf{10 węzłów:} Bardzo dobra zgodność z oryginałem.
+    \item \textbf{20 węzły:} Dokładność aproksymacji rośnie, przebieg gładki.
+    \item \textbf{40 węzły:} Brak artefaktów, profil bardzo dobrze odwzorowany.
+    \item \textbf{80 węzły:} Wysoka jakość aproksymacji, brak oscylacji.
+    \item \textbf{160 węzłów:} Idealne dopasowanie do danych.
 \end{itemize}
 
 \section{Analiza dodatkowa}
@@ -129,12 +128,12 @@ Wpływ liczby węzłów na jakość interpolacji Lagrange'a przedstawiono na rys
 \end{figure}
 \textbf{Interpretacja (Rysunek \ref{fig:challengerdeep_chebyshev}):} 
 \begin{itemize}
-    \item \textbf{5 węzły:}
-    \item \textbf{10 węzłów:}
-    \item \textbf{20 węzłów:}
-    \item \textbf{40 węzły:} 
-    \item \textbf{80 węzły:} 
-    \item \textbf{160 węzłów:} 
+    \item \textbf{5 węzły:} Profil odwzorowany poprawnie, bez oscylacji.
+    \item \textbf{10 węzłów:} Dobra zgodność, brak widocznych zakłóceń.
+    \item \textbf{20 węzły:} Profil pozostaje stabilny, bez efektu Rungego.
+    \item \textbf{40 węzły:} Brak oscylacji, interpolacja stabilna.
+    \item \textbf{80 węzły:} Wysoka jakość aproksymacji, brak artefaktów.
+    \item \textbf{160 węzłów:} Profil odwzorowany bardzo dobrze, bez niepożądanych efektów.
 \end{itemize}
 
 \subsection{Trasa o wielu wzniesieniach}
@@ -146,12 +145,12 @@ Wpływ liczby węzłów na jakość interpolacji Lagrange'a przedstawiono na rys
 \end{figure}
 \textbf{Interpretacja (Rysunek \ref{fig:wiele_wzniesien}):} 
 \begin{itemize}
-    \item \textbf{5 węzły:}
-    \item \textbf{10 węzłów:}
-    \item \textbf{20 węzłów:}
-    \item \textbf{40 węzły:} 
-    \item \textbf{80 węzły:} 
-    \item \textbf{160 węzłów:} 
+    \item \textbf{5 węzły:} Profil odwzorowany poprawnie, bez zakłóceń.
+    \item \textbf{10 węzłów:} Dobra zgodność, brak oscylacji.
+    \item \textbf{20 węzły:} Interpolacja stabilna, przebieg gładki.
+    \item \textbf{40 węzły:} Brak efektu Rungego, profil dobrze odwzorowany.
+    \item \textbf{80 węzły:} Wysoka jakość aproksymacji, brak artefaktów.
+    \item \textbf{160 węzłów:} Profil bardzo dobrze dopasowany, bez niepożądanych efektów.
 \end{itemize}
 
 \newpage
@@ -164,20 +163,18 @@ Wpływ liczby węzłów na jakość interpolacji Lagrange'a przedstawiono na rys
 \end{itemize}
 
 \section{Podsumowanie}
-Refactor!!!
 \label{sec:podsumowanie}
-Przeprowadzona analiza podstawowa wykazała znaczące różnice w przydatności obu metod do aproksymacji profilu wysokościowego.
+\textbf{Interpolacja wielomianem Lagrange'a} okazała się metodą wrażliwą na liczbę i rozmieszczenie węzłów. Przy większej liczbie równoodległych węzłów (16 i więcej) pojawia się zjawisko Rungego, prowadzące do znacznych oscylacji i zniekształceń profilu. Metoda ta może być stosowana przy niewielkiej liczbie węzłów oraz dla gładkich profili, jednak jej praktyczna użyteczność jest ograniczona. Przeskalowanie dziedziny poprawia stabilność numeryczną, lecz nie eliminuje problemu oscylacji. Wykorzystanie węzłów Czebyszewa (patrz Sekcja \ref{sec:analiza_dodatkowa}) pozwala ograniczyć te efekty i poprawić wyniki, jednak interpolacja wielomianowa pozostaje mniej stabilna i mniej gładka niż funkcje sklejane.
 
-\textbf{Interpolacja wielomianem Lagrange'a} okazała się metodą wysoce niestabilną, szczególnie przy większej liczbie równoodległych węzłów interpolacyjnych (16 i więcej w naszych testach). Zjawisko Rungego prowadzi do powstawania dużych, nierealistycznych oscylacji, które całkowicie uniemożliwiają sensowną aproksymację profilu. Metoda ta może być brana pod uwagę jedynie przy bardzo małej liczbie węzłów (np. do około 8) i dla stosunkowo gładkich profili, jednak nawet wtedy jej użyteczność jest ograniczona. Przeskalowanie dziedziny poprawia stabilność numeryczną obliczeń, ale nie eliminuje fundamentalnego problemu oscylacji przy równoodległych węzłach. Jak wykazano w analizie dodatkowej (Sekcja \ref{sec:analiza_dodatkowa}), zastosowanie węzłów Czebyszewa może znacząco zredukować te oscylacje, poprawiając wyniki dla większej liczby węzłów, choć metoda ta nadal pozostaje generalnie mniej stabilna i daje mniej gładkie wyniki niż funkcje sklejane.
+\textbf{Interpolacja naturalnymi funkcjami sklejanymi trzeciego stopnia} wykazała się dużą stabilnością i wysoką jakością aproksymacji. Metoda ta zapewnia gładkie i realistyczne odwzorowanie profilu, niezależnie od liczby węzłów (w testowanym zakresie od 4 do 128). Wraz ze wzrostem liczby węzłów dokładność aproksymacji systematycznie się poprawia, bez pojawiania się niepożądanych artefaktów. Funkcje sklejane dobrze radzą sobie zarówno z profilami gładkimi, jak i bardziej złożonymi.
+\vspace{1em}
 
-\textbf{Interpolacja naturalnymi funkcjami sklejanymi trzeciego stopnia} wykazała się znacznie lepszymi właściwościami. Jest to metoda stabilna, która dostarcza gładkich i wizualnie poprawnych aproksymacji, niezależnie od liczby użytych węzłów (w testowanym zakresie od 4 do 128). Wraz ze wzrostem liczby węzłów, jakość dopasowania systematycznie rośnie, bez wprowadzania niepożądanych artefaktów. Funkcje sklejane dobrze radzą sobie zarówno z profilami gładkimi, jak i bardziej nieregularnymi.
-
-Oceniając działanie zaimplementowanych algorytmów, można stwierdzić, że:
+Podsumowując działanie zaimplementowanych algorytmów:
 \begin{itemize}
-    \item Implementacja interpolacji Lagrange'a poprawnie odzwierciedla matematyczne właściwości tej metody, włączając w to jej podatność na zjawisko Rungego przy węzłach równoodległych oraz poprawę stabilności przy węzłach Czebyszewa. W tym sensie "działa" zgodnie z oczekiwaniami teorii, choć jej praktyczna przydatność do tego zadania jest ograniczona w przypadku węzłów równoodległych.
-    \item Implementacja naturalnych funkcji sklejanych trzeciego stopnia działa bardzo dobrze i efektywnie realizuje zadanie aproksymacji profilu wysokościowego.
+    \item Implementacja \textbf{interpolacji Lagrange'a} poprawnie odzwierciedla jej właściwości teoretyczne, w tym podatność na zjawisko Rungego przy węzłach równoodległych oraz poprawę stabilności przy \textbf{węzłach Czebyszewa}. W praktyce jej zastosowanie do aproksymacji profilu wysokościowego jest ograniczone.
+    \item Implementacja \textbf{naturalnych funkcji sklejanych trzeciego stopnia} działa stabilnie i skutecznie realizuje zadanie aproksymacji profilu.
 \end{itemize}
 
-Zdecydowanie rekomendowaną metodą do aproksymacji profili wysokościowych jest interpolacja funkcjami sklejanymi trzeciego stopnia, ze względu na jej stabilność, gładkość wyników i odporność na problemy występujące w interpolacji wielomianowej wysokiego stopnia. Interpolacja Lagrange'a, nawet z węzłami Czebyszewa, powinna być stosowana z ostrożnością i świadomością potencjalnych problemów z oscylacjami.
+Do aproksymacji profili wysokościowych rekomendowana jest interpolacja funkcjami sklejanymi trzeciego stopnia, ze względu na jej stabilność, gładkość wyników i odporność na problemy charakterystyczne dla interpolacji wielomianowej wysokiego stopnia. Interpolację Lagrange'a, nawet z węzłami Czebyszewa, należy stosować ostrożnie, mając na uwadze możliwość wystąpienia oscylacji.
 
 \end{document}
