@@ -58,12 +58,12 @@ Wpływ liczby węzłów na jakość interpolacji Lagrange'a przedstawiono na rys
 \end{figure}
 \textbf{Interpretacja (Rysunek \ref{fig:promenade_lagrange}):} 
 \begin{itemize}
-    \item \textbf{5 węzły:} Interpolacja przebiega gładko, dobrze odwzorowując profil.
-    \item \textbf{10 węzłów:} Profil pozostaje gładki, bez widocznych oscylacji.
-    \item \textbf{20 węzłów:} Pojawiają się niewielkie oscylacje na końcach przedziału.
-    \item \textbf{40 węzły:} Oscylacje na krańcach są wyraźniejsze, dokładność w środku dobra.
+    \item \textbf{5 węzły:} Zbyt mało węzłów, profil odwzorowany bardzo schematycznie i niedokładnie.
+    \item \textbf{10 węzłów:} Liczba węzłów nadal niewystarczająca, widoczne uproszczenia profilu.
+    \item \textbf{20 węzły:} Profil lepiej odwzorowany, pojawiają się wyraźne oscylacje na krańcach.
+    \item \textbf{40 węzły:} Oscylacje na krańcach wyraźniejsze, środek odwzorowany dobrze.
     \item \textbf{80 węzły:} Silne oscylacje na końcach, pogorszenie jakości interpolacji.
-    \item \textbf{160 węzłów:} Bardzo duże oscylacje na krańcach, interpolacja niestabilna.
+    \item \textbf{160 węzły:} Bardzo duże oscylacje na krańcach, interpolacja niestabilna.
 \end{itemize}
 
 \subsection{Trasa: Hel}
@@ -75,12 +75,12 @@ Wpływ liczby węzłów na jakość interpolacji Lagrange'a przedstawiono na rys
 \end{figure}
 \textbf{Interpretacja (Rysunek \ref{fig:hel_lagrange}):} 
 \begin{itemize}
-    \item \textbf{5 węzły:} Profil odwzorowany poprawnie, bez zakłóceń.
-    \item \textbf{10 węzłów:} Nadal brak istotnych oscylacji, dobra zgodność z danymi.
-    \item \textbf{20 węzły:} Pojawiają się lekkie oscylacje na końcach.
-    \item \textbf{40 węzły:} Oscylacje na krańcach są już widoczne.
+    \item \textbf{5 węzły:} Zbyt mało węzłów, profil jest bardzo uproszczony.
+    \item \textbf{10 węzłów:} Liczba węzłów niewystarczająca, uproszczenia profilu są widoczne (+ pierwsze oscylacje).
+    \item \textbf{20 węzły:} Profil lepiej odwzorowany, pojawiają się wyraźne oscylacje na końcach.
+    \item \textbf{40 węzły:} Oscylacje na krańcach są jeszcze mocniejsze.
     \item \textbf{80 węzły:} Oscylacje wyraźnie zaburzają przebieg na końcach.
-    \item \textbf{160 węzły:} Bardzo silne oscylacje, interpolacja traci sens fizyczny.
+    \item \textbf{160 węzły:} Bardzo silne oscylacje.
 \end{itemize}
 
 \section{Analiza podstawowa interpolacji funkcjami sklejanymi}
@@ -93,12 +93,12 @@ Wpływ liczby węzłów na jakość interpolacji Lagrange'a przedstawiono na rys
 \end{figure}
 \textbf{Interpretacja (Rysunek \ref{fig:promenade_splajny}):} 
 \begin{itemize}
-    \item \textbf{5 węzły:} Profil gładki, dobrze aproksymowany.
-    \item \textbf{10 węzłów:} Bardzo dobra zgodność z danymi, brak oscylacji.
+    \item \textbf{5 węzły:} Zbyt mało węzłów, profil odwzorowany bardzo ogólnie.
+    \item \textbf{10 węzły:} Profil nadal uproszczony, ale przebieg gładki.
     \item \textbf{20 węzły:} Dokładność rośnie, przebieg pozostaje gładki.
-    \item \textbf{40 węzły:} Wysoka jakość aproksymacji, brak artefaktów.
+    \item \textbf{40 węzły:} Wysoka jakość aproksymacji.
     \item \textbf{80 węzły:} Profil bardzo dobrze odwzorowany, bez zakłóceń.
-    \item \textbf{160 węzłów:} Idealne dopasowanie, brak niepożądanych efektów.
+    \item \textbf{160 węzły:} Idealne dopasowanie, brak niepożądanych efektów.
 \end{itemize}
 
 \subsection{Trasa: Hel}
@@ -110,12 +110,12 @@ Wpływ liczby węzłów na jakość interpolacji Lagrange'a przedstawiono na rys
 \end{figure}
 \textbf{Interpretacja (Rysunek \ref{fig:hej_splajny}):} 
 \begin{itemize}
-    \item \textbf{5 węzły:} Profil odwzorowany gładko, bez zakłóceń.
-    \item \textbf{10 węzłów:} Bardzo dobra zgodność z oryginałem.
+    \item \textbf{5 węzły:} Zbyt mało węzłów, profil odwzorowany bardzo uproszczony.
+    \item \textbf{10 węzły:} Profil nadal uproszczony, ale przebieg gładki.
     \item \textbf{20 węzły:} Dokładność aproksymacji rośnie, przebieg gładki.
-    \item \textbf{40 węzły:} Brak artefaktów, profil bardzo dobrze odwzorowany.
+    \item \textbf{40 węzły:} Brak zaburzeń, profil bardzo dobrze odwzorowany.
     \item \textbf{80 węzły:} Wysoka jakość aproksymacji, brak oscylacji.
-    \item \textbf{160 węzłów:} Idealne dopasowanie do danych.
+    \item \textbf{160 węzły:} Idealne dopasowanie do danych.
 \end{itemize}
 
 \section{Analiza dodatkowa}
@@ -128,12 +128,10 @@ Wpływ liczby węzłów na jakość interpolacji Lagrange'a przedstawiono na rys
 \end{figure}
 \textbf{Interpretacja (Rysunek \ref{fig:challengerdeep_chebyshev}):} 
 \begin{itemize}
-    \item \textbf{5 węzły:} Profil odwzorowany poprawnie, bez oscylacji.
-    \item \textbf{10 węzłów:} Dobra zgodność, brak widocznych zakłóceń.
-    \item \textbf{20 węzły:} Profil pozostaje stabilny, bez efektu Rungego.
-    \item \textbf{40 węzły:} Brak oscylacji, interpolacja stabilna.
-    \item \textbf{80 węzły:} Wysoka jakość aproksymacji, brak artefaktów.
-    \item \textbf{160 węzłów:} Profil odwzorowany bardzo dobrze, bez niepożądanych efektów.
+    \item \textbf{5 węzły:} Zbyt mało węzłów, profil odwzorowany bardzo ogólnie.
+    \item \textbf{10 węzłów:} Profil nadal uproszczony, ale ze względu na typ wykresu już w miarę dopasowany.
+    \item \textbf{20 węzły:} Profil coraz lepiej odwzorowany, brak efektu Rungego.
+    \item \textbf{40 węzły:} Brak oscylacji, interpolacja bardzo dobra.
 \end{itemize}
 
 \subsection{Trasa o wielu wzniesieniach}
@@ -145,12 +143,10 @@ Wpływ liczby węzłów na jakość interpolacji Lagrange'a przedstawiono na rys
 \end{figure}
 \textbf{Interpretacja (Rysunek \ref{fig:wiele_wzniesien}):} 
 \begin{itemize}
-    \item \textbf{5 węzły:} Profil odwzorowany poprawnie, bez zakłóceń.
-    \item \textbf{10 węzłów:} Dobra zgodność, brak oscylacji.
-    \item \textbf{20 węzły:} Interpolacja stabilna, przebieg gładki.
+    \item \textbf{5 węzły:} Zbyt mało węzłów, profil odwzorowany bardzo uproszczony.
+    \item \textbf{10 węzłów:} Profil nadal uproszczony, ale brak oscylacji.
+    \item \textbf{20 węzły:} Interpolacja stabilna, przebieg coraz lepiej odwzorowany.
     \item \textbf{40 węzły:} Brak efektu Rungego, profil dobrze odwzorowany.
-    \item \textbf{80 węzły:} Wysoka jakość aproksymacji, brak artefaktów.
-    \item \textbf{160 węzłów:} Profil bardzo dobrze dopasowany, bez niepożądanych efektów.
 \end{itemize}
 
 \newpage

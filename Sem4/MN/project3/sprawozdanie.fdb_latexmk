@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1749678500.07247 "/home/zussman/Repositories/Politechnika_Gdanska/Sem4/MN/project3/sprawozdanie.tex" "sprawozdanie.pdf" "sprawozdanie" 1749678501.59701 0
-  "/home/zussman/Repositories/Politechnika_Gdanska/Sem4/MN/project3/sprawozdanie.tex" 1749678499.78696 11641 9d8a8a4a90d59a713d59ba903e8a96ca ""
+["pdflatex"] 1749679297.93284 "/home/zussman/Repositories/Politechnika_Gdanska/Sem4/MN/project3/sprawozdanie.tex" "sprawozdanie.pdf" "sprawozdanie" 1749679299.41756 0
+  "/home/zussman/Repositories/Politechnika_Gdanska/Sem4/MN/project3/sprawozdanie.tex" 1749679297.64896 11490 c0db9d7302a807e9bbb61dc599c48e29 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -115,10 +115,10 @@
   "plots/Hel_Lagrange_basic.png" 1749673097.81944 182926 66cf59e308bacb9096cd02a2dad33038 ""
   "plots/Hel_Spline_basic.png" 1749673100.60262 292008 b2f7619d10bdf5a5c8319587a8334269 ""
   "plots/VariousHills_Lagrange_Chebyshev_2x2.png" 1749674077.82843 190702 3d302e65ac23251cd39751bb93598aed ""
-  "sprawozdanie.aux" 1749678501.51495 4868 5b09ae4305d50d4ec62d688a60575533 "pdflatex"
-  "sprawozdanie.out" 1749678501.51495 2896 3b38503ee7bf113d514ec0bec67b8b54 "pdflatex"
-  "sprawozdanie.tex" 1749678499.78696 11641 9d8a8a4a90d59a713d59ba903e8a96ca ""
-  "sprawozdanie.toc" 1749678501.51635 1409 dc729fb296bc7560694771c64dd765b3 "pdflatex"
+  "sprawozdanie.aux" 1749679299.33566 4868 5b09ae4305d50d4ec62d688a60575533 "pdflatex"
+  "sprawozdanie.out" 1749679299.33666 2896 3b38503ee7bf113d514ec0bec67b8b54 "pdflatex"
+  "sprawozdanie.tex" 1749679297.64896 11490 c0db9d7302a807e9bbb61dc599c48e29 ""
+  "sprawozdanie.toc" 1749679299.33809 1409 dc729fb296bc7560694771c64dd765b3 "pdflatex"
   (generated)
   "sprawozdanie.aux"
   "sprawozdanie.log"
