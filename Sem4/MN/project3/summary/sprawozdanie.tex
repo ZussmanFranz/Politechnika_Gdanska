@@ -28,7 +28,7 @@ Profil wysokościowy trasy to wykres przedstawiający wysokość bezwzględną w
 
 \section{Opis algorytmów}
 \subsection{Interpolacja wielomianowa Lagrange'a}
-Interpolacja polega na wyznaczeniu wielomianu przechodzącego przez zadane punkty (węzły). W celu poprawy stabilności numerycznej, przed wyznaczeniem wielomianu przekształcono dziedzinę do przedziału $[0,1]$.
+Interpolacja polega na wyznaczeniu wielomianu stopnia N-1 przechodzącego przez zadane N punktów (węzłów). W celu poprawy stabilności numerycznej, przed wyznaczeniem wielomianu przekształcono dziedzinę do przedziału $[0,1]$. Wzór tego wielomianu:
 \[ P(x) = \sum_{j=0}^{N-1} y_j L_j(x) \]
 gdzie $L_j(x)$ to wielomiany bazowe Lagrange'a:
 \[ L_j(x) = \prod_{m=0, m \neq j}^{N-1} \frac{x - x_m}{x_j - x_m} \]
@@ -36,6 +36,24 @@ Główną zaletą tej metody jest jej prostota koncepcyjna i gwarancja przejści
 
 \subsection{Interpolacja funkcjami sklejanymi trzeciego stopnia}
 Funkcje sklejane trzeciego stopnia (splajny kubiczne) to funkcje złożone z wielomianów trzeciego stopnia, definiowanych osobno na każdym podprzedziale $[x_i, x_{i+1}]$ pomiędzy kolejnymi węzłami. Każdy taki wielomian $S_i(x)$ jest tak dobrany, aby cała funkcja była ciągła oraz miała ciągłe pierwszą i drugą pochodną ($C^2$) w całym przedziale interpolacji. W przypadku naturalnych splajnów kubicznych dodatkowo wymaga się, aby drugie pochodne na końcach przedziału były równe zeru ($S''(x_0) = 0$, $S''(x_{N-1}) = 0$). Splajny kubiczne są mniej podatne na oscylacje niż wielomiany interpolacyjne wysokiego stopnia i zwykle zapewniają gładsze oraz bardziej realistyczne przybliżenie danych.
+
+\subsection{Interpolacja wielomianowa Lagrange'a przy urzyciu węzłów Czebyszewa}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{chebyshev_circle.png}
+    \caption{Węzły Czebyszewa są równoważne współrzędnym n na osi x równo rozmieszczonych punktów na półokręgu jednostki (tutaj dla n = 10)}
+    \label{fig:chebyshev_circle}
+\end{figure}
+Dla danej liczby całkowitej n węzły Czebyszewa w przedziale (-1, 1) to:
+\[
+x_k = \cos\left( \frac{2k-1}{2n} \pi \right), \quad k = 1, \ldots, n.
+\]
+Po przekształceniu na naszą dziedzinę [0, 1]:
+\[
+x_{k-norm} = \frac{x_k + 1}{2}
+\]
+
+Użycie węzłów Czebyszewa pozwala na zwiększenie gęstości węzłów w pobliżu krańców, co przeciwdziała zjawisku Rungego.
 
 \section{Dane}
 Do analizy wykorzystano rzeczywiste profile wysokościowe kilku tras o zróżnicowanym charakterze:
@@ -52,101 +70,101 @@ Wpływ liczby węzłów na jakość interpolacji Lagrange'a przedstawiono na rys
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{plots/GdanskPromenade_Lagrange_basic.png}
+    \includegraphics[width=0.8\textwidth]{../plots/GdanskPromenade_Lagrange_basic.png}
     \caption{Interpolacja Lagrange'a dla trasy GdanskPromenade (różne liczby węzłów)}
     \label{fig:promenade_lagrange}
 \end{figure}
 \textbf{Interpretacja (Rysunek \ref{fig:promenade_lagrange}):} 
 \begin{itemize}
-    \item \textbf{5 węzły:} Zbyt mało węzłów, profil odwzorowany bardzo schematycznie i niedokładnie.
+    \item \textbf{5 węzłów:} Zbyt mało węzłów, profil odwzorowany bardzo schematycznie i niedokładnie.
     \item \textbf{10 węzłów:} Liczba węzłów nadal niewystarczająca, widoczne uproszczenia profilu.
-    \item \textbf{20 węzły:} Profil lepiej odwzorowany, pojawiają się wyraźne oscylacje na krańcach.
-    \item \textbf{40 węzły:} Oscylacje na krańcach wyraźniejsze, środek odwzorowany dobrze.
-    \item \textbf{80 węzły:} Silne oscylacje na końcach, pogorszenie jakości interpolacji.
-    \item \textbf{160 węzły:} Bardzo duże oscylacje na krańcach, interpolacja niestabilna.
+    \item \textbf{20 węzłów:} Profil lepiej odwzorowany, pojawiają się wyraźne oscylacje na krańcach.
+    \item \textbf{40 węzłów:} Oscylacje na krańcach wyraźniejsze, środek odwzorowany dobrze.
+    \item \textbf{80 węzłów:} Silne oscylacje na końcach, pogorszenie jakości interpolacji.
+    \item \textbf{160 węzłów:} Bardzo duże oscylacje na krańcach, interpolacja niestabilna.
 \end{itemize}
 
 \subsection{Trasa: Hel}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{plots/Hel_Lagrange_basic.png}
+    \includegraphics[width=0.8\textwidth]{../plots/Hel_Lagrange_basic.png}
     \caption{Interpolacja Lagrange'a dla trasy Hel (różne liczby węzłów)}
     \label{fig:hel_lagrange}
 \end{figure}
 \textbf{Interpretacja (Rysunek \ref{fig:hel_lagrange}):} 
 \begin{itemize}
-    \item \textbf{5 węzły:} Zbyt mało węzłów, profil jest bardzo uproszczony.
+    \item \textbf{5 węzłów:} Zbyt mało węzłów, profil jest bardzo uproszczony.
     \item \textbf{10 węzłów:} Liczba węzłów niewystarczająca, uproszczenia profilu są widoczne (+ pierwsze oscylacje).
-    \item \textbf{20 węzły:} Profil lepiej odwzorowany, pojawiają się wyraźne oscylacje na końcach.
-    \item \textbf{40 węzły:} Oscylacje na krańcach są jeszcze mocniejsze.
-    \item \textbf{80 węzły:} Oscylacje wyraźnie zaburzają przebieg na końcach.
-    \item \textbf{160 węzły:} Bardzo silne oscylacje.
+    \item \textbf{20 węzłów:} Profil lepiej odwzorowany, pojawiają się wyraźne oscylacje na końcach.
+    \item \textbf{40 węzłów:} Oscylacje na krańcach są jeszcze mocniejsze.
+    \item \textbf{80 węzłów:} Oscylacje wyraźnie zaburzają przebieg na końcach.
+    \item \textbf{160 węzłów:} Bardzo silne oscylacje.
 \end{itemize}
 
 \section{Analiza podstawowa interpolacji funkcjami sklejanymi}
 \subsection{Trasa: GdanskPromenade}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{plots/GdanskPromenade_Spline_basic.png}
+    \includegraphics[width=0.8\textwidth]{../plots/GdanskPromenade_Spline_basic.png}
     \caption{Interpolacja splajnami kubicznymi dla trasy GdanskPromenade (różne liczby węzłów)}
     \label{fig:promenade_splajny}
 \end{figure}
 \textbf{Interpretacja (Rysunek \ref{fig:promenade_splajny}):} 
 \begin{itemize}
-    \item \textbf{5 węzły:} Zbyt mało węzłów, profil odwzorowany bardzo ogólnie.
-    \item \textbf{10 węzły:} Profil nadal uproszczony, ale przebieg gładki.
-    \item \textbf{20 węzły:} Dokładność rośnie, przebieg pozostaje gładki.
-    \item \textbf{40 węzły:} Wysoka jakość aproksymacji.
-    \item \textbf{80 węzły:} Profil bardzo dobrze odwzorowany, bez zakłóceń.
-    \item \textbf{160 węzły:} Idealne dopasowanie, brak niepożądanych efektów.
+    \item \textbf{5 węzłów:} Zbyt mało węzłów, profil odwzorowany bardzo ogólnie.
+    \item \textbf{10 węzłów:} Profil nadal uproszczony, ale przebieg gładki.
+    \item \textbf{20 węzłów:} Dokładność rośnie, przebieg pozostaje gładki.
+    \item \textbf{40 węzłów:} Wysoka jakość aproksymacji.
+    \item \textbf{80 węzłów:} Profil dobrze odwzorowany, bez zakłóceń, natomiast niektóre punkty są wciąż niedokładne.
+    \item \textbf{160 węzłów:} Idealne dopasowanie, brak niepożądanych efektów.
 \end{itemize}
 
 \subsection{Trasa: Hel}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{plots/Hel_Spline_basic.png}
+    \includegraphics[width=0.8\textwidth]{../plots/Hel_Spline_basic.png}
     \caption{Interpolacja splajnami kubicznymi dla trasy Hel (różne liczby węzłów)}
     \label{fig:hej_splajny}
 \end{figure}
 \textbf{Interpretacja (Rysunek \ref{fig:hej_splajny}):} 
 \begin{itemize}
-    \item \textbf{5 węzły:} Zbyt mało węzłów, profil odwzorowany bardzo uproszczony.
-    \item \textbf{10 węzły:} Profil nadal uproszczony, ale przebieg gładki.
-    \item \textbf{20 węzły:} Dokładność aproksymacji rośnie, przebieg gładki.
-    \item \textbf{40 węzły:} Brak zaburzeń, profil bardzo dobrze odwzorowany.
-    \item \textbf{80 węzły:} Wysoka jakość aproksymacji, brak oscylacji.
-    \item \textbf{160 węzły:} Idealne dopasowanie do danych.
+    \item \textbf{5 węzłów:} Zbyt mało węzłów, profil odwzorowany bardzo uproszczony.
+    \item \textbf{10 węzłów:} Profil nadal uproszczony, ale przebieg gładki.
+    \item \textbf{20 węzłów:} Dokładność aproksymacji rośnie, przebieg gładki.
+    \item \textbf{40 węzłów:} Brak zaburzeń, profil dobrze odwzorowany.
+    \item \textbf{80 węzłów:} Wysoka jakość aproksymacji, brak oscylacji, natomiast niektóre części wykresu są zbyt uproszczone.
+    \item \textbf{160 węzłów:} Idealne dopasowanie do danych (poza kilkoma punktami).
 \end{itemize}
 
 \section{Analiza dodatkowa}
 \subsection{Wpływ rozmieszczenia węzłów (węzły Czebyszewa)}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{plots/ChallengerDeep_Lagrange_Chebyshev_2x2.png}
+    \includegraphics[width=0.8\textwidth]{../plots/ChallengerDeep_Lagrange_Chebyshev_2x2.png}
     \caption{Interpolacja Lagrange'a z węzłami Czebyszewa dla trasy ChallengerDeep}
     \label{fig:challengerdeep_chebyshev}
 \end{figure}
 \textbf{Interpretacja (Rysunek \ref{fig:challengerdeep_chebyshev}):} 
 \begin{itemize}
-    \item \textbf{5 węzły:} Zbyt mało węzłów, profil odwzorowany bardzo ogólnie.
+    \item \textbf{5 węzłów:} Zbyt mało węzłów, profil odwzorowany bardzo ogólnie.
     \item \textbf{10 węzłów:} Profil nadal uproszczony, ale ze względu na typ wykresu już w miarę dopasowany.
-    \item \textbf{20 węzły:} Profil coraz lepiej odwzorowany, brak efektu Rungego.
-    \item \textbf{40 węzły:} Brak oscylacji, interpolacja bardzo dobra.
+    \item \textbf{20 węzłów:} Profil coraz lepiej odwzorowany, brak efektu Rungego.
+    \item \textbf{40 węzłów:} Brak oscylacji, interpolacja bardzo dobra.
 \end{itemize}
 
 \subsection{Trasa o wielu wzniesieniach}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.8\textwidth]{plots/VariousHills_Lagrange_Chebyshev_2x2.png}
+    \includegraphics[width=0.8\textwidth]{../plots/VariousHills_Lagrange_Chebyshev_2x2.png}
     \caption{Interpolacja Lagrange'a z węzłami Czebyszewa dla trasy VariousHills}
     \label{fig:wiele_wzniesien}
 \end{figure}
 \textbf{Interpretacja (Rysunek \ref{fig:wiele_wzniesien}):} 
 \begin{itemize}
-    \item \textbf{5 węzły:} Zbyt mało węzłów, profil odwzorowany bardzo uproszczony.
+    \item \textbf{5 węzłów:} Zbyt mało węzłów, profil odwzorowany w bardzo uproszczony sposób.
     \item \textbf{10 węzłów:} Profil nadal uproszczony, ale brak oscylacji.
-    \item \textbf{20 węzły:} Interpolacja stabilna, przebieg coraz lepiej odwzorowany.
-    \item \textbf{40 węzły:} Brak efektu Rungego, profil dobrze odwzorowany.
+    \item \textbf{20 węzłów:} Interpolacja stabilna, przebieg coraz lepiej odwzorowany.
+    \item \textbf{40 węzłów:} Brak efektu Rungego, profil dobrze odwzorowany.
 \end{itemize}
 
 \newpage
@@ -160,9 +178,9 @@ Wpływ liczby węzłów na jakość interpolacji Lagrange'a przedstawiono na rys
 
 \section{Podsumowanie}
 \label{sec:podsumowanie}
-\textbf{Interpolacja wielomianem Lagrange'a} okazała się metodą wrażliwą na liczbę i rozmieszczenie węzłów. Przy większej liczbie równoodległych węzłów (16 i więcej) pojawia się zjawisko Rungego, prowadzące do znacznych oscylacji i zniekształceń profilu. Metoda ta może być stosowana przy niewielkiej liczbie węzłów oraz dla gładkich profili, jednak jej praktyczna użyteczność jest ograniczona. Przeskalowanie dziedziny poprawia stabilność numeryczną, lecz nie eliminuje problemu oscylacji. Wykorzystanie węzłów Czebyszewa (patrz Sekcja \ref{sec:analiza_dodatkowa}) pozwala ograniczyć te efekty i poprawić wyniki, jednak interpolacja wielomianowa pozostaje mniej stabilna i mniej gładka niż funkcje sklejane.
+\textbf{Interpolacja wielomianem Lagrange'a} okazała się metodą wrażliwą na liczbę i rozmieszczenie węzłów. Przy większej liczbie równoodległych węzłów (20 i więcej) pojawia się zjawisko Rungego, prowadzące do znacznych oscylacji i zniekształceń profilu. Metoda ta może być stosowana przy niewielkiej liczbie węzłów oraz dla gładkich profili, jednak jej praktyczna użyteczność jest ograniczona. Przeskalowanie dziedziny poprawia stabilność numeryczną, lecz nie eliminuje problemu oscylacji. Wykorzystanie \textbf{węzłów Czebyszewa} pozwala ograniczyć te efekty i poprawić wyniki, jednak interpolacja wielomianowa pozostaje mniej stabilna i mniej gładka niż funkcje sklejane.
 
-\textbf{Interpolacja naturalnymi funkcjami sklejanymi trzeciego stopnia} wykazała się dużą stabilnością i wysoką jakością aproksymacji. Metoda ta zapewnia gładkie i realistyczne odwzorowanie profilu, niezależnie od liczby węzłów (w testowanym zakresie od 4 do 128). Wraz ze wzrostem liczby węzłów dokładność aproksymacji systematycznie się poprawia, bez pojawiania się niepożądanych artefaktów. Funkcje sklejane dobrze radzą sobie zarówno z profilami gładkimi, jak i bardziej złożonymi.
+\textbf{Interpolacja naturalnymi funkcjami sklejanymi trzeciego stopnia} wykazała się dużą stabilnością i wysoką jakością aproksymacji. Metoda ta zapewnia gładkie i realistyczne odwzorowanie profilu, niezależnie od liczby węzłów (w testowanym zakresie od 5 do 160). Wraz ze wzrostem liczby węzłów dokładność aproksymacji systematycznie się poprawia, bez pojawiania się niepożądanych zaburzeń. Funkcje sklejane dobrze radzą sobie zarówno z profilami gładkimi, jak i bardziej złożonymi.
 \vspace{1em}
 
 Podsumowując działanie zaimplementowanych algorytmów:

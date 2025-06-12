@@ -1,10 +1,10 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2025.6.8)  12 JUN 2025 00:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2025.6.8)  12 JUN 2025 12:29
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**/home/zussman/Repositories/Politechnika_Gdanska/Sem4/MN/project3/sprawozdanie.tex
-(/home/zussman/Repositories/Politechnika_Gdanska/Sem4/MN/project3/sprawozdanie.tex
+**/home/zussman/Repositories/Politechnika_Gdanska/Sem4/MN/project3/summary/sprawozdanie.tex
+(/home/zussman/Repositories/Politechnika_Gdanska/Sem4/MN/project3/summary/sprawozdanie.tex
 LaTeX2e <2022-11-01> patch level 1
 L3 programming layer <2023-02-22> (/usr/share/texlive/texmf-dist/tex/latex/base/article.cls
 Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
@@ -385,75 +385,74 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 \openout4 = `sprawozdanie.toc'.
 
  [2]
-<plots/GdanskPromenade_Lagrange_basic.png, id=99, 1156.32pt x 1192.455pt>
-File: plots/GdanskPromenade_Lagrange_basic.png Graphic file (type png)
-<use plots/GdanskPromenade_Lagrange_basic.png>
-Package pdftex.def Info: plots/GdanskPromenade_Lagrange_basic.png  used on input line 55.
-(pdftex.def)             Requested size: 364.19667pt x 375.57072pt.
+<chebyshev_circle.png, id=104, 501.875pt x 283.0575pt>
+File: chebyshev_circle.png Graphic file (type png)
+<use chebyshev_circle.png>
+Package pdftex.def Info: chebyshev_circle.png  used on input line 43.
+(pdftex.def)             Requested size: 364.19667pt x 205.41658pt.
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.58 \end{figure}
-                  [1{/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}]
-<plots/Hel_Lagrange_basic.png, id=114, 1156.32pt x 1192.455pt>
-File: plots/Hel_Lagrange_basic.png Graphic file (type png)
-<use plots/Hel_Lagrange_basic.png>
-Package pdftex.def Info: plots/Hel_Lagrange_basic.png  used on input line 72.
+l.47 D
+      la danej liczby całkowitej n węzły Czebyszewa w przedziale (-1, 1) to: [1]
+<../plots/GdanskPromenade_Lagrange_basic.png, id=117, 1156.32pt x 1192.455pt>
+File: ../plots/GdanskPromenade_Lagrange_basic.png Graphic file (type png)
+<use ../plots/GdanskPromenade_Lagrange_basic.png>
+Package pdftex.def Info: ../plots/GdanskPromenade_Lagrange_basic.png  used on input line 73.
 (pdftex.def)             Requested size: 364.19667pt x 375.57072pt.
 
 pdfTeX warning (ext4): destination with the same identifier (name{page.2}) has been already used, duplicate ignored
 <to be read again> 
                    \relax 
-l.76 ...retacja (Rysunek \ref{fig:hel_lagrange}):}
-                                                   [2 <./plots/GdanskPromenade_Lagrange_basic.png>]
-<plots/GdanskPromenade_Spline_basic.png, id=121, 1156.32pt x 1192.455pt>
-File: plots/GdanskPromenade_Spline_basic.png Graphic file (type png)
-<use plots/GdanskPromenade_Spline_basic.png>
-Package pdftex.def Info: plots/GdanskPromenade_Spline_basic.png  used on input line 90.
+l.77 ...a (Rysunek \ref{fig:promenade_lagrange}):}
+                                                   [2{/usr/share/texlive/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc} <./chebyshev_circle.png>]
+<../plots/Hel_Lagrange_basic.png, id=125, 1156.32pt x 1192.455pt>
+File: ../plots/Hel_Lagrange_basic.png Graphic file (type png)
+<use ../plots/Hel_Lagrange_basic.png>
+Package pdftex.def Info: ../plots/Hel_Lagrange_basic.png  used on input line 90.
 (pdftex.def)             Requested size: 364.19667pt x 375.57072pt.
- [3 <./plots/Hel_Lagrange_basic.png>]
-<plots/Hel_Spline_basic.png, id=129, 1156.32pt x 1192.455pt>
-File: plots/Hel_Spline_basic.png Graphic file (type png)
-<use plots/Hel_Spline_basic.png>
-Package pdftex.def Info: plots/Hel_Spline_basic.png  used on input line 107.
+ [3 <../plots/GdanskPromenade_Lagrange_basic.png>]
+<../plots/GdanskPromenade_Spline_basic.png, id=133, 1156.32pt x 1192.455pt>
+File: ../plots/GdanskPromenade_Spline_basic.png Graphic file (type png)
+<use ../plots/GdanskPromenade_Spline_basic.png>
+Package pdftex.def Info: ../plots/GdanskPromenade_Spline_basic.png  used on input line 108.
 (pdftex.def)             Requested size: 364.19667pt x 375.57072pt.
- [4 <./plots/GdanskPromenade_Spline_basic.png>]
-<plots/ChallengerDeep_Lagrange_Chebyshev_2x2.png, id=137, 1156.32pt x 794.97pt>
-File: plots/ChallengerDeep_Lagrange_Chebyshev_2x2.png Graphic file (type png)
-<use plots/ChallengerDeep_Lagrange_Chebyshev_2x2.png>
-Package pdftex.def Info: plots/ChallengerDeep_Lagrange_Chebyshev_2x2.png  used on input line 125.
+ [4 <../plots/Hel_Lagrange_basic.png>]
+<../plots/Hel_Spline_basic.png, id=141, 1156.32pt x 1192.455pt>
+File: ../plots/Hel_Spline_basic.png Graphic file (type png)
+<use ../plots/Hel_Spline_basic.png>
+Package pdftex.def Info: ../plots/Hel_Spline_basic.png  used on input line 125.
+(pdftex.def)             Requested size: 364.19667pt x 375.57072pt.
+ [5 <../plots/GdanskPromenade_Spline_basic.png>]
+<../plots/ChallengerDeep_Lagrange_Chebyshev_2x2.png, id=150, 1156.32pt x 794.97pt>
+File: ../plots/ChallengerDeep_Lagrange_Chebyshev_2x2.png Graphic file (type png)
+<use ../plots/ChallengerDeep_Lagrange_Chebyshev_2x2.png>
+Package pdftex.def Info: ../plots/ChallengerDeep_Lagrange_Chebyshev_2x2.png  used on input line 143.
 (pdftex.def)             Requested size: 364.19667pt x 250.38048pt.
- [5 <./plots/Hel_Spline_basic.png>]
-<plots/VariousHills_Lagrange_Chebyshev_2x2.png, id=146, 1156.32pt x 794.97pt>
-File: plots/VariousHills_Lagrange_Chebyshev_2x2.png Graphic file (type png)
-<use plots/VariousHills_Lagrange_Chebyshev_2x2.png>
-Package pdftex.def Info: plots/VariousHills_Lagrange_Chebyshev_2x2.png  used on input line 140.
+ [6 <../plots/Hel_Spline_basic.png>]
+<../plots/VariousHills_Lagrange_Chebyshev_2x2.png, id=158, 1156.32pt x 794.97pt>
+File: ../plots/VariousHills_Lagrange_Chebyshev_2x2.png Graphic file (type png)
+<use ../plots/VariousHills_Lagrange_Chebyshev_2x2.png>
+Package pdftex.def Info: ../plots/VariousHills_Lagrange_Chebyshev_2x2.png  used on input line 158.
 (pdftex.def)             Requested size: 364.19667pt x 250.38048pt.
- [6 <./plots/ChallengerDeep_Lagrange_Chebyshev_2x2.png>] [7 <./plots/VariousHills_Lagrange_Chebyshev_2x2.png>]
-
-LaTeX Warning: Reference `sec:analiza_dodatkowa' on page 8 undefined on input line 163.
-
-[8] (./sprawozdanie.aux)
-
-LaTeX Warning: There were undefined references.
-
+ [7 <../plots/ChallengerDeep_Lagrange_Chebyshev_2x2.png>] [8 <../plots/VariousHills_Lagrange_Chebyshev_2x2.png>] [9] (./sprawozdanie.aux)
 Package rerunfilecheck Info: File `sprawozdanie.out' has not changed.
-(rerunfilecheck)             Checksum: 3B38503EE7BF113D514EC0BEC67B8B54;2896.
+(rerunfilecheck)             Checksum: 140E364187F559611605C25372430BC3;3316.
  ) 
 Here is how much of TeX's memory you used:
- 12628 strings out of 476041
- 203643 string characters out of 5793175
- 1860388 words of memory out of 6000000
- 32880 multiletter control sequences out of 15000+600000
+ 12639 strings out of 476041
+ 204000 string characters out of 5793175
+ 1859388 words of memory out of 6000000
+ 32887 multiletter control sequences out of 15000+600000
  524224 words of font info for 64 fonts, out of 8000000 for 9000
  1137 hyphenation exceptions out of 8191
- 75i,6n,76p,859b,475s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,6n,76p,833b,452s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sfbx1095.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sfbx1200.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sfbx1440.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sfrm1095.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/cm-super/sfrm1728.pfb>
-Output written on sprawozdanie.pdf (10 pages, 1243404 bytes).
+Output written on sprawozdanie.pdf (11 pages, 1266155 bytes).
 PDF statistics:
- 233 PDF objects out of 1000 (max. 8388607)
- 180 compressed objects within 2 object streams
- 32 named destinations out of 1000 (max. 500000)
- 159 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 245 PDF objects out of 1000 (max. 8388607)
+ 189 compressed objects within 2 object streams
+ 35 named destinations out of 1000 (max. 500000)
+ 172 words of extra memory for PDF output out of 10000 (max. 10000000)
 
